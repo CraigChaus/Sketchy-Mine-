@@ -1,12 +1,12 @@
 CURRENT TODOS:
 - Code of conduct
-  * Communication (when, where, how often, main aim)
-  * Which role is responsible for what
-  * Who is in what role
-  * Group structure
-  * Strike system
-  * Penalties for not doing/attending stuff
-  * What everyone has to do generally (git commit messages, time sheet, etc)
+  * ~~Strike system~~
+  * ~~Penalties for not doing/attending stuff~~
+  * ~~What everyone has to do generally (git commit messages, time sheet, etc)~~
+- Communication (when, where, how often, main aim)
+- Which role is responsible for what
+- Who is in what role
+- Group structure
 - Pitch
   * Wireframes
   * PPT
