@@ -1,0 +1,33 @@
+CURRENT TODOS:
+
+- **_Code of conduct_**
+  - [x] Strike system
+  - [x] Penalties for not doing/attending stuff
+  - [x] What everyone has to do generally (git commit messages, time sheet, etc)
+- **_Pitch_**
+  - [x] Wireframes
+  - PPT
+    - [x] Background
+    - [x] Reason why we chose a different game style
+    - [x] How we aim to implement the ideas for the
+    - [x] original game
+  - [x] Script
+- **_Docs_**
+  - Team Plan doc
+    - [x] Sprint retrospectives
+    - [x] Process artifacts
+    - [x] Which role is responsible for what
+    - [x] Who is in what role
+    - [x] Group structure
+    - [x] Communication (when, where, how often, main aim)
+  - **System Doc**
+    - [x] Framework
+    - [x] Protocol analysis
+    - [x] requirements (F,NF)
+    - [ ] diagrams
+    - [x] technical design (road map)
+    - [x] user stories
+    - [x] backlogs
+  - **Game design doc**
+    - [x] Game design choices
+    - [x] Wireframes
