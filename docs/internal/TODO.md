@@ -20,11 +20,11 @@ CURRENT TODOS:
     - [X] Group structure
     - [ ] Communication (when, where, how often, main aim)
   - **System Doc**
-    - [ ] Framework
-    - [ ] Protocol analysis
+    - [X] Framework
+    - [X] Protocol analysis
     - [X] requirements (F,NF)
     - [ ] diagrams
-    - [ ] technical design (road map)
+    - [X] technical design (road map)
     - [X] user stories
     - [X] backlogs
   - **Game design doc**
