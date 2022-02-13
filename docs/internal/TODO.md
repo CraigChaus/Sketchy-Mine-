@@ -14,7 +14,7 @@ CURRENT TODOS:
 - ***Docs***
   - Team Plan doc
     - [ ] Sprint retrospectives
-    - [ ] Process artifacts
+    - [X] Process artifacts
     - [X] Which role is responsible for what
     - [X] Who is in what role
     - [X] Group structure

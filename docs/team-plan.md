@@ -205,5 +205,23 @@ Establish socket.io server
 ##### US05 BI04
 Add chat backend functionality
 
+---
 
-//TODO: Sprint retrospectives
+## Budget
+
+- Available hours per person per week: **12 hours**
+- Euros required per person per hour: **50€**
+
+### Budget breakdown
+
+| Definition               | Cost (€) |
+| ------------------------ | -------- |
+| Work per person per week | 600      |
+| Total cost per week      | 6'600    |
+| Sprint 0                 | 6'600    |
+| Sprint 1                 | 13'200   |
+| Sprint 2                 | 13,200   |
+| Sprint 3                 | 19,800   |
+| Project total            | 52,800   |
+
+> 12 EUR * 11 (developers) * 50 (hourly rate) * 8 (weeks) = _52'800 EUR_
