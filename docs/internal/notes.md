@@ -6,7 +6,7 @@
 - spectators
 - teams
 - 30 minutes playtime
-- not single man’s job (cooperative gameplay)
+- not single man's job (cooperative gameplay)
 - Chat
 - moderation
 - database
