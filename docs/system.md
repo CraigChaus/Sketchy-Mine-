@@ -161,3 +161,14 @@ Establish socket.io server
 
 #### US05 BI04
 Add chat backend functionality
+
+---
+
+## Development tools
+
+For Sprint 1 to start developing the game, we decided to use Svelte, Tailwind CSS for the client. For the server, we are going to use Node.js, Express, Socket.IO, and PostgreSQL. The server will store player data, and distribute the game state to connected clients.
+
+All team members will use Visual Studio Code as the primary editor for the project.
+
+## Communication protocols
+Since is going to be an online game the protocols we are going to use WebSockets and HTTP. HTTP over a REST API will be used for interacting with the game and dispatching certain actions like logging in, joining a game, etc. HTTP will also be used to serve the client Svelte frontend. Socket.IO over WebSockets will be used between the server and client to receive game updates. For the database, we are going to use the SQL protocol to query and store persistent information.
