@@ -225,3 +225,36 @@ Add chat backend functionality
 | Project total            | 52,800   |
 
 > 12 EUR * 11 (developers) * 50 (hourly rate) * 8 (weeks) = _52'800 EUR_
+
+---
+
+## Sprint retrospectives
+
+### Sprint 0
+
+#### What accelerated us
+
+- Clear plan on who has to do what
+- Having a todo list
+- Issues on gitlab (with labels, assigned members, etc)
+- Working in only one environment (GitLab)
+- Visual Studio Code live share (pair "programming")
+- Having a game idea that doesn't rely on a game engine
+- Having everyone in our Discord group so we can all communicate easily with each other
+
+#### What slowed us down
+
+- Communication
+- Agreeing on game specifics
+- Not everyone read the manual
+- Enforcing standardized usage of git (commit messages, branches, issues, etc)
+- Onboarding new members, who weren't there during the original planning phase
+
+#### Future plans
+
+- Having organized and scheduled meetings as agreed by the team
+- Familiarizing everyone with the standard git rules
+- Having a celebratory meeting after every sprint to boost the moral of the team, e.g lunch, mangoes and drinks
+- Being more specific on deadlines and meeting times
+- Clearly working in our defined sub-groups instead of as one large group (individual scrum masters, ambassadors, etc)
+- Making tasks clearly explained to follow a uniform standard as agreed byn everyone in the team
