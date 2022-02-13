@@ -1,21 +1,30 @@
-# Communication methods 
-### Introduction
-To successfully complete a complex project, team members must communicate effectively. In this paper described the ways and plan of our communication , as well as the tools used for this.  
+# Communication methods
 
-### Communication plan
-A plan for how we'll communicate with our project team and stakeholders:
+## Introduction
 
-| Communication       | Audience           | Goals  |Schedule |
-| ------------- |:-------------:| -----:|  -----:|
-| Kick-off meeting     | All project team, Stakeholder | Set expectations,Introduce the project to StakeHolder | One time event|
-| Meeting with team members/Scrum stand up      | All project team      | Emphasize and promote speedy decision-making and increase the Development Team's knowledge level   |At least 2 times per week|
-| MileStone review |All project team, Stakeholder      | Present deliverables, gather Feedback, decide next steps   |Ones per week|
+To successfully complete this complex project, team members must communicate effectively. This document describes the ways and general plan for team communication, as well as the tools used for this.
 
+---
 
-#### Project Communication Tools:
- For better contact with the group members, these tools were used:
+## Communication plan
 
-- Discord/Conference call - used as main communication among the members of the group and for additional meetings when needed
-- OneDrive - a shared folder in OneDrive, which has an Excel file for the timesheet where everyone inputs the time they have spent on each task they have had and few Words documents.
-- GitLab - repository on the web that offers free open and private repositories, issue tracking, and wikis. It is a full-fledged DevOps platform that enables professionals to handle all aspects of a project, from project planning and source code management to monitoring and security.
-- Brainstorming meetings/Live meetings: -  used to generate and conceptualize new ideas.
+The following is an overview for how the team will communicate internally, as well as with stakeholders.
+
+| Communication     |         Audience          |                                                                                                           Goals |                            Schedule |
+| ----------------- | :-----------------------: | --------------------------------------------------------------------------------------------------------------: | ----------------------------------: |
+| Kick-off meeting  | Project team, stakeholder |                                                      Set expectations, introduce the project to the stakeholder |                    Start of project |
+| Sprint planning   |       Project team        |                                                        Establish the backlog and objectives for the next sprint |                     Start of sprint |
+| Standup           |     Project subgroup      | Share members progress, addressing further action for blocked issues. Assign items from the backlog to members. |           At least 2 times per week |
+| Group brief       |    Project ambassadors    |           Share the groups progress, with an overview of the state of the group according to the global sprint. | At least once a week, and as needed |
+| Sprint review     |       Project team        |                                                           Validate sprint, reflect on project and team progress |                       End of sprint |
+| Publisher meeting | Project team, stakeholder |                                                        Present current deliverables, update on product progress |                       End of sprint |
+
+### Communication tools
+
+For communicating and sharing information with other project members, the following tools are to be used:
+
+- Discord - A common server is used for voice/video calls, screensharing and pair programming, as well as the primary chat tool and permanent record of all team communication. Members in the server are labelled with the role of the sub-group they belong to. Multiple channels are available for members to use depending on the context necessary.
+- OneDrive - A shared OneDrive folder is used to grant access to the shared timesheet for all project members to log their tracked project time.
+- GitLab - The issue board is used as the single source of truth of assigned items and project state. Issues and merge requests are assigned to discrete project members, with the possibility for members to leave review notes, and manage active items. GitLab is also the central store for _all_ project documentation (in markdown format).
+- Email - Used to formally communicate with the publisher and other stakeholders/
+- Physical meetings - Used for standups, and publisher presentations.
