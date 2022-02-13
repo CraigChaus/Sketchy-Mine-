@@ -2,7 +2,7 @@
 
 ## Introduction
 
-To successfully complete this complex project, team members must communicate effectively. This document describes the ways and general plan for team communication, as well as the tools used for this.
+To successfully complete this complex project, team members must communicate effectively. This section of the document describes the ways and general plan for team communication, as well as the tools used for this.
 
 ---
 
