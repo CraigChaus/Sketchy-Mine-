@@ -69,7 +69,7 @@
 - Us3Bi04 - Create websocket for transferring canvas content between drawer and server
 
 **Ana**
-- //write here
+- Research on logic of the canvas
 
 **Daria**
-- Research on how to make a drawing canvas
+- Research on logic of the canvas
