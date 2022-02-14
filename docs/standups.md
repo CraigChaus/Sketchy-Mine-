@@ -72,4 +72,4 @@
 - //write here
 
 **Daria**
-- //write here
+- Research on how to make a drawing canvas
