@@ -225,7 +225,7 @@ Create chat component
 
 ##### US05 BI02
 
-Add chat frontend functionality
+Connect frontend incoming chat to the backend
 
 ##### US05 BI03
 
@@ -234,6 +234,14 @@ Establish socket.io server
 ##### US05 BI04
 
 Add chat backend functionality
+
+##### US05 BI05
+
+Connect frontend outgoing chat to the backend
+
+##### US05 BI06
+
+Add team based chat scopes in the backend
 
 ---
 
