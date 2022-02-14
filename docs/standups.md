@@ -64,3 +64,11 @@
 - Group 2: Work us User Story 5
   - Come up with backlogs for their user story
   - Sets up the backend project
+
+---
+
+## SCRUM Standup (Group 2) - 14.02.2022
+- Vedat stays the SCRUM master
+- Vedat needs help with Git
+- Team came up with new backlogs
+- The existing backlogs for US5 are too massive
