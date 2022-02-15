@@ -29,6 +29,7 @@ build:
 
 sast:
   stage: test
+  needs: []
 include:
   - template: Security/SAST.gitlab-ci.yml
 
@@ -41,21 +42,26 @@ eslint:
 
 test:
   stage: test
+  needs:
+    - "eslint"
+    - "build"
   dependencies:
     - build
   script:
     - cd packages/backend
     - npm test
 
-builder:docker:
+build:docker:
   stage: image
+  needs:
+    - "test"
   image:
     name: gcr.io/kaniko-project/executor:debug
     entrypoint: [""]
   script:
     - mkdir -p /kaniko/.docker
     - echo "{\"auths\":{\"$CI_REGISTRY\":{\"username\":\"$CI_REGISTRY_USER\",\"password\":\"$CI_REGISTRY_PASSWORD\"}}}" > /kaniko/.docker/config.json
-    - /kaniko/executor --context $CI_PROJECT_DIR/packages/backend/ --dockerfile $CI_PROJECT_DIR/packages/backend/Dockerfile --destination $CI_REGISTRY_IMAGE
+    - /kaniko/executor --context $CI_PROJECT_DIR/packages/backend/ --dockerfile $CI_PROJECT_DIR/packages/backend/Dockerfile --destination $CI_REGISTRY_IMAGE/backend/$CI_COMMIT_REF_NAME
 # deploy:
 #   stage: deploy
 #   # only:
