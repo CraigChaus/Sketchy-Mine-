@@ -6,6 +6,7 @@
 
 import { createServer } from 'http';
 import app from '../app';
+import setupSockets from '../lib/socket';
 
 const debug = require('debug')('express');
 
@@ -81,6 +82,8 @@ function onListening() {
     : `port ${addr.port}`;
   debug(`Listening on ${bind}`);
 }
+
+setupSockets(server);
 
 /**
  * Listen on provided port, on all network interfaces.

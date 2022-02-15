@@ -8,7 +8,7 @@
     "start": "npm run prod",
     "build": "npm-run-all clean transpile",
     "serve": "node ./dist/bin/www",
-    "dev": "DEBUG=express NODE_ENV=development npm-run-all build serve",
+    "dev": "DEBUG=express,socket NODE_ENV=development npm-run-all build serve",
     "prod": "NODE_ENV=production npm-run-all build serve",
     "transpile": "babel ./src --out-dir dist",
     "clean": "rimraf dist",
@@ -35,7 +35,8 @@
     "morgan": "~1.9.1",
     "nodemon": "^2.0.15",
     "npm-run-all": "^4.1.5",
-    "rimraf": "^3.0.2"
+    "rimraf": "^3.0.2",
+    "socket.io": "^4.4.1"
   },
   "devDependencies": {
     "cross-env": "^7.0.3",
@@ -73,5 +74,9 @@
       "*.test.js",
       "*.spec.js"
     ]
+  },
+  "optionalDependencies": {
+    "bufferutil": "^4.0.6",
+    "utf-8-validate": "^5.0.8"
   }
 }
