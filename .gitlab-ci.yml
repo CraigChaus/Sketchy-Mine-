@@ -20,6 +20,5 @@ eslint:
   stage: lint
   script:
     - cd packages/backend
-    - npm install eslint \
-      eslint-config-airbnb-base
+    - npm install eslint eslint-config-airbnb-base
     - npm run lint
