@@ -191,6 +191,10 @@ Create websocket for transferring canvas content between drawer and server
 
 Create a save of the canvas content for sending to users that connected later on
 
+##### US03 BI06
+
+Create the logic for the canvas
+
 #### US04 - As a player, I want to be able to submit my guess, so that I can get more emeralds.
 
 ##### US04 BI01
