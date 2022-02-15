@@ -39,6 +39,14 @@ eslint:
     - cd packages/backend
     - npm install eslint eslint-config-airbnb-base
     - npm run lint
+  cache:
+    paths:
+      - packages/backend/node_modules/
+  artifacts:
+    expire_in: 1 days
+    when: on_success
+    paths:
+      - packages/backend/node_modules/
 
 test:
   stage: test
@@ -53,15 +61,14 @@ test:
 
 build:docker:
   stage: image
-  needs:
-    - "test"
+  needs: []
   image:
     name: gcr.io/kaniko-project/executor:debug
     entrypoint: [""]
   script:
     - mkdir -p /kaniko/.docker
     - echo "{\"auths\":{\"$CI_REGISTRY\":{\"username\":\"$CI_REGISTRY_USER\",\"password\":\"$CI_REGISTRY_PASSWORD\"}}}" > /kaniko/.docker/config.json
-    - /kaniko/executor --context $CI_PROJECT_DIR/packages/backend/ --dockerfile $CI_PROJECT_DIR/packages/backend/Dockerfile --destination $CI_REGISTRY_IMAGE/backend/$CI_COMMIT_REF_NAME
+    - /kaniko/executor --context $CI_PROJECT_DIR/packages/backend/ --dockerfile $CI_PROJECT_DIR/packages/backend/Dockerfile --destination $CI_REGISTRY_IMAGE/backend:latest
 # deploy:
 #   stage: deploy
 #   # only:
