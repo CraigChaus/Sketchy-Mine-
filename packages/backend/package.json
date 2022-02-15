@@ -1,0 +1,77 @@
+{
+  "name": "@sketchymine/backend",
+  "version": "0.0.1",
+  "description": "Backend API and WebSocket server for Sketchy Mine",
+  "main": "index.js",
+  "scripts": {
+    "test": "cross-env NODE_ENV=test jest --testTimeout=2000",
+    "start": "npm run prod",
+    "build": "npm-run-all clean transpile",
+    "serve": "node ./dist/bin/www",
+    "dev": "DEBUG=express NODE_ENV=development npm-run-all build serve",
+    "prod": "NODE_ENV=production npm-run-all build serve",
+    "transpile": "babel ./src --out-dir dist",
+    "clean": "rimraf dist",
+    "lint": "npx eslint src --ext .js",
+    "watch:dev": "nodemon"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://gitlab.com/saxion.nl/server-clients/dhi2v.so2.git"
+  },
+  "author": "DHI2V.So2",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://gitlab.com/saxion.nl/server-clients/dhi2v.so2/issues"
+  },
+  "homepage": "https://gitlab.com/saxion.nl/server-clients/dhi2v.so2#readme",
+  "dependencies": {
+    "@babel/cli": "^7.17.0",
+    "@babel/core": "^7.17.2",
+    "@babel/preset-env": "^7.16.11",
+    "cookie-parser": "~1.4.4",
+    "debug": "~2.6.9",
+    "express": "~4.16.1",
+    "morgan": "~1.9.1",
+    "nodemon": "^2.0.15",
+    "npm-run-all": "^4.1.5",
+    "rimraf": "^3.0.2"
+  },
+  "devDependencies": {
+    "cross-env": "^7.0.3",
+    "eslint": "^8.9.0",
+    "eslint-config-airbnb-base": "^15.0.0",
+    "eslint-plugin-import": "^2.25.4",
+    "jest": "^27.5.1",
+    "supertest": "^6.2.2"
+  },
+  "babel": {
+    "presets": [
+      [
+        "@babel/preset-env",
+        {
+          "targets": {
+            "node": "current"
+          }
+        }
+      ]
+    ]
+  },
+  "jest": {
+    "testEnvironment": "node",
+    "coveragePathIgnorePatterns": [
+      "/node_modules/"
+    ]
+  },
+  "nodemonConfig": {
+    "exec": "npm run dev",
+    "watch": [
+      "src/*"
+    ],
+    "ignore": [
+      "**/__tests__/**",
+      "*.test.js",
+      "*.spec.js"
+    ]
+  }
+}
