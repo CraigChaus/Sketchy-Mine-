@@ -11,6 +11,20 @@ stages:
   - lint
   - test
 
+build:
+  stage: build
+  script:
+    - cd packages/backend
+    - npm i
+  cache:
+    paths:
+      - packages/backend/node_modules/
+  artifacts:
+    expire_in: 1 days
+    when: on_success
+    paths:
+      - packages/backend/node_modules/
+
 sast:
   stage: test
 include:
@@ -22,3 +36,11 @@ eslint:
     - cd packages/backend
     - npm install eslint eslint-config-airbnb-base
     - npm run lint
+
+test:
+  stage: test
+  dependencies:
+    - build
+  script:
+    - cd packages/backend
+    - npm test
