@@ -13,7 +13,10 @@
     "transpile": "babel ./src --out-dir dist",
     "clean": "rimraf dist",
     "lint": "npx eslint src --ext .js",
-    "watch:dev": "nodemon"
+    "watch:dev": "nodemon",
+    "docker:build": "docker build -t registry.gitlab.com/saxion.nl/server-clients/dhi2v.so2/backend .",
+    "docker:run": "docker run -d -p 3000:3000 --name=sketchymine-backend registry.gitlab.com/saxion.nl/server-clients/dhi2v.so2/backend",
+    "docker:push": "docker push registry.gitlab.com/saxion.nl/server-clients/dhi2v.so2/backend"
   },
   "repository": {
     "type": "git",
