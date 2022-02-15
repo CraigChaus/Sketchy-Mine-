@@ -11,6 +11,7 @@ stages:
   - lint
   - build
   - test
+  - image
 
 build:
   stage: build
@@ -45,3 +46,31 @@ test:
   script:
     - cd packages/backend
     - npm test
+
+builder:docker:
+  stage: image
+  image:
+    name: gcr.io/kaniko-project/executor:debug
+    entrypoint: [""]
+  script:
+    - mkdir -p /kaniko/.docker
+    - echo "{\"auths\":{\"$CI_REGISTRY\":{\"username\":\"$CI_REGISTRY_USER\",\"password\":\"$CI_REGISTRY_PASSWORD\"}}}" > /kaniko/.docker/config.json
+    - /kaniko/executor --context $CI_PROJECT_DIR/packages/backend/ --dockerfile $CI_PROJECT_DIR/packages/backend/Dockerfile --destination $CI_REGISTRY_IMAGE
+# deploy:
+#   stage: deploy
+#   # only:
+#   #   refs:
+#   #     - main
+#   services: []
+#   image: alpine:latest
+#   script:
+#     - apk add --no-cache openssh
+#     - mkdir ~/.ssh
+#     - echo "$SSH_KNOWN_HOSTS" >> ~/.ssh/known_hosts
+#     - chmod 644 ~/.ssh/known_hosts
+#     - echo "$SSH_PRIVATE_KEY" > ~/.ssh/private_key
+#     - chmod 600 ~/.ssh/private_key
+#     # add ssh key stored in SSH_PRIVATE_KEY variable to the agent store
+#     - eval $(ssh-agent -s)
+#     - ssh-add ~/.ssh/private_key
+#     - ssh -p $SSH_PORT $SSH_USER@$SSH_HOST $(cat image-sha.txt)
