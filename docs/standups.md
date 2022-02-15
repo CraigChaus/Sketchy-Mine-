@@ -1,5 +1,7 @@
 # Stand ups
 
+---
+
 ## Stand up 1 - 11.02.2022
 
 **Peter** – Super Scrum Master
@@ -50,3 +52,23 @@
 
 - helped Peter with CoC
  
+---
+
+## Sprint 0 planning - 14.02.2022
+
+- Team is splitting up into the two defined subgroups
+- Teams do separate meetings and write down notes
+- Group 1: Work us User Story 3
+  - Come up with backlogs for their user story
+  - Sets up the frontend project
+- Group 2: Work us User Story 5
+  - Come up with backlogs for their user story
+  - Sets up the backend project
+
+---
+
+## SCRUM Standup (Group 2) - 14.02.2022
+- Vedat stays the SCRUM master
+- Vedat needs help with Git
+- Team came up with new backlogs
+- The existing backlogs for US5 are too massive
