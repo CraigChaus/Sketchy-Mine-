@@ -1,0 +1,9 @@
+[Unit]
+Description=SketchyMine deployment path monitor
+
+[Path]
+PathModified=/home/gitlab/sketchymine/deployment.raw
+Unit=sketchymine-deployment.service
+
+[Install]
+WantedBy=multi-user.target
