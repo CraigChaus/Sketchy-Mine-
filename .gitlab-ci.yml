@@ -64,6 +64,9 @@ build:docker:
   stage: image
   needs:
     - test
+  only:
+    refs:
+      - main
   image:
     name: gcr.io/kaniko-project/executor:debug
     entrypoint: [""]
@@ -80,9 +83,9 @@ deploy:
   stage: deploy
   needs:
     - build:docker
-  # only:
-  #   refs:
-  #     - main
+  only:
+    refs:
+      - main
   services: []
   image: alpine:latest
   script:
