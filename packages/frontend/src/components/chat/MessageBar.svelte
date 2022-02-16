@@ -12,7 +12,7 @@
     const onGuessWordClicked = () => dispatch("guessWordClicked");
 </script>
 
-<div class="flex-1 flex mt-4">
+<div class="flex-1 flex mt-8 space-x-2">
     <TextInput instruction="Search by title..." bind:input styles="lg:inline" />
 
     <div class="ml-2 lg:inline mt-2 lg:mt-0">
