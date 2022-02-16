@@ -1,0 +1,6 @@
+version: "3"
+services:
+  sketchymine-backend:
+    image: registry.gitlab.com/saxion.nl/server-clients/dhi2v.so2/backend:latest
+    ports:
+      - "3000:3000"
