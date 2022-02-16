@@ -1,9 +1,10 @@
 <script>
 
+import Toolbox from "./Toolbox.svelte";
 </script>
 
-<main>
-    <div>
-        <canvas id="drawingCanvas" width="100%" height="100%" style="border: dashed"> canvas not supported by browser</canvas>
-    </div>
-</main>
+<div class="border-dashed border-green-400" style="border-width: 6px">
+    <canvas id="drawingCanvas" class="w-full h-full" > canvas not supported by browser</canvas>
+</div>
+
+<Toolbox/>
