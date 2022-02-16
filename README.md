@@ -4,6 +4,10 @@
 
 The [packages/backend](./packages/backend/README.md) directory contains the Sketchy Mine backend.
 
+## Frontend
+
+The [packages/frontend](./packages/frontend/README.md) directory contains the Sketchy Mine Svelte frontend.
+
 ## Getting started
 
 To make it easy for you to get started with GitLab, here's a list of recommended next steps.
