@@ -1,7 +1,8 @@
 <script>
-  import ChatBox from "./components/chat/ChatBox.svelte";
-
   import Main from "./pages/Main.svelte";
+
+  import Canvas from "./Canvas/Canvas.svelte";
+  import Chat from "./pages/Chat.svelte";
 </script>
 
 <Main />

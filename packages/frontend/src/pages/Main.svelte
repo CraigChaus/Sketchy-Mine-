@@ -2,6 +2,15 @@
 
 import Canvas from "../Canvas/Canvas.svelte";
 import Toolbox from "../Canvas/Toolbox.svelte";
+export let styles = "";
+let brushColor = "#444";
+let brushRadius = 10;
+let SDraw = null;
+
+
+function clear() {
+    SDraw.clearDrawings();
+}
 </script>
 
 <div class="flex mb-4">
@@ -17,8 +26,64 @@ import Toolbox from "../Canvas/Toolbox.svelte";
         </p>
     </div>
 
-    <div class="w-full h-full h-full bg-gray-500 h-12">
-        <Canvas/>
+    <div class="w-full h-full h-full h-12">
+        <div class="container">
+
+
+            <div class="col">
+
+                <div class="row">
+                    <div class="col d-flex justify-content-center">
+                        <h2>Draw board </h2>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col d-flex justify-content-center">
+                        <Canvas
+                                bind:this={SDraw}
+                                {brushColor}
+                                {brushRadius}
+                                canvasWidth="640" />
+                    </div>
+                </div>
+                <hr>
+                <div class="flex-row justify-center">
+                    <div class="">
+                        <div class="">
+                            <div class="">
+
+                                <div class="form-row align-items-center">
+                                    <div class="col-auto">
+                                        <button class="bg-green-600 rounded-lg border-none text-white p-2 text-center text inline-block transition-all cursor-pointer {styles}" on:click={clear}>Clear</button>
+                                    </div>
+
+                                    <div class="" >
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="flex-row">
+                            <div class="flex-col d-flex justify-center">
+
+                                <div class="form-row align-center">
+                                    <div class="">
+                                        <label >COLOUR</label>
+                                        <input  type="color" bind:value={brushColor} />
+                                    </div>
+                                    <div class="">
+                                        <label>SIZE</label>
+                                        <input type="number" bind:value={brushRadius} />
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
     </div>
     <div class="w-1/3 h-full bg-gray-400 h-12">
         <p>chat goes here. chat goes here. chat goes here. chat goes here. chat goes here. chat goes here. chat goes here.
