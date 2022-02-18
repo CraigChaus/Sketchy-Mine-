@@ -48,38 +48,22 @@ function clear() {
                 </div>
                 <hr>
                 <div class="flex-row justify-center">
-                    <div class="">
-                        <div class="">
-                            <div class="">
-
-                                <div class="form-row align-items-center">
-                                    <div class="col-auto">
-                                        <button class="bg-green-600 rounded-lg border-none text-white p-2 text-center text inline-block transition-all cursor-pointer {styles}" on:click={clear}>Clear</button>
-                                    </div>
-
-                                    <div class="" >
-
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="flex-row">
-                            <div class="flex-col d-flex justify-center">
-
-                                <div class="form-row align-center">
-                                    <div class="">
-                                        <label >COLOUR</label>
+                 <div  class="inline-block float-left">
+                                        <label >Color</label>
                                         <input  type="color" bind:value={brushColor} />
-                                    </div>
-                                    <div class="">
-                                        <label>SIZE</label>
+                 </div>
+                 <div  class="inline-block float-left">
+                                        <label>Size</label>
                                         <input type="number" bind:value={brushRadius} />
-                                    </div>
+                 </div>
 
-                                </div>
-                            </div>
-                        </div>
+                    <div class="inline-block float-right">
+                        <button class="bg-green-600 rounded-lg border-none text-white p-2 text-center text inline-block transition-all cursor-pointer {styles}" on:click={clear}>Clear</button>
                     </div>
+
+
+
+
                 </div>
             </div>
         </div>
