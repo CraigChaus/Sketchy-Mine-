@@ -46,7 +46,7 @@ const setup = (server) => {
 
       // Send users and session info
       io.to(user.session).emit('sessionUsers', {
-        room: user.session,
+        session: user.session,
         users: getSessionUsers(user.session),
       });
     });
