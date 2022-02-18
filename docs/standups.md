@@ -2,7 +2,7 @@
 
 ---
 
-## Stand up 1 - 11.02.2022
+## SCRUM Standup (Entire team) - 11.02.2022
 
 **Peter** – Super Scrum Master
 - wrote and finished CoC 
@@ -72,3 +72,42 @@
 - Vedat needs help with Git
 - Team came up with new backlogs
 - The existing backlogs for US5 are too massive
+
+## SCRUM Standup (Entire team) - 18.02.2022
+**Peter** – Super Scrum Master
+
+- People who were not present:
+  - Vedat: Give reason to be absent in time to all team members
+  - Anna: Is sick, gave reason long before the meeting
+  - Melissa: Let all team members know that she will be absent with a valid reason
+- Craig:
+  - US3-BI04 (Just study, no actual work done)
+  - Likely will need help
+- Daria:
+  - Almost done, only few things need to be changed
+- Filippos:
+  - US05-BI03 (All done, merged)
+- Lukman
+  - US05-BI04 (All done, needs testing)
+  - Waiting for other team member to confirm (told them about this)
+- Marko
+  - Works on local machine
+  - Might need help on connection the ends
+  - Will finish hopefully tonight
+- Mira
+  - Worked on Canvas with Vince
+  - Encountered some trouble
+  - Tailwind still doesn't work perfectly (needs help, though should be fixed)
+- Peter
+  - Work finished, merged
+- Vince
+  - Worked with Mira
+  - After the weekend ready for new task
+
+- Generic remarks:
+  - Next time we should make more, smaller backlog items to make sure we have less blocking items
+
+## SCRUM Standup (Group 2) - 18.02.2022
+- Vedat, our SCRUM master is absent. Peter is being the SCRUM master for this meeting.
+- Created a new BackLog item (US05-BI07)
+- Assigned a new backlog item to all present members
