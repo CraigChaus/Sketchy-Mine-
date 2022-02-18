@@ -8,7 +8,7 @@
 <Main />
 
 <style global>
-  @tailwind base;
-  @tailwind components;
-  @tailwind utilities;
+    @tailwind base;
+    @tailwind components;
+    @tailwind utilities;
 </style>

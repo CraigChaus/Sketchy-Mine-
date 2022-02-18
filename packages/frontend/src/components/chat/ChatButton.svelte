@@ -7,7 +7,7 @@
 
 </script>
 
-<div class="bg-green-600 rounded-lg border-none text-white p-2 text-center text inline-block transition-all cursor-pointer {styles}" on:click={buttonClicked}>
+<div class="bg-green-600 rounded-full border-none text-white p-2 text-center text inline-block transition-all cursor-pointer {styles}" on:click={buttonClicked}>
     <p><slot/></p>
 </div>
 

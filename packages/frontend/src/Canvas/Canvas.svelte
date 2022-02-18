@@ -1,16 +1,5 @@
-<!--<script>-->
-
-<!--import Toolbox from "./Toolbox.svelte";-->
-<!--</script>-->
-
-<!--<div class="border-dashed border-green-400" style="border-width: 6px">-->
-<!--    <canvas id="drawingCanvas" class="w-full h-full" > canvas not supported by browser</canvas>-->
-<!--</div>-->
-
-<!--<Toolbox/>-->
-
 <script>
-    import { onMount, afterUpdate, onDestroy, createEventDispatcher  } from "svelte";
+    import { onMount, onDestroy, createEventDispatcher  } from "svelte";
     const dispatch = createEventDispatcher();
     import { LazyBrush } from "lazy-brush";
     import { Catenary } from "catenary-curve";
@@ -33,7 +22,6 @@
     export let saveData = "";
     export let immediateLoading = false;
     export let hideInterface = false;
-    export let classes = '';
 
 
     function midPointBtw(p1, p2) {
@@ -557,23 +545,12 @@
 
 
 </script>
-<style>
-    .drwaing-container{
-        display: block;
-        touch-action: none;
-    }
 
-
-</style>
-
-<div
-        class="drwaing-container {classes}"
-        style="height:{canvasHeight}px; width:{canvasWidth}px; background-color:{backgroundColor}"
+<div class=" " style="height:{canvasHeight}px; width:{canvasWidth}px; background-color:{backgroundColor}"
         bind:this={canvasContainer}>
     {#each canvasTypes as {name, zIndex}}
-        <canvas
-                key={name}
-                style="display:block;position:absolute; z-index:{zIndex}"
+        <canvas key={name}
+                style="display:block; position:absolute; z-index:{zIndex}"
                 bind:this={canvas[name]}
                 on:mousedown={name === "interface" ? handleDrawStart : undefined}
                 on:mousemove={name === "interface" ? handleDrawMove : undefined}
@@ -582,7 +559,6 @@
                 on:touchstart={name === "interface" ? handleDrawStart : undefined}
                 on:touchmove={name === "interface" ? handleDrawMove : undefined}
                 on:touchend={name === "interface" ? handleDrawEnd : undefined}
-                on:touchcancel={name === "interface" ? handleDrawEnd : undefined}
-        />
+                on:touchcancel={name === "interface" ? handleDrawEnd : undefined}></canvas>
     {/each}
 </div>

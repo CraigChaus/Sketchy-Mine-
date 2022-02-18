@@ -1,14 +1,28 @@
 <script>
+    import ChatButton from "../components/chat/ChatButton.svelte";
+
+    export let brushColor ;
+    export let brushRadius;
+    export let SDraw ;
+
+
+    function clear() {
+        SDraw.clearDrawings();
+    }
 
 </script>
 
 <main>
-    <input type="color">
+    <div class="m-2 p-2 border-black, rounded-full, bg-gray-300">
+        <div class="align-items-center justify-center">
+            <ChatButton on:buttonClicked={clear}>CLEAR</ChatButton>
 
-    <input type="button" class="bg-blue-500 border-black rounded">
-    <input type="button" class="bg-green-500 border-black rounded">
-    <input type="button" class="bg-yellow-500 border-black rounded">
-    <input type="button" class="bg-red-500 border-black rounded">
+            <label>COLOUR</label>
+            <input type="color" bind:value={brushColor}/>
 
-    <input type="range">
+            <label>SIZE</label>
+            <input type="number" bind:value={brushRadius}/>
+        </div>
+
+    </div>
 </main>

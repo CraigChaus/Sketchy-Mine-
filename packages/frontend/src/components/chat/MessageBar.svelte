@@ -16,13 +16,7 @@
     <TextInput instruction="Search by title..." bind:input styles="lg:inline" />
 
     <div class="ml-2 lg:inline mt-2 lg:mt-0">
-        <ActionButton
-            styles="search-button"
-            on:buttonClicked={onSendChatClicked}>Send Chat</ActionButton
-        >
-        <ActionButton
-            styles="search-button"
-            on:buttonClicked={onGuessWordClicked}>Guess Word</ActionButton
-        >
+        <ActionButton on:buttonClicked={onSendChatClicked}>DM</ActionButton>
+        <ActionButton on:buttonClicked={onGuessWordClicked}>GW</ActionButton>
     </div>
 </div>
