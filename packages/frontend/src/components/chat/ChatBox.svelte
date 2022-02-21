@@ -1,4 +1,5 @@
 <script>
+  import ScrollContainer from "../ScrollContainer.svelte";
   import ChatItem from "./ChatItem.svelte";
   /*
      Expected content:
@@ -13,7 +14,7 @@
   export let contentJSON = [];
 </script>
 
-<div class="border-4 max-h-96 overflow-y-auto flex flex-col flex-1">
+<ScrollContainer>
   {#if contentJSON !== "" || contentJSON !== undefined || contentJSON !== null}
     {#each contentJSON as element}
       <ChatItem
@@ -23,4 +24,4 @@
       />
     {/each}
   {/if}
-</div>
+</ScrollContainer>
