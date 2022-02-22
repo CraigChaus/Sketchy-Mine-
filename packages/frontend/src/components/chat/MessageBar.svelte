@@ -13,7 +13,10 @@
 
   const onSubmit = (e) => {
     e.preventDefault();
-    onSendChatClicked();
+
+    if (input) {
+      onSendChatClicked();
+    }
   };
 </script>
 
