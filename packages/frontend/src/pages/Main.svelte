@@ -1,8 +1,11 @@
 <script>
   import Canvas from "../Canvas/Canvas.svelte";
   import ChatBox from "../components/chat/ChatBox.svelte";
+  import GuessList from "../components/guess/GuessBox.svelte";
   import TeamList from "../components/team/TeamList.svelte";
-  let teamContentJSON = [
+  import MessageBar from "../components/chat/MessageBar.svelte";
+
+  let teams = [
     {
       teamname: "Team 1",
       isDrawing: false,
@@ -82,23 +85,50 @@
     },
   ];
 
-  let chatContentJSON = [
+  let chatMessages = [
     { username: "Bob", message: "Hello everyone!", type: 2 },
     { username: "Jack", message: "Good luck!", type: 1 },
     { username: "Alice", message: "Thank you! Same to y'all!", type: 2 },
     { username: "Mark", message: "Have fun!", type: 2 },
   ];
+
+  let chatInput;
+
+  const onClickChat = () => {
+    chatMessages = [
+      ...chatMessages,
+      {
+        username: "Bob",
+        message: chatInput,
+        type: 1,
+      },
+    ];
+    chatInput = "";
+  };
+
+  const onClickGuess = () => {
+    currentGuess = chatInput;
+    chatInput = "";
+  };
+
+  let currentGuess = null;
 </script>
 
-<div class="flex mb-4">
-  <div class="w-1/3 h-12">
-    <TeamList showResults={true} contentJSON={teamContentJSON} />
+<div class="flex my-8">
+  <div class="w-1/3 h-12 m-3">
+    <GuessList teamNumber={1} {currentGuess} />
+    <TeamList showResults={true} contentJSON={teams} />
   </div>
 
-  <div class="w-full h-full bg-gray-500">
+  <div class="w-full h-full">
     <Canvas />
+    <MessageBar
+      bind:input={chatInput}
+      on:guessWordClicked={onClickGuess}
+      on:sendChatClicked={onClickChat}
+    />
   </div>
-  <div class="w-1/3 h-full">
-    <ChatBox contentJSON={chatContentJSON} />
+  <div class="w-2/5 h-full mx-3">
+    <ChatBox messages={chatMessages} />
   </div>
 </div>

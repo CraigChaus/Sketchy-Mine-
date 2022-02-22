@@ -58,7 +58,7 @@
 
 <div class="w-full h-full flex justify-center">
   <div class="flex flex-col justify-center max-w-3xl flex-1">
-    <ChatBox contentJSON={chatMessages} />
+    <ChatBox messages={chatMessages} />
     <MessageBar
       bind:input
       on:guessWordClicked={onClickGuess}

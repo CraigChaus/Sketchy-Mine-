@@ -11,12 +11,12 @@
          }
      ]
      */
-  export let contentJSON = [];
+  export let messages = [];
 </script>
 
-<ScrollContainer>
-  {#if contentJSON !== "" || contentJSON !== undefined || contentJSON !== null}
-    {#each contentJSON as element}
+<ScrollContainer class="max-h-screen h-full">
+  {#if messages !== "" || messages !== undefined || messages !== null}
+    {#each messages as element}
       <ChatItem
         sender={element.username}
         message={element.message}
