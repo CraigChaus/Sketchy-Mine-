@@ -95,7 +95,7 @@
     <TeamList showResults={true} contentJSON={teamContentJSON} />
   </div>
 
-  <div class="w-full h-full h-full bg-gray-500">
+  <div class="w-full h-full bg-gray-500">
     <Canvas />
   </div>
   <div class="w-1/3 h-full">
