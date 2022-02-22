@@ -191,6 +191,10 @@ Create websocket for transferring canvas content between drawer and server
 
 Create a save of the canvas content for sending to users that connected later on
 
+##### US03 BI06
+
+Create the logic for the canvas
+
 #### US04 - As a player, I want to be able to submit my guess, so that I can get more emeralds.
 
 ##### US04 BI01
@@ -217,6 +221,10 @@ Create a progress bar to see where the team is currently at
 
 Multiply the gained emeralds when a new level is reached
 
+##### US04 Bl07
+
+Add the functionality to the progress bar
+
 #### US05 - As a player, I want a chat functionality, so I can communicate with my teammates.
 
 ##### US05 BI01
@@ -225,7 +233,7 @@ Create chat component
 
 ##### US05 BI02
 
-Add chat frontend functionality
+Connect frontend incoming chat to the backend
 
 ##### US05 BI03
 
@@ -234,6 +242,22 @@ Establish socket.io server
 ##### US05 BI04
 
 Add chat backend functionality
+
+##### US05 BI05
+
+Connect frontend outgoing chat to the backend
+
+##### US05 BI06
+
+Add team based chat scopes in the backend
+
+##### US05 BI07
+
+Add team list component
+
+##### US05 BI08
+
+Connect team listing component with backend
 
 ---
 
