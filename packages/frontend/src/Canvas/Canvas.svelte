@@ -1,12 +1,8 @@
 <script>
-    import { onMount, onDestroy, createEventDispatcher  } from "svelte";
-    const dispatch = createEventDispatcher();
-    import { LazyBrush } from "lazy-brush";
-    import { Catenary } from "catenary-curve";
-
+    import {onMount, onDestroy, createEventDispatcher} from "svelte";
+    import {LazyBrush} from "lazy-brush";
+    import {Catenary} from "catenary-curve";
     import ResizeObserver from "resize-observer-polyfill";
-
-    // import {drawImageProp} from "./drawingHelpers";
 
     export let loadTimeOffset = 5;
     export let lazyRadius = 12;
@@ -23,6 +19,7 @@
     export let immediateLoading = false;
     export let hideInterface = false;
 
+    const dispatch = createEventDispatcher();
 
     function midPointBtw(p1, p2) {
         return {
@@ -30,11 +27,6 @@
             y: p1.y + (p2.y - p1.y) / 2
         };
     }
-
-    const canvasStyle = {
-        display: "block",
-        position: "absolute"
-    };
 
     const canvasTypes = [
         {
@@ -75,9 +67,6 @@
     let canvasContainer = null;
     let canvasObserver = null;
 
-
-
-
     onMount(() => {
 
         Object.keys(canvas).forEach((key) => {
@@ -108,12 +97,12 @@
             const initX = window.innerWidth / 2;
             const initY = window.innerHeight / 2;
             lazy.update(
-                { x: initX - chainLength / 4, y: initY },
-                { both: true }
+                {x: initX - chainLength / 4, y: initY},
+                {both: true}
             );
             lazy.update(
-                { x: initX + chainLength / 4, y: initY },
-                { both: false }
+                {x: initX + chainLength / 4, y: initY},
+                {both: false}
             );
             mouseHasMoved = true;
             valuesChanged = true;
@@ -127,20 +116,14 @@
 
     });
 
-
-
-
     onDestroy(() => {
         canvasObserver.unobserve(canvasContainer)
     });
 
-
-
-
     let undo = () => {
         const lines = lines.slice(0, -1);
         clear();
-        simulateDrawingLines({ lines, immediate: true });
+        simulateDrawingLines({lines, immediate: true});
         triggerOnChange();
     };
 
@@ -158,7 +141,7 @@
             throw new Error("saveData needs to be of type string!");
         }
 
-        const { lines, width, height } = JSON.parse(saveData);
+        const {lines, width, height} = JSON.parse(saveData);
 
         if (!lines || typeof lines.push !== "function") {
             throw new Error("saveData.lines needs to be an array!");
@@ -190,15 +173,14 @@
         }
     };
 
-
-    let simulateDrawingLines = ({ lines, immediate }) => {
+    let simulateDrawingLines = ({lines, immediate}) => {
         // Simulate live-drawing of the loaded lines
         // TODO use a generator
         let curTime = 0;
         let timeoutGap = immediate ? 0 : loadTimeOffset;
 
         lines.forEach(line => {
-            let { points, brushColor, brushRadius } = line;
+            let {points, brushColor, brushRadius} = line;
 
             // Draw all at once if immediate flag is set, instead of using setTimeout
             if (immediate) {
@@ -211,7 +193,7 @@
 
                 // Save line with the drawn points
                 points = points;
-                saveLine({ brushColor, brushRadius });
+                saveLine({brushColor, brushRadius});
                 return;
             }
 
@@ -231,7 +213,7 @@
             window.setTimeout(() => {
                 // Save this line with its props instead of props
                 points = points;
-                saveLine({ brushColor, brushRadius });
+                saveLine({brushColor, brushRadius});
             }, curTime);
         });
     };
@@ -242,11 +224,11 @@
         // Start drawing
         isPressing = true;
 
-        const { x, y } = getPointerPos(e);
+        const {x, y} = getPointerPos(e);
 
         if (e.touches && e.touches.length > 0) {
             // on touch, set catenary position to touch pos
-            lazy.update({ x, y }, { both: true });
+            lazy.update({x, y}, {both: true});
         }
 
         // Ensure the initial down position gets added to our line
@@ -256,7 +238,7 @@
     let handleDrawMove = e => {
         e.preventDefault();
 
-        const { x, y } = getPointerPos(e);
+        const {x, y} = getPointerPos(e);
         handlePointerMove(x, y);
     };
 
@@ -276,7 +258,7 @@
         const saveData = getSaveData();
         for (const entry of entries) {
             console.log(entry)
-            const { width, height } = entry.contentRect;
+            const {width, height} = entry.contentRect;
             setCanvasSize(canvas.interface, width, height);
             setCanvasSize(canvas.drawing, width, height);
             setCanvasSize(canvas.temp, width, height);
@@ -284,7 +266,7 @@
 
             drawGrid(ctx.grid);
 
-            loop({ once: true });
+            loop({once: true});
         }
         loadSaveData(saveData, true);
     };
@@ -319,7 +301,7 @@
     let handlePointerMove = (x, y) => {
         if (disabled) return;
 
-        lazy.update({ x, y });
+        lazy.update({x, y});
         const isDisabled = !lazy.isEnabled();
 
         if (
@@ -346,7 +328,7 @@
         mouseHasMoved = true;
     };
 
-    let drawPoints = ({ points, brushColor, brushRadius }) => {
+    let drawPoints = ({points, brushColor, brushRadius}) => {
         ctx.temp.lineJoin = "round";
         ctx.temp.lineCap = "round";
         ctx.temp.strokeStyle = brushColor;
@@ -380,7 +362,7 @@
         ctx.temp.stroke();
     };
 
-    let saveLine = ({ brushColor, brushRadius } = {}) => {
+    let saveLine = ({brushColor, brushRadius} = {}) => {
         if (points.length < 2) return;
 
         // Save as new line
@@ -426,7 +408,7 @@
         );
     };
 
-    let loop = ({ once = false } = {}) => {
+    let loop = ({once = false} = {}) => {
         if (mouseHasMoved || valuesChanged) {
             const pointer = lazy.getPointerCoordinates();
             const brush = lazy.getBrushCoordinates();
@@ -513,18 +495,17 @@
         ctx.fill();
     };
 
-    export function clearDrawings(){
+    export function clearDrawings() {
         clear()
     }
 
-    export function undoDrawings(){
+    export function undoDrawings() {
         undo()
     }
 
-    export function get_image_data(){
+    export function get_image_data() {
         return prepareImageData()
     }
-
 
     function prepareImageData() {
         var newCanvas = document.createElement('canvas'),
@@ -535,19 +516,18 @@
         newCanvas.width = width;
         newCanvas.height = height;
 
-        [ctx.grid.canvas,ctx.drawing.canvas].forEach(function(n) {
+        [ctx.grid.canvas, ctx.drawing.canvas].forEach(function (n) {
             _ctx.beginPath();
             _ctx.drawImage(n, 0, 0, width, height);
         });
 
         return newCanvas.toDataURL();
-    };
-
+    }
 
 </script>
 
-<div class=" " style="height:{canvasHeight}px; width:{canvasWidth}px; background-color:{backgroundColor}"
-        bind:this={canvasContainer}>
+<div class="border-black" style="height:{canvasHeight}px; width:{canvasWidth}px; background-color:{backgroundColor}"
+     bind:this={canvasContainer}>
     {#each canvasTypes as {name, zIndex}}
         <canvas key={name}
                 style="display:block; position:absolute; z-index:{zIndex}"
