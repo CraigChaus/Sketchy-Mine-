@@ -7,21 +7,24 @@
     export let won = false;
     export let placementNr = -1;        //If guessed correctly, shows the place of the team
     export let isDrawingTeam = false;
+
   </script>
   
 <div class="flex-1 w-full h-full flex max-h-20">
     {#if isSelf}
     <div class="bg-blue-700 my-1 p-2 text-white flex-1">
         <div class="flex justify-between">
-            {#if showResults && won && !isDrawingTeam}
-                {#if placementNr === 1}
-                    <Icon data="{faCrown}" scale="1.5" style="color: gold"/>
-                {:else}
-                    <p class="font-bold text-yellow-300" style="font-style: italic">#{placementNr}</p>
+            <div style="width: 2rem;">
+                {#if showResults && won && !isDrawingTeam}
+                    {#if placementNr === 1}
+                        <Icon data="{faCrown}" scale="1.5" style="color: gold; display: block; margin-left: auto; margin-right: auto"/>
+                    {:else}
+                        <p class="font-bold text-yellow-300" style="font-style: italic">#{placementNr}</p>
                 {/if}
-            {:else if showResults && !won && !isDrawingTeam}
-                <Icon data="{faAngleDown}" scale="1.5" style="color: red"/>
-            {/if}
+                {:else if showResults && !won && !isDrawingTeam}
+                    <Icon data="{faAngleDown}" scale="1.5" style="color: red"/>
+                {/if}
+            </div>
             <p class="w-full"><slot/></p>
             {#if isDrawingTeam}
                 <Icon data="{faPaintbrush}" scale="1.5"/>
@@ -38,15 +41,17 @@
     {:else}
     <div class="bg-gray-600 my-1 p-2 text-white flex-1">
         <div class="flex justify-between">
-            {#if showResults && won && !isDrawingTeam}
-                {#if placementNr === 1}
-                    <Icon data="{faCrown}" scale="1.5" style="color: gold"/>
-                {:else}
-                    <p class="font-bold text-yellow-300" style="font-style: italic">#{placementNr}</p>
+            <div style="width: 2rem;">
+                {#if showResults && won && !isDrawingTeam}
+                    {#if placementNr === 1}
+                        <Icon data="{faCrown}" scale="1.5" style="color: gold; display: block; margin-left: auto; margin-right: auto"/>
+                    {:else}
+                        <p class="font-bold text-yellow-300" style="font-style: italic">#{placementNr}</p>
                 {/if}
-            {:else if showResults && !won && !isDrawingTeam}
-                <Icon data="{faAngleDown}" scale="1.5" style="color: red"/>
-            {/if}
+                {:else if showResults && !won && !isDrawingTeam}
+                    <Icon data="{faAngleDown}" scale="1.5" style="color: red; display: block; margin-left: auto; margin-right: auto"/>
+                {/if}
+            </div>
             <p class="w-full"><slot/></p>
             {#if isDrawingTeam}
                 <Icon data="{faPaintbrush}" scale="1.5"/>
