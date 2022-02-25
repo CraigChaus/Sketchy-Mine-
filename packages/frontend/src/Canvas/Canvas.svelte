@@ -3,6 +3,7 @@
     import {LazyBrush} from "lazy-brush";
     import {Catenary} from "catenary-curve";
     import ResizeObserver from "resize-observer-polyfill";
+    import socket from "../socket/index";
 
     export let loadTimeOffset = 5;
     export let lazyRadius = 12;
@@ -173,7 +174,9 @@
         }
     };
 
-    let simulateDrawingLines = ({lines, immediate}) => {
+    let simulateDrawingLines = (payload) => {
+        let lines = payload['lines'];
+        let immediate = payload['immediate'];
         // Simulate live-drawing of the loaded lines
         // TODO use a generator
         let curTime = 0;
@@ -216,7 +219,10 @@
                 saveLine({brushColor, brushRadius});
             }, curTime);
         });
+
+        socket.emit('canvas:line', { lines: lines, immediate: immediate });
     };
+    socket.on('canvas:line', simulateDrawingLines);
 
     let handleDrawStart = e => {
         e.preventDefault();
@@ -328,7 +334,12 @@
         mouseHasMoved = true;
     };
 
-    let drawPoints = ({points, brushColor, brushRadius}) => {
+    let drawPoints = (payload) => {
+        let points = payload['points'];
+        let brushColor = payload['brushColor'];
+        let brushRadius = payload['brushRadius'];
+
+        console.log("in draw points");
         ctx.temp.lineJoin = "round";
         ctx.temp.lineCap = "round";
         ctx.temp.strokeStyle = brushColor;
@@ -360,7 +371,11 @@
         // the bezier control point
         ctx.temp.lineTo(p1.x, p1.y);
         ctx.temp.stroke();
+        socket.emit('canvas:midpoint', midPoint);
+        socket.emit('canvas:points', { points: points, brushColor: brushColor, brushRadius: brushRadius });
     };
+    socket.on('canvas:points', drawPoints);
+
 
     let saveLine = ({brushColor, brushRadius} = {}) => {
         if (points.length < 2) return;
@@ -385,6 +400,7 @@
         ctx.temp.clearRect(0, 0, width, height);
 
         triggerOnChange();
+        socket.emit('canvas:saveLine', {})
     };
 
     let triggerOnChange = (event) => {
