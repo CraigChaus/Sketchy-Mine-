@@ -48,7 +48,7 @@ const chatHandler = (io, socket) => {
       io.to(user.session).emit('message', messageFormat(name, `${user.username} has left the chat`));
     }
 
-    // Send users and session info
+    // Send users and session info again when user disconnects
     io.to(user.session).emit('sessionUsers', {
       room: user.session,
       users: getSessionUsers(user.session),
