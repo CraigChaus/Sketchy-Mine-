@@ -1,5 +1,5 @@
 // Get current time using moment library
-const moment = require('moment');
+import moment from 'moment';
 
 function messageFormat(username, text) {
   return {
@@ -9,4 +9,4 @@ function messageFormat(username, text) {
   };
 }
 
-module.exports = messageFormat;
+export default messageFormat;
