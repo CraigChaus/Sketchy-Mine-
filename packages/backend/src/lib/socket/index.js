@@ -5,7 +5,11 @@ const debug = require('debug')('socket');
 
 const setup = (server) => {
   debug('Initializing Socket.IO server ');
-  const io = new Server(server, { /* options */ });
+  const io = new Server(server, {
+    cors: {
+      origin: '*',
+    }
+  });
 
   const onConnection = (socket) => {
     debug('New socket connection');
