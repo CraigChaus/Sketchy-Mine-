@@ -118,7 +118,7 @@
     });
 
     onDestroy(() => {
-        canvasObserver.unobserve(canvasContainer)
+        canvasObserver.unobserve(canvasContainer);
     });
 
     let undo = () => {
@@ -132,17 +132,19 @@
         return JSON.stringify({
             lines: lines,
             width: canvasWidth,
-            height: canvasHeight
+            height: canvasHeight,
         });
     };
 
-    let loadSaveData = (saveData, immediate = immediateLoading) => {
-        console.log(saveData)
+    let loadSaveData = (payLoad) => {
+        let saveData = payLoad['saveData'];
+        let immediate = immediateLoading;
+        console.log(saveData);
         if (typeof saveData !== "string") {
             throw new Error("saveData needs to be of type string!");
         }
 
-        const {lines, width, height} = JSON.parse(saveData);
+        const {lines, width, height}= JSON.parse(saveData);
 
         if (!lines || typeof lines.push !== "function") {
             throw new Error("saveData.lines needs to be an array!");
@@ -153,7 +155,7 @@
         if (width === canvasWidth && height === canvasHeight) {
             simulateDrawingLines({
                 lines,
-                immediate
+                immediate,
             });
         } else {
             const scaleX = canvasWidth / width;
@@ -165,14 +167,17 @@
                     ...line,
                     points: line.points.map(p => ({
                         x: p.x * scaleX,
-                        y: p.y * scaleY
+                        y: p.y * scaleY,
                     })),
-                    brushRadius: line.brushRadius * scaleAvg
+                    brushRadius: line.brushRadius * scaleAvg,
                 })),
-                immediate
+                immediate,
             });
         }
+        //Load the saved data/ lines
+        socket.emit('canvas:line', { saveData: saveData});
     };
+    socket.on('canvas:Line', loadSaveData);
 
     let simulateDrawingLines = (payload) => {
         let lines = payload['lines'];
@@ -207,7 +212,7 @@
                     drawPoints({
                         points: points.slice(0, i + 1),
                         brushColor,
-                        brushRadius
+                        brushRadius,
                     });
                 }, curTime);
             }
@@ -219,10 +224,7 @@
                 saveLine({brushColor, brushRadius});
             }, curTime);
         });
-
-        socket.emit('canvas:line', { lines: lines, immediate: immediate });
     };
-    socket.on('canvas:line', simulateDrawingLines);
 
     let handleDrawStart = e => {
         e.preventDefault();
@@ -371,11 +373,12 @@
         // the bezier control point
         ctx.temp.lineTo(p1.x, p1.y);
         ctx.temp.stroke();
-        socket.emit('canvas:midpoint', midPoint);
+
+        //Draw the points
         socket.emit('canvas:points', { points: points, brushColor: brushColor, brushRadius: brushRadius });
     };
+    //Socket: For drawing the points, drawing on the canvas
     socket.on('canvas:points', drawPoints);
-
 
     let saveLine = ({brushColor, brushRadius} = {}) => {
         if (points.length < 2) return;
@@ -384,9 +387,12 @@
         lines.push({
             points: [...points],
             brushColor: brushColor || brushColor,
-            brushRadius: brushRadius || brushRadius
+            brushRadius: brushRadius || brushRadius,
         });
 
+        //Save the lines drawn
+        socket.emit('canvas:lineData',{ points: points, brushColor: brushColor,brushRadius: brushRadius});
+        socket.on('canvas:lineData', lines.push);
         // Reset points array
         points.length = 0;
 
@@ -398,9 +404,7 @@
 
         // Clear the temporary line-drawing canvas
         ctx.temp.clearRect(0, 0, width, height);
-
         triggerOnChange();
-        socket.emit('canvas:saveLine', {})
     };
 
     let triggerOnChange = (event) => {
@@ -414,15 +418,16 @@
             0,
             0,
             canvas.drawing.width,
-            canvas.drawing.height
+            canvas.drawing.height,
         );
         ctx.temp.clearRect(
             0,
             0,
             canvas.temp.width,
-            canvas.temp.height
+            canvas.temp.height,
         );
     };
+
 
     let loop = ({once = false} = {}) => {
         if (mouseHasMoved || valuesChanged) {
@@ -511,34 +516,37 @@
         ctx.fill();
     };
 
-    export function clearDrawings() {
-        clear()
-    }
+        export function clearDrawings() {
+            clear();
+        }
 
-    export function undoDrawings() {
-        undo()
-    }
+        export function undoDrawings() {
+            undo();
+        }
 
-    export function get_image_data() {
-        return prepareImageData()
-    }
+        export function get_image_data() {
+            return prepareImageData()
+        }
 
-    function prepareImageData() {
-        var newCanvas = document.createElement('canvas'),
-            _ctx = newCanvas.getContext('2d'),
-            width = canvasWidth,
-            height = canvasHeight;
+        function prepareImageData() {
+            var newCanvas = document.createElement('canvas'),
+                _ctx = newCanvas.getContext('2d'),
+                width = canvasWidth,
+                height = canvasHeight;
 
-        newCanvas.width = width;
-        newCanvas.height = height;
+            newCanvas.width = width;
+            newCanvas.height = height;
 
-        [ctx.grid.canvas, ctx.drawing.canvas].forEach(function (n) {
-            _ctx.beginPath();
-            _ctx.drawImage(n, 0, 0, width, height);
-        });
+            [ctx.grid.canvas, ctx.drawing.canvas].forEach(function (n) {
+                _ctx.beginPath();
+                _ctx.drawImage(n, 0, 0, width, height);
+                console.log("Sending "+ n +" : "+ width +" : " + height);
+                socket.emit('canvas:prepImage', {n: n, width: width, height: height});
+            });
+            return newCanvas.toDataURL();
+        }
+        socket.on('canvas:prepImage', prepareImageData);
 
-        return newCanvas.toDataURL();
-    }
 
 </script>
 
