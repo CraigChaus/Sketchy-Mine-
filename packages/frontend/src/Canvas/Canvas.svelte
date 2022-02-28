@@ -331,6 +331,7 @@
                 brushColor: brushColor,
                 brushRadius: brushRadius
             });
+            socket.emit('canvas:points', { points: points, brushColor: brushColor, brushRadius: brushRadius });
         }
 
         mouseHasMoved = true;
@@ -346,12 +347,14 @@
         ctx.temp.lineCap = "round";
         ctx.temp.strokeStyle = brushColor;
 
-        ctx.temp.clearRect(
-            0,
-            0,
-            ctx.temp.canvas.width,
-            ctx.temp.canvas.height
-        );
+        //todo understand what this does
+        // ctx.temp.clearRect(
+        //     0,
+        //     0,
+        //     ctx.temp.canvas.width,
+        //     ctx.temp.canvas.height
+        // );
+
         ctx.temp.lineWidth = brushRadius * 2;
 
         let p1 = points[0];
@@ -375,7 +378,7 @@
         ctx.temp.stroke();
 
         //Draw the points
-        socket.emit('canvas:points', { points: points, brushColor: brushColor, brushRadius: brushRadius });
+        // socket.emit('canvas:points', { points: points, brushColor: brushColor, brushRadius: brushRadius });
     };
     //Socket: For drawing the points, drawing on the canvas
     socket.on('canvas:points', drawPoints);
@@ -391,11 +394,8 @@
         });
 
         //Save the lines drawn
-        socket.emit('canvas:lineData',{ points: points, brushColor: brushColor,brushRadius: brushRadius});
-        socket.on('canvas:lineData', lines.push);
         // Reset points array
         points.length = 0;
-
         const width = canvas.temp.width;
         const height = canvas.temp.height;
 
@@ -404,8 +404,11 @@
 
         // Clear the temporary line-drawing canvas
         ctx.temp.clearRect(0, 0, width, height);
+
         triggerOnChange();
+        socket.emit('canvas:lineData',{ points: points, brushColor: brushColor,brushRadius: brushRadius});
     };
+    socket.on('canvas:saveLine', saveLine);
 
     let triggerOnChange = (event) => {
         dispatch('change', event);
