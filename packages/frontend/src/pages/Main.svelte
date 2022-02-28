@@ -8,10 +8,6 @@
     let brushRadius = 8;
     let SDraw = null;
 
-    function clear() {
-        SDraw.clearDrawings();
-    }
-
 </script>
 <PageLayout>
     <div class="p-4">
@@ -43,6 +39,7 @@
                         <Canvas bind:this={SDraw} {brushColor} {brushRadius} canvasWidth="640"/>
                     </div>
                 </div>
+
                 <div class="flex-row justify-center">
                     <Toolbox bind:SDraw={SDraw} bind:brushColor={brushColor} bind:brushRadius={brushRadius}/>
                 </div>
