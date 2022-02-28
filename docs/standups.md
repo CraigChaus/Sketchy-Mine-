@@ -151,3 +151,39 @@
 - Vedat, our SCRUM master is absent. Peter is being the SCRUM master for this meeting.
 - Created a new BackLog item (US05-BI07)
 - Assigned a new backlog item to all present members
+
+## SCRUM Standup (Entire team) - 28.02.2022
+
+**Peter** – Super Scrum Master
+
+- People who were not present:
+  - Marko: Did not give a reason in advance to the team only to one team member today at 8am
+  - Lukman: Late but is comming
+
+- Vedat
+  - Needed client side, so did work of Lukman
+  - Needs help, work not yet done
+
+- Mira
+  - Progress made, not yet done, will be ready maybe today
+  - Would like some help
+
+- Daria
+  - Didn't get new task, thus didn't do any task due to real life issues 
+
+- Vince
+  - Yesterday got new task
+  - Progress made
+
+- Anna
+  - Got no tasks due to COVID, thus no progress made by her
+
+- Craig
+  - Works with Melissa
+  - Went well but encountered a glitch, need help (with canvas)
+
+- Melissa
+  - Encountered merge issues, had to modify design
+  - Need to discuss with team
+  - Glitches found, need to discuss with team together
+  - Task is basically dune, but is glitchy
