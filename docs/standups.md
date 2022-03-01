@@ -187,3 +187,16 @@
   - Need to discuss with team
   - Glitches found, need to discuss with team together
   - Task is basically dune, but is glitchy
+
+## SCRUM Standup (Group 2) - 01.03.2022
+
+- Was a quick SCRUM meeting to assign new task to those who were done with their tasks
+- Present: Filippos, Vedat (SCRUM master), Peter
+- Goal:
+  - Assign new items to Peter and Filippos
+  - Help Vedat with his code
+- Peter: Got task `US04-BI03`
+- Filippos: Got task `US04–BI08`
+- Other
+  - Had a long discussion on what to do with Marko's tasks as we have no idea on the progress of his 2 tasks (other than some work being up on GitLan) and one task is vital for the demo for the publisher
+  - No decision has been made: Hoping Marko will do his task in time and we won't take over in case he has made progress
