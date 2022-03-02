@@ -10,7 +10,7 @@ const canvasHandler = (io, socket) => {
 
   const clearCanvas = () => {
     socket.broadcast.emit(CANVAS_EVENTS.CLEAR);
-  }
+  };
 
   socket.on(CANVAS_EVENTS.POINTS, drawPoints);
   socket.on(CANVAS_EVENTS.CLEAR, clearCanvas);
