@@ -1,7 +1,6 @@
 <script>
     import {onMount, onDestroy, createEventDispatcher} from "svelte";
     import {LazyBrush} from "lazy-brush";
-    import {Catenary} from "catenary-curve";
     import ResizeObserver from "resize-observer-polyfill";
     import socket from "../socket/index";
 
@@ -51,8 +50,6 @@
 
     let canvas = {};
     let ctx = {};
-
-    let catenary = new Catenary();
 
     let points = [];
     let lines = [];
@@ -328,7 +325,7 @@
                 brushColor: brushColor,
                 brushRadius: brushRadius
             });
-            socket.emit('canvas:points', { points: points, brushColor: brushColor, brushRadius: brushRadius });
+            socket.emit('canvas:points', { points, brushColor, brushRadius });
         }
 
         mouseHasMoved = true;
