@@ -174,10 +174,7 @@
                 immediate,
             });
         }
-        //Load the saved data/ lines
-        socket.emit('canvas:line', { saveData: saveData});
     };
-    socket.on('canvas:Line', loadSaveData);
 
     let simulateDrawingLines = (payload) => {
         let lines = payload['lines'];
@@ -377,8 +374,6 @@
         ctx.temp.lineTo(p1.x, p1.y);
         ctx.temp.stroke();
 
-        //Draw the points
-        // socket.emit('canvas:points', { points: points, brushColor: brushColor, brushRadius: brushRadius });
     };
     //Socket: For drawing the points, drawing on the canvas
     socket.on('canvas:points', drawPoints);
@@ -406,9 +401,7 @@
         ctx.temp.clearRect(0, 0, width, height);
 
         triggerOnChange();
-        socket.emit('canvas:lineData',{ points: points, brushColor: brushColor,brushRadius: brushRadius});
     };
-    socket.on('canvas:saveLine', saveLine);
 
     let triggerOnChange = (event) => {
         dispatch('change', event);
@@ -544,11 +537,9 @@
                 _ctx.beginPath();
                 _ctx.drawImage(n, 0, 0, width, height);
                 console.log("Sending "+ n +" : "+ width +" : " + height);
-                socket.emit('canvas:prepImage', {n: n, width: width, height: height});
             });
             return newCanvas.toDataURL();
         }
-        socket.on('canvas:prepImage', prepareImageData);
 
 
 </script>
