@@ -5,8 +5,10 @@ const CHAT_EVENTS = {
 const chatHandler = (io, socket) => {
   const sendChat = (payload) => {
     console.log(`Received: ${payload}`);
-    io.emit(CHAT_EVENTS.SEND);
+    socket.broadcast.emit(CHAT_EVENTS.SEND, payload);
   };
+
+  // io.emit(CHAT_EVENTS.SEND, "Testing message.")
 
   socket.on(CHAT_EVENTS.SEND, sendChat);
 };

@@ -7,7 +7,12 @@ const setup = (server) => {
   debug('Initializing Socket.IO server ');
   const io = new Server(server, {
     cors: {
-      origin: '*',
+      origin: [
+        'http://localhost:8080',
+        'https://sketchymine.philipposslicher.tech',
+        /.+--sketchymine\.netlify\.app$/,
+      ],
+      methods: ['GET', 'POST'],
     }
   });
 

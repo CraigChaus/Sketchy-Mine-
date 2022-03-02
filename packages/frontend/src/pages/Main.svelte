@@ -11,15 +11,29 @@
 
   console.log("Before connect")
   socket.on("connect", () => {
+
     // either with send()
-    console.log("hello.")
+    // console.log("hello.")
 
     // or with emit() and custom event names
-    socket.emit("chat:send", "Hello!", { "mr": "john" }, Uint8Array.from([1, 2, 3, 4]));
+    // socket.emit("chat:send", "Hello!", { "mr": "john" }, Uint8Array.from([1, 2, 3, 4]));
   });
 
+
+  // Receiving messages
   socket.on("chat:send", data => {
+    if(!data) {
+      return;
+    }
     console.log(data);
+    chatMessages = [
+      ...chatMessages,
+      {
+        username: data.username,
+        message: data.message,
+        type: 2,
+      }
+    ];
   });
 
   let currentColourIndex = 0;
@@ -135,15 +149,18 @@
   ];
 
   let chatInput;
+  let userName = "Mare";
 
+  // Sending messages
   const onClickChat = () => {
+    socket.emit("chat:send", {message: chatInput, username: userName})
     chatMessages = [
       ...chatMessages,
       {
-        username: "Bob",
+        username: userName,
         message: chatInput,
         type: 1,
-      },
+      }
     ];
     chatInput = "";
   };
@@ -155,6 +172,7 @@
 
   let currentGuess = null;
 </script>
+
 <ProgressBar teams="{teams}">
 
 </ProgressBar>
