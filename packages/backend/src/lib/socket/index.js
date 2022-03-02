@@ -13,7 +13,7 @@ const setup = (server) => {
         /.+--sketchymine\.netlify\.app$/,
       ],
       methods: ['GET', 'POST'],
-    }
+    },
   });
 
   const onConnection = (socket) => {
