@@ -10,7 +10,7 @@ const setup = (server) => {
     cors: {
       origin: [
         'http://localhost:8080',
-        'sketchymine.philipposslicher.tech',
+        'https://sketchymine.philipposslicher.tech',
         /.+--sketchymine\.netlify\.app$/,
       ],
       methods: ['GET', 'POST'],
