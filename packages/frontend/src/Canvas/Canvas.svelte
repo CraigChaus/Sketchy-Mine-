@@ -339,7 +339,6 @@
         let brushColor = payload['brushColor'];
         let brushRadius = payload['brushRadius'];
 
-        console.log("in draw points");
         ctx.temp.lineJoin = "round";
         ctx.temp.lineCap = "round";
         ctx.temp.strokeStyle = brushColor;
