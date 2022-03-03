@@ -8,7 +8,7 @@
 
   export let teamGuesses = [
     { value: "Monkey", frequency: 5 },
-    { value: "Car", frequency: 7 },
+    { value: "Car", frequency: 11 },
     { value: "Horse", frequency: 2 },
   ];
 
