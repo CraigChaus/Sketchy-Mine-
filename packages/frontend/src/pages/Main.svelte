@@ -7,18 +7,29 @@
   import Toolbox from "../Canvas/Toolbox.svelte";
   import ProgressBar from "../components/team/ProgressBar.svelte";
   import socket from "../socket/index";
+  import { onMount } from "svelte";
+
+  let username;
+
+  const session = "main";
+
+  onMount(() => {
+    username = "User" + Math.round(Math.random() * 10000);
+    socket.emit("joinSession", { username, session });
+  });
 
   // Receiving messages
-  socket.on("chat:send", (data) => {
+  socket.on("message", (data) => {
     if (!data) {
       return;
     }
+
     chatMessages = [
       ...chatMessages,
       {
         username: data.username,
-        message: data.message,
-        type: 2,
+        message: data.text,
+        type: data.type,
       },
     ];
   });
@@ -134,7 +145,6 @@
   let chatMessages = [];
 
   let chatInput;
-  let userName = "User";
 
   const onClickGuess = () => {
     currentGuess = chatInput;
@@ -143,15 +153,15 @@
 
   // Sending messages
   const onClickChat = () => {
-    socket.emit("chat:send", { message: chatInput, username: userName });
-    chatMessages = [
-      ...chatMessages,
-      {
-        username: userName,
-        message: chatInput,
-        type: 1,
-      },
-    ];
+    socket.emit("chatMessage", chatInput);
+    // chatMessages = [
+    //   ...chatMessages,
+    //   {
+    //     username: username,
+    //     message: chatInput,
+    //     type: 1,
+    //   },
+    // ];
     chatInput = "";
   };
 
