@@ -17,10 +17,12 @@
   on:click={buttonClicked}
   class="disabled:brightness-105 disabled:border-green-400 border-2 transition-all {(frequency / teamSize * 100) > 50 ? "bg-green-400" : "bg-gray-200" }  duration-200 p-2 w-full rounded-lg hover:brightness-95"
 >
-  <p>
+  <div class="flex justify-center flex-row">
     {#if (frequency / teamSize * 100) > 50}
-      <Icon data="{faPaperPlane}"/>
+      <div class="flex-initial mr-1"><Icon data="{faPaperPlane}"/></div>
     {/if}
-    <slot /> <span class="font-medium">{value}</span> - {frequency}/{teamSize}
-  </p>
+    <div class="flex-initial mr-1"><slot /></div>
+    <div class="flex-initial mr-1 font-medium truncate">{value}</div>
+    <div class="flex-initial mr-1 whitespace-nowrap"> - {frequency}/{teamSize}</div>
+  </div>
 </button>
