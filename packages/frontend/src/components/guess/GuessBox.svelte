@@ -12,13 +12,13 @@
     { value: "Horse", frequency: 2 },
   ];
 
-  export function sortGuesses(){
+  function sortGuesses(){
     teamGuesses.sort((a, b) => {
       return b.frequency - a.frequency;
     });
   }
  
-  sortGuesses();
+  $: teamGuesses, sortGuesses();
 
   const guess = (valueEvent) => {
     const guessedValue = valueEvent.detail;
