@@ -5,6 +5,7 @@
     import TeamList from "../components/team/TeamList.svelte";
     import MessageBar from "../components/chat/MessageBar.svelte";
     import Toolbox from "../Canvas/Toolbox.svelte";
+    import {onMount} from "svelte";
 
     let teams = [
         {
@@ -121,6 +122,40 @@
     function clear() {
         SDraw.clearDrawings();
     }
+    
+    async function getAllowDraw(){
+        return decryptedJWT.isDrawer;
+    }
+
+    let decryptedJWT = {
+        username: "Bob",
+        uid: "487asdn38asdjk3",
+        isDrawer: false,
+    };
+
+    onMount( () =>{
+        randomizeDrawer();
+        promise = getAllowDraw();
+
+    });
+    let randomizeDrawer = () => {
+        if (Math.random() < 0.5){
+            decryptedJWT.isDrawer = true;
+        }else {
+            decryptedJWT.isDrawer = false;
+        }
+        console.log(decryptedJWT.isDrawer);
+
+    }
+    let becomeDrawer = () =>{
+        decryptedJWT.isDrawer = true;
+        promise = getAllowDraw();
+    }
+    let becomeGuesser = () =>{
+        decryptedJWT.isDrawer = false;
+        promise = getAllowDraw();
+    }
+    let promise = getAllowDraw();
 </script>
 
 <div class="flex my-8">
@@ -130,15 +165,22 @@
     </div>
 
     <div class="w-full h-full">
-        <Canvas bind:this={SDraw} {brushColor} {brushRadius} canvasWidth="640"/>
+        <Canvas decryptedJWT={decryptedJWT} bind:this={SDraw} {brushColor} {brushRadius} canvasWidth="640"/>
         <div class="flex-row justify-center">
-            <Toolbox bind:SDraw={SDraw} bind:brushColor={brushColor} bind:brushRadius={brushRadius}/>
+            {#await promise}
+            {:then allow}
+            {#if allow}
+                <Toolbox bind:SDraw={SDraw} bind:brushColor={brushColor} bind:brushRadius={brushRadius}/>
+            {/if}
+            {/await}
         </div>
         <MessageBar
                 bind:input={chatInput}
                 on:guessWordClicked={onClickGuess}
                 on:sendChatClicked={onClickChat}
         />
+        <button on:click={decryptedJWT.isDrawer=becomeDrawer} class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">become drawer</button>
+        <button on:click={decryptedJWT.isDrawer=becomeGuesser} class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded">become guesser</button>
     </div>
     <div class="w-2/5 h-full mx-3">
         <ChatBox messages={chatMessages}/>

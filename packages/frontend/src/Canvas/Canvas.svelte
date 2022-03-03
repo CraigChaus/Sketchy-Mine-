@@ -221,39 +221,47 @@
     };
 
     let handleDrawStart = e => {
-        e.preventDefault();
+        if (decryptedJWT.isDrawer) {
+            e.preventDefault();
 
-        // Start drawing
-        isPressing = true;
+            // Start drawing
+            isPressing = true;
 
-        const {x, y} = getPointerPos(e);
+            const {x, y} = getPointerPos(e);
 
-        if (e.touches && e.touches.length > 0) {
-            // on touch, set catenary position to touch pos
-            lazy.update({x, y}, {both: true});
+            if (e.touches && e.touches.length > 0) {
+                // on touch, set catenary position to touch pos
+                lazy.update({x, y}, {both: true});
+            }
+
+            // Ensure the initial down position gets added to our line
+            handlePointerMove(x, y);
         }
-
-        // Ensure the initial down position gets added to our line
-        handlePointerMove(x, y);
     };
 
     let handleDrawMove = e => {
-        e.preventDefault();
+        if (decryptedJWT.isDrawer) {
 
-        const {x, y} = getPointerPos(e);
-        handlePointerMove(x, y);
+
+            e.preventDefault();
+
+            const {x, y} = getPointerPos(e);
+            handlePointerMove(x, y);
+        }
     };
 
     let handleDrawEnd = e => {
-        e.preventDefault();
+        if (decryptedJWT.isDrawer) {
+            e.preventDefault();
 
-        // Draw to this end pos
-        handleDrawMove(e);
+            // Draw to this end pos
+            handleDrawMove(e);
 
-        // Stop drawing & save the drawn line
-        isDrawing = false;
-        isPressing = false;
-        saveLine();
+            // Stop drawing & save the drawn line
+            isDrawing = false;
+            isPressing = false;
+            saveLine();
+        }
     };
 
     let handleCanvasResize = (entries, observer) => {
@@ -536,6 +544,8 @@
             });
             return newCanvas.toDataURL();
         }
+
+        export let decryptedJWT;
 
 
 </script>
