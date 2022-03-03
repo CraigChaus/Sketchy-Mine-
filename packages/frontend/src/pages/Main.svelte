@@ -174,13 +174,13 @@
 
 <ProgressBar {teams} />
 
-<div class="flex my-8">
-  <div class="w-1/3 h-12 m-3">
+<div class="flex">
+  <div class="w-1/4 h-12">
     <GuessList teamNumber={1} {currentGuess} />
     <TeamList showResults={true} contentJSON={teams} />
   </div>
 
-  <div class="w-full h-full">
+  <div class="w-2/4 h-full">
     <Canvas bind:this={SDraw} {brushColor} {brushRadius} canvasWidth="640" />
     <div class="flex-row justify-center">
       <Toolbox bind:SDraw bind:brushColor bind:brushRadius />
@@ -191,7 +191,7 @@
       on:sendChatClicked={onClickChat}
     />
   </div>
-  <div class="w-2/5 h-full mx-3">
+  <div class="w-1/4 h-full mx-3">
     <ChatBox messages={chatMessages} />
   </div>
 </div>
