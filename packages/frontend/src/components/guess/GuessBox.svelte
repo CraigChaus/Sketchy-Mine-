@@ -7,10 +7,18 @@
   export let currentGuess = null;
 
   export let teamGuesses = [
-    { value: "Apple", frequency: 13 },
-    { value: "aple", frequency: 2 },
-    { value: "Banana", frequency: 3 },
+    { value: "Monkey", frequency: 5 },
+    { value: "Car", frequency: 7 },
+    { value: "Horse", frequency: 2 },
   ];
+
+  export function sortGuesses(){
+    teamGuesses.sort((a, b) => {
+      return b.frequency - a.frequency;
+    });
+  }
+ 
+  sortGuesses();
 
   const guess = (valueEvent) => {
     const guessedValue = valueEvent.detail;
