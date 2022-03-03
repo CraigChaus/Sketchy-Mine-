@@ -1,41 +1,59 @@
 <script>
-  import ChatBox from "../components/chat/ChatBox.svelte";
-  import MessageBar from "../components/chat/MessageBar.svelte";
-  import { io } from "socket.io-client";
+    import ChatBox from "../components/chat/ChatBox.svelte";
+    import MessageBar from "../components/chat/MessageBar.svelte";
 
-  let input;
-  const socket = io("ws://localhost:3000");
+    let input;
 
-  console.log("Before connect")
-  socket.on("connect", () => {
-    // either with send()
-    console.log("hello.")
+    const onClickChat = () => {
+        // alert("Chat button: " + input);
+        chatMessages = [
+            ...chatMessages,
+            {
+                username: "Bob",
+                message: input,
+                type: 1,
+            },
+        ];
+        input = "";
+    };
 
-    // or with emit() and custom event names
-    // socket.emit("salutations", "Hello!", { "mr": "john" }, Uint8Array.from([1, 2, 3, 4]));
-  });
+    const onClickGuess = () => {
+        // alert("Guess button: " + input);
+        input = "";
+    };
 
-  const onClickChat = () => {
-    // alert("Chat button: " + input);
-    chatMessages = [
-      ...chatMessages,
-      {
-        username: "Bob",
-        message: input,
-        type: 2,
-      },
+    let chatMessages = [
+        {
+            username: "Bob",
+            message: "Hello everyone!",
+            type: 1,
+        },
+        {
+            username: "Alice",
+            message: "Let's do this :)",
+            type: 2,
+        },
+        {
+            username: "SYSTEM",
+            message: "Game is starting...",
+            type: 3,
+        },
+        {
+            username: "Bob",
+            message: "Hello everyone!",
+            type: 1,
+        },
+        {
+            username: "Alice",
+            message: "Let's do this :)",
+            type: 2,
+        },
+        {
+            username: "Alice",
+            message: "Let's do this :)asgasfgfgadfgdfgdfgsdfgsfdgsfdgsdfg",
+            type: 2,
+        },
     ];
-    input = "";
-  };
-
-  const onClickGuess = () => {
-    // alert("Guess button: " + input);
-    input = "";
-  };
-
-  let chatMessages = [  ];
-
-
 </script>
 
 <div class="w-full h-full flex justify-center">

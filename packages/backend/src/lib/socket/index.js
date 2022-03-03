@@ -1,5 +1,6 @@
 import { Server } from 'socket.io';
 import chatHandler from './handlers/chatHandler';
+import canvasHandler from './handlers/canvasHandler';
 
 const debug = require('debug')('socket');
 
@@ -19,6 +20,7 @@ const setup = (server) => {
   const onConnection = (socket) => {
     debug('New socket connection');
     chatHandler(io, socket);
+    canvasHandler(io, socket);
   };
 
   io.on('connection', onConnection);
