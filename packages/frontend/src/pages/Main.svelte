@@ -1,5 +1,4 @@
 <script>
-  import { io } from "socket.io-client";
   import Canvas from "../Canvas/Canvas.svelte";
   import ChatBox from "../components/chat/ChatBox.svelte";
   import GuessList from "../components/guess/GuessBox.svelte";
@@ -14,7 +13,6 @@
     if (!data) {
       return;
     }
-    console.log(data);
     chatMessages = [
       ...chatMessages,
       {
@@ -136,7 +134,7 @@
   let chatMessages = [];
 
   let chatInput;
-  let userName = "Mare";
+  let userName = "User";
 
   const onClickGuess = () => {
     currentGuess = chatInput;
@@ -162,10 +160,6 @@
   let brushColor = "#444";
   let brushRadius = 8;
   let SDraw = null;
-
-  function clear() {
-    SDraw.clearDrawings();
-  }
 </script>
 
 <ProgressBar {teams} />
