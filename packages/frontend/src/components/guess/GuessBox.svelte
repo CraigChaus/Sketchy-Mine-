@@ -1,34 +1,23 @@
 <script>
   import ScrollContainer from "../ScrollContainer.svelte";
-import GuessOption from "./GuessOption.svelte";
+  import GuessOption from "./GuessOption.svelte";
 
   export let teamNumber = 0;
   export let teamSize = 20;
   export let currentGuess = null;
 
   export let teamGuesses = [
-    { value: "guessWordClickedguessWordClickedguessWordClickedguessWordClickedguessWordClickedguessWordClickedguessWordClickedguessWordClicked", frequency: 5 },
     { value: "Car", frequency: 11 },
-    { value: "Horse", frequency: 2 },
-    { value: "House", frequency: 6 },
-    { value: "House", frequency: 6 },
-    { value: "House", frequency: 6 },
-    { value: "House", frequency: 6 },
-    { value: "House", frequency: 6 },
-    { value: "House", frequency: 6 },
-    { value: "House", frequency: 6 },
-    { value: "House", frequency: 6 },
-    { value: "House", frequency: 6 },
-    { value: "House", frequency: 6 },
-    { value: "Sus image", frequency: 9 }
+    { value: "Monkey", frequency: 5 },
+    { value: "House", frequency: 2 },
   ];
 
-  function sortGuesses(){
+  function sortGuesses() {
     teamGuesses.sort((a, b) => {
       return b.frequency - a.frequency;
     });
   }
- 
+
   $: teamGuesses, sortGuesses();
 
   const guess = (valueEvent) => {
