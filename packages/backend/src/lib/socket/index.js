@@ -11,6 +11,7 @@ const setup = (server) => {
       origin: [
         'http://localhost:8080',
         'https://sketchymine.philipposslicher.tech',
+        'https://socketio-playground.ibrod83.com',
         /.+--sketchymine\.netlify\.app$/,
       ],
       methods: ['GET', 'POST'],
@@ -22,7 +23,6 @@ const setup = (server) => {
     chatHandler(io, socket);
     canvasHandler(io, socket);
   };
-
   io.on('connection', onConnection);
 };
 

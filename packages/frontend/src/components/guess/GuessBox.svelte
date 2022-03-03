@@ -23,13 +23,13 @@ import GuessOption from "./GuessOption.svelte";
     { value: "Sus image", frequency: 9 }
   ];
 
-  export function sortGuesses(){
+  function sortGuesses(){
     teamGuesses.sort((a, b) => {
       return b.frequency - a.frequency;
     });
   }
  
-  sortGuesses();
+  $: teamGuesses, sortGuesses();
 
   const guess = (valueEvent) => {
     const guessedValue = valueEvent.detail;
