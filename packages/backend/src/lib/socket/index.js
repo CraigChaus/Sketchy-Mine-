@@ -22,7 +22,6 @@ const setup = (server) => {
     chatHandler(io, socket);
     canvasHandler(io, socket);
   };
-
   io.on('connection', onConnection);
 };
 
