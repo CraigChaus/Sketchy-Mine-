@@ -87,10 +87,12 @@
     ];
 
     let chatMessages = [
-        {username: "Bob", message: "Hello everyone!", type: 2},
-        {username: "Jack", message: "Good luck!", type: 1},
-        {username: "Alice", message: "Thank you! Same to y'all!", type: 2},
-        {username: "Mark", message: "Have fun!", type: 2},
+        {username: "Bob", message: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum", type: 2},
+        {username: "Jack", message: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum", type: 1},
+        {username: "Alice", message: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum", type: 2},
+        {username: "[SYSETM]", message: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.!", type: 3},
+        {username: "Mark", message: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum", type: 2},
+        {username: "Susan", message: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.", type: 2},
     ];
 
     let chatInput;
@@ -123,13 +125,13 @@
     }
 </script>
 
-<div class="flex my-8">
-    <div class="w-1/3 h-12 m-3">
+<div class="flex">
+    <div class="w-1/4 h-12">
         <GuessList teamNumber={1} {currentGuess}/>
         <TeamList showResults={true} contentJSON={teams}/>
     </div>
 
-    <div class="w-full h-full">
+    <div class="w-2/4 h-full">
         <Canvas bind:this={SDraw} {brushColor} {brushRadius} canvasWidth="640"/>
         <div class="flex-row justify-center">
             <Toolbox bind:SDraw={SDraw} bind:brushColor={brushColor} bind:brushRadius={brushRadius}/>
@@ -140,7 +142,7 @@
                 on:sendChatClicked={onClickChat}
         />
     </div>
-    <div class="w-2/5 h-full mx-3">
-        <ChatBox messages={chatMessages}/>
+    <div class="w-1/4 h-full mx-3">
+        <ChatBox messages={chatMessages} />
     </div>
 </div>
