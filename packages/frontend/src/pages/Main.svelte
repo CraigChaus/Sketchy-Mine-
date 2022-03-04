@@ -143,11 +143,17 @@
   ];
 
   let chatMessages = [];
+  let teamGuesses = [];
 
   let chatInput;
 
   const onClickGuess = () => {
-    currentGuess = chatInput;
+    if(chatInput !== "" || (currentGuess !== "" && currentGuess !== null)) {
+      currentGuess = chatInput;
+      teamGuesses.push({value: currentGuess, frequency: 1});
+      socket.emit("wordGuess", currentGuess);
+    }
+
     chatInput = "";
   };
 
@@ -176,7 +182,7 @@
 
 <div class="flex">
   <div class="w-1/4 h-12">
-    <GuessList teamNumber={1} {currentGuess} />
+    <GuessList teamGuesses={teamGuesses} teamNumber={1} {currentGuess} />
     <TeamList showResults={true} contentJSON={teams} />
   </div>
 

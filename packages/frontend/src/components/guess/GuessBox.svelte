@@ -6,11 +6,7 @@
   export let teamSize = 20;
   export let currentGuess = null;
 
-  export let teamGuesses = [
-    { value: "Car", frequency: 11 },
-    { value: "Monkey", frequency: 5 },
-    { value: "House", frequency: 2 },
-  ];
+  export let teamGuesses = [];
 
   function sortGuesses() {
     teamGuesses.sort((a, b) => {
