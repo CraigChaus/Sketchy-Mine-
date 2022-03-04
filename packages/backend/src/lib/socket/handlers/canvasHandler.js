@@ -4,15 +4,14 @@ const CANVAS_EVENTS = {
   DRAWER: 'canvas:drawer',
   GUESSER: 'canvas:guesser',
   SPECTATOR: 'canvas:spectator',
-  NEWLOGIN: 'canvas:new-user'
+  NEWLOGIN: 'canvas:new-user',
 };
-
 
 let canvasHistory = [];
 
 const canvasHandler = (io, socket) => {
   const drawPoints = (payload) => {
-    //saves to the array containing the previous drawings
+    // saves to the array containing the previous drawings
     canvasHistory.push(payload);
 
     socket.broadcast.emit(CANVAS_EVENTS.POINTS, payload);
@@ -24,32 +23,28 @@ const canvasHandler = (io, socket) => {
   };
 
   const drawAllPoints = () => {
-    canvasHistory.forEach((item) =>{
+    canvasHistory.forEach((item) => {
       socket.emit(CANVAS_EVENTS.POINTS, item);
     });
-  }
-
+  };
 
   socket.on(CANVAS_EVENTS.POINTS, drawPoints);
   socket.on(CANVAS_EVENTS.CLEAR, clearCanvas);
   socket.on(CANVAS_EVENTS.NEWLOGIN, drawAllPoints);
 
-  const makeSpectator = () =>{
-    socket.broadcast.emit(CANVAS_EVENTS.SPECTATOR)
-  }
-  const makeDrawer = () =>{
-    socket.broadcast.emit(CANVAS_EVENTS.DRAWER)
-  }
-  const makeGuesser = () =>{
-    socket.broadcast.emit(CANVAS_EVENTS.GUESSER)
-  }
+  const makeSpectator = () => {
+    socket.broadcast.emit(CANVAS_EVENTS.SPECTATOR);
+  };
+  const makeDrawer = () => {
+    socket.broadcast.emit(CANVAS_EVENTS.DRAWER);
+  };
+  const makeGuesser = () => {
+    socket.broadcast.emit(CANVAS_EVENTS.GUESSER);
+  };
 
   socket.on(CANVAS_EVENTS.DRAWER, makeDrawer);
   socket.on(CANVAS_EVENTS.GUESSER, makeGuesser);
   socket.on(CANVAS_EVENTS.SPECTATOR, makeSpectator);
-
-  
 };
-
 
 export default canvasHandler;

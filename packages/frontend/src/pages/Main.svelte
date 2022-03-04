@@ -6,8 +6,9 @@
     import MessageBar from "../components/chat/MessageBar.svelte";
     import Toolbox from "../Canvas/Toolbox.svelte";
     import {onMount} from "svelte";
-import socket from "../socket";
-import { faL, fas } from "@fortawesome/free-solid-svg-icons";
+    import socket from "../socket";
+    import { faL, fas } from "@fortawesome/free-solid-svg-icons";
+    import ProgressBar from "../components/team/ProgressBar.svelte";
 
     let teams = [
         {
@@ -88,42 +89,32 @@ import { faL, fas } from "@fortawesome/free-solid-svg-icons";
             placementNr: undefined,
         },
     ];
+ 
 
-    let chatMessages = [
-        {username: "Bob", message: "Hello everyone!", type: 2},
-        {username: "Jack", message: "Good luck!", type: 1},
-        {username: "Alice", message: "Thank you! Same to y'all!", type: 2},
-        {username: "Mark", message: "Have fun!", type: 2},
-    ];
+  let username;
 
-    let chatInput;
+  const session = "main";
 
-    const onClickChat = () => {
-        chatMessages = [
-            ...chatMessages,
-            {
-                username: "Bob",
-                message: chatInput,
-                type: 1,
-            },
-        ];
-        chatInput = "";
-    };
+  onMount(() => {
+    username = "User" + Math.round(Math.random() * 10000);
+    socket.emit("joinSession", { username, session });
+  });
 
-    const onClickGuess = () => {
-        currentGuess = chatInput;
-        chatInput = "";
-    };
-
-    let currentGuess = null;
-
-    let brushColor = "#444";
-    let brushRadius = 8;
-    let SDraw = null;
-
-    function clear() {
-        SDraw.clearDrawings();
+  // Receiving messages
+  socket.on("message", (data) => {
+    if (!data) {
+      return;
     }
+    
+    chatMessages = [
+      ...chatMessages,
+      {
+        username: data.username,
+        message: data.text,
+        type: data.type,
+      },
+    ];
+  });
     
     async function getRole(){
         return role;
@@ -180,15 +171,50 @@ import { faL, fas } from "@fortawesome/free-solid-svg-icons";
     let makeAllDrawer = () => {
         socket.emit('canvas:drawer')
     }
+
+  let currentColourIndex = 0;
+  function teamColour() {
+    return "hsl(" + currentColourIndex++ * 37 + ", 100%, 50%)";
+  }
+
+  let chatMessages = [];
+
+  let chatInput;
+
+  const onClickGuess = () => {
+    currentGuess = chatInput;
+    chatInput = "";
+  };
+
+  // Sending messages
+  const onClickChat = () => {
+    socket.emit("chatMessage", chatInput);
+    // chatMessages = [
+    //   ...chatMessages,
+    //   {
+    //     username: username,
+    //     message: chatInput,
+    //     type: 1,
+    //   },
+    // ];
+    chatInput = "";
+  };
+
+  let currentGuess = null;
+
+  let brushColor = "#444";
+  let brushRadius = 8;
+  let SDraw = null;
 </script>
 
-<div class="flex my-8">
-    <div class="w-1/3 h-12 m-3">
-        <GuessList teamNumber={1} {currentGuess}/>
-        <TeamList showResults={true} contentJSON={teams}/>
-    </div>
+<ProgressBar {teams} />
 
-    <div class="w-full h-full">
+<div class="flex">
+    <div class="w-1/4 h-12">
+        <GuessList teamNumber={1} {currentGuess} />
+        <TeamList showResults={true} contentJSON={teams} />
+    </div>
+    <div class="w-2/4 h-full">
         <Canvas role={role} bind:this={SDraw} {brushColor} {brushRadius} canvasWidth="640"/>
         <div class="flex-row justify-center">
             {#await promise}
@@ -200,17 +226,18 @@ import { faL, fas } from "@fortawesome/free-solid-svg-icons";
             <p>You are currently role {role}</p>
             {/await}
         </div>
-        <MessageBar role={role}
-                bind:input={chatInput}
-                on:guessWordClicked={onClickGuess}
-                on:sendChatClicked={onClickChat}
-        />
         <button on:click={becomeDrawer} class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">become drawer</button>
         <button on:click={becomeGuesser} class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded">become guesser</button>
         <button on:click={makeAllDrawer} class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">make all users drawers</button>
         <button on:click={makeAllSpec} class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded">make all users spectators</button>
+        <MessageBar role={role}
+        bind:input={chatInput}
+        on:guessWordClicked={onClickGuess}
+        on:sendChatClicked={onClickChat}
+      />
     </div>
-    <div class="w-2/5 h-full mx-3">
-        <ChatBox messages={chatMessages}/>
-    </div>
+    
+  <div class="w-1/4 h-full mx-3">
+    <ChatBox messages={chatMessages} />
+  </div>
 </div>

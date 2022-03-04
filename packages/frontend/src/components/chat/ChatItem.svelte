@@ -4,16 +4,16 @@
   export let type = false;
 </script>
 
-<div class="flex-1 w-full h-full flex max-h-20">
+<div class="flex-1 w-full h-full flex max-h-full">
   {#if type === 1}
     <div class="ml-3" />
     <div
-      class="bg-blue-700 my-1 p-2 rounded-l-2xl text-white ml-auto flex items-center"
+      class="bg-blue-700 my-1 p-2 rounded-l-2xl text-white ml-auto flex items-center h-full"
     >
       <p class="text-right">{message}</p>
     </div>
   {:else if type === 2}
-    <div class="bg-gray-600 my-1 p-2 rounded-r-2xl text-white mr-3">
+    <div class="bg-gray-600 my-1 p-2 rounded-r-2xl text-white mr-3 h-full">
       <p class="font-bold text-blue-400 text-xs">{sender}</p>
       <p>{message}</p>
     </div>
