@@ -34,6 +34,16 @@
     ];
   });
 
+  // Receiving guesses
+  socket.on("guess", (guesses) => {
+    if (!data) {
+      return;
+    }
+
+    teamGuesses = [...guesses];
+
+  });
+
   let currentColourIndex = 0;
   function teamColour() {
     return "hsl(" + currentColourIndex++ * 37 + ", 100%, 50%)";
@@ -148,7 +158,7 @@
   let chatInput;
 
   const onClickGuess = () => {
-    if(chatInput !== "" || (currentGuess !== "" && currentGuess !== null)) {
+    if(chatInput !== "") {
       currentGuess = chatInput;
       teamGuesses.push({value: currentGuess, frequency: 1});
       socket.emit("wordGuess", currentGuess);
@@ -156,6 +166,10 @@
 
     chatInput = "";
   };
+
+  const onClickGuessItem = (e) => {
+      socket.emit("wordGuess", e.detail);
+  }
 
   // Sending messages
   const onClickChat = () => {
@@ -184,7 +198,7 @@
 
 <div class="flex">
   <div class="w-1/4 h-12">
-    <GuessList teamGuesses={teamGuesses} teamNumber={1} {currentGuess} />
+    <GuessList on:guessClicked={onClickGuessItem} teamGuesses={teamGuesses} teamNumber={1} {currentGuess} />
     <TeamList showResults={true} contentJSON={teams} />
   </div>
 
