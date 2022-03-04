@@ -5,34 +5,9 @@
   import TeamList from "../components/team/TeamList.svelte";
   import MessageBar from "../components/chat/MessageBar.svelte";
   import Toolbox from "../Canvas/Toolbox.svelte";
-  import ProgressBar from "../components/team/ProgressBar.svelte";
-  import socket from "../socket/index";
   import { onMount } from "svelte";
-
-  let username;
-
-  const session = "main";
-
-  onMount(() => {
-    username = "User" + Math.round(Math.random() * 10000);
-    socket.emit("joinSession", { username, session });
-  });
-
-  // Receiving messages
-  socket.on("message", (data) => {
-    if (!data) {
-      return;
-    }
-
-    chatMessages = [
-      ...chatMessages,
-      {
-        username: data.username,
-        message: data.text,
-        type: data.type,
-      },
-    ];
-  });
+  import socket from "../socket";
+  import ProgressBar from "../components/team/ProgressBar.svelte";
 
   let currentColourIndex = 0;
   function teamColour() {
@@ -142,6 +117,83 @@
     },
   ];
 
+  let username;
+
+  const session = "main";
+
+  onMount(() => {
+    username = "User" + Math.round(Math.random() * 10000);
+    socket.emit("joinSession", { username, session });
+  });
+
+  // Receiving messages
+  socket.on("message", (data) => {
+    if (!data) {
+      return;
+    }
+
+    chatMessages = [
+      ...chatMessages,
+      {
+        username: data.username,
+        message: data.text,
+        type: data.type,
+      },
+    ];
+  });
+
+  async function getRole() {
+    return role;
+  }
+
+  let role = 3;
+
+  onMount(() => {
+    randomizeDrawer();
+    promise = getRole();
+    socket.emit("canvas:new-user");
+  });
+  let randomizeDrawer = () => {
+    let rng = Math.random();
+    if (rng < 0.33) {
+      role = 1;
+    } else if (rng > 0.33 && rng < 0.66) {
+      role = 2;
+    } else {
+      role = 3;
+    }
+    console.log(role);
+  };
+
+  let promise = getRole();
+
+  let becomeDrawer = () => {
+    role = 1;
+    promise = getRole();
+  };
+  let becomeGuesser = () => {
+    role = 2;
+    promise = getRole();
+  };
+  let becomeSpectator = () => {
+    role = 3;
+    promise = getRole();
+  };
+
+  //1: drawer
+  //2: guesser
+  //3: spectator
+  socket.on("canvas:drawer", becomeDrawer);
+  socket.on("canvas:guesser", becomeGuesser);
+  socket.on("canvas:spectator", becomeSpectator);
+
+  let makeAllSpec = () => {
+    socket.emit("canvas:spectator");
+  };
+  let makeAllDrawer = () => {
+    socket.emit("canvas:drawer");
+  };
+
   let chatMessages = [];
 
   let chatInput;
@@ -179,18 +231,52 @@
     <GuessList teamNumber={1} {currentGuess} />
     <TeamList showResults={true} contentJSON={teams} />
   </div>
-
   <div class="w-2/4 h-full">
-    <Canvas bind:this={SDraw} {brushColor} {brushRadius} canvasWidth="640" />
+    <Canvas
+      {role}
+      bind:this={SDraw}
+      {brushColor}
+      {brushRadius}
+      canvasWidth="640"
+    />
     <div class="flex-row justify-center">
-      <Toolbox bind:SDraw bind:brushColor bind:brushRadius />
+      {#await promise}
+        <p>loading..</p>
+      {:then role}
+        {#if role === 1}
+          <Toolbox bind:SDraw bind:brushColor bind:brushRadius />
+        {/if}
+        <p>You are currently role {role}</p>
+      {/await}
     </div>
+    <button
+      on:click={becomeDrawer}
+      class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+      >become drawer</button
+    >
+    <button
+      on:click={becomeGuesser}
+      class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded"
+      >become guesser</button
+    >
+    <button
+      on:click={makeAllDrawer}
+      class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+      >make all users drawers</button
+    >
+    <button
+      on:click={makeAllSpec}
+      class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded"
+      >make all users spectators</button
+    >
     <MessageBar
+      {role}
       bind:input={chatInput}
       on:guessWordClicked={onClickGuess}
       on:sendChatClicked={onClickChat}
     />
   </div>
+
   <div class="w-1/4 h-full mx-3">
     <ChatBox messages={chatMessages} />
   </div>
