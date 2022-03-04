@@ -221,6 +221,10 @@ Create a progress bar to see where the team is currently at
 
 Multiply the gained emeralds when a new level is reached
 
+##### US04 Bl07
+
+Add the functionality to the progress bar
+
 #### US05 - As a player, I want a chat functionality, so I can communicate with my teammates.
 
 ##### US05 BI01
@@ -246,6 +250,14 @@ Connect frontend outgoing chat to the backend
 ##### US05 BI06
 
 Add team based chat scopes in the backend
+
+##### US05 BI07
+
+Add team list component
+
+##### US05 BI08
+
+Connect team listing component with backend
 
 ---
 

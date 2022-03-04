@@ -1,4 +1,5 @@
 <script>
+  import ScrollContainer from "../ScrollContainer.svelte";
   import ChatItem from "./ChatItem.svelte";
   /*
      Expected content:
@@ -10,12 +11,12 @@
          }
      ]
      */
-  export let contentJSON = [];
+  export let messages = [];
 </script>
 
-<div class="border-4 max-h-96 overflow-y-auto flex flex-col flex-1">
-  {#if contentJSON !== "" || contentJSON !== undefined || contentJSON !== null}
-    {#each contentJSON as element}
+<ScrollContainer class="max-h-screen h-full">
+  {#if messages !== "" || messages !== undefined || messages !== null}
+    {#each messages as element}
       <ChatItem
         sender={element.username}
         message={element.message}
@@ -23,4 +24,4 @@
       />
     {/each}
   {/if}
-</div>
+</ScrollContainer>
