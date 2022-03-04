@@ -159,16 +159,18 @@
 
   // Sending messages
   const onClickChat = () => {
-    socket.emit("chatMessage", chatInput);
-    // chatMessages = [
-    //   ...chatMessages,
-    //   {
-    //     username: username,
-    //     message: chatInput,
-    //     type: 1,
-    //   },
-    // ];
-    chatInput = "";
+    if(chatInput !== ""){
+      socket.emit("chatMessage", chatInput);
+      // chatMessages = [
+      //   ...chatMessages,
+      //   {
+      //     username: username,
+      //     message: chatInput,
+      //     type: 1,
+      //   },
+      // ];
+      chatInput = "";
+    }
   };
 
   let currentGuess = null;
