@@ -6,6 +6,8 @@
     import MessageBar from "../components/chat/MessageBar.svelte";
     import Toolbox from "../Canvas/Toolbox.svelte";
     import {onMount} from "svelte";
+import socket from "../socket";
+import { faL, fas } from "@fortawesome/free-solid-svg-icons";
 
     let teams = [
         {
@@ -123,39 +125,61 @@
         SDraw.clearDrawings();
     }
     
-    async function getAllowDraw(){
-        return decryptedJWT.isDrawer;
+    async function getRole(){
+        return role;
     }
 
-    let decryptedJWT = {
-        username: "Bob",
-        uid: "487asdn38asdjk3",
-        isDrawer: false,
-    };
+    let role = 3;
 
     onMount( () =>{
         randomizeDrawer();
-        promise = getAllowDraw();
+        promise = getRole();
+        socket.emit('canvas:new-user')
 
     });
     let randomizeDrawer = () => {
-        if (Math.random() < 0.5){
-            decryptedJWT.isDrawer = true;
-        }else {
-            decryptedJWT.isDrawer = false;
+        let rng = Math.random();
+        if (rng < 0.33){
+            role = 1;
+        }else if (rng > 0.33 && rng < 0.66) {
+            role = 2;
+        }else{
+            role = 3;
         }
-        console.log(decryptedJWT.isDrawer);
+        console.log(role);
 
     }
+
+    let promise = getRole();
+
     let becomeDrawer = () =>{
-        decryptedJWT.isDrawer = true;
-        promise = getAllowDraw();
+        role = 1;    
+        promise = getRole();
     }
     let becomeGuesser = () =>{
-        decryptedJWT.isDrawer = false;
-        promise = getAllowDraw();
+        role = 2;
+        promise = getRole();
     }
-    let promise = getAllowDraw();
+    let becomeSpectator = () => {
+        role = 3;
+        promise = getRole();
+        
+        
+    }
+
+    //1: drawer
+    //2: guesser
+    //3: spectator
+    socket.on('canvas:drawer', becomeDrawer);
+    socket.on('canvas:guesser', becomeGuesser);
+    socket.on('canvas:spectator', becomeSpectator);
+
+    let makeAllSpec = () => {
+        socket.emit('canvas:spectator')
+    }
+    let makeAllDrawer = () => {
+        socket.emit('canvas:drawer')
+    }
 </script>
 
 <div class="flex my-8">
@@ -165,22 +189,26 @@
     </div>
 
     <div class="w-full h-full">
-        <Canvas decryptedJWT={decryptedJWT} bind:this={SDraw} {brushColor} {brushRadius} canvasWidth="640"/>
+        <Canvas role={role} bind:this={SDraw} {brushColor} {brushRadius} canvasWidth="640"/>
         <div class="flex-row justify-center">
             {#await promise}
-            {:then allow}
-            {#if allow}
+            <p>loading..</p>
+            {:then role}
+            {#if role === 1}
                 <Toolbox bind:SDraw={SDraw} bind:brushColor={brushColor} bind:brushRadius={brushRadius}/>
             {/if}
+            <p>You are currently role {role}</p>
             {/await}
         </div>
-        <MessageBar
+        <MessageBar role={role}
                 bind:input={chatInput}
                 on:guessWordClicked={onClickGuess}
                 on:sendChatClicked={onClickChat}
         />
-        <button on:click={decryptedJWT.isDrawer=becomeDrawer} class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">become drawer</button>
-        <button on:click={decryptedJWT.isDrawer=becomeGuesser} class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded">become guesser</button>
+        <button on:click={becomeDrawer} class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">become drawer</button>
+        <button on:click={becomeGuesser} class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded">become guesser</button>
+        <button on:click={makeAllDrawer} class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">make all users drawers</button>
+        <button on:click={makeAllSpec} class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded">make all users spectators</button>
     </div>
     <div class="w-2/5 h-full mx-3">
         <ChatBox messages={chatMessages}/>

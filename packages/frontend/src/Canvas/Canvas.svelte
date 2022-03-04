@@ -136,7 +136,7 @@
     let loadSaveData = (payLoad) => {
         let saveData = payLoad['saveData'];
         let immediate = immediateLoading;
-        console.log(saveData);
+        // console.log(saveData); 
         if (typeof saveData !== "string") {
             throw new Error("saveData needs to be of type string!");
         }
@@ -221,7 +221,7 @@
     };
 
     let handleDrawStart = e => {
-        if (decryptedJWT.isDrawer) {
+        if (role === 1) {
             e.preventDefault();
 
             // Start drawing
@@ -240,7 +240,7 @@
     };
 
     let handleDrawMove = e => {
-        if (decryptedJWT.isDrawer) {
+        if (role === 1) {
 
 
             e.preventDefault();
@@ -251,7 +251,7 @@
     };
 
     let handleDrawEnd = e => {
-        if (decryptedJWT.isDrawer) {
+        if (role === 1) {
             e.preventDefault();
 
             // Draw to this end pos
@@ -340,6 +340,8 @@
     };
 
     let drawPoints = (payload) => {
+        //what
+        console.log("ready to draw")
         let points = payload['points'];
         let brushColor = payload['brushColor'];
         let brushRadius = payload['brushRadius'];
@@ -348,7 +350,7 @@
         ctx.temp.lineCap = "round";
         ctx.temp.strokeStyle = brushColor;
 
-        //todo understand what this does
+        //todo understand why this is here
         // ctx.temp.clearRect(
         //     0,
         //     0,
@@ -545,8 +547,10 @@
             return newCanvas.toDataURL();
         }
 
-        export let decryptedJWT;
+        export let role;
 
+
+        socket.on('canvas:clear', clear);
 
 </script>
 

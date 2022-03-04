@@ -10,7 +10,7 @@
         SDraw.clearDrawings();
     }
 
-    socket.on('canvas:clear', clear);
+    // socket.on('canvas:clear', clear);
 </script>
 
 <main>
