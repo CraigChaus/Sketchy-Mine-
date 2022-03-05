@@ -1,16 +1,15 @@
 <script>
   import ScrollContainer from "../ScrollContainer.svelte";
   import GuessOption from "./GuessOption.svelte";
+  import { createEventDispatcher } from "svelte";
 
   export let teamNumber = 0;
   export let teamSize = 20;
   export let currentGuess = null;
 
-  export let teamGuesses = [
-    { value: "Car", frequency: 11 },
-    { value: "Monkey", frequency: 5 },
-    { value: "House", frequency: 2 },
-  ];
+  export let teamGuesses = [];
+
+  const dispatch = createEventDispatcher();
 
   function sortGuesses() {
     teamGuesses.sort((a, b) => {
@@ -23,6 +22,7 @@
   const guess = (valueEvent) => {
     const guessedValue = valueEvent.detail;
     currentGuess = guessedValue;
+    dispatch("guessClicked", currentGuess);
   };
 </script>
 

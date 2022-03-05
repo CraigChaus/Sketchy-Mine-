@@ -9,6 +9,16 @@
   import socket from "../socket";
   import ProgressBar from "../components/team/ProgressBar.svelte";
 
+  // Receiving guesses
+  socket.on("guess", (guesses) => {
+    if (!data) {
+      return;
+    }
+
+    teamGuesses = [...guesses];
+
+  });
+
   let currentColourIndex = 0;
   function teamColour() {
     return "hsl(" + currentColourIndex++ * 37 + ", 100%, 50%)";
@@ -195,26 +205,38 @@
   };
 
   let chatMessages = [];
+  let teamGuesses = [];
 
   let chatInput;
 
   const onClickGuess = () => {
-    currentGuess = chatInput;
+    if(chatInput !== "") {
+      currentGuess = chatInput;
+      teamGuesses.push({value: currentGuess, frequency: 1});
+      socket.emit("wordGuess", currentGuess);
+    }
+
     chatInput = "";
   };
 
+  const onClickGuessItem = (e) => {
+      socket.emit("wordGuess", e.detail);
+  }
+
   // Sending messages
   const onClickChat = () => {
-    socket.emit("chatMessage", chatInput);
-    // chatMessages = [
-    //   ...chatMessages,
-    //   {
-    //     username: username,
-    //     message: chatInput,
-    //     type: 1,
-    //   },
-    // ];
-    chatInput = "";
+    if(chatInput !== ""){
+      socket.emit("chatMessage", chatInput);
+      // chatMessages = [
+      //   ...chatMessages,
+      //   {
+      //     username: username,
+      //     message: chatInput,
+      //     type: 1,
+      //   },
+      // ];
+      chatInput = "";
+    }
   };
 
   let currentGuess = null;
@@ -228,7 +250,7 @@
 
 <div class="flex">
   <div class="w-1/4 h-12">
-    <GuessList teamNumber={1} {currentGuess} />
+    <GuessList on:guessClicked={onClickGuessItem} teamGuesses={teamGuesses} teamNumber={1} {currentGuess} />
     <TeamList showResults={true} contentJSON={teams} />
   </div>
   <div class="w-2/4 h-full">
