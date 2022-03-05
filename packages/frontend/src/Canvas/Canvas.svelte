@@ -136,7 +136,7 @@
     let loadSaveData = (payLoad) => {
         let saveData = payLoad['saveData'];
         let immediate = immediateLoading;
-        console.log(saveData);
+        // console.log(saveData); 
         if (typeof saveData !== "string") {
             throw new Error("saveData needs to be of type string!");
         }
@@ -221,39 +221,47 @@
     };
 
     let handleDrawStart = e => {
-        e.preventDefault();
+        if (role === 1) {
+            e.preventDefault();
 
-        // Start drawing
-        isPressing = true;
+            // Start drawing
+            isPressing = true;
 
-        const {x, y} = getPointerPos(e);
+            const {x, y} = getPointerPos(e);
 
-        if (e.touches && e.touches.length > 0) {
-            // on touch, set catenary position to touch pos
-            lazy.update({x, y}, {both: true});
+            if (e.touches && e.touches.length > 0) {
+                // on touch, set catenary position to touch pos
+                lazy.update({x, y}, {both: true});
+            }
+
+            // Ensure the initial down position gets added to our line
+            handlePointerMove(x, y);
         }
-
-        // Ensure the initial down position gets added to our line
-        handlePointerMove(x, y);
     };
 
     let handleDrawMove = e => {
-        e.preventDefault();
+        if (role === 1) {
 
-        const {x, y} = getPointerPos(e);
-        handlePointerMove(x, y);
+
+            e.preventDefault();
+
+            const {x, y} = getPointerPos(e);
+            handlePointerMove(x, y);
+        }
     };
 
     let handleDrawEnd = e => {
-        e.preventDefault();
+        if (role === 1) {
+            e.preventDefault();
 
-        // Draw to this end pos
-        handleDrawMove(e);
+            // Draw to this end pos
+            handleDrawMove(e);
 
-        // Stop drawing & save the drawn line
-        isDrawing = false;
-        isPressing = false;
-        saveLine();
+            // Stop drawing & save the drawn line
+            isDrawing = false;
+            isPressing = false;
+            saveLine();
+        }
     };
 
     let handleCanvasResize = (entries, observer) => {
@@ -332,6 +340,8 @@
     };
 
     let drawPoints = (payload) => {
+        //what
+        console.log("ready to draw")
         let points = payload['points'];
         let brushColor = payload['brushColor'];
         let brushRadius = payload['brushRadius'];
@@ -340,7 +350,7 @@
         ctx.temp.lineCap = "round";
         ctx.temp.strokeStyle = brushColor;
 
-        //todo understand what this does
+        //todo understand why this is here
         // ctx.temp.clearRect(
         //     0,
         //     0,
@@ -537,6 +547,10 @@
             return newCanvas.toDataURL();
         }
 
+        export let role;
+
+
+        socket.on('canvas:clear', clear);
 
 </script>
 

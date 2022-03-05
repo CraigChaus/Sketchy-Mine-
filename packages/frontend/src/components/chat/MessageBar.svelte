@@ -6,6 +6,7 @@
   const dispatch = createEventDispatcher();
 
   export let input;
+  export let role;
 
   const onSendChatClicked = () => dispatch("sendChatClicked");
 
@@ -35,8 +36,9 @@
       styles="search-button bg-blue-600"
       on:buttonClicked={onSendChatClicked}>Send Chat</ActionButton
     >
-    <ActionButton styles="search-button" on:buttonClicked={onGuessWordClicked}
-      >Guess Word</ActionButton
-    >
+    
+    {#if role === 2}
+      <ActionButton styles="search-button" on:buttonClicked={onGuessWordClicked}>Guess Word</ActionButton>
+    {/if}
   </div>
 </div>
