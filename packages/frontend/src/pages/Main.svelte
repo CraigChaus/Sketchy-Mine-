@@ -59,6 +59,12 @@
       placementNr: 2,
       points: 37,
       colour: teamColour(),
+      members: [
+        {username: "Bob", guessed: false},
+        {username: "Jack", guessed: true},
+        {username: "Alice", guessed: false},
+        {username: "John", guessed: false},
+      ]
     },
     {
       teamname: "Team 2",
@@ -68,6 +74,12 @@
       placementNr: undefined,
       points: 21,
       colour: teamColour(),
+      members: [
+        {username: "Bob", guessed: false},
+        {username: "Jack", guessed: true},
+        {username: "Alice", guessed: false},
+        {username: "John", guessed: false},
+      ]
     },
     {
       teamname: "Team 3",
@@ -77,6 +89,12 @@
       placementNr: 1,
       points: 79,
       colour: teamColour(),
+      members: [
+        {username: "Bob", guessed: false},
+        {username: "Jack", guessed: true},
+        {username: "Alice", guessed: false},
+        {username: "John", guessed: false},
+      ]
     },
     {
       teamname: "Team 4",
@@ -86,6 +104,12 @@
       placementNr: undefined,
       points: 90,
       colour: teamColour(),
+      members: [
+        {username: "Bob", guessed: false},
+        {username: "Jack", guessed: true},
+        {username: "Alice", guessed: false},
+        {username: "John", guessed: false},
+      ]
     },
     {
       teamname: "Team 5",
@@ -95,6 +119,12 @@
       placementNr: undefined,
       points: 80,
       colour: teamColour(),
+      members: [
+        {username: "Bob", guessed: false},
+        {username: "Jack", guessed: true},
+        {username: "Alice", guessed: false},
+        {username: "John", guessed: false},
+      ]
     },
     {
       teamname: "Team 6",
@@ -104,6 +134,12 @@
       placementNr: 3,
       points: 56,
       colour: teamColour(),
+      members: [
+        {username: "Bob", guessed: false},
+        {username: "Jack", guessed: true},
+        {username: "Alice", guessed: false},
+        {username: "John", guessed: false},
+      ]
     },
     {
       teamname: "Team 7",
@@ -113,6 +149,12 @@
       placementNr: 4,
       points: 33,
       colour: teamColour(),
+      members: [
+        {username: "Bob", guessed: false},
+        {username: "Jack", guessed: true},
+        {username: "Alice", guessed: false},
+        {username: "John", guessed: false},
+      ]
     },
     {
       teamname: "Team 8",
@@ -122,6 +164,12 @@
       placementNr: undefined,
       points: 74,
       colour: teamColour(),
+      members: [
+        {username: "Bob", guessed: false},
+        {username: "Jack", guessed: true},
+        {username: "Alice", guessed: false},
+        {username: "John", guessed: false},
+      ]
     },
     {
       teamname: "Team 9",
@@ -131,6 +179,12 @@
       placementNr: undefined,
       points: 13,
       colour: teamColour(),
+      members: [
+        {username: "Bob", guessed: false},
+        {username: "Jack", guessed: true},
+        {username: "Alice", guessed: false},
+        {username: "John", guessed: false},
+      ]
     },
     {
       teamname: "Team 10",
@@ -140,6 +194,12 @@
       placementNr: undefined,
       points: 88,
       colour: teamColour(),
+      members: [
+        {username: "Bob", guessed: false},
+        {username: "Jack", guessed: true},
+        {username: "Alice", guessed: false},
+        {username: "John", guessed: false},
+      ]
     },
     {
       teamname: "Team 11",
@@ -149,6 +209,12 @@
       placementNr: undefined,
       points: 99,
       colour: teamColour(),
+      members: [
+        {username: "Bob", guessed: false},
+        {username: "Jack", guessed: true},
+        {username: "Alice", guessed: false},
+        {username: "John", guessed: false},
+      ]
     },
   ];
 
@@ -196,13 +262,13 @@
 
 <ProgressBar {teams} />
 
-<div class="flex">
-  <div class="w-1/4 h-12">
+<div class="flex min-h-screen flex-row flex-grow">
+  <div class="flex-1 w-1/4 h-12">
     <GuessList on:guessClicked={onClickGuessItem} teamGuesses={teamGuesses} teamNumber={1} {currentGuess} />
     <TeamList showResults={true} contentJSON={teams} />
   </div>
 
-  <div class="w-2/4 h-full">
+  <div class="flex-1 w-2/4 h-full">
     <Canvas bind:this={SDraw} {brushColor} {brushRadius} canvasWidth="640" />
     <div class="flex-row justify-center">
       <Toolbox bind:SDraw bind:brushColor bind:brushRadius />
@@ -213,7 +279,7 @@
       on:sendChatClicked={onClickChat}
     />
   </div>
-  <div class="w-1/4 h-full mx-3">
+  <div class="flex-1 w-1/4 h-full mx-3">
     <ChatBox messages={chatMessages} />
   </div>
 </div>
