@@ -1,10 +1,11 @@
 # System Document
 ---
-##Functional design
+## Functional design
 
-###Goal
-The purpose of the created product is entertainment, spending time competing with other people.
-###Product
+### Goal
+
+The purpose of the created product is entertainment by teaming up with other players and competing in order to gain ranks in the player board.
+### Product
 
 
 The presented product is a network game created for a large number of players who will be divided into teams.  Teams compete with each other to collect prizes.  This game does not have an ending, but it has difficulty levels, with each level the prize for completing the task increases.  The game consists in guessing the word made by one of the teams, using the image of this word in the form of a sketch as a clue.  The game also has a moderator who has a direct influence on the course of the game.
@@ -13,7 +14,7 @@ The presented product is a network game created for a large number of players wh
 
 
 
-###Requirements
+### Requirements
 
 ### Business requirements
 
@@ -93,14 +94,14 @@ The presented product is a network game created for a large number of players wh
 
 
 ---
-###Interface
+### Interface
 
 #### Description of a graphical representation of interaction with a WebApplication.
 
 ![Use Case Diagram](./resources/diagrams/Use Case Diagram.png "login image")
 
 
-####Use case diagrams consist of 2 objects:
+#### Use case diagrams consist of 2 objects:
 1. Player
 2. Moderator
 
@@ -117,21 +118,21 @@ The presented product is a network game created for a large number of players wh
 
 
 
-#####Purpose of moderator: The goal of the moderator is to monitor and control the correct course of the game.
+##### Purpose of moderator: The goal of the moderator is to monitor and control the correct course of the game.
 
-####Moderator capabilities:
+#### Moderator capabilities:
 - The moderator's capabilities include private chat with the whole team, as well as with an individual team member.
 - The moderator can kick any player out of the game, as well as completely ban the player's account.
 - Moderator options include making the game harder or easier for the players.
 
 
-##Technical design
+## Technical design
 ### Development tools
 
 For Sprint 1 to start developing the game, we decided to use Svelte, Tailwind CSS for the client. For the server, we are going to use Node.js, Express, Socket.IO, and PostgreSQL. The server will store player data, and distribute the game state to connected clients.
 
 
-###Tools used for development:
+### Tools used for development:
 
 |Programming Languages       | Tooling/IDE       | 
 | ------------- |:-------------:| 
@@ -140,7 +141,7 @@ For Sprint 1 to start developing the game, we decided to use Svelte, Tailwind CS
 | CSS|   Tailwind CSS    |  
 
 
-###Tools used for application:
+### Tools used for application:
 |Tool/ Application/Module      | Purpose|      
 | ------------- |:-------------:| 
 | Svelte      |For developing fast JavaScript Web Application |
