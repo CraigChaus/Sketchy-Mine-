@@ -75,10 +75,10 @@
       points: 21,
       colour: teamColour(),
       members: [
-        {username: "Bob", guessed: false},
-        {username: "Jack", guessed: true},
-        {username: "Alice", guessed: false},
-        {username: "John", guessed: false},
+        {username: "Bob", guessed: false, draws: false},
+        {username: "Jack", guessed: true, draws: false},
+        {username: "Alice", guessed: false, draws: true},
+        {username: "John", guessed: false, draws: false},
       ]
     },
     {
@@ -90,10 +90,10 @@
       points: 79,
       colour: teamColour(),
       members: [
-        {username: "Bob", guessed: false},
-        {username: "Jack", guessed: true},
-        {username: "Alice", guessed: false},
-        {username: "John", guessed: false},
+        {username: "Bob", guessed: false, draws: false},
+        {username: "Jack", guessed: true, draws: false},
+        {username: "Alice", guessed: false, draws: false},
+        {username: "John", guessed: false, draws: false},
       ]
     },
     {
@@ -105,10 +105,10 @@
       points: 90,
       colour: teamColour(),
       members: [
-        {username: "Bob", guessed: false},
-        {username: "Jack", guessed: true},
-        {username: "Alice", guessed: false},
-        {username: "John", guessed: false},
+        {username: "Bob", guessed: false, draws: false},
+        {username: "Jack", guessed: true, draws: false},
+        {username: "Alice", guessed: false, draws: false},
+        {username: "John", guessed: false, draws: false},
       ]
     },
     {
@@ -120,10 +120,10 @@
       points: 80,
       colour: teamColour(),
       members: [
-        {username: "Bob", guessed: false},
-        {username: "Jack", guessed: true},
-        {username: "Alice", guessed: false},
-        {username: "John", guessed: false},
+        {username: "Bob", guessed: false, draws: false},
+        {username: "Jack", guessed: true, draws: false},
+        {username: "Alice", guessed: false, draws: false},
+        {username: "John", guessed: false, draws: false},
       ]
     },
     {
@@ -135,10 +135,10 @@
       points: 56,
       colour: teamColour(),
       members: [
-        {username: "Bob", guessed: false},
-        {username: "Jack", guessed: true},
-        {username: "Alice", guessed: false},
-        {username: "John", guessed: false},
+        {username: "Bob", guessed: false, draws: false},
+        {username: "Jack", guessed: true, draws: false},
+        {username: "Alice", guessed: false, draws: false},
+        {username: "John", guessed: false, draws: false},
       ]
     },
     {
@@ -150,10 +150,10 @@
       points: 33,
       colour: teamColour(),
       members: [
-        {username: "Bob", guessed: false},
-        {username: "Jack", guessed: true},
-        {username: "Alice", guessed: false},
-        {username: "John", guessed: false},
+        {username: "Bob", guessed: false, draws: false},
+        {username: "Jack", guessed: true, draws: false},
+        {username: "Alice", guessed: false, draws: false},
+        {username: "John", guessed: false, draws: false},
       ]
     },
     {
@@ -165,10 +165,10 @@
       points: 74,
       colour: teamColour(),
       members: [
-        {username: "Bob", guessed: false},
-        {username: "Jack", guessed: true},
-        {username: "Alice", guessed: false},
-        {username: "John", guessed: false},
+        {username: "Bob", guessed: false, draws: false},
+        {username: "Jack", guessed: true, draws: false},
+        {username: "Alice", guessed: false, draws: false},
+        {username: "John", guessed: false, draws: false},
       ]
     },
     {
@@ -180,10 +180,10 @@
       points: 13,
       colour: teamColour(),
       members: [
-        {username: "Bob", guessed: false},
-        {username: "Jack", guessed: true},
-        {username: "Alice", guessed: false},
-        {username: "John", guessed: false},
+        {username: "Bob", guessed: false, draws: false},
+        {username: "Jack", guessed: true, draws: false},
+        {username: "Alice", guessed: false, draws: false},
+        {username: "John", guessed: false, draws: false},
       ]
     },
     {
@@ -195,10 +195,10 @@
       points: 88,
       colour: teamColour(),
       members: [
-        {username: "Bob", guessed: false},
-        {username: "Jack", guessed: true},
-        {username: "Alice", guessed: false},
-        {username: "John", guessed: false},
+        {username: "Bob", guessed: false, draws: false},
+        {username: "Jack", guessed: true, draws: false},
+        {username: "Alice", guessed: false, draws: false},
+        {username: "John", guessed: false, draws: false},
       ]
     },
     {
@@ -210,10 +210,10 @@
       points: 99,
       colour: teamColour(),
       members: [
-        {username: "Bob", guessed: false},
-        {username: "Jack", guessed: true},
-        {username: "Alice", guessed: false},
-        {username: "John", guessed: false},
+        {username: "Bob", guessed: false, draws: false},
+        {username: "Jack", guessed: true, draws: false},
+        {username: "Alice", guessed: false, draws: false},
+        {username: "John", guessed: false, draws: false},
       ]
     },
   ];
