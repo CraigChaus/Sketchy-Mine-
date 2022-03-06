@@ -4,7 +4,17 @@
   import GuessList from "../components/guess/GuessBox.svelte";
   import TeamList from "../components/team/TeamList.svelte";
   import MessageBar from "../components/chat/MessageBar.svelte";
+  import Toolbox from "../Canvas/Toolbox.svelte";
+  import { onMount } from "svelte";
+  import socket from "../socket";
+  import ProgressBar from "../components/team/ProgressBar.svelte";
 
+  let currentColourIndex = 0;
+  function teamColour() {
+    return "hsl(" + currentColourIndex++ * 37 + ", 100%, 50%)";
+  }
+
+  // Points and colour are used by ProgressBar.
   let teams = [
     {
       teamname: "Team 1",
@@ -12,6 +22,8 @@
       isSelf: true,
       won: true,
       placementNr: 2,
+      points: 37,
+      colour: teamColour(),
     },
     {
       teamname: "Team 2",
@@ -19,6 +31,8 @@
       isSelf: false,
       won: undefined,
       placementNr: undefined,
+      points: 21,
+      colour: teamColour(),
     },
     {
       teamname: "Team 3",
@@ -26,6 +40,8 @@
       isSelf: false,
       won: true,
       placementNr: 1,
+      points: 79,
+      colour: teamColour(),
     },
     {
       teamname: "Team 4",
@@ -33,6 +49,8 @@
       isSelf: false,
       won: false,
       placementNr: undefined,
+      points: 90,
+      colour: teamColour(),
     },
     {
       teamname: "Team 5",
@@ -40,6 +58,8 @@
       isSelf: false,
       won: false,
       placementNr: undefined,
+      points: 80,
+      colour: teamColour(),
     },
     {
       teamname: "Team 6",
@@ -47,6 +67,8 @@
       isSelf: false,
       won: true,
       placementNr: 3,
+      points: 56,
+      colour: teamColour(),
     },
     {
       teamname: "Team 7",
@@ -54,6 +76,8 @@
       isSelf: false,
       won: true,
       placementNr: 4,
+      points: 33,
+      colour: teamColour(),
     },
     {
       teamname: "Team 8",
@@ -61,6 +85,8 @@
       isSelf: false,
       won: false,
       placementNr: undefined,
+      points: 74,
+      colour: teamColour(),
     },
     {
       teamname: "Team 9",
@@ -68,6 +94,8 @@
       isSelf: false,
       won: false,
       placementNr: undefined,
+      points: 13,
+      colour: teamColour(),
     },
     {
       teamname: "Team 10",
@@ -75,6 +103,8 @@
       isSelf: false,
       won: false,
       placementNr: undefined,
+      points: 88,
+      colour: teamColour(),
     },
     {
       teamname: "Team 11",
@@ -82,53 +112,172 @@
       isSelf: false,
       won: false,
       placementNr: undefined,
+      points: 99,
+      colour: teamColour(),
     },
   ];
 
-  let chatMessages = [
-    { username: "Bob", message: "Hello everyone!", type: 2 },
-    { username: "Jack", message: "Good luck!", type: 1 },
-    { username: "Alice", message: "Thank you! Same to y'all!", type: 2 },
-    { username: "Mark", message: "Have fun!", type: 2 },
-  ];
+  let username;
 
-  let chatInput;
+  const session = "main";
 
-  const onClickChat = () => {
+  onMount(() => {
+    username = "User" + Math.round(Math.random() * 10000);
+    socket.emit("joinSession", { username, session });
+  });
+
+  // Receiving messages
+  socket.on("message", (data) => {
+    if (!data) {
+      return;
+    }
+
     chatMessages = [
       ...chatMessages,
       {
-        username: "Bob",
-        message: chatInput,
-        type: 1,
+        username: data.username,
+        message: data.text,
+        type: data.type,
       },
     ];
-    chatInput = "";
+  });
+
+  async function getRole() {
+    return role;
+  }
+
+  let role = 3;
+
+  onMount(() => {
+    randomizeDrawer();
+    promise = getRole();
+    socket.emit("canvas:new-user");
+  });
+  let randomizeDrawer = () => {
+    let rng = Math.random();
+    if (rng < 0.33) {
+      role = 1;
+    } else if (rng > 0.33 && rng < 0.66) {
+      role = 2;
+    } else {
+      role = 3;
+    }
+    console.log(role);
   };
+
+  let promise = getRole();
+
+  let becomeDrawer = () => {
+    role = 1;
+    promise = getRole();
+  };
+  let becomeGuesser = () => {
+    role = 2;
+    promise = getRole();
+  };
+  let becomeSpectator = () => {
+    role = 3;
+    promise = getRole();
+  };
+
+  //1: drawer
+  //2: guesser
+  //3: spectator
+  socket.on("canvas:drawer", becomeDrawer);
+  socket.on("canvas:guesser", becomeGuesser);
+  socket.on("canvas:spectator", becomeSpectator);
+
+  let makeAllSpec = () => {
+    socket.emit("canvas:spectator");
+  };
+  let makeAllDrawer = () => {
+    socket.emit("canvas:drawer");
+  };
+
+  let chatMessages = [];
+
+  let chatInput;
 
   const onClickGuess = () => {
     currentGuess = chatInput;
     chatInput = "";
   };
 
+  // Sending messages
+  const onClickChat = () => {
+    socket.emit("chatMessage", chatInput);
+    // chatMessages = [
+    //   ...chatMessages,
+    //   {
+    //     username: username,
+    //     message: chatInput,
+    //     type: 1,
+    //   },
+    // ];
+    chatInput = "";
+  };
+
   let currentGuess = null;
+
+  let brushColor = "#444";
+  let brushRadius = 8;
+  let SDraw = null;
 </script>
 
-<div class="flex my-8">
-  <div class="w-1/3 h-12 m-3">
+<ProgressBar {teams} />
+
+<div class="flex">
+  <div class="w-1/4 h-12">
     <GuessList teamNumber={1} {currentGuess} />
     <TeamList showResults={true} contentJSON={teams} />
   </div>
-
-  <div class="w-full h-full">
-    <Canvas />
+  <div class="w-2/4 h-full">
+    <Canvas
+      {role}
+      bind:this={SDraw}
+      {brushColor}
+      {brushRadius}
+      canvasWidth="640"
+    />
+    <div class="flex-row justify-center">
+      {#await promise}
+        <p>loading..</p>
+      {:then role}
+        {#if role === 1}
+          <Toolbox bind:SDraw bind:brushColor bind:brushRadius />
+        {/if}
+        <p>You are currently role {role}</p>
+      {/await}
+    </div>
+    <button
+      on:click={becomeDrawer}
+      class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+      >become drawer</button
+    >
+    <button
+      on:click={becomeGuesser}
+      class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded"
+      >become guesser</button
+    >
+    <button
+      on:click={makeAllDrawer}
+      class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+      >make all users drawers</button
+    >
+    <button
+      on:click={makeAllSpec}
+      class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded"
+      >make all users spectators</button
+    >
     <MessageBar
+      {role}
       bind:input={chatInput}
       on:guessWordClicked={onClickGuess}
       on:sendChatClicked={onClickChat}
     />
   </div>
-  <div class="w-2/5 h-full mx-3">
+
+  <div class="w-1/4 h-full mx-3">
     <ChatBox messages={chatMessages} />
   </div>
 </div>

@@ -56,15 +56,19 @@ The purpose of the ambassador is to handle the two groups ambassadors and mainta
 
 #### Scrum Masters
 
-- Group-1 Scrum Master: Craig Chauraya
-- Group-2 Scrum Master: Vedat Daglar
+- Group-1 Scrum Master (Sprint 1): Craig Chauraya
+- Group-2 Scrum Master (Sprint 1): Vedat Daglar
+- Group-1 Scrum Master (Sprint 2): Mira Ilieva
+- Group-2 Scrum Master (Sprint 2): Lukman Sulaiman Al-Busaidi
 
 The scrum masters keep track of the issues/tasks given for the following stand-up meeting.
 
 #### Group Ambassadors
 
-- Group-1 Ambassador: Vincenzo Savarese
-- Group-2 Ambassador: Vedat Daglar
+- Group-1 Ambassador (Sprint 1): Vincenzo Savarese
+- Group-2 Ambassador (Sprint 1): Vedat Daglar
+- Group-1 Ambassador (Sprint 2): Melissa Neamt-Jilovan
+- Group-2 Ambassador (Sprint 2): Philippos Slicher
 
 The group ambassadors are responsible for communication with the other teams' ambassador.
 They also inform the head ambassador of the progress within the team.
