@@ -554,7 +554,7 @@
 
 </script>
 
-<div class="border-black" style="height:{canvasHeight}px; width:{canvasWidth}px; background-color:{backgroundColor}"
+<div class="border-black bg-green-6100" style="height:{canvasHeight}px; width:{canvasWidth}px"
      bind:this={canvasContainer}>
     {#each canvasTypes as {name, zIndex}}
         <canvas key={name}

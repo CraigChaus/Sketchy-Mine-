@@ -6,8 +6,22 @@
     export let brushRadius;
     export let SDraw;
 
-    function clear() {
-        SDraw.clearDrawings();
+
+    let colourYellow = () => {
+        brushColor = "#FFE100";
+        console.log("test")
+    }
+    let colourBlue = () => {
+        brushColor = "#37a0ff";
+        console.log("test")
+    }
+    let colourRed = () => {
+        brushColor = "#ea1000";
+        console.log("test")
+    }
+    let colourGreen = () => {
+        brushColor = "#2dce00";
+        console.log("test")
     }
 
     // socket.on('canvas:clear', clear);
@@ -21,11 +35,17 @@
                 <label>COLOUR</label>
                 <input type="color" bind:value={brushColor}/>
             </div>
+
+            <input type="button" class="bg-yellow-500 h-8 w-8 rounded-full" on:click={colourYellow}>
+            <input type="button" class="bg-blue-500 h-8 w-8 rounded-full" on:click={colourBlue}>
+            <input type="button" class="bg-red-500 h-8 w-8 rounded-full" on:click={colourRed}>
+            <input type="button" class="bg-green-500 h-8 w-8 rounded-full" on:click={colourGreen}>
+
             <div class="lg:inline m-2">
                 <label>SIZE</label>
-                <input class="w-1/3" type="number" bind:value={brushRadius}/>
+                <input type="range" bind:value={brushRadius}/>
             </div>
-        </div>
 
+        </div>
     </div>
 </main>
