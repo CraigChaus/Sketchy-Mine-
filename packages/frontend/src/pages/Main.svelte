@@ -213,14 +213,18 @@
     if(chatInput !== "") {
       currentGuess = chatInput;
       teamGuesses.push({value: currentGuess, frequency: 1});
-      socket.emit("wordGuess", currentGuess);
+      sendGuess(currentGuess);
     }
 
     chatInput = "";
   };
 
   const onClickGuessItem = (e) => {
-      socket.emit("wordGuess", e.detail);
+      sendGuess(e.detail);
+  }
+
+  const sendGuess = (guess) => {
+    socket.emit("round:guess", guess);
   }
 
   // Sending messages
