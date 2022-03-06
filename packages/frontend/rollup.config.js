@@ -10,8 +10,6 @@ import replace from '@rollup/plugin-replace';
 const production = !process.env.ROLLUP_WATCH;
 const { API_URL } = process.env;
 
-console.log(API_URL);
-
 function serve() {
   let server;
 
