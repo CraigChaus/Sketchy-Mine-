@@ -336,6 +336,12 @@ The following is an overview for how the team will communicate internally, as we
 | Sprint review     |       Project team        |                                                           Validate sprint, reflect on project and team progress |                       End of sprint |
 | Publisher meeting | Project team, stakeholder |                                                        Present current deliverables, update on product progress |                       End of sprint |
 
+####Schedule
+- Standups: Monday, Friday (every week); 
+- Publisher meeting: Monday (8.03.2022);
+- Sprint review (Sprint 1): Monday (8.03.2022);
+
+
 #### Communication tools
 
 For communicating and sharing information with other project members, the following tools are to be used:
