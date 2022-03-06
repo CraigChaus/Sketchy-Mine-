@@ -1,6 +1,6 @@
 <script>
-  import ChatBox from "../components/chat/ChatBox.svelte";
-  import MessageBar from "../components/chat/MessageBar.svelte";
+  import ChatBox from '../components/chat/ChatBox.svelte';
+  import MessageBar from '../components/chat/MessageBar.svelte';
 
   let input;
 
@@ -9,47 +9,47 @@
     chatMessages = [
       ...chatMessages,
       {
-        username: "Bob",
+        username: 'Bob',
         message: input,
         type: 1,
       },
     ];
-    input = "";
+    input = '';
   };
 
   const onClickGuess = () => {
     // alert("Guess button: " + input);
-    input = "";
+    input = '';
   };
 
   let chatMessages = [
     {
-      username: "Bob",
-      message: "Hello everyone!",
+      username: 'Bob',
+      message: 'Hello everyone!',
       type: 1,
     },
     {
-      username: "Alice",
+      username: 'Alice',
       message: "Let's do this :)",
       type: 2,
     },
     {
-      username: "SYSTEM",
-      message: "Game is starting...",
+      username: 'SYSTEM',
+      message: 'Game is starting...',
       type: 3,
     },
     {
-      username: "Bob",
-      message: "Hello everyone!",
+      username: 'Bob',
+      message: 'Hello everyone!',
       type: 1,
     },
     {
-      username: "Alice",
+      username: 'Alice',
       message: "Let's do this :)",
       type: 2,
     },
     {
-      username: "Alice",
+      username: 'Alice',
       message: "Let's do this :)asgasfgfgadfgdfgdfgsdfgsfdgsfdgsdfg",
       type: 2,
     },

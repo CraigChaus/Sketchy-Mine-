@@ -1,11 +1,11 @@
 <script>
+  import { onMount } from "svelte";
   import Canvas from "../Canvas/Canvas.svelte";
   import ChatBox from "../components/chat/ChatBox.svelte";
   import GuessList from "../components/guess/GuessBox.svelte";
   import TeamList from "../components/team/TeamList.svelte";
   import MessageBar from "../components/chat/MessageBar.svelte";
   import Toolbox from "../Canvas/Toolbox.svelte";
-  import { onMount } from "svelte";
   import socket from "../socket";
   import { teamsValue } from "../stores/teams";
   import ProgressBar from "../components/team/ProgressBar.svelte";
@@ -23,11 +23,11 @@
 
   let currentColourIndex = 0;
   function teamColour() {
-    return "hsl(" + currentColourIndex++ * 37 + ", 100%, 50%)";
+    return `hsl(${currentColourIndex++ * 37}, 100%, 50%)`;
   }
 
   // Points and colour are used by ProgressBar.
-  let teams = [
+  const teams = [
     {
       teamname: "Team 1",
       isDrawing: false,
@@ -37,11 +37,11 @@
       points: 37,
       colour: teamColour(),
       members: [
-        {username: "Bob", guessed: false, current: true},
-        {username: "Jack", guessed: true},
-        {username: "Alice", guessed: false},
-        {username: "John", guessed: false},
-      ]
+        { username: "Bob", guessed: false, current: true },
+        { username: "Jack", guessed: true },
+        { username: "Alice", guessed: false },
+        { username: "John", guessed: false },
+      ],
     },
     {
       teamname: "Team 2",
@@ -52,11 +52,11 @@
       points: 21,
       colour: teamColour(),
       members: [
-        {username: "Bob", guessed: false, draws: false},
-        {username: "Jack", guessed: true, draws: false},
-        {username: "Alice", guessed: false, draws: true},
-        {username: "John", guessed: false, draws: false},
-      ]
+        { username: "Bob", guessed: false, draws: false },
+        { username: "Jack", guessed: true, draws: false },
+        { username: "Alice", guessed: false, draws: true },
+        { username: "John", guessed: false, draws: false },
+      ],
     },
     {
       teamname: "Team 3",
@@ -67,11 +67,11 @@
       points: 79,
       colour: teamColour(),
       members: [
-        {username: "Bob", guessed: false, draws: false},
-        {username: "Jack", guessed: true, draws: false},
-        {username: "Alice", guessed: false, draws: false},
-        {username: "John", guessed: false, draws: false},
-      ]
+        { username: "Bob", guessed: false, draws: false },
+        { username: "Jack", guessed: true, draws: false },
+        { username: "Alice", guessed: false, draws: false },
+        { username: "John", guessed: false, draws: false },
+      ],
     },
     {
       teamname: "Team 4",
@@ -82,11 +82,11 @@
       points: 90,
       colour: teamColour(),
       members: [
-        {username: "Bob", guessed: false, draws: false},
-        {username: "Jack", guessed: true, draws: false},
-        {username: "Alice", guessed: false, draws: false},
-        {username: "John", guessed: false, draws: false},
-      ]
+        { username: "Bob", guessed: false, draws: false },
+        { username: "Jack", guessed: true, draws: false },
+        { username: "Alice", guessed: false, draws: false },
+        { username: "John", guessed: false, draws: false },
+      ],
     },
     {
       teamname: "Team 5",
@@ -97,11 +97,11 @@
       points: 45,
       colour: teamColour(),
       members: [
-        {username: "Bob", guessed: false, draws: false},
-        {username: "Jack", guessed: true, draws: false},
-        {username: "Alice", guessed: false, draws: false},
-        {username: "John", guessed: false, draws: false},
-      ]
+        { username: "Bob", guessed: false, draws: false },
+        { username: "Jack", guessed: true, draws: false },
+        { username: "Alice", guessed: false, draws: false },
+        { username: "John", guessed: false, draws: false },
+      ],
     },
     {
       teamname: "Team 6",
@@ -112,11 +112,11 @@
       points: 56,
       colour: teamColour(),
       members: [
-        {username: "Bob", guessed: false, draws: false},
-        {username: "Jack", guessed: true, draws: false},
-        {username: "Alice", guessed: false, draws: false},
-        {username: "John", guessed: false, draws: false},
-      ]
+        { username: "Bob", guessed: false, draws: false },
+        { username: "Jack", guessed: true, draws: false },
+        { username: "Alice", guessed: false, draws: false },
+        { username: "John", guessed: false, draws: false },
+      ],
     },
     {
       teamname: "Team 7",
@@ -127,11 +127,11 @@
       points: 33,
       colour: teamColour(),
       members: [
-        {username: "Bob", guessed: false, draws: false},
-        {username: "Jack", guessed: true, draws: false},
-        {username: "Alice", guessed: false, draws: false},
-        {username: "John", guessed: false, draws: false},
-      ]
+        { username: "Bob", guessed: false, draws: false },
+        { username: "Jack", guessed: true, draws: false },
+        { username: "Alice", guessed: false, draws: false },
+        { username: "John", guessed: false, draws: false },
+      ],
     },
     {
       teamname: "Team 8",
@@ -142,11 +142,11 @@
       points: 74,
       colour: teamColour(),
       members: [
-        {username: "Bob", guessed: false, draws: false},
-        {username: "Jack", guessed: true, draws: false},
-        {username: "Alice", guessed: false, draws: false},
-        {username: "John", guessed: false, draws: false},
-      ]
+        { username: "Bob", guessed: false, draws: false },
+        { username: "Jack", guessed: true, draws: false },
+        { username: "Alice", guessed: false, draws: false },
+        { username: "John", guessed: false, draws: false },
+      ],
     },
     {
       teamname: "Team 9",
@@ -157,11 +157,11 @@
       points: 13,
       colour: teamColour(),
       members: [
-        {username: "Bob", guessed: false, draws: false},
-        {username: "Jack", guessed: true, draws: false},
-        {username: "Alice", guessed: false, draws: false},
-        {username: "John", guessed: false, draws: false},
-      ]
+        { username: "Bob", guessed: false, draws: false },
+        { username: "Jack", guessed: true, draws: false },
+        { username: "Alice", guessed: false, draws: false },
+        { username: "John", guessed: false, draws: false },
+      ],
     },
     {
       teamname: "Team 10",
@@ -172,11 +172,11 @@
       points: 85,
       colour: teamColour(),
       members: [
-        {username: "Bob", guessed: false, draws: false},
-        {username: "Jack", guessed: true, draws: false},
-        {username: "Alice", guessed: false, draws: false},
-        {username: "John", guessed: false, draws: false},
-      ]
+        { username: "Bob", guessed: false, draws: false },
+        { username: "Jack", guessed: true, draws: false },
+        { username: "Alice", guessed: false, draws: false },
+        { username: "John", guessed: false, draws: false },
+      ],
     },
     {
       teamname: "Team 11",
@@ -187,11 +187,11 @@
       points: 95,
       colour: teamColour(),
       members: [
-        {username: "Bob", guessed: false, draws: false},
-        {username: "Jack", guessed: true, draws: false},
-        {username: "Alice", guessed: false, draws: false},
-        {username: "John", guessed: false, draws: false},
-      ]
+        { username: "Bob", guessed: false, draws: false },
+        { username: "Jack", guessed: true, draws: false },
+        { username: "Alice", guessed: false, draws: false },
+        { username: "John", guessed: false, draws: false },
+      ],
     },
   ];
 
@@ -200,10 +200,14 @@
   // Progress bar functionality
 
   // This updates the team's points that guessed correctly
-  const updateCorrectGuessingTeamPoints = (correctGuessedTeam, guessedTimeTaken) => {
-    teams.forEach(team => {
-      if ((team.teamname === correctGuessedTeam)) {
-        if (guessedTimeTaken < 30) { // if they guessed in less than 30 seconds, they get 20 points and so on
+  const updateCorrectGuessingTeamPoints = (
+    correctGuessedTeam,
+    guessedTimeTaken
+  ) => {
+    teams.forEach((team) => {
+      if (team.teamname === correctGuessedTeam) {
+        if (guessedTimeTaken < 30) {
+          // if they guessed in less than 30 seconds, they get 20 points and so on
           team.points += 20;
         } else if (guessedTimeTaken < 60) {
           team.points += 15;
@@ -222,7 +226,7 @@
 
   // This updates the team's points that guessed wrongly
   const updateWrongGuessingTeamPoints = (wrongGuessingTeam) => {
-    teams.forEach(team => {
+    teams.forEach((team) => {
       if (team.teamname === wrongGuessingTeam) {
         team.points += 3;
       }
@@ -236,10 +240,10 @@
   // This is to update the drawing team's points
   const updateDrawingTeamPoints = (drawingTeam, numberOfGuessedTeams) => {
     if (numberOfGuessedTeams < teams.length) {
-      let percentage = getGuessedTeamsPercentage(numberOfGuessedTeams);
+      const percentage = getGuessedTeamsPercentage(numberOfGuessedTeams);
 
-      teams.forEach(team => {
-        if ((team.teamname === drawingTeam)) {
+      teams.forEach((team) => {
+        if (team.teamname === drawingTeam) {
           if (percentage > 0 && percentage < 25) {
             team.points += 10;
           } else if (percentage < 50) {
@@ -260,26 +264,27 @@
 
   // This calculates the percentage of the teams that guessed correctly
   const getGuessedTeamsPercentage = (numberOfGuessedTeams) => {
-    let teamsSize = teams.length - 1; // we exclude the drawing team
-    let percentage = (numberOfGuessedTeams / teamsSize) * 100;
+    const teamsSize = teams.length - 1; // we exclude the drawing team
+    const percentage = (numberOfGuessedTeams / teamsSize) * 100;
 
     return percentage;
-  }
+  };
 
   const validateLevelPoints = (points) => {
-    if (points >= 100) { // we make sure no team has more than the maximum amount of points
+    if (points >= 100) {
+      // we make sure no team has more than the maximum amount of points
       points -= 100;
     }
 
     return points;
-  }
+  };
 
   let username;
 
   const session = "main";
 
   onMount(() => {
-    username = "User" + Math.round(Math.random() * 10000);
+    username = `User${Math.round(Math.random() * 10000)}`;
     socket.emit("joinSession", { username, session });
   });
 
@@ -311,7 +316,7 @@
     socket.emit("canvas:new-user");
   });
   let randomizeDrawer = () => {
-    let rng = Math.random();
+    const rng = Math.random();
     if (rng < 0.33) {
       role = 1;
     } else if (rng > 0.33 && rng < 0.66) {
@@ -319,35 +324,34 @@
     } else {
       role = 3;
     }
-    console.log(role);
   };
 
   let promise = getRole();
 
-  let becomeDrawer = () => {
+  const becomeDrawer = () => {
     role = 1;
     promise = getRole();
   };
-  let becomeGuesser = () => {
+  const becomeGuesser = () => {
     role = 2;
     promise = getRole();
   };
-  let becomeSpectator = () => {
+  const becomeSpectator = () => {
     role = 3;
     promise = getRole();
   };
 
-  //1: drawer
-  //2: guesser
-  //3: spectator
+  // 1: drawer
+  // 2: guesser
+  // 3: spectator
   socket.on("canvas:drawer", becomeDrawer);
   socket.on("canvas:guesser", becomeGuesser);
   socket.on("canvas:spectator", becomeSpectator);
 
-  let makeAllSpec = () => {
+  const makeAllSpec = () => {
     socket.emit("canvas:spectator");
   };
-  let makeAllDrawer = () => {
+  const makeAllDrawer = () => {
     socket.emit("canvas:drawer");
   };
 
@@ -367,7 +371,6 @@
   };
 
   const updateGuessState = (payload) => {
-    console.log(payload);
     teamGuesses = payload;
   };
 
@@ -395,6 +398,11 @@
 
   socket.on("round:result", (payload) => {
     results = payload;
+
+    const correct = currentGuess.toLowerCase() === payload.result.toLowerCase();
+    const team1 = teams[0];
+    team1.won = correct;
+    teams = teams;
   });
 
   let currentGuess = null;

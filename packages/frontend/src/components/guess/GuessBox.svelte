@@ -34,7 +34,6 @@
   };
 
   const updateProgress = (payload) => {
-    console.log(payload);
     timeRemainingInSeconds = payload.timeLeft;
   };
 
