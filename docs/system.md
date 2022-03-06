@@ -125,6 +125,18 @@ The presented product is a network game created for a large number of players wh
 - The moderator can kick any player out of the game, as well as completely ban the player's account.
 - Moderator options include making the game harder or easier for the players.
 
+##Description of Component Diagram
+![Component Diagram](./resources/diagrams/Abstract Component Diagram.png "login image")
+
+####Component diagram consists of 5 components connected to each other illustrating the operation of the system.
+
+- The Client Web Browser component that requires the
+- Game Server component to provide a running game, inside the Game server component are two subclasses:
+
+  1.Socket.IO component, which provides our Clent Web Browser component realtime web application ( communication between webclient and servers).
+
+  2.Database controller component.Data from the Socket.io component is streamed to the Database controller component, which in turn is connected to the database,
+- the Database component provides access to write new data about the course of the game, players, and so on, and also provides the Database Controller with access to read previously saved data.
 
 ## Technical design
 ### Development tools
