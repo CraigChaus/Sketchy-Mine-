@@ -1,8 +1,8 @@
 <script>
     import {onMount, onDestroy, createEventDispatcher} from "svelte";
     import {LazyBrush} from "lazy-brush";
-    import {Catenary} from "catenary-curve";
     import ResizeObserver from "resize-observer-polyfill";
+    import socket from "../socket/index";
 
     export let loadTimeOffset = 5;
     export let lazyRadius = 12;
@@ -50,8 +50,6 @@
 
     let canvas = {};
     let ctx = {};
-
-    let catenary = new Catenary();
 
     let points = [];
     let lines = [];
@@ -117,7 +115,7 @@
     });
 
     onDestroy(() => {
-        canvasObserver.unobserve(canvasContainer)
+        canvasObserver.unobserve(canvasContainer);
     });
 
     let undo = () => {
@@ -131,17 +129,19 @@
         return JSON.stringify({
             lines: lines,
             width: canvasWidth,
-            height: canvasHeight
+            height: canvasHeight,
         });
     };
 
-    let loadSaveData = (saveData, immediate = immediateLoading) => {
-        console.log(saveData)
+    let loadSaveData = (payLoad) => {
+        let saveData = payLoad['saveData'];
+        let immediate = immediateLoading;
+        // console.log(saveData); 
         if (typeof saveData !== "string") {
             throw new Error("saveData needs to be of type string!");
         }
 
-        const {lines, width, height} = JSON.parse(saveData);
+        const {lines, width, height}= JSON.parse(saveData);
 
         if (!lines || typeof lines.push !== "function") {
             throw new Error("saveData.lines needs to be an array!");
@@ -152,7 +152,7 @@
         if (width === canvasWidth && height === canvasHeight) {
             simulateDrawingLines({
                 lines,
-                immediate
+                immediate,
             });
         } else {
             const scaleX = canvasWidth / width;
@@ -164,16 +164,18 @@
                     ...line,
                     points: line.points.map(p => ({
                         x: p.x * scaleX,
-                        y: p.y * scaleY
+                        y: p.y * scaleY,
                     })),
-                    brushRadius: line.brushRadius * scaleAvg
+                    brushRadius: line.brushRadius * scaleAvg,
                 })),
-                immediate
+                immediate,
             });
         }
     };
 
-    let simulateDrawingLines = ({lines, immediate}) => {
+    let simulateDrawingLines = (payload) => {
+        let lines = payload['lines'];
+        let immediate = payload['immediate'];
         // Simulate live-drawing of the loaded lines
         // TODO use a generator
         let curTime = 0;
@@ -204,7 +206,7 @@
                     drawPoints({
                         points: points.slice(0, i + 1),
                         brushColor,
-                        brushRadius
+                        brushRadius,
                     });
                 }, curTime);
             }
@@ -219,39 +221,47 @@
     };
 
     let handleDrawStart = e => {
-        e.preventDefault();
+        if (role === 1) {
+            e.preventDefault();
 
-        // Start drawing
-        isPressing = true;
+            // Start drawing
+            isPressing = true;
 
-        const {x, y} = getPointerPos(e);
+            const {x, y} = getPointerPos(e);
 
-        if (e.touches && e.touches.length > 0) {
-            // on touch, set catenary position to touch pos
-            lazy.update({x, y}, {both: true});
+            if (e.touches && e.touches.length > 0) {
+                // on touch, set catenary position to touch pos
+                lazy.update({x, y}, {both: true});
+            }
+
+            // Ensure the initial down position gets added to our line
+            handlePointerMove(x, y);
         }
-
-        // Ensure the initial down position gets added to our line
-        handlePointerMove(x, y);
     };
 
     let handleDrawMove = e => {
-        e.preventDefault();
+        if (role === 1) {
 
-        const {x, y} = getPointerPos(e);
-        handlePointerMove(x, y);
+
+            e.preventDefault();
+
+            const {x, y} = getPointerPos(e);
+            handlePointerMove(x, y);
+        }
     };
 
     let handleDrawEnd = e => {
-        e.preventDefault();
+        if (role === 1) {
+            e.preventDefault();
 
-        // Draw to this end pos
-        handleDrawMove(e);
+            // Draw to this end pos
+            handleDrawMove(e);
 
-        // Stop drawing & save the drawn line
-        isDrawing = false;
-        isPressing = false;
-        saveLine();
+            // Stop drawing & save the drawn line
+            isDrawing = false;
+            isPressing = false;
+            saveLine();
+        }
     };
 
     let handleCanvasResize = (entries, observer) => {
@@ -323,22 +333,31 @@
                 brushColor: brushColor,
                 brushRadius: brushRadius
             });
+            socket.emit('canvas:points', { points, brushColor, brushRadius });
         }
 
         mouseHasMoved = true;
     };
 
-    let drawPoints = ({points, brushColor, brushRadius}) => {
+    let drawPoints = (payload) => {
+        //what
+        console.log("ready to draw")
+        let points = payload['points'];
+        let brushColor = payload['brushColor'];
+        let brushRadius = payload['brushRadius'];
+
         ctx.temp.lineJoin = "round";
         ctx.temp.lineCap = "round";
         ctx.temp.strokeStyle = brushColor;
 
-        ctx.temp.clearRect(
-            0,
-            0,
-            ctx.temp.canvas.width,
-            ctx.temp.canvas.height
-        );
+        //todo understand why this is here
+        // ctx.temp.clearRect(
+        //     0,
+        //     0,
+        //     ctx.temp.canvas.width,
+        //     ctx.temp.canvas.height
+        // );
+
         ctx.temp.lineWidth = brushRadius * 2;
 
         let p1 = points[0];
@@ -360,7 +379,10 @@
         // the bezier control point
         ctx.temp.lineTo(p1.x, p1.y);
         ctx.temp.stroke();
+
     };
+    //Socket: For drawing the points, drawing on the canvas
+    socket.on('canvas:points', drawPoints);
 
     let saveLine = ({brushColor, brushRadius} = {}) => {
         if (points.length < 2) return;
@@ -369,12 +391,12 @@
         lines.push({
             points: [...points],
             brushColor: brushColor || brushColor,
-            brushRadius: brushRadius || brushRadius
+            brushRadius: brushRadius || brushRadius,
         });
 
+        //Save the lines drawn
         // Reset points array
         points.length = 0;
-
         const width = canvas.temp.width;
         const height = canvas.temp.height;
 
@@ -398,15 +420,16 @@
             0,
             0,
             canvas.drawing.width,
-            canvas.drawing.height
+            canvas.drawing.height,
         );
         ctx.temp.clearRect(
             0,
             0,
             canvas.temp.width,
-            canvas.temp.height
+            canvas.temp.height,
         );
     };
+
 
     let loop = ({once = false} = {}) => {
         if (mouseHasMoved || valuesChanged) {
@@ -495,34 +518,39 @@
         ctx.fill();
     };
 
-    export function clearDrawings() {
-        clear()
-    }
+        export function clearDrawings() {
+            clear();
+        }
 
-    export function undoDrawings() {
-        undo()
-    }
+        export function undoDrawings() {
+            undo();
+        }
 
-    export function get_image_data() {
-        return prepareImageData()
-    }
+        export function get_image_data() {
+            return prepareImageData()
+        }
 
-    function prepareImageData() {
-        var newCanvas = document.createElement('canvas'),
-            _ctx = newCanvas.getContext('2d'),
-            width = canvasWidth,
-            height = canvasHeight;
+        function prepareImageData() {
+            var newCanvas = document.createElement('canvas'),
+                _ctx = newCanvas.getContext('2d'),
+                width = canvasWidth,
+                height = canvasHeight;
 
-        newCanvas.width = width;
-        newCanvas.height = height;
+            newCanvas.width = width;
+            newCanvas.height = height;
 
-        [ctx.grid.canvas, ctx.drawing.canvas].forEach(function (n) {
-            _ctx.beginPath();
-            _ctx.drawImage(n, 0, 0, width, height);
-        });
+            [ctx.grid.canvas, ctx.drawing.canvas].forEach(function (n) {
+                _ctx.beginPath();
+                _ctx.drawImage(n, 0, 0, width, height);
+                console.log("Sending "+ n +" : "+ width +" : " + height);
+            });
+            return newCanvas.toDataURL();
+        }
 
-        return newCanvas.toDataURL();
-    }
+        export let role;
+
+
+        socket.on('canvas:clear', clear);
 
 </script>
 

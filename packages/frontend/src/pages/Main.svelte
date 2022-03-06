@@ -1,199 +1,283 @@
 <script>
-    import Canvas from "../Canvas/Canvas.svelte";
-    import ChatBox from "../components/chat/ChatBox.svelte";
-    import GuessList from "../components/guess/GuessBox.svelte";
-    import TeamList from "../components/team/TeamList.svelte";
-    import MessageBar from "../components/chat/MessageBar.svelte";
-    import Toolbox from "../Canvas/Toolbox.svelte";
-    import ProgressBar from "../components/team/ProgressBar.svelte";
-    import socket from "../socket/index";
-    import { onMount } from "svelte";
+  import Canvas from "../Canvas/Canvas.svelte";
+  import ChatBox from "../components/chat/ChatBox.svelte";
+  import GuessList from "../components/guess/GuessBox.svelte";
+  import TeamList from "../components/team/TeamList.svelte";
+  import MessageBar from "../components/chat/MessageBar.svelte";
+  import Toolbox from "../Canvas/Toolbox.svelte";
+  import { onMount } from "svelte";
+  import socket from "../socket";
+  import ProgressBar from "../components/team/ProgressBar.svelte";
 
-    let username;
+  let currentColourIndex = 0;
+  function teamColour() {
+    return "hsl(" + currentColourIndex++ * 37 + ", 100%, 50%)";
+  }
 
-    const session = "main";
+  // Points and colour are used by ProgressBar.
+  let teams = [
+    {
+      teamname: "Team 1",
+      isDrawing: false,
+      isSelf: true,
+      won: true,
+      placementNr: 2,
+      points: 37,
+      colour: teamColour(),
+    },
+    {
+      teamname: "Team 2",
+      isDrawing: true,
+      isSelf: false,
+      won: undefined,
+      placementNr: undefined,
+      points: 21,
+      colour: teamColour(),
+    },
+    {
+      teamname: "Team 3",
+      isDrawing: false,
+      isSelf: false,
+      won: true,
+      placementNr: 1,
+      points: 79,
+      colour: teamColour(),
+    },
+    {
+      teamname: "Team 4",
+      isDrawing: false,
+      isSelf: false,
+      won: false,
+      placementNr: undefined,
+      points: 90,
+      colour: teamColour(),
+    },
+    {
+      teamname: "Team 5",
+      isDrawing: false,
+      isSelf: false,
+      won: false,
+      placementNr: undefined,
+      points: 80,
+      colour: teamColour(),
+    },
+    {
+      teamname: "Team 6",
+      isDrawing: false,
+      isSelf: false,
+      won: true,
+      placementNr: 3,
+      points: 56,
+      colour: teamColour(),
+    },
+    {
+      teamname: "Team 7",
+      isDrawing: false,
+      isSelf: false,
+      won: true,
+      placementNr: 4,
+      points: 33,
+      colour: teamColour(),
+    },
+    {
+      teamname: "Team 8",
+      isDrawing: false,
+      isSelf: false,
+      won: false,
+      placementNr: undefined,
+      points: 74,
+      colour: teamColour(),
+    },
+    {
+      teamname: "Team 9",
+      isDrawing: false,
+      isSelf: false,
+      won: false,
+      placementNr: undefined,
+      points: 13,
+      colour: teamColour(),
+    },
+    {
+      teamname: "Team 10",
+      isDrawing: false,
+      isSelf: false,
+      won: false,
+      placementNr: undefined,
+      points: 88,
+      colour: teamColour(),
+    },
+    {
+      teamname: "Team 11",
+      isDrawing: false,
+      isSelf: false,
+      won: false,
+      placementNr: undefined,
+      points: 99,
+      colour: teamColour(),
+    },
+  ];
 
-    onMount(() => {
-        username = "User" + Math.round(Math.random() * 10000);
-        socket.emit("joinSession", { username, session });
-    });
+  let username;
 
-    // Receiving messages
-    socket.on("message", (data) => {
-        if (!data) {
-            return;
-        }
+  const session = "main";
 
-        chatMessages = [
-            ...chatMessages,
-            {
-                username: data.username,
-                message: data.text,
-                type: data.type,
-            },
-        ];
-    });
+  onMount(() => {
+    username = "User" + Math.round(Math.random() * 10000);
+    socket.emit("joinSession", { username, session });
+  });
 
-    let currentColourIndex = 0;
-    function teamColour() {
-        return "hsl(" + currentColourIndex++ * 37 + ", 100%, 50%)";
+  // Receiving messages
+  socket.on("message", (data) => {
+    if (!data) {
+      return;
     }
 
-    // Points and colour are used by ProgressBar.
-    let teams = [
-        {
-            teamname: "Team 1",
-            isDrawing: false,
-            isSelf: true,
-            won: true,
-            placementNr: 2,
-            points: 37,
-            colour: teamColour(),
-        },
-        {
-            teamname: "Team 2",
-            isDrawing: true,
-            isSelf: false,
-            won: undefined,
-            placementNr: undefined,
-            points: 21,
-            colour: teamColour(),
-        },
-        {
-            teamname: "Team 3",
-            isDrawing: false,
-            isSelf: false,
-            won: true,
-            placementNr: 1,
-            points: 79,
-            colour: teamColour(),
-        },
-        {
-            teamname: "Team 4",
-            isDrawing: false,
-            isSelf: false,
-            won: false,
-            placementNr: undefined,
-            points: 90,
-            colour: teamColour(),
-        },
-        {
-            teamname: "Team 5",
-            isDrawing: false,
-            isSelf: false,
-            won: false,
-            placementNr: undefined,
-            points: 80,
-            colour: teamColour(),
-        },
-        {
-            teamname: "Team 6",
-            isDrawing: false,
-            isSelf: false,
-            won: true,
-            placementNr: 3,
-            points: 56,
-            colour: teamColour(),
-        },
-        {
-            teamname: "Team 7",
-            isDrawing: false,
-            isSelf: false,
-            won: true,
-            placementNr: 4,
-            points: 33,
-            colour: teamColour(),
-        },
-        {
-            teamname: "Team 8",
-            isDrawing: false,
-            isSelf: false,
-            won: false,
-            placementNr: undefined,
-            points: 74,
-            colour: teamColour(),
-        },
-        {
-            teamname: "Team 9",
-            isDrawing: false,
-            isSelf: false,
-            won: false,
-            placementNr: undefined,
-            points: 13,
-            colour: teamColour(),
-        },
-        {
-            teamname: "Team 10",
-            isDrawing: false,
-            isSelf: false,
-            won: false,
-            placementNr: undefined,
-            points: 88,
-            colour: teamColour(),
-        },
-        {
-            teamname: "Team 11",
-            isDrawing: false,
-            isSelf: false,
-            won: false,
-            placementNr: undefined,
-            points: 99,
-            colour: teamColour(),
-        },
+    chatMessages = [
+      ...chatMessages,
+      {
+        username: data.username,
+        message: data.text,
+        type: data.type,
+      },
     ];
+  });
 
-    let chatMessages = [];
+  async function getRole() {
+    return role;
+  }
 
-    let chatInput;
+  let role = 3;
 
-    const onClickGuess = () => {
-        currentGuess = chatInput;
-        chatInput = "";
-    };
+  onMount(() => {
+    randomizeDrawer();
+    promise = getRole();
+    socket.emit("canvas:new-user");
+  });
+  let randomizeDrawer = () => {
+    let rng = Math.random();
+    if (rng < 0.33) {
+      role = 1;
+    } else if (rng > 0.33 && rng < 0.66) {
+      role = 2;
+    } else {
+      role = 3;
+    }
+    console.log(role);
+  };
 
-    // Sending messages
-    const onClickChat = () => {
-        socket.emit("chatMessage", chatInput);
-        // chatMessages = [
-        //   ...chatMessages,
-        //   {
-        //     username: username,
-        //     message: chatInput,
-        //     type: 1,
-        //   },
-        // ];
-        chatInput = "";
-    };
+  let promise = getRole();
 
-    let currentGuess = null;
+  let becomeDrawer = () => {
+    role = 1;
+    promise = getRole();
+  };
+  let becomeGuesser = () => {
+    role = 2;
+    promise = getRole();
+  };
+  let becomeSpectator = () => {
+    role = 3;
+    promise = getRole();
+  };
 
-    let brushColor = "#444";
-    let brushRadius = 8;
-    let SDraw = null;
+  //1: drawer
+  //2: guesser
+  //3: spectator
+  socket.on("canvas:drawer", becomeDrawer);
+  socket.on("canvas:guesser", becomeGuesser);
+  socket.on("canvas:spectator", becomeSpectator);
 
+  let makeAllSpec = () => {
+    socket.emit("canvas:spectator");
+  };
+  let makeAllDrawer = () => {
+    socket.emit("canvas:drawer");
+  };
 
+  let chatMessages = [];
+
+  let chatInput;
+
+  const onClickGuess = () => {
+    currentGuess = chatInput;
+    chatInput = "";
+  };
+
+  // Sending messages
+  const onClickChat = () => {
+    socket.emit("chatMessage", chatInput);
+    // chatMessages = [
+    //   ...chatMessages,
+    //   {
+    //     username: username,
+    //     message: chatInput,
+    //     type: 1,
+    //   },
+    // ];
+    chatInput = "";
+  };
+
+  let currentGuess = null;
+
+  let brushColor = "#444";
+  let brushRadius = 8;
+  let SDraw = null;
 </script>
 
 <ProgressBar {teams} />
 
 <div class="flex">
-    <div class="w-1/4 h-12">
-        <GuessList teamNumber={1} {currentGuess} />
-        <TeamList showResults={true} contentJSON={teams} />
+  <div class="w-1/4 h-12">
+    <GuessList teamNumber={1} {currentGuess} />
+    <TeamList showResults={true} contentJSON={teams} />
+  </div>
+  <div class="w-2/4 h-full">
+    <Canvas
+      {role}
+      bind:this={SDraw}
+      {brushColor}
+      {brushRadius}
+      canvasWidth="640"
+    />
+    <div class="flex-row justify-center">
+      {#await promise}
+        <p>loading..</p>
+      {:then role}
+        {#if role === 1}
+          <Toolbox bind:SDraw bind:brushColor bind:brushRadius />
+        {/if}
+        <p>You are currently role {role}</p>
+      {/await}
     </div>
+    <button
+      on:click={becomeDrawer}
+      class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+      >become drawer</button
+    >
+    <button
+      on:click={becomeGuesser}
+      class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded"
+      >become guesser</button
+    >
+    <button
+      on:click={makeAllDrawer}
+      class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+      >make all users drawers</button
+    >
+    <button
+      on:click={makeAllSpec}
+      class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded"
+      >make all users spectators</button
+    >
+    <MessageBar
+      {role}
+      bind:input={chatInput}
+      on:guessWordClicked={onClickGuess}
+      on:sendChatClicked={onClickChat}
+    />
+  </div>
 
-    <div class="w-2/4 h-full">
-        <Canvas bind:this={SDraw} {brushColor} {brushRadius} canvasWidth="640" />
-        <div class="flex-row justify-center">
-            <Toolbox bind:SDraw bind:brushColor bind:brushRadius />
-        </div>
-        <MessageBar
-                bind:input={chatInput}
-                on:guessWordClicked={onClickGuess}
-                on:sendChatClicked={onClickChat}
-        />
-    </div>
-    <div class="w-1/4 h-full mx-3">
-        <ChatBox messages={chatMessages} />
-    </div>
+  <div class="w-1/4 h-full mx-3">
+    <ChatBox messages={chatMessages} />
+  </div>
 </div>
