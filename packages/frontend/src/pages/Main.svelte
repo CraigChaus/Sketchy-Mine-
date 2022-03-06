@@ -9,6 +9,17 @@
   import socket from "../socket";
   import ProgressBar from "../components/team/ProgressBar.svelte";
 
+  let results = null;
+
+  // Receiving guesses
+  socket.on("guess", (guesses) => {
+    if (!data) {
+      return;
+    }
+
+    teamGuesses = [...guesses];
+  });
+
   let currentColourIndex = 0;
   function teamColour() {
     return "hsl(" + currentColourIndex++ * 37 + ", 100%, 50%)";
@@ -195,27 +206,50 @@
   };
 
   let chatMessages = [];
+  let teamGuesses = [];
 
   let chatInput;
 
   const onClickGuess = () => {
-    currentGuess = chatInput;
+    if (chatInput !== "") {
+      currentGuess = chatInput;
+      // teamGuesses.push({ value: currentGuess, frequency: 1 });
+      sendGuess(currentGuess);
+    }
+
     chatInput = "";
+  };
+
+  const updateGuessState = (payload) => {
+    console.log(payload);
+    teamGuesses = payload;
+  };
+
+  socket.on("round:state", updateGuessState);
+
+  const onClickGuessItem = (e) => {
+    sendGuess(e.detail);
+  };
+
+  const sendGuess = (guess) => {
+    socket.emit("round:guess", guess);
   };
 
   // Sending messages
   const onClickChat = () => {
-    socket.emit("chatMessage", chatInput);
-    // chatMessages = [
-    //   ...chatMessages,
-    //   {
-    //     username: username,
-    //     message: chatInput,
-    //     type: 1,
-    //   },
-    // ];
-    chatInput = "";
+    if (chatInput !== "") {
+      socket.emit("chatMessage", chatInput);
+      chatInput = "";
+    }
   };
+
+  const startRound = () => {
+    socket.emit("round:start");
+  };
+
+  socket.on("round:result", (payload) => {
+    results = payload;
+  });
 
   let currentGuess = null;
 
@@ -228,10 +262,15 @@
 
 <div class="flex">
   <div class="w-1/4 h-12">
-    <GuessList teamNumber={1} {currentGuess} />
-    <TeamList showResults={true} contentJSON={teams} />
+    <GuessList
+      on:guessClicked={onClickGuessItem}
+      {teamGuesses}
+      teamNumber={1}
+      currentGuess={currentGuess ? currentGuess.toLowerCase() : null}
+    />
+    <TeamList showResults={results != null} contentJSON={teams} />
   </div>
-  <div class="w-2/4 h-full">
+  <div class="w-2/4 h-full space-y-1">
     <Canvas
       {role}
       bind:this={SDraw}
@@ -269,6 +308,13 @@
       class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded"
       >make all users spectators</button
     >
+
+    <button
+      on:click={startRound}
+      class="bg-purple-500 hover:bg-purple-700 text-white font-bold py-2 px-4 rounded"
+      >Start Round</button
+    >
+
     <MessageBar
       {role}
       bind:input={chatInput}

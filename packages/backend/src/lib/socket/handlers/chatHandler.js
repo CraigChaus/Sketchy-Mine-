@@ -4,6 +4,8 @@ import {
 } from '../utils/users';
 
 import messageFormat from '../utils/messages';
+import { GUESS_EVENTS, sendState } from './guessHandler';
+import { getGuesses, removeUserGuesses } from '../utils/gameState';
 
 // This will appear as the name of the sender
 const name = 'Sketchy Mine System';
@@ -34,6 +36,8 @@ const chatHandler = (io, socket) => {
       room: user.session,
       users: getSessionUsers(user.session),
     });
+
+    sendState(socket);
   });
 
   // Listen for chat message
@@ -46,17 +50,24 @@ const chatHandler = (io, socket) => {
 
   // Runs when client disconnects from the server
   socket.on('disconnect', () => {
+    const existingUser = getCurrentUser(socket.id);
+
+    if (existingUser) {
+      removeUserGuesses(existingUser);
+      io.emit(GUESS_EVENTS.ROUND_STATE, getGuesses(existingUser.session));
+    }
+
     const user = userLeave(socket.id);
 
     if (user) {
-      dbg('Client disconnected', user);
+      dbg('Client disconnected', existingUser);
       // Send to everyone using emit() method
-      io.to(user.session).emit(CHAT_EVENTS.MESSAGE, messageFormat(name, `${user.username} has left the chat`, 3));
+      io.to(existingUser.session).emit(CHAT_EVENTS.MESSAGE, messageFormat(name, `${existingUser.username} has left the chat`, 3));
 
       // Send users and session info again when user disconnects
-      io.to(user.session).emit(CHAT_EVENTS.SESSION_USERS, {
-        room: user.session,
-        users: getSessionUsers(user.session),
+      io.to(existingUser.session).emit(CHAT_EVENTS.SESSION_USERS, {
+        room: existingUser.session,
+        users: getSessionUsers(existingUser.session),
       });
     }
   });
