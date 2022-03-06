@@ -1,19 +1,19 @@
 <script>
-  import { onMount } from 'svelte';
-  import Canvas from '../Canvas/Canvas.svelte';
-  import ChatBox from '../components/chat/ChatBox.svelte';
-  import GuessList from '../components/guess/GuessBox.svelte';
-  import TeamList from '../components/team/TeamList.svelte';
-  import MessageBar from '../components/chat/MessageBar.svelte';
-  import Toolbox from '../Canvas/Toolbox.svelte';
-  import socket from '../socket';
-  import { teamsValue } from '../stores/teams';
-  import ProgressBar from '../components/team/ProgressBar.svelte';
+  import { onMount } from "svelte";
+  import Canvas from "../Canvas/Canvas.svelte";
+  import ChatBox from "../components/chat/ChatBox.svelte";
+  import GuessList from "../components/guess/GuessBox.svelte";
+  import TeamList from "../components/team/TeamList.svelte";
+  import MessageBar from "../components/chat/MessageBar.svelte";
+  import Toolbox from "../Canvas/Toolbox.svelte";
+  import socket from "../socket";
+  import { teamsValue } from "../stores/teams";
+  import ProgressBar from "../components/team/ProgressBar.svelte";
 
   let results = null;
 
   // Receiving guesses
-  socket.on('guess', (guesses) => {
+  socket.on("guess", (guesses) => {
     if (!data) {
       return;
     }
@@ -29,7 +29,7 @@
   // Points and colour are used by ProgressBar.
   const teams = [
     {
-      teamname: 'Team 1',
+      teamname: "Team 1",
       isDrawing: false,
       isSelf: true,
       won: true,
@@ -37,14 +37,14 @@
       points: 37,
       colour: teamColour(),
       members: [
-        { username: 'Bob', guessed: false, current: true },
-        { username: 'Jack', guessed: true },
-        { username: 'Alice', guessed: false },
-        { username: 'John', guessed: false },
+        { username: "Bob", guessed: false, current: true },
+        { username: "Jack", guessed: true },
+        { username: "Alice", guessed: false },
+        { username: "John", guessed: false },
       ],
     },
     {
-      teamname: 'Team 2',
+      teamname: "Team 2",
       isDrawing: true,
       isSelf: false,
       won: undefined,
@@ -52,14 +52,14 @@
       points: 21,
       colour: teamColour(),
       members: [
-        { username: 'Bob', guessed: false, draws: false },
-        { username: 'Jack', guessed: true, draws: false },
-        { username: 'Alice', guessed: false, draws: true },
-        { username: 'John', guessed: false, draws: false },
+        { username: "Bob", guessed: false, draws: false },
+        { username: "Jack", guessed: true, draws: false },
+        { username: "Alice", guessed: false, draws: true },
+        { username: "John", guessed: false, draws: false },
       ],
     },
     {
-      teamname: 'Team 3',
+      teamname: "Team 3",
       isDrawing: false,
       isSelf: false,
       won: true,
@@ -67,14 +67,14 @@
       points: 79,
       colour: teamColour(),
       members: [
-        { username: 'Bob', guessed: false, draws: false },
-        { username: 'Jack', guessed: true, draws: false },
-        { username: 'Alice', guessed: false, draws: false },
-        { username: 'John', guessed: false, draws: false },
+        { username: "Bob", guessed: false, draws: false },
+        { username: "Jack", guessed: true, draws: false },
+        { username: "Alice", guessed: false, draws: false },
+        { username: "John", guessed: false, draws: false },
       ],
     },
     {
-      teamname: 'Team 4',
+      teamname: "Team 4",
       isDrawing: false,
       isSelf: false,
       won: false,
@@ -82,14 +82,14 @@
       points: 90,
       colour: teamColour(),
       members: [
-        { username: 'Bob', guessed: false, draws: false },
-        { username: 'Jack', guessed: true, draws: false },
-        { username: 'Alice', guessed: false, draws: false },
-        { username: 'John', guessed: false, draws: false },
+        { username: "Bob", guessed: false, draws: false },
+        { username: "Jack", guessed: true, draws: false },
+        { username: "Alice", guessed: false, draws: false },
+        { username: "John", guessed: false, draws: false },
       ],
     },
     {
-      teamname: 'Team 5',
+      teamname: "Team 5",
       isDrawing: false,
       isSelf: false,
       won: false,
@@ -97,14 +97,14 @@
       points: 45,
       colour: teamColour(),
       members: [
-        { username: 'Bob', guessed: false, draws: false },
-        { username: 'Jack', guessed: true, draws: false },
-        { username: 'Alice', guessed: false, draws: false },
-        { username: 'John', guessed: false, draws: false },
+        { username: "Bob", guessed: false, draws: false },
+        { username: "Jack", guessed: true, draws: false },
+        { username: "Alice", guessed: false, draws: false },
+        { username: "John", guessed: false, draws: false },
       ],
     },
     {
-      teamname: 'Team 6',
+      teamname: "Team 6",
       isDrawing: false,
       isSelf: false,
       won: true,
@@ -112,14 +112,14 @@
       points: 56,
       colour: teamColour(),
       members: [
-        { username: 'Bob', guessed: false, draws: false },
-        { username: 'Jack', guessed: true, draws: false },
-        { username: 'Alice', guessed: false, draws: false },
-        { username: 'John', guessed: false, draws: false },
+        { username: "Bob", guessed: false, draws: false },
+        { username: "Jack", guessed: true, draws: false },
+        { username: "Alice", guessed: false, draws: false },
+        { username: "John", guessed: false, draws: false },
       ],
     },
     {
-      teamname: 'Team 7',
+      teamname: "Team 7",
       isDrawing: false,
       isSelf: false,
       won: true,
@@ -127,14 +127,14 @@
       points: 33,
       colour: teamColour(),
       members: [
-        { username: 'Bob', guessed: false, draws: false },
-        { username: 'Jack', guessed: true, draws: false },
-        { username: 'Alice', guessed: false, draws: false },
-        { username: 'John', guessed: false, draws: false },
+        { username: "Bob", guessed: false, draws: false },
+        { username: "Jack", guessed: true, draws: false },
+        { username: "Alice", guessed: false, draws: false },
+        { username: "John", guessed: false, draws: false },
       ],
     },
     {
-      teamname: 'Team 8',
+      teamname: "Team 8",
       isDrawing: false,
       isSelf: false,
       won: false,
@@ -142,14 +142,14 @@
       points: 74,
       colour: teamColour(),
       members: [
-        { username: 'Bob', guessed: false, draws: false },
-        { username: 'Jack', guessed: true, draws: false },
-        { username: 'Alice', guessed: false, draws: false },
-        { username: 'John', guessed: false, draws: false },
+        { username: "Bob", guessed: false, draws: false },
+        { username: "Jack", guessed: true, draws: false },
+        { username: "Alice", guessed: false, draws: false },
+        { username: "John", guessed: false, draws: false },
       ],
     },
     {
-      teamname: 'Team 9',
+      teamname: "Team 9",
       isDrawing: false,
       isSelf: false,
       won: false,
@@ -157,14 +157,14 @@
       points: 13,
       colour: teamColour(),
       members: [
-        { username: 'Bob', guessed: false, draws: false },
-        { username: 'Jack', guessed: true, draws: false },
-        { username: 'Alice', guessed: false, draws: false },
-        { username: 'John', guessed: false, draws: false },
+        { username: "Bob", guessed: false, draws: false },
+        { username: "Jack", guessed: true, draws: false },
+        { username: "Alice", guessed: false, draws: false },
+        { username: "John", guessed: false, draws: false },
       ],
     },
     {
-      teamname: 'Team 10',
+      teamname: "Team 10",
       isDrawing: false,
       isSelf: false,
       won: false,
@@ -172,14 +172,14 @@
       points: 85,
       colour: teamColour(),
       members: [
-        { username: 'Bob', guessed: false, draws: false },
-        { username: 'Jack', guessed: true, draws: false },
-        { username: 'Alice', guessed: false, draws: false },
-        { username: 'John', guessed: false, draws: false },
+        { username: "Bob", guessed: false, draws: false },
+        { username: "Jack", guessed: true, draws: false },
+        { username: "Alice", guessed: false, draws: false },
+        { username: "John", guessed: false, draws: false },
       ],
     },
     {
-      teamname: 'Team 11',
+      teamname: "Team 11",
       isDrawing: false,
       isSelf: false,
       won: false,
@@ -187,10 +187,10 @@
       points: 95,
       colour: teamColour(),
       members: [
-        { username: 'Bob', guessed: false, draws: false },
-        { username: 'Jack', guessed: true, draws: false },
-        { username: 'Alice', guessed: false, draws: false },
-        { username: 'John', guessed: false, draws: false },
+        { username: "Bob", guessed: false, draws: false },
+        { username: "Jack", guessed: true, draws: false },
+        { username: "Alice", guessed: false, draws: false },
+        { username: "John", guessed: false, draws: false },
       ],
     },
   ];
@@ -202,7 +202,7 @@
   // This updates the team's points that guessed correctly
   const updateCorrectGuessingTeamPoints = (
     correctGuessedTeam,
-    guessedTimeTaken,
+    guessedTimeTaken
   ) => {
     teams.forEach((team) => {
       if (team.teamname === correctGuessedTeam) {
@@ -281,15 +281,15 @@
 
   let username;
 
-  const session = 'main';
+  const session = "main";
 
   onMount(() => {
     username = `User${Math.round(Math.random() * 10000)}`;
-    socket.emit('joinSession', { username, session });
+    socket.emit("joinSession", { username, session });
   });
 
   // Receiving messages
-  socket.on('message', (data) => {
+  socket.on("message", (data) => {
     if (!data) {
       return;
     }
@@ -313,7 +313,7 @@
   onMount(() => {
     randomizeDrawer();
     promise = getRole();
-    socket.emit('canvas:new-user');
+    socket.emit("canvas:new-user");
   });
   let randomizeDrawer = () => {
     const rng = Math.random();
@@ -344,15 +344,15 @@
   // 1: drawer
   // 2: guesser
   // 3: spectator
-  socket.on('canvas:drawer', becomeDrawer);
-  socket.on('canvas:guesser', becomeGuesser);
-  socket.on('canvas:spectator', becomeSpectator);
+  socket.on("canvas:drawer", becomeDrawer);
+  socket.on("canvas:guesser", becomeGuesser);
+  socket.on("canvas:spectator", becomeSpectator);
 
   const makeAllSpec = () => {
-    socket.emit('canvas:spectator');
+    socket.emit("canvas:spectator");
   };
   const makeAllDrawer = () => {
-    socket.emit('canvas:drawer');
+    socket.emit("canvas:drawer");
   };
 
   let chatMessages = [];
@@ -361,48 +361,53 @@
   let chatInput;
 
   const onClickGuess = () => {
-    if (chatInput !== '') {
+    if (chatInput !== "") {
       currentGuess = chatInput;
       // teamGuesses.push({ value: currentGuess, frequency: 1 });
       sendGuess(currentGuess);
     }
 
-    chatInput = '';
+    chatInput = "";
   };
 
   const updateGuessState = (payload) => {
     teamGuesses = payload;
   };
 
-  socket.on('round:state', updateGuessState);
+  socket.on("round:state", updateGuessState);
 
   const onClickGuessItem = (e) => {
     sendGuess(e.detail);
   };
 
   const sendGuess = (guess) => {
-    socket.emit('round:guess', guess);
+    socket.emit("round:guess", guess);
   };
 
   // Sending messages
   const onClickChat = () => {
-    if (chatInput !== '') {
-      socket.emit('chatMessage', chatInput);
-      chatInput = '';
+    if (chatInput !== "") {
+      socket.emit("chatMessage", chatInput);
+      chatInput = "";
     }
   };
 
   const startRound = () => {
-    socket.emit('round:start');
+    socket.emit("round:start");
   };
 
-  socket.on('round:result', (payload) => {
+  socket.on("round:result", (payload) => {
     results = payload;
+
+    const correct = currentGuess.toLowerCase() === payload.result.toLowerCase();
+    const team1 = teams[0];
+    team1.won = correct;
+    teams = teams;
   });
 
   let currentGuess = null;
 
-  let brushColor = '#444';
+  let brushColor = "#444";
   let brushRadius = 8;
   let SDraw = null;
 </script>
