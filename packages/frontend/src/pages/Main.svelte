@@ -36,7 +36,7 @@
       points: 37,
       colour: teamColour(),
       members: [
-        {username: "Bob", guessed: false},
+        {username: "Bob", guessed: false, current: true},
         {username: "Jack", guessed: true},
         {username: "Alice", guessed: false},
         {username: "John", guessed: false},
@@ -93,7 +93,7 @@
       isSelf: false,
       won: false,
       placementNr: undefined,
-      points: 80,
+      points: 45,
       colour: teamColour(),
       members: [
         {username: "Bob", guessed: false, draws: false},
@@ -168,7 +168,7 @@
       isSelf: false,
       won: false,
       placementNr: undefined,
-      points: 88,
+      points: 85,
       colour: teamColour(),
       members: [
         {username: "Bob", guessed: false, draws: false},
@@ -183,7 +183,7 @@
       isSelf: false,
       won: false,
       placementNr: undefined,
-      points: 99,
+      points: 95,
       colour: teamColour(),
       members: [
         {username: "Bob", guessed: false, draws: false},
