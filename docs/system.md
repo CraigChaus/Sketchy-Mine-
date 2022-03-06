@@ -1,6 +1,20 @@
 # System Document
 ---
-## Requirements
+## Functional design
+
+### Goal
+
+The purpose of the created product is entertainment by teaming up with other players and competing in order to gain ranks in the player board.
+### Product
+
+
+The presented product is a network game created for a large number of players who will be divided into teams.  Teams compete with each other to collect prizes.  This game does not have an ending, but it has difficulty levels, with each level the prize for completing the task increases.  The game consists in guessing the word made by one of the teams, using the image of this word in the form of a sketch as a clue.  The game also has a moderator who has a direct influence on the course of the game.
+
+
+
+
+
+### Requirements
 
 ### Business requirements
 
@@ -80,13 +94,62 @@
 
 
 ---
+### Interface
 
-## Development tools
+#### Description of a graphical representation of interaction with a WebApplication.
+
+![Use Case Diagram](./resources/diagrams/Use Case Diagram.png "login image")
+
+
+#### Use case diagrams consist of 2 objects:
+1. Player
+2. Moderator
+
+
+#### Player capabilities:
+- Whenever player opens the web application and select the role of a participant in the game if the game has not yet started or if the first round of this game is in progress.
+- The player than must register to participate or log into a previously registered account.
+- The player can be just a spectator, then he just watches the game process, without the ability to somehow influence it.
+- Next when the player has chosen the role of the player, he joins the team automatically.
+- When the game began, the progress towards the victory of the Player is indicated by the number of emeralds collected,when a word is guessed from your drawing by the player's team or when a word is guessed from your drawing under the required conditions.
+- Afterwords, player can see the progress and rating of the players.
+- During the game, the player communicates via chat with his team, discussing options for solving the puzzle.
+- The game is divided into several rounds, in each round, the players of the team will guess the drawn image through voting and chat discussions, another role during the game is when your team has to draw the image for other teams to guess it
+
+
+
+##### Purpose of moderator: The goal of the moderator is to monitor and control the correct course of the game.
+
+#### Moderator capabilities:
+- The moderator's capabilities include private chat with the whole team, as well as with an individual team member.
+- The moderator can kick any player out of the game, as well as completely ban the player's account.
+- Moderator options include making the game harder or easier for the players.
+
+
+## Technical design
+### Development tools
 
 For Sprint 1 to start developing the game, we decided to use Svelte, Tailwind CSS for the client. For the server, we are going to use Node.js, Express, Socket.IO, and PostgreSQL. The server will store player data, and distribute the game state to connected clients.
 
-All team members will use Visual Studio Code as the primary editor for the project.
 
+### Tools used for development:
+
+|Programming Languages       | Tooling/IDE       | 
+| ------------- |:-------------:| 
+| Javascript      |Svelte for IDE, Canvas API | 
+| HTML     | Svelte for IDE ,Canvas API    |  
+| CSS|   Tailwind CSS    |  
+
+
+### Tools used for application:
+|Tool/ Application/Module      | Purpose|      
+| ------------- |:-------------:| 
+| Svelte      |For developing fast JavaScript Web Application |
+| Node.js    | using JavaScript to start both the frontend and backend of web apps | 
+| Express.js | By configuring routes for your application, Express. js makes it simple to create a web server and render HTML pages for various HTTP requests.| 
+|Socket.IO| library for realtime web applications|
+|PostgreSQL|open-source relational database management system |
+|Visual Studio Code|All team members will use Visual Studio Code as the primary editor for the project|
 ## Communication protocols
 Since is going to be an online game the protocols we are going to use WebSockets and HTTP. HTTP over a REST API will be used for interacting with the game and dispatching certain actions like logging in, joining a game, etc. HTTP will also be used to serve the client Svelte frontend. Socket.IO over WebSockets will be used between the server and client to receive game updates. For the database, we are going to use the SQL protocol to query and store persistent information.
 
