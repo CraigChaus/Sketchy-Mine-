@@ -7,6 +7,8 @@
   export let value = "";
   export let frequency = 0;
   export let teamSize = 0;
+  export let turnedOff = false;
+
   const dispatch = createEventDispatcher();
 
   let buttonClicked = () => dispatch("guess", value);
@@ -15,7 +17,7 @@
 <button
   {disabled}
   on:click={buttonClicked}
-  class="disabled:brightness-105 disabled:border-green-400 border-2 transition-all {(frequency / teamSize * 100) > 50 ? "bg-green-400" : "bg-gray-200" }  duration-200 p-2 w-full rounded-lg hover:brightness-95"
+  class="disabled:brightness-105 disabled:border-green-400 border-2 transition-all {(frequency / teamSize * 100) > 50 ? "bg-green-400" : "bg-gray-200" }  duration-200 p-2 w-full rounded-lg hover:brightness-95 {turnedOff ? "cursor-not-allowed bg-gray-200 text-gray-400 border-0" : ""}"
 >
   <div class="flex justify-center flex-row">
     {#if (frequency / teamSize * 100) > 50}

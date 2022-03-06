@@ -8,7 +8,7 @@
   export let teamNumber = 0;
   export let teamSize = 20;
   export let currentGuess = null;
-  export let timeRemainingInSeconds = 60;
+  export let timeRemainingInSeconds = -1;
 
   export let teamGuesses = [];
 
@@ -33,11 +33,8 @@
     result = payload.result;
   };
 
-  const clearResult = () => {
-    result = "N/A";
-  };
-
   const updateProgress = (payload) => {
+    console.log(payload);
     timeRemainingInSeconds = payload.timeLeft;
   };
 
@@ -46,7 +43,11 @@
 </script>
 
 <section class="p-4 border-2 h-80 border-gray-300 space-y-2">
-  {#if timeRemainingInSeconds <= 0}
+  {#if result === "N/A" && timeRemainingInSeconds < 0}
+    <p class="border-b-2 italic text-center">
+      Waiting for next round to start...
+    </p>
+  {:else if timeRemainingInSeconds <= 0}
     <p class="border-b-2">
       Correct word: <span class="font-bold text-purple-600">{result}</span>
     </p>
@@ -70,6 +71,7 @@
           frequency={teamGuess.frequency}
           {teamSize}
           on:guess={guess}
+          turnedOff={timeRemainingInSeconds <= 0}
         >
           {guessIndex + 1}:
         </GuessOption>

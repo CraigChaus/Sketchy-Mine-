@@ -35,6 +35,12 @@
       placementNr: 2,
       points: 37,
       colour: teamColour(),
+      members: [
+        {username: "Bob", guessed: false, current: true},
+        {username: "Jack", guessed: true},
+        {username: "Alice", guessed: false},
+        {username: "John", guessed: false},
+      ]
     },
     {
       teamname: "Team 2",
@@ -44,6 +50,12 @@
       placementNr: undefined,
       points: 21,
       colour: teamColour(),
+      members: [
+        {username: "Bob", guessed: false, draws: false},
+        {username: "Jack", guessed: true, draws: false},
+        {username: "Alice", guessed: false, draws: true},
+        {username: "John", guessed: false, draws: false},
+      ]
     },
     {
       teamname: "Team 3",
@@ -53,6 +65,12 @@
       placementNr: 1,
       points: 79,
       colour: teamColour(),
+      members: [
+        {username: "Bob", guessed: false, draws: false},
+        {username: "Jack", guessed: true, draws: false},
+        {username: "Alice", guessed: false, draws: false},
+        {username: "John", guessed: false, draws: false},
+      ]
     },
     {
       teamname: "Team 4",
@@ -62,6 +80,12 @@
       placementNr: undefined,
       points: 90,
       colour: teamColour(),
+      members: [
+        {username: "Bob", guessed: false, draws: false},
+        {username: "Jack", guessed: true, draws: false},
+        {username: "Alice", guessed: false, draws: false},
+        {username: "John", guessed: false, draws: false},
+      ]
     },
     {
       teamname: "Team 5",
@@ -69,8 +93,14 @@
       isSelf: false,
       won: false,
       placementNr: undefined,
-      points: 80,
+      points: 45,
       colour: teamColour(),
+      members: [
+        {username: "Bob", guessed: false, draws: false},
+        {username: "Jack", guessed: true, draws: false},
+        {username: "Alice", guessed: false, draws: false},
+        {username: "John", guessed: false, draws: false},
+      ]
     },
     {
       teamname: "Team 6",
@@ -80,6 +110,12 @@
       placementNr: 3,
       points: 56,
       colour: teamColour(),
+      members: [
+        {username: "Bob", guessed: false, draws: false},
+        {username: "Jack", guessed: true, draws: false},
+        {username: "Alice", guessed: false, draws: false},
+        {username: "John", guessed: false, draws: false},
+      ]
     },
     {
       teamname: "Team 7",
@@ -89,6 +125,12 @@
       placementNr: 4,
       points: 33,
       colour: teamColour(),
+      members: [
+        {username: "Bob", guessed: false, draws: false},
+        {username: "Jack", guessed: true, draws: false},
+        {username: "Alice", guessed: false, draws: false},
+        {username: "John", guessed: false, draws: false},
+      ]
     },
     {
       teamname: "Team 8",
@@ -98,6 +140,12 @@
       placementNr: undefined,
       points: 74,
       colour: teamColour(),
+      members: [
+        {username: "Bob", guessed: false, draws: false},
+        {username: "Jack", guessed: true, draws: false},
+        {username: "Alice", guessed: false, draws: false},
+        {username: "John", guessed: false, draws: false},
+      ]
     },
     {
       teamname: "Team 9",
@@ -107,6 +155,12 @@
       placementNr: undefined,
       points: 13,
       colour: teamColour(),
+      members: [
+        {username: "Bob", guessed: false, draws: false},
+        {username: "Jack", guessed: true, draws: false},
+        {username: "Alice", guessed: false, draws: false},
+        {username: "John", guessed: false, draws: false},
+      ]
     },
     {
       teamname: "Team 10",
@@ -114,8 +168,14 @@
       isSelf: false,
       won: false,
       placementNr: undefined,
-      points: 88,
+      points: 85,
       colour: teamColour(),
+      members: [
+        {username: "Bob", guessed: false, draws: false},
+        {username: "Jack", guessed: true, draws: false},
+        {username: "Alice", guessed: false, draws: false},
+        {username: "John", guessed: false, draws: false},
+      ]
     },
     {
       teamname: "Team 11",
@@ -123,8 +183,14 @@
       isSelf: false,
       won: false,
       placementNr: undefined,
-      points: 99,
+      points: 95,
       colour: teamColour(),
+      members: [
+        {username: "Bob", guessed: false, draws: false},
+        {username: "Jack", guessed: true, draws: false},
+        {username: "Alice", guessed: false, draws: false},
+        {username: "John", guessed: false, draws: false},
+      ]
     },
   ];
 

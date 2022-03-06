@@ -1,30 +1,38 @@
 <script>
     import Icon from 'svelte-awesome';
     import { faPaintbrush, faCircleCheck, faCircleXmark, faCrown, faAngleDown } from '@fortawesome/free-solid-svg-icons';
+    import MembersList from './MembersList.svelte';
 
     export let isSelf = false;          //True if the current player is in the team
     export let showResults = false;
     export let won = false;
     export let placementNr = -1;        //If guessed correctly, shows the place of the team
     export let isDrawingTeam = false;
+    export let members = [{"username": "N/A", "guessed": false}];
+
+    let showMembers = isSelf;
+
+    let buttonClicked = () => showMembers = !showMembers;
 
   </script>
   
 <div class="flex-1 w-full h-full flex max-h-20">
     {#if isSelf}
-    <div class="bg-blue-700 my-1 p-2 text-white flex-1">
+    <div on:click={buttonClicked} class="bg-blue-700 mt-1 p-2 text-white flex-1 cursor-pointer transition-all duration-200 hover:brightness-90">
         <div class="flex justify-between">
-            <div style="width: 2rem;">
-                {#if showResults && won && !isDrawingTeam}
+            {#if showResults}
+                <div style="width: 2rem;">
+                {#if won && !isDrawingTeam}
                     {#if placementNr === 1}
                         <Icon data="{faCrown}" scale="1.5" style="color: gold; display: block; margin-left: auto; margin-right: auto"/>
                     {:else}
                         <p class="font-bold text-yellow-300" style="font-style: italic">#{placementNr}</p>
-                {/if}
-                {:else if showResults && !won && !isDrawingTeam}
-                    <Icon data="{faAngleDown}" scale="1.5" style="color: red"/>
-                {/if}
-            </div>
+                    {/if}
+                    {:else if !won && !isDrawingTeam}
+                        <Icon data="{faAngleDown}" scale="1.5" style="color: red"/>
+                    {/if}
+                </div>
+            {/if}
             <p class="w-full"><slot/></p>
             {#if isDrawingTeam}
                 <Icon data="{faPaintbrush}" scale="1.5"/>
@@ -39,19 +47,21 @@
         </div>
     </div>
     {:else}
-    <div class="bg-gray-600 my-1 p-2 text-white flex-1">
+    <div on:click={buttonClicked} class="bg-gray-600 mt-1 p-2 text-white flex-1 cursor-pointer transition-all duration-200 hover:brightness-90">
         <div class="flex justify-between">
-            <div style="width: 2rem;">
-                {#if showResults && won && !isDrawingTeam}
+            {#if showResults}
+                <div style="width: 2rem;">
+                {#if won && !isDrawingTeam}
                     {#if placementNr === 1}
                         <Icon data="{faCrown}" scale="1.5" style="color: gold; display: block; margin-left: auto; margin-right: auto"/>
                     {:else}
                         <p class="font-bold text-yellow-300" style="font-style: italic">#{placementNr}</p>
-                {/if}
-                {:else if showResults && !won && !isDrawingTeam}
-                    <Icon data="{faAngleDown}" scale="1.5" style="color: red; display: block; margin-left: auto; margin-right: auto"/>
-                {/if}
-            </div>
+                    {/if}
+                    {:else if !won && !isDrawingTeam}
+                        <Icon data="{faAngleDown}" scale="1.5" style="color: red"/>
+                    {/if}
+                </div>
+            {/if}
             <p class="w-full"><slot/></p>
             {#if isDrawingTeam}
                 <Icon data="{faPaintbrush}" scale="1.5"/>
@@ -67,4 +77,7 @@
     </div>
     {/if}
 </div>
+{#if showMembers}
+    <MembersList membersJSON={members} showGuessedIndicator={isSelf}/>
+{/if}
   
