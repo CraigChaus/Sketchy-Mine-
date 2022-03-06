@@ -1,4 +1,5 @@
 import debug from 'debug';
+import { sendProgress, sendResult } from '../handlers/guessHandler';
 
 const dbg = debug('state');
 
@@ -7,6 +8,8 @@ const wordBank = [
   'Banana',
   'Emerald',
 ];
+
+const ROUND_DURATION = 10;
 
 export const getRandomWord = () => {
   const nextWordIndex = Math.floor(Math.random() * wordBank.length);
@@ -17,6 +20,7 @@ export const getRandomWord = () => {
 export const gameState = {
   currentWord: null,
   guesses: [],
+  roundTime: null,
 };
 
 export const getGuesses = (session) => {
@@ -41,12 +45,26 @@ export const getGuesses = (session) => {
   return guesses;
 };
 
-export const addGuess = (username, session, guess) => {
-  const savedGuess = {
-    username, session, guess,
+export const getProgress = () => {
+  const timeLeft = gameState.roundTime;
+
+  return {
+    timeLeft,
   };
+};
+
+export const addGuess = (username, session, guess) => {
+  let savedGuess = gameState.guesses.find((g) => g.username === username && g.session === session);
+
+  if (savedGuess) {
+    savedGuess.guess = guess;
+  } else {
+    savedGuess = {
+      username, session, guess,
+    };
+    gameState.guesses = [...gameState.guesses, savedGuess];
+  }
   dbg('New guess', savedGuess);
-  gameState.guesses = [...gameState.guesses, savedGuess];
 
   const guesses = getGuesses(session);
   dbg('Guesses -', guesses);
@@ -59,5 +77,27 @@ export const checkWord = (guess) => guess.toLowerCase() === getCurrentWord().toL
 export const nextWord = () => {
   const word = getRandomWord();
   gameState.currentWord = word;
+  gameState.roundTime = ROUND_DURATION;
+
+  sendProgress();
+
+  const progressTimer = setInterval(() => {
+    gameState.roundTime -= 1;
+    sendProgress();
+
+    if (gameState.roundTime <= 0) {
+      dbg('Round over');
+      clearInterval(progressTimer);
+      sendResult();
+    }
+  }, 1000);
+
   dbg('Round Word -', getCurrentWord());
+};
+
+export const removeUserGuesses = (user) => {
+  if (user) {
+    // eslint-disable-next-line max-len
+    gameState.guesses = gameState.guesses.filter((g) => g.username !== user.username);
+  }
 };

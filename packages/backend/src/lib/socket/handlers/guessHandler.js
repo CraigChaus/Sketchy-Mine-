@@ -1,6 +1,7 @@
 import debug from 'debug';
+import { getIO } from '..';
 import {
-  addGuess, checkWord, getGuesses,
+  addGuess, checkWord, getCurrentWord, getGuesses, getProgress,
 } from '../utils/gameState';
 import { getCurrentUser } from '../utils/users';
 
@@ -9,22 +10,58 @@ export const GUESS_EVENTS = {
   GUESS_OK: 'guess:ok',
   ROUND_GUESS: 'round:guess',
   ROUND_STATE: 'round:state',
+  ROUND_PROGRESS: 'round:progress',
+  ROUND_RESULT: 'round:result',
+};
+
+const dbg = debug('handler:guess');
+
+export const sendState = (socket) => {
+  const user = getCurrentUser(socket.id);
+
+  if (user) {
+    const guesses = getGuesses(user.session);
+    dbg(GUESS_EVENTS.ROUND_STATE, guesses);
+    socket.emit(GUESS_EVENTS.ROUND_STATE, guesses);
+  }
+};
+
+export const sendProgress = () => {
+  const io = getIO();
+
+  const progress = getProgress();
+  dbg(GUESS_EVENTS.ROUND_PROGRESS, progress);
+  io.emit(GUESS_EVENTS.ROUND_PROGRESS, progress);
+};
+
+export const sendResult = () => {
+  const io = getIO();
+
+  const progress = { result: getCurrentWord() };
+  dbg(GUESS_EVENTS.ROUND_RESULT, progress);
+  io.emit(GUESS_EVENTS.ROUND_RESULT, progress);
 };
 
 const guessHandler = (io, socket) => {
-  const dbg = debug('handler:guess');
-
   const sendGuess = (payload) => {
-    const isCorrect = checkWord(payload);
+    const word = payload.toLowerCase();
 
-    addGuess('user', 'main', payload);
-    io.emit(GUESS_EVENTS.ROUND_STATE, getGuesses('main'));
+    const user = getCurrentUser(socket.id);
+
+    if (!user) {
+      return;
+    }
+
+    const isCorrect = checkWord(word);
+
+    addGuess(user.username, user.session, word);
+    io.emit(GUESS_EVENTS.ROUND_STATE, getGuesses(user.session));
 
     if (!isCorrect) {
       // Client guessed incorrectly
       const response = {
         error: 'Invalid guess',
-        payload,
+        payload: word,
         id: socket.id,
       };
       dbg(response);
@@ -35,24 +72,16 @@ const guessHandler = (io, socket) => {
     // Correct guess
 
     const response = {
-      payload,
+      payload: word,
       id: socket.id,
     };
     socket.emit(GUESS_EVENTS.GUESS_OK, response);
   };
 
-  const sendState = () => {
-    const user = getCurrentUser(socket.id);
-
-    if (user) {
-      const guesses = getGuesses(socket);
-      dbg(GUESS_EVENTS.ROUND_STATE, guesses);
-      socket.emit(GUESS_EVENTS.ROUND_STATE, guesses);
-    }
-  };
-
   socket.on(GUESS_EVENTS.ROUND_GUESS, sendGuess);
-  socket.on(GUESS_EVENTS.ROUND_STATE, sendState);
+  socket.on(GUESS_EVENTS.ROUND_STATE, () => sendState(socket));
+
+  sendProgress();
 };
 
 export default guessHandler;

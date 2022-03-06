@@ -7,9 +7,12 @@ import { nextWord } from './utils/gameState';
 
 const debug = require('debug')('socket');
 
+let io;
+export const getIO = () => io;
+
 const setup = (server) => {
   debug('Initializing Socket.IO server ');
-  const io = new Server(server, {
+  io = new Server(server, {
     cors: {
       origin: [
         'http://localhost:8080',
