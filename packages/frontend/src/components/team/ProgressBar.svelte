@@ -1,21 +1,17 @@
-
 <script>
-
+    import { teamsValue } from '../../stores/teams';
 
     export let teams = [];
-    console.log(teams);
-
+    teamsValue.subscribe(value => {
+        teams = value;
+    });
 
     // Needs to be updated, get from "somewhere"
     let totalPoints = 100;
     let teamPoints;
 
     let emeraldPosition = [25, 50, 80];
-
-
 </script>
-
-
 
 <div class="progressBar my-5 mx-3"  >
     <div class="progress-background">
