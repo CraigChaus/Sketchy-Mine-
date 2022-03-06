@@ -70,6 +70,7 @@
           frequency={teamGuess.frequency}
           {teamSize}
           on:guess={guess}
+          turnedOff={timeRemainingInSeconds <= 0}
         >
           {guessIndex + 1}:
         </GuessOption>
