@@ -7,6 +7,7 @@
   import Toolbox from "../Canvas/Toolbox.svelte";
   import { onMount } from "svelte";
   import socket from "../socket";
+  import { teamsValue } from "../stores/teams";
   import ProgressBar from "../components/team/ProgressBar.svelte";
 
   let currentColourIndex = 0;
@@ -116,6 +117,85 @@
       colour: teamColour(),
     },
   ];
+
+  teamsValue.set(teams);
+
+  // Progress bar functionality
+
+  // This updates the team's points that guessed correctly
+  const updateCorrectGuessingTeamPoints = (correctGuessedTeam, guessedTimeTaken) => {
+    teams.forEach(team => {
+      if ((team.teamname === correctGuessedTeam)) {
+        if (guessedTimeTaken < 30) { // if they guessed in less than 30 seconds, they get 20 points and so on
+          team.points += 20;
+        } else if (guessedTimeTaken < 60) {
+          team.points += 15;
+        } else if (guessedTimeTaken < 90) {
+          team.points += 10;
+        } else {
+          team.points += 5;
+        }
+      }
+
+      team.points = validateLevelPoints(team.points);
+    });
+
+    teamsValue.set(teams);
+  };
+
+  // This updates the team's points that guessed wrongly
+  const updateWrongGuessingTeamPoints = (wrongGuessingTeam) => {
+    teams.forEach(team => {
+      if (team.teamname === wrongGuessingTeam) {
+        team.points += 3;
+      }
+
+      team.points = validateLevelPoints(team.points);
+    });
+
+    teamsValue.set(teams);
+  };
+
+  // This is to update the drawing team's points
+  const updateDrawingTeamPoints = (drawingTeam, numberOfGuessedTeams) => {
+    if (numberOfGuessedTeams < teams.length) {
+      let percentage = getGuessedTeamsPercentage(numberOfGuessedTeams);
+
+      teams.forEach(team => {
+        if ((team.teamname === drawingTeam)) {
+          if (percentage > 0 && percentage < 25) {
+            team.points += 10;
+          } else if (percentage < 50) {
+            team.points += 20;
+          } else if (percentage < 75) {
+            team.points += 30;
+          } else {
+            team.points += 40;
+          }
+        }
+
+        team.points = validateLevelPoints(team.points);
+      });
+
+      teamsValue.set(teams);
+    }
+  };
+
+  // This calculates the percentage of the teams that guessed correctly
+  const getGuessedTeamsPercentage = (numberOfGuessedTeams) => {
+    let teamsSize = teams.length - 1; // we exclude the drawing team
+    let percentage = (numberOfGuessedTeams / teamsSize) * 100;
+
+    return percentage;
+  }
+
+  const validateLevelPoints = (points) => {
+    if (points >= 100) { // we make sure no team has more than the maximum amount of points
+      points -= 100;
+    }
+
+    return points;
+  }
 
   let username;
 
