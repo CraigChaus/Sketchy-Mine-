@@ -5,7 +5,7 @@ import {
 
 import messageFormat from '../utils/messages';
 import { GUESS_EVENTS, sendState } from './guessHandler';
-import { gameState, getGuesses, removeUserGuesses } from '../utils/gameState';
+import { getGuesses, removeUserGuesses } from '../utils/gameState';
 
 // This will appear as the name of the sender
 const name = 'Sketchy Mine System';
