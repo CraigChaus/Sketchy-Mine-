@@ -1,7 +1,7 @@
 import debug from 'debug';
 import { getIO } from '..';
 import {
-  addGuess, checkWord, getCurrentWord, getGuesses, getProgress,
+  addGuess, checkWord, getCurrentWord, getGuesses, getProgress, nextWord,
 } from '../utils/gameState';
 import { getCurrentUser } from '../utils/users';
 
@@ -12,6 +12,7 @@ export const GUESS_EVENTS = {
   ROUND_STATE: 'round:state',
   ROUND_PROGRESS: 'round:progress',
   ROUND_RESULT: 'round:result',
+  ROUND_START: 'round:start',
 };
 
 const dbg = debug('handler:guess');
@@ -40,6 +41,11 @@ export const sendResult = () => {
   const progress = { result: getCurrentWord() };
   dbg(GUESS_EVENTS.ROUND_RESULT, progress);
   io.emit(GUESS_EVENTS.ROUND_RESULT, progress);
+};
+
+const startRound = (socket) => {
+  nextWord();
+  sendState(socket);
 };
 
 const guessHandler = (io, socket) => {
@@ -80,6 +86,7 @@ const guessHandler = (io, socket) => {
 
   socket.on(GUESS_EVENTS.ROUND_GUESS, sendGuess);
   socket.on(GUESS_EVENTS.ROUND_STATE, () => sendState(socket));
+  socket.on(GUESS_EVENTS.ROUND_START, () => startRound(socket));
 
   sendProgress();
 };

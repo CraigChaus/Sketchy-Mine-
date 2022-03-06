@@ -47,7 +47,7 @@ const setup = (server) => {
   io.on('connection', onConnection);
 
   // Game setup
-  nextWord();
+  // nextWord();
 
   return io;
 };

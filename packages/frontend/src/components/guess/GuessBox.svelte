@@ -8,7 +8,7 @@
   export let teamNumber = 0;
   export let teamSize = 20;
   export let currentGuess = null;
-  export let timeRemainingInSeconds = 0;
+  export let timeRemainingInSeconds = 60;
 
   export let teamGuesses = [];
 
@@ -23,12 +23,13 @@
   $: teamGuesses, sortGuesses();
 
   const guess = (valueEvent) => {
-    const guessedValue = valueEvent.detail;
+    const guessedValue = valueEvent.detail.toLowerCase();
     currentGuess = guessedValue;
     dispatch("guessClicked", currentGuess);
   };
 
   const showResult = (payload) => {
+    currentGuess = null;
     result = payload.result;
   };
 
@@ -64,7 +65,7 @@
     <div class="flex flex-col items-center space-y-2">
       {#each teamGuesses as teamGuess, guessIndex}
         <GuessOption
-          disabled={teamGuess.value === currentGuess}
+          disabled={teamGuess.value === currentGuess || result != null}
           value={teamGuess.value}
           frequency={teamGuess.frequency}
           {teamSize}

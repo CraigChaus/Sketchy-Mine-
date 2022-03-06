@@ -9,6 +9,8 @@
   import socket from "../socket";
   import ProgressBar from "../components/team/ProgressBar.svelte";
 
+  let results = null;
+
   // Receiving guesses
   socket.on("guess", (guesses) => {
     if (!data) {
@@ -237,17 +239,17 @@
   const onClickChat = () => {
     if (chatInput !== "") {
       socket.emit("chatMessage", chatInput);
-      // chatMessages = [
-      //   ...chatMessages,
-      //   {
-      //     username: username,
-      //     message: chatInput,
-      //     type: 1,
-      //   },
-      // ];
       chatInput = "";
     }
   };
+
+  const startRound = () => {
+    socket.emit("round:start");
+  };
+
+  socket.on("round:result", (payload) => {
+    results = payload;
+  });
 
   let currentGuess = null;
 
@@ -264,11 +266,11 @@
       on:guessClicked={onClickGuessItem}
       {teamGuesses}
       teamNumber={1}
-      {currentGuess}
+      currentGuess={currentGuess ? currentGuess.toLowerCase() : null}
     />
-    <TeamList showResults={true} contentJSON={teams} />
+    <TeamList showResults={results != null} contentJSON={teams} />
   </div>
-  <div class="w-2/4 h-full">
+  <div class="w-2/4 h-full space-y-1">
     <Canvas
       {role}
       bind:this={SDraw}
@@ -306,6 +308,13 @@
       class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded"
       >make all users spectators</button
     >
+
+    <button
+      on:click={startRound}
+      class="bg-purple-500 hover:bg-purple-700 text-white font-bold py-2 px-4 rounded"
+      >Start Round</button
+    >
+
     <MessageBar
       {role}
       bind:input={chatInput}

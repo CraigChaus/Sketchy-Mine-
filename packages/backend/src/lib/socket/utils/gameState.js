@@ -17,11 +17,13 @@ export const getRandomWord = () => {
   return nextWord;
 };
 
-export const gameState = {
+const defaultState = {
   currentWord: null,
   guesses: [],
   roundTime: null,
 };
+
+export const gameState = JSON.parse(JSON.stringify(defaultState));
 
 export const getGuesses = (session) => {
   const filteredGuesses = gameState.guesses.filter((g) => g.session === session);
@@ -72,12 +74,14 @@ export const addGuess = (username, session, guess) => {
 
 export const getCurrentWord = () => gameState.currentWord;
 
-export const checkWord = (guess) => guess.toLowerCase() === getCurrentWord().toLowerCase();
+// eslint-disable-next-line max-len
+export const checkWord = (guess) => (guess.toLowerCase() === getCurrentWord ? getCurrentWord().toLowerCase() : false);
 
 export const nextWord = () => {
   const word = getRandomWord();
   gameState.currentWord = word;
   gameState.roundTime = ROUND_DURATION;
+  gameState.guesses = [];
 
   sendProgress();
 
