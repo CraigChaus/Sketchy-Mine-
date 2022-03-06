@@ -4,8 +4,8 @@ import { sendProgress, sendResult } from '../handlers/guessHandler';
 const dbg = debug('state');
 
 const wordBank = [
-  'Apple',
-  'Banana',
+  // 'Apple',
+  // 'Banana',
   'Emerald',
 ];
 
