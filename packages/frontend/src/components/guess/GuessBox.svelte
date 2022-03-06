@@ -8,7 +8,7 @@
   export let teamNumber = 0;
   export let teamSize = 20;
   export let currentGuess = null;
-  export let timeRemainingInSeconds = null;
+  export let timeRemainingInSeconds = -1;
 
   export let teamGuesses = [];
 
@@ -34,6 +34,7 @@
   };
 
   const updateProgress = (payload) => {
+    console.log(payload);
     timeRemainingInSeconds = payload.timeLeft;
   };
 
@@ -42,7 +43,7 @@
 </script>
 
 <section class="p-4 border-2 h-80 border-gray-300 space-y-2">
-  {#if result === "N/A" && timeRemainingInSeconds <= 0}
+  {#if result === "N/A" && timeRemainingInSeconds < 0}
     <p class="border-b-2 italic text-center">
       Waiting for next round to start...
     </p>

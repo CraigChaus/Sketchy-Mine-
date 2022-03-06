@@ -87,8 +87,6 @@ const guessHandler = (io, socket) => {
   socket.on(GUESS_EVENTS.ROUND_GUESS, sendGuess);
   socket.on(GUESS_EVENTS.ROUND_STATE, () => sendState(socket));
   socket.on(GUESS_EVENTS.ROUND_START, () => startRound(socket));
-
-  sendProgress();
 };
 
 export default guessHandler;
