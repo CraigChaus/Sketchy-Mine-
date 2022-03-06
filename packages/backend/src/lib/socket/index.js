@@ -3,7 +3,6 @@ import { instrument } from '@socket.io/admin-ui';
 import chatHandler from './handlers/chatHandler';
 import canvasHandler from './handlers/canvasHandler';
 import guessHandler from './handlers/guessHandler';
-import { nextWord } from './utils/gameState';
 
 const debug = require('debug')('socket');
 
@@ -17,7 +16,6 @@ const setup = (server) => {
       origin: [
         'http://localhost:8080',
         'https://sketchymine.philipposslicher.tech',
-        'https://socketio-playground.ibrod83.com',
         /.+--sketchymine\.netlify\.app$/,
         'https://socketio-playground.ibrod83.com',
         'https://admin.socket.io',
