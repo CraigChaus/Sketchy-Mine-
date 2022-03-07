@@ -88,7 +88,7 @@
 
 ---
 
-## Sprint 0 planning - 14.02.2022
+## Sprint 1 planning - 14.02.2022
 
 - Team is splitting up into the two defined subgroups
 - Teams do separate meetings and write down notes
@@ -201,7 +201,7 @@
   - Had a long discussion on what to do with Marko's tasks as we have no idea on the progress of his 2 tasks (other than some work being up on GitLab) and one task is vital for the demo for the publisher
   - No decision has been made: Hoping Marko will do his task in time and we won't take over in case he has made progress
 
-## SCRUM Standup (Entire team) - 04.02.2022
+## SCRUM Standup (Entire team) - 04.03.2022
 - Not present:
   - Ana: Sent message 1 hour before meeting that she can't attend due to her laptop being broken. She let us know that she is done with her task (models). She needs help with the deployment diagram
 - Craig:
@@ -240,3 +240,41 @@
     - plans for sprint 2
   - Mira will create the presentation slides
   - Mira, Melissa, Vince will present
+
+## SCRUM Sprint 1 retrospective (Entire team) - 07.03.2022
+- Everyone is present
+- See notes in `team-plan.md`
+
+## SCRUM Sprint 2 planning (Entire team) - 07.03.2022
+- Everyone is present
+- Group 1 will work on:
+  - US1
+- Group 2 will work on:
+  - US11
+
+## SCRUM group 2 planning - 07.03.2022
+- Marko is not present because of work, everyone else is
+- Task: creating backlog items for US11
+  
+- What needs to be done:
+  - Implement teams (team members, team types - draw/guesser, permissions for chat/buttons)
+  - Implement UI indicators on the webpage (current level, emerald shards collected in current level)
+  - Implement team stats (stores for emeralds, levels)
+  - Move team indicators on the progress bar
+    - Reward progress on progress bar for team(s) when they guessed a word
+    - Place back team members to the beginning when they reached the end and increment the shards multiplier
+  - Implement database
+    - User data (accounts name, password, shards)
+  - Implement UI for drawing team
+    - Time remaining indicator
+    - What word to draw
+    - At the end of the round how many teams guessed the word
+  - Progression for the drawing team
+    - At the end of the round calculate progress for the drawing team
+  - Matchmaking
+    - Newly joined users must be placed in a team
+    - A team needs to be automatically created
+  - Digging distance
+  - Connect team members list (who draws, who is current user, etc) with the fronted
+  - Ability in the UI to chose who will draw (voting system)
+    - Handel who draws in the backend
