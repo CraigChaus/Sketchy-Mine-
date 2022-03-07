@@ -263,6 +263,52 @@ Add team list component
 
 Connect team listing component with backend
 
+#### US11 - As a player, I want to get emeralds, so that I can purchase powerups with the gained emeralds.
+
+##### US11 Bl01
+
+Create the database and the database schema
+
+##### US11 Bl02
+
+Handling team stats in the backend so that each level, emeralds are distributed among team members
+
+##### US11 Bl03
+
+Send updates to the frontend about team progression from the backend.
+
+##### US11 Bl04
+
+Reset the progress of the finished team to the begining when they reach the end of the progress.
+
+##### US11 Bl05
+
+Store the digging distance for each team in the backend
+
+##### US11 Bl06
+
+Pick a word from the word list in the databse and send it to the frontend
+
+##### US11 Bl07
+
+Send results of the round to the frontend to display the teams that guseed the word correclty or not.
+
+##### US11 Bl08
+
+Define the progress that the team should progress in each round in the backend.
+
+##### US11 Bl09
+
+Matchmaking ui in the frontend
+
+##### US11 Bl10
+
+Matchmaking system in the backend
+
+##### US11 Bl11
+
+Create the voting system.
+
 ---
 
 ## Budget
