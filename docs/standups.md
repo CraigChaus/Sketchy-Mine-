@@ -251,3 +251,27 @@
   - US1
 - Group 2 will work on:
   - US11
+
+## SCRUM group 2 planning (Entire team) - 07.03.2022
+- Marko is not present because of work, everyone else is
+- Task: creating backlog items for US11
+  
+- What needs to be done:
+  - Implement teams (team members, team types - draw/guesser, permissions for chat/buttons)
+  - Implement UI indicators on the webpage (current level, emerald shards collected in current level)
+  - Implement team stats (stores for emeralds, levels)
+  - Move team indicators on the progress bar
+    - Reward progress on progress bar for team(s) when they guessed a word
+    - Place back team members to the beginning when they reached the end and increment the shards multiplier
+  - Implement database
+    - User data (accounts name, password, shards)
+  - Implement UI for drawing team
+    - Time remaining indicator
+    - What word to draw
+    - At the end of the round how many teams guessed the word
+  - Progression for the drawing team
+    - At the end of the round calculate progress for the drawing team
+  - Matchmaking
+    - Newly joined users must be placed in a team
+    - A team needs to be automatically created
+  
