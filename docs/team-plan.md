@@ -229,6 +229,10 @@ Multiply the gained emeralds when a new level is reached
 
 Add the functionality to the progress bar
 
+##### US04 Bl08
+
+Create guess backend
+
 #### US05 - As a player, I want a chat functionality, so I can communicate with my teammates.
 
 ##### US05 BI01
@@ -372,11 +376,12 @@ The following is an overview for how the team will communicate internally, as we
 | Sprint review     |       Project team        |                                                           Validate sprint, reflect on project and team progress |                       End of sprint |
 | Publisher meeting | Project team, stakeholder |                                                        Present current deliverables, update on product progress |                       End of sprint |
 
-####Schedule
-- Standups: Monday, Friday (every week); 
-- Publisher meeting: Monday (8.03.2022);
-- Sprint review (Sprint 1): Monday (8.03.2022);
+#### Schedule
 
+| | Sprint planning | Sprint review | Standups | Publisher meeting |
+|-|-|-|-|-|
+| Sprint 1 | 14.02.2022 | 07.03.2022 |  Monday, Friday (every week) | 07.03.2022 |
+| Sprint 2 | 07.03.2022 | – |  Monday, Friday (every week) | – |
 
 #### Communication tools
 
@@ -385,5 +390,5 @@ For communicating and sharing information with other project members, the follow
 - Discord - A common server is used for voice/video calls, screensharing and pair programming, as well as the primary chat tool and permanent record of all team communication. Members in the server are labelled with the role of the sub-group they belong to. Multiple channels are available for members to use depending on the context necessary.
 - OneDrive - A shared OneDrive folder is used to grant access to the shared timesheet for all project members to log their tracked project time.
 - GitLab - The issue board is used as the single source of truth of assigned items and project state. Issues and merge requests are assigned to discrete project members, with the possibility for members to leave review notes, and manage active items. GitLab is also the central store for _all_ project documentation (in markdown format).
-- Email - Used to formally communicate with the publisher and other stakeholders/
+- Email - Used to formally communicate with the publisher and other stakeholders
 - Physical meetings - Used for standups, and publisher presentations.

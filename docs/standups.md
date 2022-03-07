@@ -274,4 +274,7 @@
   - Matchmaking
     - Newly joined users must be placed in a team
     - A team needs to be automatically created
-  
+  - Digging distance
+  - Connect team members list (who draws, who is current user, etc) with the fronted
+  - Ability in the UI to chose who will draw (voting system)
+    - Handel who draws in the backend
