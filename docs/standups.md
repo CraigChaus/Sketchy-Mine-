@@ -252,7 +252,7 @@
 - Group 2 will work on:
   - US11
 
-## SCRUM group 2 planning (Entire team) - 07.03.2022
+## SCRUM group 2 planning - 07.03.2022
 - Marko is not present because of work, everyone else is
 - Task: creating backlog items for US11
   
