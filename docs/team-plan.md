@@ -282,7 +282,7 @@ Connect team listing component with backend
 | Sprint 3                 | 19,800   |
 | Project total            | 52,800   |
 
-> 12 EUR _ 11 (developers) _ 50 (hourly rate) \* 8 (weeks) = _52'800 EUR_
+> 12 EUR 11 _(developers)_ 50 _(hourly rate)_ \* 8 _(weeks)_ = _52'800 EUR_
 
 ---
 
@@ -317,6 +317,12 @@ Connect team listing component with backend
 - Clearly working in our defined sub-groups instead of as one large group (individual scrum masters, ambassadors, etc)
 - Making tasks clearly explained to follow a uniform standard as agreed byn everyone in the team
 
+#### Costs:
+
+- Sprint 0 total time spent: *125.71 hours*
+- Sprint 0 estimated costs: *6'600€*
+- Sprint 0 actual costs: *6'285.5€*
+
 ### Sprint 1
 
 ![S1R](./resources/img/sprint1-retrospective.png "Sprint 1 Retrospective")
@@ -335,6 +341,13 @@ Connect team listing component with backend
 ![S1R](./resources/img/retrospective-formula.png "Retrospective formula")
 
 > Focus factor this sprint: **0.83712**
+
+#### Costs:
+
+- Sprint 1 total time spent: *177.41 hours*
+- Sprint 1 estimated costs: *13'200€*
+- Sprint 1 actual costs: *8'870.5€*
+
 
 ---
 
