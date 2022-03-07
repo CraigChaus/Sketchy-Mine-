@@ -88,7 +88,7 @@
 
 ---
 
-## Sprint 0 planning - 14.02.2022
+## Sprint 1 planning - 14.02.2022
 
 - Team is splitting up into the two defined subgroups
 - Teams do separate meetings and write down notes

@@ -317,6 +317,25 @@ Connect team listing component with backend
 - Clearly working in our defined sub-groups instead of as one large group (individual scrum masters, ambassadors, etc)
 - Making tasks clearly explained to follow a uniform standard as agreed byn everyone in the team
 
+### Sprint 1
+
+![S1R](./resources/img/sprint1-retrospective.png "Sprint 1 Retrospective")
+
+#### Focus factor:
+𝑓 = 𝑓𝑜𝑐𝑢𝑠 𝑓𝑎𝑐𝑡𝑜𝑟
+
+𝑡 = 𝑎𝑣𝑎𝑖𝑙𝑎𝑏𝑙𝑒 h𝑜𝑢𝑟𝑠 𝑝𝑒𝑟 𝑤𝑒𝑒𝑘 𝑝𝑒𝑟 𝑝𝑒𝑟𝑠𝑜𝑛 (12)
+
+𝑛 = 𝑛𝑢𝑚𝑏𝑒𝑟 𝑜𝑓 𝑡𝑒𝑎𝑚 𝑚𝑒𝑚𝑏𝑒𝑟𝑠 (11)
+
+𝑤 = 𝑛𝑢𝑚𝑏𝑒𝑟 𝑜𝑓 𝑤𝑒𝑒𝑘𝑠 𝑓𝑜𝑟 𝑎 𝑆𝑝𝑟𝑖𝑛𝑡 (2)
+
+𝑣 = 𝑆𝑢𝑚 𝑤𝑒𝑖𝑔h𝑡 𝑜𝑓 𝑏𝑎𝑐𝑘𝑙𝑜𝑔 𝑖𝑡𝑒𝑚 (221)
+
+![S1R](./resources/img/retrospective-formula.png "Retrospective formula")
+
+> Focus factor this sprint: **0.83712**
+
 ---
 
 ## Communication methods
