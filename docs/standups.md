@@ -201,7 +201,7 @@
   - Had a long discussion on what to do with Marko's tasks as we have no idea on the progress of his 2 tasks (other than some work being up on GitLab) and one task is vital for the demo for the publisher
   - No decision has been made: Hoping Marko will do his task in time and we won't take over in case he has made progress
 
-## SCRUM Standup (Entire team) - 04.02.2022
+## SCRUM Standup (Entire team) - 04.03.2022
 - Not present:
   - Ana: Sent message 1 hour before meeting that she can't attend due to her laptop being broken. She let us know that she is done with her task (models). She needs help with the deployment diagram
 - Craig:
@@ -240,3 +240,14 @@
     - plans for sprint 2
   - Mira will create the presentation slides
   - Mira, Melissa, Vince will present
+
+## SCRUM Sprint 1 retrospective (Entire team) - 07.03.2022
+- Everyone is present
+- See notes in `team-plan.md`
+
+## SCRUM Sprint 2 planning (Entire team) - 07.03.2022
+- Everyone is present
+- Group 1 will work on:
+  - US1
+- Group 2 will work on:
+  - US11
