@@ -35,6 +35,13 @@
       won: true,
       placementNr: 2,
       points: 37,
+      level: 1,
+      shards: 0,
+      checkpoints: {
+        1: false,
+        2: false,
+        3: false
+      },
       colour: teamColour(),
       members: [
         { username: "Bob", guessed: false, current: true },
@@ -50,6 +57,13 @@
       won: undefined,
       placementNr: undefined,
       points: 21,
+      level: 1,
+      shards: 0,
+      checkpoints: {
+        one: false,
+        two: false,
+        three: false
+      },
       colour: teamColour(),
       members: [
         { username: "Bob", guessed: false, draws: false },
@@ -65,6 +79,13 @@
       won: true,
       placementNr: 1,
       points: 79,
+      level: 1,
+      shards: 0,
+      checkpoints: {
+        one: false,
+        two: false,
+        three: false
+      },
       colour: teamColour(),
       members: [
         { username: "Bob", guessed: false, draws: false },
@@ -80,6 +101,13 @@
       won: false,
       placementNr: undefined,
       points: 90,
+      level: 1,
+      shards: 0,
+      checkpoints: {
+        one: false,
+        two: false,
+        three: false
+      },
       colour: teamColour(),
       members: [
         { username: "Bob", guessed: false, draws: false },
@@ -95,6 +123,13 @@
       won: false,
       placementNr: undefined,
       points: 45,
+      level: 1,
+      shards: 0,
+      checkpoints: {
+        one: false,
+        two: false,
+        three: false
+      },
       colour: teamColour(),
       members: [
         { username: "Bob", guessed: false, draws: false },
@@ -110,6 +145,13 @@
       won: true,
       placementNr: 3,
       points: 56,
+      level: 1,
+      shards: 0,
+      checkpoints: {
+        one: false,
+        two: false,
+        three: false
+      },
       colour: teamColour(),
       members: [
         { username: "Bob", guessed: false, draws: false },
@@ -125,6 +167,13 @@
       won: true,
       placementNr: 4,
       points: 33,
+      level: 1,
+      shards: 0,
+      checkpoints: {
+        one: false,
+        two: false,
+        three: false
+      },
       colour: teamColour(),
       members: [
         { username: "Bob", guessed: false, draws: false },
@@ -140,6 +189,13 @@
       won: false,
       placementNr: undefined,
       points: 74,
+      level: 1,
+      shards: 0,
+      checkpoints: {
+        one: false,
+        two: false,
+        three: false
+      },
       colour: teamColour(),
       members: [
         { username: "Bob", guessed: false, draws: false },
@@ -155,6 +211,13 @@
       won: false,
       placementNr: undefined,
       points: 13,
+      level: 1,
+      shards: 0,
+      checkpoints: {
+        one: false,
+        two: false,
+        three: false
+      },
       colour: teamColour(),
       members: [
         { username: "Bob", guessed: false, draws: false },
@@ -170,6 +233,13 @@
       won: false,
       placementNr: undefined,
       points: 85,
+      level: 1,
+      shards: 0,
+      checkpoints: {
+        one: false,
+        two: false,
+        three: false
+      },
       colour: teamColour(),
       members: [
         { username: "Bob", guessed: false, draws: false },
@@ -185,6 +255,13 @@
       won: false,
       placementNr: undefined,
       points: 95,
+      level: 1,
+      shards: 0,
+      checkpoints: {
+        one: false,
+        two: false,
+        three: false
+      },
       colour: teamColour(),
       members: [
         { username: "Bob", guessed: false, draws: false },
@@ -198,8 +275,15 @@
   teamsValue.set(teams);
 
   // Progress bar functionality
-
-  // This updates the team's points that guessed correctly
+  /**
+   * This function updates the team's points that guessed correctly.
+   * The increase is based on certain timestamps, as it follows:
+   * If guessedTimeTaken is less than 30 seconds, the points are increased by 20,
+   * if less than 60, by 15,
+   * and less than 90, by 10.
+   * @param correctGuessedTeam the team that correctly guessed the answer
+   * @param guessedTimeTaken the time taken to get the correct guess
+   */
   const updateCorrectGuessingTeamPoints = (
     correctGuessedTeam,
     guessedTimeTaken
@@ -218,26 +302,43 @@
         }
       }
 
-      team.points = validateLevelPoints(team.points);
+      validateLevelPoints(team);
     });
 
     teamsValue.set(teams);
   };
 
-  // This updates the team's points that guessed wrongly
+  /**
+   * This updates the team's points that guessed wrongly.
+   * It increases the team's points by 3 with every wrong guess,
+   * no matter the time taken.
+   * @param wrongGuessingTeam the team that made the wrong guess
+   */
   const updateWrongGuessingTeamPoints = (wrongGuessingTeam) => {
     teams.forEach((team) => {
       if (team.teamname === wrongGuessingTeam) {
         team.points += 3;
       }
 
-      team.points = validateLevelPoints(team.points);
+      validateLevelPoints(team);
     });
 
     teamsValue.set(teams);
   };
 
-  // This is to update the drawing team's points
+  /**
+   * This function updates the drawing team's points.
+   * It increases the points based on the percentage
+   * of those who guessed correctly as to the total number
+   * of teams playing the round.
+   * The points awarded as follows:
+   * percentage up to 25 gets 10 points,
+   * up to 50 - 20 points,
+   * up to 75 - 30,
+   * up to 100 - 40.
+   * @param drawingTeam the currently drawing team
+   * @param numberOfGuessedTeams the number of teams that guessed correctly
+   */
   const updateDrawingTeamPoints = (drawingTeam, numberOfGuessedTeams) => {
     if (numberOfGuessedTeams < teams.length) {
       const percentage = getGuessedTeamsPercentage(numberOfGuessedTeams);
@@ -255,28 +356,53 @@
           }
         }
 
-        team.points = validateLevelPoints(team.points);
+        validateLevelPoints(team);
       });
 
       teamsValue.set(teams);
     }
   };
 
-  // This calculates the percentage of the teams that guessed correctly
+  /**
+   * This calculates the percentage of the teams
+   * that guessed correctly out of the total number of teams.
+   * It excludes the drawing team.
+   * @param numberOfGuessedTeams the number of teams that guessed correctly
+   * @returns {number} the percentage
+   */
   const getGuessedTeamsPercentage = (numberOfGuessedTeams) => {
-    const teamsSize = teams.length - 1; // we exclude the drawing team
+    const teamsSize = teams.length - 1;
     const percentage = (numberOfGuessedTeams / teamsSize) * 100;
 
     return percentage;
   };
 
-  const validateLevelPoints = (points) => {
-    if (points >= 100) {
-      // we make sure no team has more than the maximum amount of points
-      points -= 100;
+  /**
+   * This function checks the level per team
+   * and the amount of shards each team can get.
+   * It increases the amount of shards by the number
+   * of level at every checkpoint.
+   * The checkpoints are: 25, 50 and 80.
+   * When the team levels up, the checkpoints are reset.
+   * @param team the team whose points are being checked
+   */
+  const validateLevelPoints = (team) => {
+    if (team.points >= 25 && !(team.checkpoints.one)) {
+      team.shards += team.level;
+      team.checkpoints.one = true;
+    } else if (team.points >= 50 && !(team.checkpoints.two)) {
+      team.shards += team.level;
+      team.checkpoints.two = true;
+    } else if (team.points >= 80 && !(team.checkpoints.three)) {
+      team.shards += team.level;
+      team.checkpoints.three = true;
+    } else if (team.points >= 100) { // we make sure no team has more than the maximum amount of points
+      team.points -= 100;
+      team.level++;
+      team.checkpoints.one = false; // TODO needs refactoring
+      team.checkpoints.two = false;
+      team.checkpoints.three = false;
     }
-
-    return points;
   };
 
   let username;
