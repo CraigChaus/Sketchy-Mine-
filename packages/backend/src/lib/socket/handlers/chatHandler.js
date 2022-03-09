@@ -6,7 +6,7 @@ import {
 import messageFormat from '../utils/messages';
 import { GUESS_EVENTS, sendState } from './guessHandler';
 import { getGuesses, removeUserGuesses } from '../utils/gameState';
-import { removePlayerFromTeam, Teams } from '../../../data/teams';
+import { removePlayerFromTeam } from '../../../data/teams';
 import { sendTeamData } from './teamHandler';
 
 // This will appear as the name of the sender
