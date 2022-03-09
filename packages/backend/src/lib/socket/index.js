@@ -3,6 +3,7 @@ import { instrument } from '@socket.io/admin-ui';
 import chatHandler from './handlers/chatHandler';
 import canvasHandler from './handlers/canvasHandler';
 import guessHandler from './handlers/guessHandler';
+import teamHandler from './handlers/teamHandler';
 
 const debug = require('debug')('socket');
 
@@ -32,6 +33,7 @@ const setup = (server) => {
     chatHandler(io, socket);
     canvasHandler(io, socket);
     guessHandler(io, socket);
+    teamHandler(io, socket);
   };
 
   instrument(io, {

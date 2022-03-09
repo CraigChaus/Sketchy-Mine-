@@ -19,13 +19,19 @@
        */
     export let contentJSON = [];
     export let showResults = false;
+</script>
 
-  </script>
-  
-  <ScrollContainer>
+<ScrollContainer>
     {#if contentJSON !== "" || contentJSON !== undefined || contentJSON !== null}
         {#each contentJSON as element}
-            <TeamItem members={element.members} showResults={showResults} isSelf={element.isSelf} isDrawingTeam={element.isDrawing} won={element.won} placementNr={element.placementNr}>{element.teamname}</TeamItem>
+            <TeamItem
+                members={element.members}
+                {showResults}
+                isSelf={element.isSelf}
+                isDrawingTeam={element.isDrawing}
+                won={element.won}
+                placementNr={element.placementNr}>{element.teamname}</TeamItem
+            >
         {/each}
     {/if}
-  </ScrollContainer>
+</ScrollContainer>

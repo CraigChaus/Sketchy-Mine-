@@ -21,258 +21,8 @@
     teamGuesses = [...guesses];
   });
 
-  let currentColourIndex = 0;
-  function teamColour() {
-    return `hsl(${currentColourIndex++ * 37}, 100%, 50%)`;
-  }
-
   // Points and colour are used by ProgressBar.
-  const teams = [
-    {
-      teamname: "Team 1",
-      isDrawing: false,
-      isSelf: true,
-      won: true,
-      placementNr: 2,
-      points: 37,
-      level: 1,
-      shards: 0,
-      checkpoints: {
-        1: false,
-        2: false,
-        3: false
-      },
-      colour: teamColour(),
-      members: [
-        { username: "Bob", guessed: false, current: true },
-        { username: "Jack", guessed: true },
-        { username: "Alice", guessed: false },
-        { username: "John", guessed: false },
-      ],
-    },
-    {
-      teamname: "Team 2",
-      isDrawing: true,
-      isSelf: false,
-      won: undefined,
-      placementNr: undefined,
-      points: 21,
-      level: 1,
-      shards: 0,
-      checkpoints: {
-        one: false,
-        two: false,
-        three: false
-      },
-      colour: teamColour(),
-      members: [
-        { username: "Bob", guessed: false, draws: false },
-        { username: "Jack", guessed: true, draws: false },
-        { username: "Alice", guessed: false, draws: true },
-        { username: "John", guessed: false, draws: false },
-      ],
-    },
-    {
-      teamname: "Team 3",
-      isDrawing: false,
-      isSelf: false,
-      won: true,
-      placementNr: 1,
-      points: 79,
-      level: 1,
-      shards: 0,
-      checkpoints: {
-        one: false,
-        two: false,
-        three: false
-      },
-      colour: teamColour(),
-      members: [
-        { username: "Bob", guessed: false, draws: false },
-        { username: "Jack", guessed: true, draws: false },
-        { username: "Alice", guessed: false, draws: false },
-        { username: "John", guessed: false, draws: false },
-      ],
-    },
-    {
-      teamname: "Team 4",
-      isDrawing: false,
-      isSelf: false,
-      won: false,
-      placementNr: undefined,
-      points: 90,
-      level: 1,
-      shards: 0,
-      checkpoints: {
-        one: false,
-        two: false,
-        three: false
-      },
-      colour: teamColour(),
-      members: [
-        { username: "Bob", guessed: false, draws: false },
-        { username: "Jack", guessed: true, draws: false },
-        { username: "Alice", guessed: false, draws: false },
-        { username: "John", guessed: false, draws: false },
-      ],
-    },
-    {
-      teamname: "Team 5",
-      isDrawing: false,
-      isSelf: false,
-      won: false,
-      placementNr: undefined,
-      points: 45,
-      level: 1,
-      shards: 0,
-      checkpoints: {
-        one: false,
-        two: false,
-        three: false
-      },
-      colour: teamColour(),
-      members: [
-        { username: "Bob", guessed: false, draws: false },
-        { username: "Jack", guessed: true, draws: false },
-        { username: "Alice", guessed: false, draws: false },
-        { username: "John", guessed: false, draws: false },
-      ],
-    },
-    {
-      teamname: "Team 6",
-      isDrawing: false,
-      isSelf: false,
-      won: true,
-      placementNr: 3,
-      points: 56,
-      level: 1,
-      shards: 0,
-      checkpoints: {
-        one: false,
-        two: false,
-        three: false
-      },
-      colour: teamColour(),
-      members: [
-        { username: "Bob", guessed: false, draws: false },
-        { username: "Jack", guessed: true, draws: false },
-        { username: "Alice", guessed: false, draws: false },
-        { username: "John", guessed: false, draws: false },
-      ],
-    },
-    {
-      teamname: "Team 7",
-      isDrawing: false,
-      isSelf: false,
-      won: true,
-      placementNr: 4,
-      points: 33,
-      level: 1,
-      shards: 0,
-      checkpoints: {
-        one: false,
-        two: false,
-        three: false
-      },
-      colour: teamColour(),
-      members: [
-        { username: "Bob", guessed: false, draws: false },
-        { username: "Jack", guessed: true, draws: false },
-        { username: "Alice", guessed: false, draws: false },
-        { username: "John", guessed: false, draws: false },
-      ],
-    },
-    {
-      teamname: "Team 8",
-      isDrawing: false,
-      isSelf: false,
-      won: false,
-      placementNr: undefined,
-      points: 74,
-      level: 1,
-      shards: 0,
-      checkpoints: {
-        one: false,
-        two: false,
-        three: false
-      },
-      colour: teamColour(),
-      members: [
-        { username: "Bob", guessed: false, draws: false },
-        { username: "Jack", guessed: true, draws: false },
-        { username: "Alice", guessed: false, draws: false },
-        { username: "John", guessed: false, draws: false },
-      ],
-    },
-    {
-      teamname: "Team 9",
-      isDrawing: false,
-      isSelf: false,
-      won: false,
-      placementNr: undefined,
-      points: 13,
-      level: 1,
-      shards: 0,
-      checkpoints: {
-        one: false,
-        two: false,
-        three: false
-      },
-      colour: teamColour(),
-      members: [
-        { username: "Bob", guessed: false, draws: false },
-        { username: "Jack", guessed: true, draws: false },
-        { username: "Alice", guessed: false, draws: false },
-        { username: "John", guessed: false, draws: false },
-      ],
-    },
-    {
-      teamname: "Team 10",
-      isDrawing: false,
-      isSelf: false,
-      won: false,
-      placementNr: undefined,
-      points: 85,
-      level: 1,
-      shards: 0,
-      checkpoints: {
-        one: false,
-        two: false,
-        three: false
-      },
-      colour: teamColour(),
-      members: [
-        { username: "Bob", guessed: false, draws: false },
-        { username: "Jack", guessed: true, draws: false },
-        { username: "Alice", guessed: false, draws: false },
-        { username: "John", guessed: false, draws: false },
-      ],
-    },
-    {
-      teamname: "Team 11",
-      isDrawing: false,
-      isSelf: false,
-      won: false,
-      placementNr: undefined,
-      points: 95,
-      level: 1,
-      shards: 0,
-      checkpoints: {
-        one: false,
-        two: false,
-        three: false
-      },
-      colour: teamColour(),
-      members: [
-        { username: "Bob", guessed: false, draws: false },
-        { username: "Jack", guessed: true, draws: false },
-        { username: "Alice", guessed: false, draws: false },
-        { username: "John", guessed: false, draws: false },
-      ],
-    },
-  ];
-
-  teamsValue.set(teams);
+  let teams = [];
 
   // Progress bar functionality
   /**
@@ -387,16 +137,17 @@
    * @param team the team whose points are being checked
    */
   const validateLevelPoints = (team) => {
-    if (team.points >= 25 && !(team.checkpoints.one)) {
+    if (team.points >= 25 && !team.checkpoints.one) {
       team.shards += team.level;
       team.checkpoints.one = true;
-    } else if (team.points >= 50 && !(team.checkpoints.two)) {
+    } else if (team.points >= 50 && !team.checkpoints.two) {
       team.shards += team.level;
       team.checkpoints.two = true;
-    } else if (team.points >= 80 && !(team.checkpoints.three)) {
+    } else if (team.points >= 80 && !team.checkpoints.three) {
       team.shards += team.level;
       team.checkpoints.three = true;
-    } else if (team.points >= 100) { // we make sure no team has more than the maximum amount of points
+    } else if (team.points >= 100) {
+      // we make sure no team has more than the maximum amount of points
       team.points -= 100;
       team.level++;
       team.checkpoints.one = false; // TODO needs refactoring
@@ -411,8 +162,21 @@
 
   onMount(() => {
     username = `User${Math.round(Math.random() * 10000)}`;
-    socket.emit("joinSession", { username, session });
+    socket.emit("joinSession", { username, session }, () => {
+      randomizeDrawer();
+      promise = getRole();
+      socket.emit("canvas:new-user");
+      socket.emit("teams:get");
+      joinMatch();
+    });
   });
+
+  teamsValue.set(teams);
+
+  const joinMatch = () => {
+    socket.emit("teams:get");
+    socket.emit("teams:join"); //TODO: This should only run on matchmaking
+  };
 
   // Receiving messages
   socket.on("message", (data) => {
@@ -430,17 +194,32 @@
     ];
   });
 
+  let teamSize = 0;
+
+  socket.on("teams:update", (data) => {
+    if (!data) {
+      return;
+    }
+
+    data.forEach((t) => {
+      t.members.forEach((u) => {
+        if (u.username === username) {
+          t.isSelf = true;
+          u.current = true;
+          teamSize = t.members.length;
+        }
+      });
+    });
+
+    teams = data;
+  });
+
   async function getRole() {
     return role;
   }
 
   let role = 3;
 
-  onMount(() => {
-    randomizeDrawer();
-    promise = getRole();
-    socket.emit("canvas:new-user");
-  });
   let randomizeDrawer = () => {
     const rng = Math.random();
     if (rng < 0.33) {
@@ -547,6 +326,7 @@
       {teamGuesses}
       teamNumber={1}
       currentGuess={currentGuess ? currentGuess.toLowerCase() : null}
+      {teamSize}
     />
     <TeamList showResults={results != null} contentJSON={teams} />
   </div>
