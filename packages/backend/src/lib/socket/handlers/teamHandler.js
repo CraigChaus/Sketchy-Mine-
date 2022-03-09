@@ -1,6 +1,7 @@
 import debug from 'debug';
 import User from '../../../data/model/user';
 import { Teams, updateTeams } from '../../../data/teams';
+import { getCurrentUser } from '../utils/users';
 
 const TEAM_EVENTS = {
   REQUEST_LISTING: 'teams:get',
@@ -12,17 +13,13 @@ const TEAM_EVENTS = {
 const teamHandler = (io, socket) => {
   const dbg = debug('handler:team');
 
-  // TODO: Fix this since it doesn't work: always gives undefined
-  // const user = getCurrentUser(socket.id);
-
-  const user = { username: 'Username' };
-
   const sendTeamData = () => {
     dbg(TEAM_EVENTS.SEND_LISTING);
     socket.emit(TEAM_EVENTS.SEND_LISTING, Teams);
   };
 
   const joinTeam = (payload) => {
+    const user = getCurrentUser(socket.id);
     dbg(TEAM_EVENTS.JOIN_TEAM, user.username);
 
     const team = Teams.find((o) => o.teamname === payload);

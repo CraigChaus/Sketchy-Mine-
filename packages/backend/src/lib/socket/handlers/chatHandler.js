@@ -21,7 +21,7 @@ const CHAT_EVENTS = {
 const chatHandler = (io, socket) => {
   const dbg = debug('handler:chat');
 
-  socket.on(CHAT_EVENTS.JOIN, ({ username, session }) => {
+  socket.on(CHAT_EVENTS.JOIN, ({ username, session }, callback) => {
     dbg(CHAT_EVENTS.JOIN, { username, session });
     const user = userJoin(socket.id, username, session);
     socket.join(user.session);
@@ -38,6 +38,8 @@ const chatHandler = (io, socket) => {
     });
 
     sendState(socket);
+
+    callback();
   });
 
   // Listen for chat message
