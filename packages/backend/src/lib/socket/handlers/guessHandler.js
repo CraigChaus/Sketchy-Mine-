@@ -1,14 +1,12 @@
 import debug from 'debug';
 import { getIO } from '..';
 import {
-  addGuess, checkWord, getCurrentWord, getGuesses, getProgress, nextWord, getTeamResults,
+  addGuess, getCurrentWord, getGuesses, getProgress, nextWord, getTeamResults,
 } from '../utils/gameState';
 import { getCurrentUser } from '../utils/users';
 import { TEAM_EVENTS } from './teamHandler';
 
 export const GUESS_EVENTS = {
-  GUESS_ERR: 'guess:err',
-  GUESS_OK: 'guess:ok',
   ROUND_GUESS: 'round:guess',
   ROUND_STATE: 'round:state',
   ROUND_PROGRESS: 'round:progress',
@@ -61,30 +59,8 @@ const guessHandler = (io, socket) => {
       return;
     }
 
-    const isCorrect = checkWord(word);
-
     addGuess(user.username, user.session, word);
     io.emit(GUESS_EVENTS.ROUND_STATE, getGuesses(user.session));
-
-    if (!isCorrect) {
-      // Client guessed incorrectly
-      const response = {
-        error: 'Invalid guess',
-        payload: word,
-        id: socket.id,
-      };
-      dbg(response);
-      socket.emit(GUESS_EVENTS.GUESS_ERR, response);
-      return;
-    }
-
-    // Correct guess
-
-    const response = {
-      payload: word,
-      id: socket.id,
-    };
-    socket.emit(GUESS_EVENTS.GUESS_OK, response);
   };
 
   socket.on(GUESS_EVENTS.ROUND_GUESS, sendGuess);

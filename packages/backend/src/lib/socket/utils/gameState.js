@@ -4,13 +4,14 @@ import { sendProgress, sendResult } from '../handlers/guessHandler';
 
 const dbg = debug('state');
 
+const ROUND_DURATION = 20;
+const teamGuesses = [];
+
 const wordBank = [
   // 'Apple',
   // 'Banana',
   'Emerald',
 ];
-
-const ROUND_DURATION = 20;
 
 export const getRandomWord = () => {
   const nextWordIndex = Math.floor(Math.random() * wordBank.length);
@@ -23,8 +24,6 @@ const defaultState = {
   guesses: [],
   roundTime: null,
 };
-
-const teamGuesses = [];
 
 export const gameState = JSON.parse(JSON.stringify(defaultState));
 
@@ -105,9 +104,6 @@ export const getTeamResults = () => {
   });
   return team;
 };
-
-// eslint-disable-next-line max-len
-export const checkWord = (guess) => (guess.toLowerCase() === getCurrentWord ? getCurrentWord().toLowerCase() : false);
 
 export const nextWord = () => {
   const word = getRandomWord();
