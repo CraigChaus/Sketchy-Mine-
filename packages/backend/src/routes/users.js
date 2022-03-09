@@ -3,7 +3,7 @@ import { Router } from 'express';
 const { StatusCodes } = require('http-status-codes');
 
 const router = Router();
-let users = require('../data/users');
+const users = require('../data/users');
 
 /* GET users listing. */
 router.get('/', (req, res) => {
@@ -12,17 +12,15 @@ router.get('/', (req, res) => {
 
 /* Get user by ID */
 router.get('/:id', (req, res) => {
-  const id = req.params.id;
-  const user = users.find((user) => {
-    return user.id == id;
-  });
+  const { id } = req.params;
+  const user = users.find((us) => us.id === id);
 
   if (user) {
     res.send(user);
   } else {
     res
-        .status(StatusCodes.NOT_FOUND)
-        .send(`User with id ${id} not found`);
+      .status(StatusCodes.NOT_FOUND)
+      .send(`User with id ${id} not found`);
   }
 });
 
