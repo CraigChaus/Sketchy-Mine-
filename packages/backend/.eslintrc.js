@@ -16,5 +16,6 @@ module.exports = {
     'no-console': 'off',
     'import/no-cycle': 'off',
     'no-param-reassign': 'off',
+    'consistent-return': 'off',
   },
 };

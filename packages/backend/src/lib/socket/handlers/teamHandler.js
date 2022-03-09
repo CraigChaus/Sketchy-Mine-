@@ -4,7 +4,7 @@ import User from '../../../data/model/user';
 import { addTeam, Teams, updateTeams } from '../../../data/teams';
 import { getCurrentUser } from '../utils/users';
 
-const TEAM_EVENTS = {
+export const TEAM_EVENTS = {
   REQUEST_LISTING: 'teams:get',
   SEND_LISTING: 'teams:update',
   JOIN_TEAM: 'teams:join',

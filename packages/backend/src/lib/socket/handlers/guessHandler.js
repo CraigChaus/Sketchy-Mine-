@@ -1,9 +1,10 @@
 import debug from 'debug';
 import { getIO } from '..';
 import {
-  addGuess, checkWord, getCurrentWord, getGuesses, getProgress, nextWord,
+  addGuess, checkWord, getCurrentWord, getGuesses, getProgress, nextWord, getTeamResults,
 } from '../utils/gameState';
 import { getCurrentUser } from '../utils/users';
+import { TEAM_EVENTS } from './teamHandler';
 
 export const GUESS_EVENTS = {
   GUESS_ERR: 'guess:err',
@@ -38,7 +39,9 @@ export const sendProgress = () => {
 export const sendResult = () => {
   const io = getIO();
 
+  io.emit(TEAM_EVENTS.SEND_LISTING, getTeamResults());
   const progress = { result: getCurrentWord() };
+
   dbg(GUESS_EVENTS.ROUND_RESULT, progress);
   io.emit(GUESS_EVENTS.ROUND_RESULT, progress);
 };

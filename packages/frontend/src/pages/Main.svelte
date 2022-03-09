@@ -166,7 +166,6 @@
       randomizeDrawer();
       promise = getRole();
       socket.emit("canvas:new-user");
-      socket.emit("teams:get");
       joinMatch();
     });
   });
@@ -277,6 +276,7 @@
 
   const updateGuessState = (payload) => {
     teamGuesses = payload;
+    console.log(payload);
   };
 
   socket.on("round:state", updateGuessState);
@@ -301,14 +301,7 @@
     socket.emit("round:start");
   };
 
-  socket.on("round:result", (payload) => {
-    results = payload;
-
-    const correct = currentGuess.toLowerCase() === payload.result.toLowerCase();
-    const team1 = teams[0];
-    team1.won = correct;
-    teams = teams;
-  });
+  socket.on("round:result", (payload) => (results = payload));
 
   let currentGuess = null;
 

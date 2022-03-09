@@ -14,7 +14,6 @@ class Team {
     this.points = 0;
     this.level = 0;
     this.shards = 0;
-    this.submittedGuess = '';
     this.checkpoints = {
       1: false,
       2: false,

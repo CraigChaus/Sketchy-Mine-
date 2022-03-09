@@ -1,4 +1,5 @@
 import debug from 'debug';
+import { Teams } from '../../../data/teams';
 import { sendProgress, sendResult } from '../handlers/guessHandler';
 
 const dbg = debug('state');
@@ -9,7 +10,7 @@ const wordBank = [
   'Emerald',
 ];
 
-const ROUND_DURATION = 10;
+const ROUND_DURATION = 20;
 
 export const getRandomWord = () => {
   const nextWordIndex = Math.floor(Math.random() * wordBank.length);
@@ -22,6 +23,8 @@ const defaultState = {
   guesses: [],
   roundTime: null,
 };
+
+const teamGuesses = [];
 
 export const gameState = JSON.parse(JSON.stringify(defaultState));
 
@@ -56,6 +59,24 @@ export const getProgress = () => {
 };
 
 export const addGuess = (username, session, guess) => {
+  const currentTeam = Teams.find((t) => t.members.find((m) => m.username === username));
+  if (!teamGuesses.some((t) => t.teamname === currentTeam.teamname)) {
+    teamGuesses.push({ teamname: currentTeam.teamname, guesses: [{ guess, freq: 1 }] });
+  } else {
+    teamGuesses.forEach((t) => {
+      if (t.teamname === currentTeam.teamname) {
+        const found = t.guesses.some((g) => g.guess === guess);
+        if (!found) {
+          t.guesses.push({ guess, freq: 1 });
+        } else {
+          t.guesses.forEach((g) => {
+            if (g.guess === guess) g.freq += 1;
+          });
+        }
+      }
+    });
+  }
+
   let savedGuess = gameState.guesses.find((g) => g.username === username && g.session === session);
 
   if (savedGuess) {
@@ -73,6 +94,17 @@ export const addGuess = (username, session, guess) => {
 };
 
 export const getCurrentWord = () => gameState.currentWord;
+
+export const getTeamResults = () => {
+  const team = [...Teams];
+  team.forEach((t) => {
+    const currentTeamGuessStat = teamGuesses.find((tm) => tm.teamname === t.teamname);
+    const bg = currentTeamGuessStat.guesses.reduce((max, obj) => (obj.freq > max.freq ? obj : max));
+    if (bg.guess.toLowerCase() === getCurrentWord().toLowerCase()) t.won = true;
+    else t.won = false;
+  });
+  return team;
+};
 
 // eslint-disable-next-line max-len
 export const checkWord = (guess) => (guess.toLowerCase() === getCurrentWord ? getCurrentWord().toLowerCase() : false);
