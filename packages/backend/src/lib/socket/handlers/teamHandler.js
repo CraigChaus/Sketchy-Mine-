@@ -40,8 +40,25 @@ const teamHandler = (io, socket) => {
     }
   };
 
+  const joinMatch = () => {
+    // Log team member capacity
+    Teams.forEach((t) => {
+      dbg(`${t.teamname}:`, `${t.members.length} players`);
+    });
+
+    const sortedTeams = Teams.slice()
+      .filter((t) => t.level === 0) // Only consider teams at level 0
+      // eslint-disable-next-line max-len
+      .sort((t1, t2) => t1.members.length - t2.members.length || t1.teamname.toLowerCase() - t2.teamname.toLowerCase()); // Sort teams by team members and name
+
+    // Get team with lowest number of players
+    const teamToJoin = sortedTeams[0];
+
+    joinTeam(teamToJoin.teamname);
+  };
+
   socket.on(TEAM_EVENTS.REQUEST_LISTING, () => sendTeamData(io));
-  socket.on(TEAM_EVENTS.JOIN_TEAM, () => joinTeam('Team 1'));
+  socket.on(TEAM_EVENTS.JOIN_TEAM, joinMatch);
 };
 
 export default teamHandler;
