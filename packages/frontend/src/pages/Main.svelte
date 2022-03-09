@@ -162,6 +162,11 @@
   onMount(() => {
     username = `User${Math.round(Math.random() * 10000)}`;
     socket.emit("joinSession", { username, session });
+    randomizeDrawer();
+    promise = getRole();
+    socket.emit("canvas:new-user");
+    socket.emit("teams:get");
+    socket.emit("teams:join"); //TODO: This should only run on matchmaking
   });
 
   teamsValue.set(teams);
@@ -186,6 +191,16 @@
     if (!data) {
       return;
     }
+
+    data.forEach(t => {
+      t.members.forEach(u => {
+        if(u.username === username){
+          t.isSelf = true;
+          u.current = true;
+        }
+      });
+    } );
+
     teams = data;
   });
 
@@ -195,13 +210,6 @@
 
   let role = 3;
 
-  onMount(() => {
-    randomizeDrawer();
-    promise = getRole();
-    socket.emit("canvas:new-user");
-    socket.emit("teams:get");
-    socket.emit("teams:join", "Team 1"); //TODO: This should only run on matchmaking
-  });
   let randomizeDrawer = () => {
     const rng = Math.random();
     if (rng < 0.33) {

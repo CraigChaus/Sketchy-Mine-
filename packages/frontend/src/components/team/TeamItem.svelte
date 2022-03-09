@@ -77,7 +77,7 @@
     </div>
     {/if}
 </div>
-{#if showMembers}
+{#if showMembers || isSelf}
     <MembersList membersJSON={members} showGuessedIndicator={isSelf}/>
 {/if}
   

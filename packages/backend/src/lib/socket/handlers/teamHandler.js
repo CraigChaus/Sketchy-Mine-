@@ -9,36 +9,12 @@ const TEAM_EVENTS = {
   JOIN_TEAM: 'teams:join',
 };
 
-function getUserSpecificTeamData(username) {
-  const teamsToSend = [];
-
-  for (const t of Teams) {
-    const team = { ...t };
-    const members = [];
-    for (const m of team.members) {
-      if (m.username === username) {
-        const u = { ...m };
-        u.current = true;
-        members.push(u);
-        team.isSelf = true;
-      } else {
-        members.push(m);
-      }
-    }
-    team.members = members;
-    teamsToSend.push(team);
-  }
-
-  return teamsToSend;
-}
-
 const teamHandler = (io, socket) => {
   const dbg = debug('handler:team');
 
   const sendTeamData = () => {
-    const user = getCurrentUser(socket.id);
     dbg(TEAM_EVENTS.SEND_LISTING);
-    socket.emit(TEAM_EVENTS.SEND_LISTING, getUserSpecificTeamData(user.username));
+    socket.emit(TEAM_EVENTS.SEND_LISTING, Teams);
   };
 
   const joinTeam = (payload) => {
@@ -59,13 +35,13 @@ const teamHandler = (io, socket) => {
 
           return obj;
         }));
-        io.emit(TEAM_EVENTS.SEND_LISTING, getUserSpecificTeamData(user.username));
+        io.emit(TEAM_EVENTS.SEND_LISTING, Teams);
       }
     }
   };
 
   socket.on(TEAM_EVENTS.REQUEST_LISTING, sendTeamData);
-  socket.on(TEAM_EVENTS.JOIN_TEAM, joinTeam);
+  socket.on(TEAM_EVENTS.JOIN_TEAM, () => joinTeam('Team 1'));
 };
 
 export default teamHandler;
