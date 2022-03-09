@@ -24,10 +24,6 @@
   // Points and colour are used by ProgressBar.
   let teams = [];
 
-  socket.emit("teams:get");
-
-  teamsValue.set(teams);
-
   // Progress bar functionality
   /**
    * This function updates the team's points that guessed correctly.
@@ -168,6 +164,8 @@
     socket.emit("joinSession", { username, session });
   });
 
+  teamsValue.set(teams);
+
   // Receiving messages
   socket.on("message", (data) => {
     if (!data) {
@@ -184,11 +182,14 @@
     ];
   });
 
+  socket.emit("teams:get");
+
+  socket.emit("teams:join", "Team 1"); //TODO: This should only run on matchmaking
+
   socket.on("teams:update", (data) => {
     if (!data) {
       return;
     }
-    console.log(data);
     teams = data;
   });
 
