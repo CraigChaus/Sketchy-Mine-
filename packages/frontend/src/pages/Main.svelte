@@ -182,10 +182,6 @@
     ];
   });
 
-  socket.emit("teams:get");
-
-  socket.emit("teams:join", "Team 1"); //TODO: This should only run on matchmaking
-
   socket.on("teams:update", (data) => {
     if (!data) {
       return;
@@ -203,6 +199,8 @@
     randomizeDrawer();
     promise = getRole();
     socket.emit("canvas:new-user");
+    socket.emit("teams:get");
+    socket.emit("teams:join", "Team 1"); //TODO: This should only run on matchmaking
   });
   let randomizeDrawer = () => {
     const rng = Math.random();
