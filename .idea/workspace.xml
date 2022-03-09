@@ -2,9 +2,10 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="481344fd-0740-43af-9167-2cce919a43b1" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/packages/frontend/src/pages/Home.svelte" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/packages/frontend/src/pages/Ranking.svelte" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/Timesheet.xlsx" beforeDir="false" afterPath="$PROJECT_DIR$/docs/Timesheet.xlsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/packages/frontend/src/App.svelte" beforeDir="false" afterPath="$PROJECT_DIR$/packages/frontend/src/App.svelte" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -15,6 +16,8 @@
     <option name="RECENT_TEMPLATES">
       <list>
         <option value="JavaScript File" />
+        <option value="Home.svelte" />
+        <option value="Ranking.svelte" />
       </list>
     </option>
   </component>
@@ -28,6 +31,9 @@
   </component>
   <component name="MarkdownSettingsMigration">
     <option name="stateVersion" value="1" />
+  </component>
+  <component name="ProblemsViewState">
+    <option name="selectedIndex" value="1" />
   </component>
   <component name="ProjectId" id="24xq8ucaqLsxCeGBoGz9tE7NBa6" />
   <component name="ProjectViewState">
@@ -104,5 +110,6 @@
         </entry>
       </map>
     </option>
+    <option name="oldMeFiltersMigrated" value="true" />
   </component>
 </project>
