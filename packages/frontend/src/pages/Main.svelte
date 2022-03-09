@@ -163,14 +163,17 @@
   onMount(() => {
     username = `User${Math.round(Math.random() * 10000)}`;
     socket.emit("joinSession", { username, session }, () => {
-      console.log("Joined session");
       socket.emit("teams:get");
-
-      socket.emit("teams:join", "Team 1"); //TODO: This should only run on matchmaking
+      // joinMatch();
     });
   });
 
   teamsValue.set(teams);
+
+  const joinMatch = () => {
+    socket.emit("teams:get");
+    socket.emit("teams:join", "Team 1"); //TODO: This should only run on matchmaking
+  };
 
   // Receiving messages
   socket.on("message", (data) => {
