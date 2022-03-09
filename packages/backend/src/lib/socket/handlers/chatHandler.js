@@ -6,7 +6,8 @@ import {
 import messageFormat from '../utils/messages';
 import { GUESS_EVENTS, sendState } from './guessHandler';
 import { getGuesses, removeUserGuesses } from '../utils/gameState';
-import { removePlayer } from '../../../data/teams';
+import { removePlayerFromTeam, Teams } from '../../../data/teams';
+import { sendTeamData } from './teamHandler';
 
 // This will appear as the name of the sender
 const name = 'Sketchy Mine System';
@@ -57,7 +58,9 @@ const chatHandler = (io, socket) => {
 
     if (existingUser) {
       removeUserGuesses(existingUser);
-      removePlayer(existingUser.username);
+      removePlayerFromTeam(existingUser.username);
+      sendTeamData(io);
+
       io.emit(GUESS_EVENTS.ROUND_STATE, getGuesses(existingUser.session));
     }
 

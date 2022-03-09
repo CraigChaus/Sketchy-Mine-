@@ -9,14 +9,14 @@ const TEAM_EVENTS = {
   JOIN_TEAM: 'teams:join',
 };
 
+const dbg = debug('handler:team');
+
+export const sendTeamData = (io) => {
+  dbg(TEAM_EVENTS.SEND_LISTING);
+  io.emit(TEAM_EVENTS.SEND_LISTING, Teams);
+};
+
 const teamHandler = (io, socket) => {
-  const dbg = debug('handler:team');
-
-  const sendTeamData = () => {
-    dbg(TEAM_EVENTS.SEND_LISTING);
-    socket.emit(TEAM_EVENTS.SEND_LISTING, Teams);
-  };
-
   const joinTeam = (payload) => {
     const user = getCurrentUser(socket.id);
     dbg(TEAM_EVENTS.JOIN_TEAM, user.username);
@@ -40,7 +40,7 @@ const teamHandler = (io, socket) => {
     }
   };
 
-  socket.on(TEAM_EVENTS.REQUEST_LISTING, sendTeamData);
+  socket.on(TEAM_EVENTS.REQUEST_LISTING, () => sendTeamData(io));
   socket.on(TEAM_EVENTS.JOIN_TEAM, () => joinTeam('Team 1'));
 };
 

@@ -167,7 +167,7 @@
       promise = getRole();
       socket.emit("canvas:new-user");
       socket.emit("teams:get");
-      // joinMatch();
+       joinMatch();
     });
   });
 

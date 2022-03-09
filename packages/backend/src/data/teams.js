@@ -29,7 +29,7 @@ export function updateTeams(t) {
   t.forEach((element) => Teams.push(element));
 }
 
-export function removePlayer(username) {
+export function removePlayerFromTeam(username) {
   Teams.forEach((t) => {
     t.members = t.members.filter((m) => m.username !== username);
   });
