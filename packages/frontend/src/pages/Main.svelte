@@ -137,16 +137,17 @@
    * @param team the team whose points are being checked
    */
   const validateLevelPoints = (team) => {
-    if (team.points >= 25 && !(team.checkpoints.one)) {
+    if (team.points >= 25 && !team.checkpoints.one) {
       team.shards += team.level;
       team.checkpoints.one = true;
-    } else if (team.points >= 50 && !(team.checkpoints.two)) {
+    } else if (team.points >= 50 && !team.checkpoints.two) {
       team.shards += team.level;
       team.checkpoints.two = true;
-    } else if (team.points >= 80 && !(team.checkpoints.three)) {
+    } else if (team.points >= 80 && !team.checkpoints.three) {
       team.shards += team.level;
       team.checkpoints.three = true;
-    } else if (team.points >= 100) { // we make sure no team has more than the maximum amount of points
+    } else if (team.points >= 100) {
+      // we make sure no team has more than the maximum amount of points
       team.points -= 100;
       team.level++;
       team.checkpoints.one = false; // TODO needs refactoring
@@ -161,12 +162,15 @@
 
   onMount(() => {
     username = `User${Math.round(Math.random() * 10000)}`;
-    socket.emit("joinSession", { username, session });
-    randomizeDrawer();
-    promise = getRole();
-    socket.emit("canvas:new-user");
-    socket.emit("teams:get");
-    socket.emit("teams:join"); //TODO: This should only run on matchmaking
+    socket.emit("joinSession", { username, session }, () => {
+      randomizeDrawer();
+      promise = getRole();
+      socket.emit("canvas:new-user");
+      console.log("Joined session");
+      socket.emit("teams:get");
+
+      socket.emit("teams:join"); //TODO: This should only run on matchmaking
+    });
   });
 
   teamsValue.set(teams);
