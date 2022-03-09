@@ -1,36 +1,34 @@
-import Team from './model/team';
-// import User from './model/user';
+/**
+ * In-memory teams DB
+ */
+export const Teams = [];
 
-// const bob = new User('Bob');
-// const jack = new User('Jack');
-// const susan = new User('Susan');
-// const alice = new User('Alice');
-// const mark = new User('Mark');
-// const david = new User('David');
-
-const team1 = new Team('Team 1');
-
-const team2 = new Team('Team 2');
-// team2.members.push(bob);
-// team2.members.push(jack);
-// team2.members.push(susan);
-
-const team3 = new Team('Team 3');
-// team3.members.push(alice);
-// team3.members.push(mark);
-// team3.members.push(david);
-
-export const Teams = [
-  team1, team2, team3,
-];
-
+/**
+ * Set the teams available
+ * @param {Team[]} t Array of teams to set
+ */
 export function updateTeams(t) {
   Teams.length = 0;
   t.forEach((element) => Teams.push(element));
 }
 
+/**
+ * Remove a player from any team they are in
+ * @param {String} username Player username to remove
+ */
 export function removePlayerFromTeam(username) {
   Teams.forEach((t) => {
     t.members = t.members.filter((m) => m.username !== username);
   });
+
+  // Delete any teams that are now empty
+  updateTeams(Teams.filter((t) => t.members.length > 0));
+}
+
+/**
+ * Add a new team
+ * @param {Team} t Team instance to add
+ */
+export function addTeam(t) {
+  Teams.push(t);
 }

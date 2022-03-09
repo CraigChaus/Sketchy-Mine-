@@ -1,6 +1,7 @@
 import debug from 'debug';
+import Team from '../../../data/model/team';
 import User from '../../../data/model/user';
-import { Teams, updateTeams } from '../../../data/teams';
+import { addTeam, Teams, updateTeams } from '../../../data/teams';
 import { getCurrentUser } from '../utils/users';
 
 const TEAM_EVENTS = {
@@ -40,6 +41,10 @@ const teamHandler = (io, socket) => {
     }
   };
 
+  /**
+   * Join a team as a player based on the available teams and their current capacity,
+   * or by creating a new team
+   */
   const joinMatch = () => {
     // Log team member capacity
     Teams.forEach((t) => {
@@ -52,8 +57,15 @@ const teamHandler = (io, socket) => {
       .sort((t1, t2) => t1.members.length - t2.members.length || t1.teamname.toLowerCase() - t2.teamname.toLowerCase()); // Sort teams by team members and name
 
     // Get team with lowest number of players
-    const teamToJoin = sortedTeams[0];
+    let teamToJoin = sortedTeams[0];
 
+    // If the team already has 3 members, create a new team instead
+    if (!teamToJoin || teamToJoin.members.length >= 3) {
+      const teamIndex = Teams.length + 1;
+      teamToJoin = new Team(`Team ${teamIndex}`);
+      addTeam(teamToJoin);
+      dbg('Adding team:', teamToJoin.teamname);
+    }
     joinTeam(teamToJoin.teamname);
   };
 
