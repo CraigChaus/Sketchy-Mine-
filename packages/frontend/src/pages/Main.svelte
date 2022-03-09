@@ -167,7 +167,7 @@
       promise = getRole();
       socket.emit("canvas:new-user");
       socket.emit("teams:get");
-       joinMatch();
+      joinMatch();
     });
   });
 
@@ -194,19 +194,22 @@
     ];
   });
 
+  let teamSize = 0;
+
   socket.on("teams:update", (data) => {
     if (!data) {
       return;
     }
 
-    data.forEach(t => {
-      t.members.forEach(u => {
-        if(u.username === username){
+    data.forEach((t) => {
+      t.members.forEach((u) => {
+        if (u.username === username) {
           t.isSelf = true;
           u.current = true;
+          teamSize = t.members.length;
         }
       });
-    } );
+    });
 
     teams = data;
   });
@@ -323,6 +326,7 @@
       {teamGuesses}
       teamNumber={1}
       currentGuess={currentGuess ? currentGuess.toLowerCase() : null}
+      {teamSize}
     />
     <TeamList showResults={results != null} contentJSON={teams} />
   </div>
