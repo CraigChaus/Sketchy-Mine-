@@ -1,6 +1,8 @@
 import { Router } from 'express';
 
 const { StatusCodes } = require('http-status-codes');
+const { uuid } = require('uuidv4');
+const bcrypt = require('bcrypt');
 
 const router = Router();
 const users = require('../data/users');
@@ -21,6 +23,27 @@ router.get('/:id', (req, res) => {
     res
       .status(StatusCodes.NOT_FOUND)
       .send(`User with id ${id} not found`);
+  }
+});
+
+/* Register user */
+router.post('/', async (req, res) => {
+  try {
+    console.log(req.body);
+    users.push({
+      id: users.length + 1,
+      username: req.body.username,
+      password: await bcrypt.hash(req.body.password, 12),
+      secret: uuid(),
+    });
+
+    res
+      .status(StatusCodes.CREATED)
+      .send('User registered!');
+  } catch {
+    res
+      .status(StatusCodes.BAD_REQUEST)
+      .send('Please fill in username/password');
   }
 });
 
