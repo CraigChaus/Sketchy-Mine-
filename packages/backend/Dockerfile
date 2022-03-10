@@ -4,7 +4,7 @@ WORKDIR /usr/src/app
 
 COPY package*.json ./
 
-RUN npm i
+RUN npm ci
 
 COPY . .
 
@@ -17,6 +17,9 @@ COPY --from=build /usr/src/app/package*.json ./
 COPY --from=build /usr/src/app/dist/ ./dist/
 
 RUN npm ci --only=production
+
+ENV NODE_ENV=production
+ENV DEBUG=express,socket,state,db,handler:*
 
 CMD ["npm", "run", "serve"]
 

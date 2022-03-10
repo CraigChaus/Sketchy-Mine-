@@ -4,6 +4,16 @@ This project contains the Express REST server for the game, as well as the Socke
 
 ## Running
 
+### Requirements
+
+> Important, prior to running the server, copy the [_.env.example_](./.env.example) file provided into _.env_, and edit the variables as required.
+
+Ensure a PostgreSQL server is reachable and configured with the **DB_URL** variable configured.
+
+#### Compose
+
+A [docker-compose file](./docker-compose.yml) has been provided for running a local database server.
+
 ### Dev
 
 To run the project in development mode, run `npm run watch:dev`.
@@ -24,5 +34,4 @@ This project is set up to be automatically linted using ESLint. Install ESLint f
 
 ## Future Plans
 
-- Docker image
 - Additional tests
