@@ -21,46 +21,29 @@ export const getRandomWord = () => {
 
 const defaultState = {
   currentWord: null,
-  guesses: [],
   roundTime: null,
 };
 
 export const gameState = JSON.parse(JSON.stringify(defaultState));
 
-export const getGuesses = (session) => {
-  const filteredGuesses = gameState.guesses.filter((g) => g.session === session);
-
-  const guessesMap = {};
-
-  filteredGuesses.forEach((g) => {
-    if (guessesMap[g.guess]) {
-      guessesMap[g.guess] += 1;
-    } else {
-      guessesMap[g.guess] = 1;
-    }
-  });
-
+export const getGuesses = (username) => {
   const guesses = [];
+  const currentTeam = Teams.find((t) => t.members.find((m) => m.username === username));
+  if (!currentTeam) return guesses;
+  const teamGuessData = teamGuesses.find((t) => t.teamname === currentTeam.teamname);
 
-  Object.keys(guessesMap).forEach((guess) => {
-    guesses.push({ value: guess, frequency: guessesMap[guess] });
-  });
+  console.log(teamGuessData);
 
+  if (teamGuessData) {
+    teamGuessData.guesses.forEach((g) => guesses.push({ value: g.guess, frequency: g.freq }));
+  }
   return guesses;
-};
-
-export const getProgress = () => {
-  const timeLeft = gameState.roundTime;
-
-  return {
-    timeLeft,
-  };
 };
 
 export const addGuess = (username, session, guess) => {
   const currentTeam = Teams.find((t) => t.members.find((m) => m.username === username));
   if (!teamGuesses.some((t) => t.teamname === currentTeam.teamname)) {
-    teamGuesses.push({ teamname: currentTeam.teamname, guesses: [{ guess, freq: 1 }] });
+    teamGuesses.push({ teamname: currentTeam.teamname, guesses: [{ guess, freq: 1, username }] });
   } else {
     teamGuesses.forEach((t) => {
       if (t.teamname === currentTeam.teamname) {
@@ -69,27 +52,12 @@ export const addGuess = (username, session, guess) => {
           t.guesses.push({ guess, freq: 1 });
         } else {
           t.guesses.forEach((g) => {
-            if (g.guess === guess) g.freq += 1;
+            if (g.guess === guess && g.username !== username) g.freq += 1;
           });
         }
       }
     });
   }
-
-  let savedGuess = gameState.guesses.find((g) => g.username === username && g.session === session);
-
-  if (savedGuess) {
-    savedGuess.guess = guess;
-  } else {
-    savedGuess = {
-      username, session, guess,
-    };
-    gameState.guesses = [...gameState.guesses, savedGuess];
-  }
-  dbg('New guess', savedGuess);
-
-  const guesses = getGuesses(session);
-  dbg('Guesses -', guesses);
 };
 
 export const getCurrentWord = () => gameState.currentWord;
@@ -97,10 +65,12 @@ export const getCurrentWord = () => gameState.currentWord;
 export const getTeamResults = () => {
   const team = [...Teams];
   team.forEach((t) => {
-    const currentTeamGuessStat = teamGuesses.find((tm) => tm.teamname === t.teamname);
-    const bg = currentTeamGuessStat.guesses.reduce((max, obj) => (obj.freq > max.freq ? obj : max));
-    if (bg.guess.toLowerCase() === getCurrentWord().toLowerCase()) t.won = true;
-    else t.won = false;
+    const tGuesses = teamGuesses.find((tm) => tm.teamname === t.teamname);
+    if (tGuesses) {
+      const bg = tGuesses.guesses.reduce((max, obj) => (obj.freq > max.freq ? obj : max));
+      if (bg.guess.toLowerCase() === getCurrentWord().toLowerCase()) t.won = true;
+      else t.won = false;
+    }
   });
   return team;
 };
@@ -109,18 +79,19 @@ export const nextWord = () => {
   const word = getRandomWord();
   gameState.currentWord = word;
   gameState.roundTime = ROUND_DURATION;
-  gameState.guesses = [];
+  teamGuesses.guesses = [];
 
-  sendProgress();
+  sendProgress({ roundTime: gameState.roundTime });
 
   const progressTimer = setInterval(() => {
     gameState.roundTime -= 1;
-    sendProgress();
+    sendProgress({ roundTime: gameState.roundTime });
 
     if (gameState.roundTime <= 0) {
       dbg('Round over');
       clearInterval(progressTimer);
-      sendResult();
+      dbg(gameState);
+      sendResult(gameState);
     }
   }, 1000);
 
@@ -130,6 +101,8 @@ export const nextWord = () => {
 export const removeUserGuesses = (user) => {
   if (user) {
     // eslint-disable-next-line max-len
-    gameState.guesses = gameState.guesses.filter((g) => g.username !== user.username);
+    teamGuesses.forEach((t) => {
+      t.guesses = t.guessses.filter((g) => g.username !== user.username);
+    });
   }
 };

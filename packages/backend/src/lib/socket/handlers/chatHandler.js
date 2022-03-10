@@ -61,7 +61,7 @@ const chatHandler = (io, socket) => {
       removePlayerFromTeam(existingUser.username);
       sendTeamData(io);
 
-      io.emit(GUESS_EVENTS.ROUND_STATE, getGuesses(existingUser.session));
+      io.emit(GUESS_EVENTS.ROUND_STATE, getGuesses(existingUser.username));
     }
 
     const user = userLeave(socket.id);

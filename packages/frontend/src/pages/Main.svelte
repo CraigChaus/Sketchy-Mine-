@@ -12,15 +12,6 @@
 
   let results = null;
 
-  // Receiving guesses
-  socket.on("guess", (guesses) => {
-    if (!data) {
-      return;
-    }
-
-    teamGuesses = [...guesses];
-  });
-
   // Points and colour are used by ProgressBar.
   let teams = [];
 
@@ -274,12 +265,8 @@
     chatInput = "";
   };
 
-  const updateGuessState = (payload) => {
-    teamGuesses = payload;
-    console.log(payload);
-  };
-
-  socket.on("round:state", updateGuessState);
+  const updateGuessState = (payload) => (teamGuesses = payload);
+  socket.on("round:progress", updateGuessState);
 
   const onClickGuessItem = (e) => {
     sendGuess(e.detail);

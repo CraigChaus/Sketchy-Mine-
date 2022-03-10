@@ -1,7 +1,7 @@
 import debug from 'debug';
 import { getIO } from '..';
 import {
-  addGuess, getCurrentWord, getGuesses, getProgress, nextWord, getTeamResults,
+  addGuess, getCurrentWord, getGuesses, nextWord, getTeamResults,
 } from '../utils/gameState';
 import { getCurrentUser } from '../utils/users';
 import { TEAM_EVENTS } from './teamHandler';
@@ -9,29 +9,36 @@ import { TEAM_EVENTS } from './teamHandler';
 export const GUESS_EVENTS = {
   ROUND_GUESS: 'round:guess',
   ROUND_STATE: 'round:state',
-  ROUND_PROGRESS: 'round:progress',
   ROUND_RESULT: 'round:result',
+  ROUND_GUESSES: 'round:progress',
   ROUND_START: 'round:start',
 };
 
 const dbg = debug('handler:guess');
 
+export const sendProgress = (progress) => {
+  const io = getIO();
+
+  dbg(GUESS_EVENTS.ROUND_STATE, progress);
+  io.emit(GUESS_EVENTS.ROUND_STATE, progress);
+};
+
+const broadcastTeamSpecificGuesses = (io) => {
+  io.sockets.sockets.forEach((v, k) => {
+    const user = getCurrentUser(k);
+    if (!user) return;
+    const guesses = getGuesses(user.username);
+    dbg(GUESS_EVENTS.ROUND_GUESSES, guesses);
+    v.emit(GUESS_EVENTS.ROUND_GUESSES, guesses);
+  });
+};
+
 export const sendState = (socket) => {
   const user = getCurrentUser(socket.id);
 
   if (user) {
-    const guesses = getGuesses(user.session);
-    dbg(GUESS_EVENTS.ROUND_STATE, guesses);
-    socket.emit(GUESS_EVENTS.ROUND_STATE, guesses);
+    broadcastTeamSpecificGuesses(getIO());
   }
-};
-
-export const sendProgress = () => {
-  const io = getIO();
-
-  const progress = getProgress();
-  dbg(GUESS_EVENTS.ROUND_PROGRESS, progress);
-  io.emit(GUESS_EVENTS.ROUND_PROGRESS, progress);
 };
 
 export const sendResult = () => {
@@ -60,7 +67,7 @@ const guessHandler = (io, socket) => {
     }
 
     addGuess(user.username, user.session, word);
-    io.emit(GUESS_EVENTS.ROUND_STATE, getGuesses(user.session));
+    broadcastTeamSpecificGuesses(io);
   };
 
   socket.on(GUESS_EVENTS.ROUND_GUESS, sendGuess);

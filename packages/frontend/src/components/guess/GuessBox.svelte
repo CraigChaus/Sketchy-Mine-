@@ -34,11 +34,11 @@
   };
 
   const updateProgress = (payload) => {
-    timeRemainingInSeconds = payload.timeLeft;
+    timeRemainingInSeconds = payload.roundTime;
   };
 
   socket.on("round:result", showResult);
-  socket.on("round:progress", updateProgress);
+  socket.on("round:state", updateProgress);
 </script>
 
 <section class="p-4 border-2 h-80 border-gray-300 space-y-2">
