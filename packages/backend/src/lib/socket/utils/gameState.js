@@ -5,7 +5,7 @@ import { broadcastTeamSpecificGuesses, sendProgress, sendResult } from '../handl
 
 const dbg = debug('state');
 
-const ROUND_DURATION = 60;
+const ROUND_DURATION = 40;
 const teamGuesses = [];
 
 const wordBank = [
@@ -54,11 +54,13 @@ export const addGuess = (username, guess) => {
         const found = t.guesses.some((g) => g.guess === guess);
         if (!found) {
           t.guesses.push({ guess, freq: 1, usernames: [username] });
+          currentTeam.lastGuessSubmit = new Date();
         } else {
           t.guesses.forEach((g) => {
             if (g.guess === guess && !g.usernames.includes(username)) {
               g.freq += 1;
               g.usernames.push(username);
+              currentTeam.lastGuessSubmit = new Date();
             }
           });
         }
@@ -79,6 +81,12 @@ export const getTeamResults = () => {
       else t.won = false;
     }
   });
+  team.sort((a, b) => b.lastGuessSubmit - a.lastGuessSubmit);
+  let index = 1;
+  team.forEach((t) => {
+    if (t.won)t.placementNr = index++;
+  });
+  console.log(team);
   return team;
 };
 

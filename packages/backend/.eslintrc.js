@@ -17,5 +17,6 @@ module.exports = {
     'import/no-cycle': 'off',
     'no-param-reassign': 'off',
     'consistent-return': 'off',
+    'no-plusplus': 'off',
   },
 };
