@@ -1,8 +1,10 @@
 import debug from 'debug';
+import { getIO } from '..';
 import Team from '../../../data/model/team';
 import User from '../../../data/model/user';
 import { addTeam, Teams, updateTeams } from '../../../data/teams';
 import { getCurrentUser } from '../utils/users';
+import { broadcastTeamSpecificGuesses } from './guessHandler';
 
 export const TEAM_EVENTS = {
   REQUEST_LISTING: 'teams:get',
@@ -67,6 +69,7 @@ const teamHandler = (io, socket) => {
       dbg('Adding team:', teamToJoin.teamname);
     }
     joinTeam(teamToJoin.teamname);
+    broadcastTeamSpecificGuesses(getIO());
   };
 
   socket.on(TEAM_EVENTS.REQUEST_LISTING, () => sendTeamData(io));

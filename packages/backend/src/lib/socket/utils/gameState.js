@@ -1,10 +1,11 @@
 import debug from 'debug';
+import { getIO } from '..';
 import { Teams } from '../../../data/teams';
-import { sendProgress, sendResult } from '../handlers/guessHandler';
+import { broadcastTeamSpecificGuesses, sendProgress, sendResult } from '../handlers/guessHandler';
 
 const dbg = debug('state');
 
-const ROUND_DURATION = 20;
+const ROUND_DURATION = 60;
 const teamGuesses = [];
 
 const wordBank = [
@@ -40,19 +41,25 @@ export const getGuesses = (username) => {
   return guesses;
 };
 
-export const addGuess = (username, session, guess) => {
+export const addGuess = (username, guess) => {
   const currentTeam = Teams.find((t) => t.members.find((m) => m.username === username));
   if (!teamGuesses.some((t) => t.teamname === currentTeam.teamname)) {
-    teamGuesses.push({ teamname: currentTeam.teamname, guesses: [{ guess, freq: 1, username }] });
+    const guessObj = { guess, freq: 1, usernames: [username] };
+    const teamObj = { teamname: currentTeam.teamname, guesses: [guessObj] };
+    teamGuesses.push(teamObj);
   } else {
     teamGuesses.forEach((t) => {
       if (t.teamname === currentTeam.teamname) {
+        t.guesses = t.guesses.filter((g) => !g.usernames.includes(username));
         const found = t.guesses.some((g) => g.guess === guess);
         if (!found) {
-          t.guesses.push({ guess, freq: 1 });
+          t.guesses.push({ guess, freq: 1, usernames: [username] });
         } else {
           t.guesses.forEach((g) => {
-            if (g.guess === guess && g.username !== username) g.freq += 1;
+            if (g.guess === guess && !g.usernames.includes(username)) {
+              g.freq += 1;
+              g.usernames.push(username);
+            }
           });
         }
       }
@@ -90,8 +97,7 @@ export const nextWord = () => {
     if (gameState.roundTime <= 0) {
       dbg('Round over');
       clearInterval(progressTimer);
-      dbg(gameState);
-      sendResult(gameState);
+      sendResult();
     }
   }, 1000);
 
@@ -102,7 +108,17 @@ export const removeUserGuesses = (user) => {
   if (user) {
     // eslint-disable-next-line max-len
     teamGuesses.forEach((t) => {
-      t.guesses = t.guessses.filter((g) => g.username !== user.username);
+      t.guesses.forEach((g) => {
+        if (g.usernames.includes(user.username)) {
+          g.usernames = g.usernames.filter((u) => u !== user.username);
+          g.freq -= 1;
+        }
+      });
     });
+
+    teamGuesses.forEach((t) => {
+      t.guesses = t.guesses.filter((g) => g.freq > 0);
+    });
+    broadcastTeamSpecificGuesses(getIO());
   }
 };

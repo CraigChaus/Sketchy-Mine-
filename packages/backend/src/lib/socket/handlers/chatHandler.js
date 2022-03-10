@@ -4,8 +4,8 @@ import {
 } from '../utils/users';
 
 import messageFormat from '../utils/messages';
-import { GUESS_EVENTS, sendState } from './guessHandler';
-import { getGuesses, removeUserGuesses } from '../utils/gameState';
+import { sendState } from './guessHandler';
+import { removeUserGuesses } from '../utils/gameState';
 import { removePlayerFromTeam } from '../../../data/teams';
 import { sendTeamData } from './teamHandler';
 
@@ -60,8 +60,6 @@ const chatHandler = (io, socket) => {
       removeUserGuesses(existingUser);
       removePlayerFromTeam(existingUser.username);
       sendTeamData(io);
-
-      io.emit(GUESS_EVENTS.ROUND_STATE, getGuesses(existingUser.username));
     }
 
     const user = userLeave(socket.id);

@@ -23,7 +23,7 @@ export const sendProgress = (progress) => {
   io.emit(GUESS_EVENTS.ROUND_STATE, progress);
 };
 
-const broadcastTeamSpecificGuesses = (io) => {
+export const broadcastTeamSpecificGuesses = (io) => {
   io.sockets.sockets.forEach((v, k) => {
     const user = getCurrentUser(k);
     if (!user) return;
@@ -66,7 +66,7 @@ const guessHandler = (io, socket) => {
       return;
     }
 
-    addGuess(user.username, user.session, word);
+    addGuess(user.username, word);
     broadcastTeamSpecificGuesses(io);
   };
 

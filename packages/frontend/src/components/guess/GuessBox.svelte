@@ -6,7 +6,7 @@
 
   export let result = "N/A";
   export let teamNumber = 0;
-  export let teamSize = 20;
+  export let teamSize = 60;
   export let currentGuess = null;
   export let timeRemainingInSeconds = -1;
 
@@ -46,7 +46,7 @@
     <p class="border-b-2 italic text-center">
       Waiting for next round to start...
     </p>
-  {:else if timeRemainingInSeconds <= 0}
+  {:else if timeRemainingInSeconds == 0}
     <p class="border-b-2">
       Correct word: <span class="font-bold text-purple-600">{result}</span>
     </p>
@@ -65,7 +65,7 @@
     <div class="flex flex-col items-center space-y-2">
       {#each teamGuesses as teamGuess, guessIndex}
         <GuessOption
-          disabled={teamGuess.value === currentGuess || result != null}
+          disabled={teamGuess.value === currentGuess}
           value={teamGuess.value}
           frequency={teamGuess.frequency}
           {teamSize}
