@@ -1,5 +1,5 @@
 import { INTEGER, STRING } from 'sequelize';
-import sequelize from '../util/database_config';
+import sequelize from '../util/config';
 
 const User = sequelize.define('user', {
   user_id: {
