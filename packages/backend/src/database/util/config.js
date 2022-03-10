@@ -1,5 +1,4 @@
 import Sequelize from 'sequelize';
-import { IS_PROD } from '../../app';
 
 const { DB_URL } = process.env;
 if (!DB_URL) {
@@ -9,7 +8,7 @@ if (!DB_URL) {
 
 const sequelize = new Sequelize(DB_URL, {
   dialect: 'postgres',
-  logging: !IS_PROD,
+  logging: process.env.NODE_ENV === 'development',
 });
 
 export default sequelize;

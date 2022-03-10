@@ -9,7 +9,6 @@ import setupDatabase from './database';
 
 export const IS_PROD = process.env.NODE_ENV === 'production';
 
-setupDatabase();
 const app = express();
 
 app.use(logger('dev'));
@@ -18,6 +17,9 @@ app.use(urlencoded({ extended: false }));
 app.use(cookieParser());
 
 app.use('/', indexRouter);
-app.use('/users', usersRouter);
+
+setupDatabase().then(() => {
+  app.use('/users', usersRouter);
+});
 
 export default app;
