@@ -1,7 +1,7 @@
 import debug from 'debug';
-import sequelize from './util/config';
 import User from './models/user_model';
 import { IS_PROD } from '../app';
+import sequelize from './util/config';
 
 const dbg = debug('db');
 

@@ -5,7 +5,6 @@ import logger from 'morgan';
 
 import indexRouter from './routes/index';
 import usersRouter from './routes/users';
-import setupDatabase from './database';
 
 export const IS_PROD = process.env.NODE_ENV === 'production';
 
@@ -17,9 +16,6 @@ app.use(urlencoded({ extended: false }));
 app.use(cookieParser());
 
 app.use('/', indexRouter);
-
-setupDatabase().then(() => {
-  app.use('/users', usersRouter);
-});
+app.use('/users', usersRouter);
 
 export default app;

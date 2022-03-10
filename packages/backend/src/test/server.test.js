@@ -1,10 +1,17 @@
 import supertest from 'supertest';
-import server from '../app';
+import app from '../app';
+import setupDatabase from '../database';
 
-const requestWithSupertest = supertest(server);
+let requestWithSupertest;
+
+beforeAll(async () => {
+  await setupDatabase();
+  requestWithSupertest = supertest(app);
+});
 
 describe('Status Endpoint', () => {
   it('GET / should show server status', async () => {
+    console.log(`ENV: ${process.env.NODE_ENV}`);
     const res = await requestWithSupertest.get('/');
     expect(res.status).toEqual(200);
     expect(res.type).toEqual(expect.stringContaining('json'));
