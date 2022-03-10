@@ -54,6 +54,7 @@ export const sendResult = () => {
 const startRound = (socket) => {
   nextWord();
   sendState(socket);
+  getIO().emit(GUESS_EVENTS.ROUND_RESULT, null);
 };
 
 const guessHandler = (io, socket) => {
