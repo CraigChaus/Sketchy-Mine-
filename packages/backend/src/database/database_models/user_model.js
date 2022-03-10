@@ -1,22 +1,22 @@
-const Sequelize = require('sequelize');
-const sequelize = require('../util/database_config');
+import { INTEGER, STRING } from 'sequelize';
+import sequelize from '../util/database_config';
 
 const User = sequelize.define('user', {
   user_id: {
-    type: Sequelize.INTEGER,
+    type: INTEGER,
     primaryKey: true,
     autoincrement: true,
   },
   username: {
-    type: Sequelize.STRING,
+    type: STRING,
     allowNull: false,
   },
   password: {
-    type: Sequelize.STRING,
+    type: STRING,
   },
   total_emeralds: {
-    type: Sequelize.INTEGER,
+    type: INTEGER,
   },
 });
 
-module.exports = User;
+export default User;
