@@ -189,8 +189,27 @@ All players have their own persistent ranking, based on the number of emerald sh
 
 ### Moderator
 
-![Moderator](./resources/wireframes/moderator.png "Moderator view")
+#### Moderator view of the canvas
+![Moderator](./resources/wireframes/moderator-buttons.png "Moderator view")
 
+- view of the moderator is similar to the player's view, but has additional buttons:
+  - the moderator can kick out a player, prevent them to send messages and send them a warning (warning form below)
+  - they can boost, de-boost or kick out the whole group
+  - they can clear the canvas and ban the drawer form his role, if what he is drawing is inappropriate
+  - they can delete messages from the chat and ban the player from sending more, if they are being offensive so anyone
 - the modal appears on top of the screen upon chosen moderator action
 - behind the modal the view is similar to spectator one
 - the modal depends on the chosen action that the moderator want to perform
+
+#### Moderator warning message form
+![WarningForm](./resources/wireframes/warning-message-form.jpg "Warning message form")
+
+- The moderator can write out a private message (warning) to one of the players upon clicking the correct button
+- The form shows in front of the view so the moderator can still spectate what is going on
+- The <em>X</em> symbol closes the form without sending the message (if the moderator decides later that the warning is not needed) 
+
+#### Player's view of the warning
+![WarningForm](./resources/wireframes/warning-message-player-view-form.jpg "Warning message player view")
+
+- The player sees the warning content
+- The player closes the warning by clicking the <em>X</em> symbol
