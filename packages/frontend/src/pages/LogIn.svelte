@@ -4,12 +4,12 @@
         <form action="">
             <div class="mt-4">
                 <div>
-                    <label class="block">Username<label>
+                    <label class="block">Username</label>
                         <input type="text"
                                class="w-full px-4 py-2 mt-2 border rounded-md focus:outline-none focus:ring-1 focus:ring-blue-600">
                 </div>
                 <div class="mt-4">
-                    <label class="block">Password<label>
+                    <label class="block">Password</label>
                         <input type="password"
                                class="w-full px-4 py-2 mt-2 border rounded-md focus:outline-none focus:ring-1 focus:ring-blue-600">
                 </div>
