@@ -4,13 +4,15 @@
   import { createEventDispatcher } from "svelte";
   import socket from "../../socket";
 
+  // If this is set to "N/A" and the timeRemainingInSeconds is -1,
+  // that means the round is not yet started
   export let result = "N/A";
   export let teamNumber = 0;
   export let teamSize = 60;
   export let currentGuess = null;
   export let timeRemainingInSeconds = -1;
 
-  export let teamGuesses = [];
+  export let teamGuesses = []; //List of team guess objects
 
   const dispatch = createEventDispatcher();
 
@@ -20,6 +22,7 @@
     });
   }
 
+  // Sort the team guesses every time the array is updated
   $: teamGuesses, sortGuesses();
 
   const guess = (valueEvent) => {
@@ -28,11 +31,19 @@
     dispatch("guessClicked", currentGuess);
   };
 
+  /**
+   * Show the final word
+   * @param payload Contains an object with a property of "result"
+   */
   const showResult = (payload) => {
     currentGuess = null;
     result = payload.result;
   };
 
+  /**
+   * Update timer
+   * @param payload Timer data
+   */
   const updateProgress = (payload) => {
     timeRemainingInSeconds = payload.roundTime;
   };
