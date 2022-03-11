@@ -14,7 +14,7 @@
 
   // Receiving guesses
   socket.on("guess", (guesses) => {
-    if (!data) {
+    if (!guesses) {
       return;
     }
 
