@@ -278,3 +278,35 @@
   - Connect team members list (who draws, who is current user, etc) with the fronted
   - Ability in the UI to chose who will draw (voting system)
     - Handel who draws in the backend
+
+## SCRUM Standup (Entire team) - 11.03.2022
+- Not present: Vince (got covid, in quarantine)
+- Vedat:
+  - Created database
+  - Task deployed on VPS
+  - Peter help with implementation
+- Marko:
+  - Sort of did it, but got an error
+  - Have to fix the error first (let it known in Discord before the meeting), will need help most likely
+  - Did some refactoring because of Lukeman
+- Lukeman:
+  - Still working on his task
+  - Original task was already done, thus took an other one
+- Daria:
+  - First task is completed
+  - Second task is still in progress
+- Filippos:
+  - Task done, merged 
+  - Did deployments for database
+- Craig:
+  - Core task finished with Melissa
+- Ana:
+  - Had issues with Tailwind, Filippos will help
+  - Task only has bugs
+- Mira:
+  - Task done, ready to be merged
+- Melissa:
+  - Waits for Ana's and Mira's work
+  - Main task is done
+- Peter:
+  - Main task is done, but not fully complete
