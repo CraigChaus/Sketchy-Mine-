@@ -6,6 +6,8 @@ import {
 import messageFormat from '../utils/messages';
 import { GUESS_EVENTS, sendState } from './guessHandler';
 import { getGuesses, removeUserGuesses } from '../utils/gameState';
+import { removePlayerFromTeam } from '../../../data/teams';
+import { sendTeamData } from './teamHandler';
 
 // This will appear as the name of the sender
 const name = 'Sketchy Mine System';
@@ -21,7 +23,7 @@ const CHAT_EVENTS = {
 const chatHandler = (io, socket) => {
   const dbg = debug('handler:chat');
 
-  socket.on(CHAT_EVENTS.JOIN, ({ username, session }) => {
+  socket.on(CHAT_EVENTS.JOIN, ({ username, session }, callback) => {
     dbg(CHAT_EVENTS.JOIN, { username, session });
     const user = userJoin(socket.id, username, session);
     socket.join(user.session);
@@ -38,6 +40,8 @@ const chatHandler = (io, socket) => {
     });
 
     sendState(socket);
+
+    callback();
   });
 
   // Listen for chat message
@@ -54,6 +58,9 @@ const chatHandler = (io, socket) => {
 
     if (existingUser) {
       removeUserGuesses(existingUser);
+      removePlayerFromTeam(existingUser.username);
+      sendTeamData(io);
+
       io.emit(GUESS_EVENTS.ROUND_STATE, getGuesses(existingUser.session));
     }
 
