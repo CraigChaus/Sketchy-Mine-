@@ -1,13 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="481344fd-0740-43af-9167-2cce919a43b1" name="Changes" comment="sign-up page">
-      <change afterPath="$PROJECT_DIR$/docs/resources/wireframes/moderator-buttons.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/docs/resources/wireframes/warning-message-form.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/docs/resources/wireframes/warning-message-player-view-form.jpg" afterDir="false" />
+    <list default="true" id="481344fd-0740-43af-9167-2cce919a43b1" name="Changes" comment="moderator and warning wireframes added + description in the game-design document">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/game-design.md" beforeDir="false" afterPath="$PROJECT_DIR$/docs/game-design.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/resources/wireframes/moderator.png" beforeDir="false" afterPath="$PROJECT_DIR$/docs/resources/wireframes/moderator.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/team-plan.md" beforeDir="false" afterPath="$PROJECT_DIR$/docs/team-plan.md" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -95,7 +91,7 @@
       <workItem from="1646759986036" duration="25000" />
       <workItem from="1646824988250" duration="873000" />
       <workItem from="1646841884035" duration="120000" />
-      <workItem from="1646998692296" duration="736000" />
+      <workItem from="1646998692296" duration="1961000" />
     </task>
     <task id="LOCAL-00001" summary="chore/updated-time-sheet">
       <created>1646607271272</created>
@@ -104,7 +100,14 @@
       <option name="project" value="LOCAL" />
       <updated>1646607271272</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL-00002" summary="moderator and warning wireframes added + description in the game-design document">
+      <created>1646999465342</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1646999465342</updated>
+    </task>
+    <option name="localTasksCounter" value="3" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -135,7 +138,8 @@
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="chore/updated-time-sheet" />
-    <option name="LAST_COMMIT_MESSAGE" value="chore/updated-time-sheet" />
+    <MESSAGE value="moderator and warning wireframes added + description in the game-design document" />
+    <option name="LAST_COMMIT_MESSAGE" value="moderator and warning wireframes added + description in the game-design document" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />
