@@ -267,6 +267,10 @@ Add team list component
 
 Connect team listing component with backend
 
+##### US05 BI09
+
+Make team based chat
+
 #### US11 - As a player, I want to get emeralds, so that I can purchase powerups with the gained emeralds.
 
 ##### US11 Bl01
@@ -424,10 +428,10 @@ The following is an overview for how the team will communicate internally, as we
 
 #### Schedule
 
-| | Sprint planning | Sprint review | Standups | Publisher meeting |
-|-|-|-|-|-|
-| Sprint 1 | 14.02.2022 | 07.03.2022 |  Monday, Friday (every week) | 07.03.2022 |
-| Sprint 2 | 07.03.2022 | – |  Monday, Friday (every week) | – |
+|          | Sprint planning | Sprint review | Standups                    | Publisher meeting |
+| -------- | --------------- | ------------- | --------------------------- | ----------------- |
+| Sprint 1 | 14.02.2022      | 07.03.2022    | Monday, Friday (every week) | 07.03.2022        |
+| Sprint 2 | 07.03.2022      | –             | Monday, Friday (every week) | –                 |
 
 #### Communication tools
 
