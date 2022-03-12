@@ -10,19 +10,21 @@
   import { teamsValue } from "../stores/teams";
   import ProgressBar from "../components/team/ProgressBar.svelte";
 
-  let results = null;
+  const session = "main";
 
-  // Receiving guesses
-  socket.on("guess", (guesses) => {
-    if (!data) {
-      return;
-    }
-
-    teamGuesses = [...guesses];
-  });
-
-  // Points and colour are used by ProgressBar.
-  let teams = [];
+  let results = null; // It has to be null when we want to hide the results on the team listing
+  let username;
+  let teams = []; // Points and colour are used by ProgressBar.
+  let teamSize = 0;
+  let chatMessages = [];
+  let teamGuesses = [];
+  let role = 3;
+  let promise = getRole();
+  let chatInput;
+  let currentGuess = null;
+  let brushColor = "#444";
+  let brushRadius = 8;
+  let SDraw = null;
 
   // Progress bar functionality
   /**
@@ -156,17 +158,12 @@
     }
   };
 
-  let username;
-
-  const session = "main";
-
   onMount(() => {
     username = `User${Math.round(Math.random() * 10000)}`;
     socket.emit("joinSession", { username, session }, () => {
       randomizeDrawer();
       promise = getRole();
       socket.emit("canvas:new-user");
-      socket.emit("teams:get");
       joinMatch();
     });
   });
@@ -194,8 +191,6 @@
     ];
   });
 
-  let teamSize = 0;
-
   socket.on("teams:update", (data) => {
     if (!data) {
       return;
@@ -218,8 +213,6 @@
     return role;
   }
 
-  let role = 3;
-
   let randomizeDrawer = () => {
     const rng = Math.random();
     if (rng < 0.33) {
@@ -230,8 +223,6 @@
       role = 3;
     }
   };
-
-  let promise = getRole();
 
   const becomeDrawer = () => {
     role = 1;
@@ -246,25 +237,6 @@
     promise = getRole();
   };
 
-  // 1: drawer
-  // 2: guesser
-  // 3: spectator
-  socket.on("canvas:drawer", becomeDrawer);
-  socket.on("canvas:guesser", becomeGuesser);
-  socket.on("canvas:spectator", becomeSpectator);
-
-  const makeAllSpec = () => {
-    socket.emit("canvas:spectator");
-  };
-  const makeAllDrawer = () => {
-    socket.emit("canvas:drawer");
-  };
-
-  let chatMessages = [];
-  let teamGuesses = [];
-
-  let chatInput;
-
   const onClickGuess = () => {
     if (chatInput !== "") {
       currentGuess = chatInput;
@@ -275,19 +247,9 @@
     chatInput = "";
   };
 
-  const updateGuessState = (payload) => {
-    teamGuesses = payload;
-  };
+  const updateGuessState = (payload) => (teamGuesses = payload);
 
-  socket.on("round:state", updateGuessState);
-
-  const onClickGuessItem = (e) => {
-    sendGuess(e.detail);
-  };
-
-  const sendGuess = (guess) => {
-    socket.emit("round:guess", guess);
-  };
+  const onClickGuessItem = (e) => sendGuess(e.detail);
 
   // Sending messages
   const onClickChat = () => {
@@ -297,24 +259,19 @@
     }
   };
 
-  const startRound = () => {
-    socket.emit("round:start");
-  };
+  const startRound = () => socket.emit("round:start");
+  const sendGuess = (guess) => socket.emit("round:guess", guess);
+  const makeAllDrawer = () => socket.emit("canvas:drawer");
+  const makeAllSpec = () => socket.emit("canvas:spectator");
 
-  socket.on("round:result", (payload) => {
-    results = payload;
-
-    const correct = currentGuess.toLowerCase() === payload.result.toLowerCase();
-    const team1 = teams[0];
-    team1.won = correct;
-    teams = teams;
-  });
-
-  let currentGuess = null;
-
-  let brushColor = "#444";
-  let brushRadius = 8;
-  let SDraw = null;
+  socket.on("round:result", (payload) => (results = payload));
+  socket.on("round:progress", updateGuessState);
+  // 1: drawer
+  // 2: guesser
+  // 3: spectator
+  socket.on("canvas:drawer", becomeDrawer);
+  socket.on("canvas:guesser", becomeGuesser);
+  socket.on("canvas:spectator", becomeSpectator);
 </script>
 
 <ProgressBar {teams} />

@@ -4,13 +4,15 @@
   import { createEventDispatcher } from "svelte";
   import socket from "../../socket";
 
+  // If this is set to "N/A" and the timeRemainingInSeconds is -1,
+  // that means the round is not yet started
   export let result = "N/A";
   export let teamNumber = 0;
-  export let teamSize = 20;
+  export let teamSize = 60;
   export let currentGuess = null;
   export let timeRemainingInSeconds = -1;
 
-  export let teamGuesses = [];
+  export let teamGuesses = []; //List of team guess objects
 
   const dispatch = createEventDispatcher();
 
@@ -20,6 +22,7 @@
     });
   }
 
+  // Sort the team guesses every time the array is updated
   $: teamGuesses, sortGuesses();
 
   const guess = (valueEvent) => {
@@ -28,17 +31,25 @@
     dispatch("guessClicked", currentGuess);
   };
 
+  /**
+   * Show the final word
+   * @param payload Contains an object with a property of "result"
+   */
   const showResult = (payload) => {
     currentGuess = null;
     result = payload.result;
   };
 
+  /**
+   * Update timer
+   * @param payload Timer data
+   */
   const updateProgress = (payload) => {
-    timeRemainingInSeconds = payload.timeLeft;
+    timeRemainingInSeconds = payload.roundTime;
   };
 
   socket.on("round:result", showResult);
-  socket.on("round:progress", updateProgress);
+  socket.on("round:state", updateProgress);
 </script>
 
 <section class="p-4 border-2 h-80 border-gray-300 space-y-2">
@@ -46,7 +57,7 @@
     <p class="border-b-2 italic text-center">
       Waiting for next round to start...
     </p>
-  {:else if timeRemainingInSeconds <= 0}
+  {:else if timeRemainingInSeconds == 0}
     <p class="border-b-2">
       Correct word: <span class="font-bold text-purple-600">{result}</span>
     </p>
@@ -65,7 +76,7 @@
     <div class="flex flex-col items-center space-y-2">
       {#each teamGuesses as teamGuess, guessIndex}
         <GuessOption
-          disabled={teamGuess.value === currentGuess || result != null}
+          disabled={teamGuess.value === currentGuess}
           value={teamGuess.value}
           frequency={teamGuess.frequency}
           {teamSize}

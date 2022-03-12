@@ -318,3 +318,4 @@
 - Vedat's task was done, taking a new task
 - Marko got new task, still working on previous task. Both of them should be done by Tuesday
 - Lukman got a new task, still working on it
+  - Main task is done, but not fully complete
