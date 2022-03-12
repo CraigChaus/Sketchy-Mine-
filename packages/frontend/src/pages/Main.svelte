@@ -10,7 +10,8 @@
   import { teamsValue } from "../stores/teams";
   import ProgressBar from "../components/team/ProgressBar.svelte";
 
-  const session = "main";
+  let teamSession = "main"
+
 
   let results = null; // It has to be null when we want to hide the results on the team listing
   let username;
@@ -160,12 +161,15 @@
 
   onMount(() => {
     username = `User${Math.round(Math.random() * 10000)}`;
-    socket.emit("joinSession", { username, session }, () => {
+    console.log("Just not anything.");
+    socket.emit("joinSession", { username }, () => {
+      console.log("Just anything.");
       randomizeDrawer();
       promise = getRole();
       socket.emit("canvas:new-user");
       joinMatch();
-    });
+    });//TODO: Join team chat
+
   });
 
   teamsValue.set(teams);
@@ -192,13 +196,24 @@
   });
 
   socket.on("teams:update", (data) => {
+    console.log("The same, just anything there.")
     if (!data) {
       return;
     }
 
-    data.forEach((t) => {
+    data.forEach((t, i) => {
       t.members.forEach((u) => {
         if (u.username === username) {
+          console.log("I am in a team: " +i +".");
+          let teamName = "Team +" +(i +1);
+
+          if (teamSession !== teamName){
+            teamSession = teamName;
+
+            socket.emit("joinTeamChat", {teamSession});
+            console.log("Joined team "+ i + " successfully.");
+          }
+
           t.isSelf = true;
           u.current = true;
           teamSize = t.members.length;

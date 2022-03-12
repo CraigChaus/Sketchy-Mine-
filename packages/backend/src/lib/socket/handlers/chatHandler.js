@@ -13,7 +13,10 @@ import { sendTeamData } from './teamHandler';
 const name = 'Sketchy Mine System';
 
 const CHAT_EVENTS = {
-  JOIN: 'joinSession',
+  JOINTEAMCHAT: 'joinTeamChat',
+
+  //JOINSESSION is joining the whole game.
+  JOINSESSION: 'joinSession',
   SEND: 'chat:send',
   MESSAGE: 'message',
   SESSION_USERS: 'sessionUsers',
@@ -23,12 +26,29 @@ const CHAT_EVENTS = {
 const chatHandler = (io, socket) => {
   const dbg = debug('handler:chat');
 
-  socket.on(CHAT_EVENTS.JOIN, ({ username, teamSession }, callback) => {
-    dbg(CHAT_EVENTS.JOIN, { username, teamSession });
-    const user = userJoin(socket.id, username, teamSession);
-    socket.join(user.teamSession);
+
+  // User joins a session / game.
+
+  socket.on(CHAT_EVENTS.JOINSESSION, ({ username}, callback) => {
+    dbg(CHAT_EVENTS.JOIN, { username});
+    userJoin(socket.id, username);
+
     // Welcome current user
     socket.emit(CHAT_EVENTS.MESSAGE, messageFormat(name, 'Welcome to Sketchy Mine!', 3));
+
+    sendState(socket);
+
+    callback();
+  });
+
+
+
+
+  // User that has already joined the game is now connected to the chat that only his team members can see.
+  socket.on(CHAT_EVENTS.JOINTEAMCHAT, ({teamSession}) => {
+    const user = getCurrentUser(socket.id);
+    user.teamSession = teamSession;
+    socket.join(user.teamSession);
 
     // Send to all users this message except for current user
     socket.broadcast.to(user.teamSession).emit(CHAT_EVENTS.MESSAGE, messageFormat(name, `${user.username} has joined the chat`, 3));
@@ -38,11 +58,9 @@ const chatHandler = (io, socket) => {
       room: user.teamSession,
       users: getSessionUsers(user.teamSession),
     });
-
-    sendState(socket);
-
-    callback();
   });
+
+
 
   // Listen for chat message
   socket.on(CHAT_EVENTS.CHAT_MESSAGE, (msg) => {

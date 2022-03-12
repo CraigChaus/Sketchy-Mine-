@@ -258,7 +258,8 @@
 
       loop({ once: true });
     }
-    loadSaveData(saveData, true);
+    // Commented out bottom line because it gives error in console
+  //  loadSaveData(saveData, true);         //TODO: Canvas people fix me please
   };
 
   let setCanvasSize = (canvas, width, height) => {
