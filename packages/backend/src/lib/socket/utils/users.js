@@ -6,8 +6,8 @@ const users = [];
 
 // Join user to chat room
 // If later on we decided to add multiple session/rooms then this method is already up to date
-export const userJoin = (id, username, session) => {
-  const user = { id, username, session };
+export const userJoin = (id, username, teamSession) => {
+  const user = { id, username, teamSession };
   users.push(user);
   return user;
 };
@@ -15,7 +15,7 @@ export const userJoin = (id, username, session) => {
 // Get current user
 export const getCurrentUser = (id) => users.find((user) => user.id === id);
 
-// User leaves chat session
+// User leaves chat teamSession
 export const userLeave = (id) => {
   const index = users.findIndex((user) => user.id === id);
   if (index !== -1) {
@@ -25,5 +25,5 @@ export const userLeave = (id) => {
   return null;
 };
 
-// Get session users
+// Get team users
 export const getSessionUsers = (room) => users.filter((user) => user.room === room);

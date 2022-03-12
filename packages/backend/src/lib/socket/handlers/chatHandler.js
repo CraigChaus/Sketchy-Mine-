@@ -23,20 +23,20 @@ const CHAT_EVENTS = {
 const chatHandler = (io, socket) => {
   const dbg = debug('handler:chat');
 
-  socket.on(CHAT_EVENTS.JOIN, ({ username, session }, callback) => {
-    dbg(CHAT_EVENTS.JOIN, { username, session });
-    const user = userJoin(socket.id, username, session);
-    socket.join(user.session);
+  socket.on(CHAT_EVENTS.JOIN, ({ username, teamSession }, callback) => {
+    dbg(CHAT_EVENTS.JOIN, { username, teamSession });
+    const user = userJoin(socket.id, username, teamSession);
+    socket.join(user.teamSession);
     // Welcome current user
     socket.emit(CHAT_EVENTS.MESSAGE, messageFormat(name, 'Welcome to Sketchy Mine!', 3));
 
     // Send to all users this message except for current user
-    socket.broadcast.to(user.session).emit(CHAT_EVENTS.MESSAGE, messageFormat(name, `${user.username} has joined the chat`, 3));
+    socket.broadcast.to(user.teamSession).emit(CHAT_EVENTS.MESSAGE, messageFormat(name, `${user.username} has joined the chat`, 3));
 
     // Send users and session info
-    io.to(user.session).emit(CHAT_EVENTS.SESSION_USERS, {
-      room: user.session,
-      users: getSessionUsers(user.session),
+    io.to(user.teamSession).emit(CHAT_EVENTS.SESSION_USERS, {
+      room: user.teamSession,
+      users: getSessionUsers(user.teamSession),
     });
 
     sendState(socket);
@@ -48,7 +48,7 @@ const chatHandler = (io, socket) => {
   socket.on(CHAT_EVENTS.CHAT_MESSAGE, (msg) => {
     dbg(CHAT_EVENTS.CHAT_MESSAGE, { msg });
     const user = getCurrentUser(socket.id);
-    socket.broadcast.to(user.session).emit(CHAT_EVENTS.MESSAGE, messageFormat(user.username, msg));
+    socket.broadcast.to(user.teamSession).emit(CHAT_EVENTS.MESSAGE, messageFormat(user.username, msg));
     socket.emit(CHAT_EVENTS.MESSAGE, messageFormat(user.username, msg, 1));
   });
 
@@ -67,12 +67,12 @@ const chatHandler = (io, socket) => {
     if (user) {
       dbg('Client disconnected', existingUser);
       // Send to everyone using emit() method
-      io.to(existingUser.session).emit(CHAT_EVENTS.MESSAGE, messageFormat(name, `${existingUser.username} has left the chat`, 3));
+      io.to(existingUser.teamSession).emit(CHAT_EVENTS.MESSAGE, messageFormat(name, `${existingUser.username} has left the chat`, 3));
 
       // Send users and session info again when user disconnects
-      io.to(existingUser.session).emit(CHAT_EVENTS.SESSION_USERS, {
-        room: existingUser.session,
-        users: getSessionUsers(existingUser.session),
+      io.to(existingUser.teamSession).emit(CHAT_EVENTS.SESSION_USERS, {
+        room: existingUser.teamSession,
+        users: getSessionUsers(existingUser.teamSession),
       });
     }
   });
