@@ -1,12 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="481344fd-0740-43af-9167-2cce919a43b1" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/backend/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/packages/backend/package-lock.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/backend/src/lib/socket/handlers/chatHandler.js" beforeDir="false" afterPath="$PROJECT_DIR$/packages/backend/src/lib/socket/handlers/chatHandler.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/backend/src/lib/socket/utils/users.js" beforeDir="false" afterPath="$PROJECT_DIR$/packages/backend/src/lib/socket/utils/users.js" afterDir="false" />
-    </list>
+    <list default="true" id="481344fd-0740-43af-9167-2cce919a43b1" name="Changes" comment="Refactored sessions to teamSession." />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -111,6 +106,14 @@
       <workItem from="1646308368431" duration="41678000" />
       <workItem from="1646606496778" duration="598000" />
     </task>
+    <task id="LOCAL-00001" summary="Refactored sessions to teamSession.">
+      <created>1647099085293</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1647099085293</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -139,5 +142,9 @@
       </map>
     </option>
     <option name="oldMeFiltersMigrated" value="true" />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="Refactored sessions to teamSession." />
+    <option name="LAST_COMMIT_MESSAGE" value="Refactored sessions to teamSession." />
   </component>
 </project>
