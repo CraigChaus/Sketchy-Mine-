@@ -3,24 +3,26 @@
 
     const form = useForm();
 
-    let email_address;
-    let password;
-    let username;
+    const handleSubmit = async () => {
+        const response = await signup();
+        if (response) {
+            if (response['status'] === 201) {
+                alert("Successfully registered");
+            }
+        }
+    };
 
+    let email_address;
+    let username = '';
+    let password = '';
     const signup = async () => {
-        const response = await fetch('http://localhost:3000/users', {
+        const response = await fetch('http://localhost:3000/users/register', {
             method: "POST",
             headers: {
                 'Content-Type': 'application/json',
                 'Accept': 'application/json',
             },
-            body: JSON.stringify({
-                email_address: email_address,
-                password: password,
-                username: username,
-                isAdmin: false
-
-            })
+            body: JSON.stringify({username, password})
         });
 
         if (response.status === 201) {
@@ -33,7 +35,7 @@
 </script>
 
 <div class="container h-screen px-5 py-24 mx-auto flex flex-wrap items-center">
-    <form use:form
+    <form use:form action="" on:submit|preventDefault={handleSubmit}
           class="lg:w-2/6 md:w-1/2 bg-gray-100 rounded-lg p-8 flex flex-col md:ml-auto w-full mt-10 md:mt-0">
 
         <h2 class="text-gray-900 text-lg font-medium title-font mb-5">Sign up</h2>

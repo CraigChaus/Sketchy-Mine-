@@ -48,4 +48,24 @@ router.post('/', isLoggedIn, async (req, res) => {
   }
 });
 
+router.post('/register', async (req, res) => {
+  try {
+    users.push({
+      id: users.length + 1,
+      username: req.body.username,
+      password: await bcrypt.hash(req.body.password, 10),
+      secret: uuid(),
+      roles: ['user'],
+    });
+
+    res
+      .status(StatusCodes.CREATED)
+      .send('User registered!');
+  } catch {
+    res
+      .status(StatusCodes.BAD_REQUEST)
+      .send('Please fill in username/password');
+  }
+});
+
 export default router;
