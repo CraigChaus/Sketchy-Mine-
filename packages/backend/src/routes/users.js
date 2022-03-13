@@ -3,17 +3,18 @@ import { Router } from 'express';
 const { StatusCodes } = require('http-status-codes');
 const { uuid } = require('uuidv4');
 const bcrypt = require('bcrypt');
+const isLoggedIn = require('../middleware/is-logged-in');
 
 const router = Router();
 const users = require('../data/users');
 
 /* GET users listing. */
-router.get('/', (req, res) => {
+router.get('/', isLoggedIn, (req, res) => {
   res.send(users);
 });
 
 /* Get user by ID */
-router.get('/:id', (req, res) => {
+router.get('/:id', isLoggedIn, (req, res) => {
   const { id } = req.params;
   const user = users.find((us) => us.id === id);
 
@@ -27,7 +28,7 @@ router.get('/:id', (req, res) => {
 });
 
 /* Register user */
-router.post('/', async (req, res) => {
+router.post('/', isLoggedIn, async (req, res) => {
   try {
     console.log(req.body);
     users.push({
