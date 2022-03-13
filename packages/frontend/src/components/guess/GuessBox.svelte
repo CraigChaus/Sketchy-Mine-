@@ -1,4 +1,8 @@
 <script>
+  /**
+   * GuessBox component
+   * Holds individual guess items
+   */
   import ScrollContainer from "../ScrollContainer.svelte";
   import GuessOption from "./GuessOption.svelte";
   import { createEventDispatcher } from "svelte";
@@ -6,11 +10,11 @@
 
   // If this is set to "N/A" and the timeRemainingInSeconds is -1,
   // that means the round is not yet started
-  export let result = "N/A";
+  export let result = "N/A"; // When the round is over, or not yet started, this should be "N/A"
   export let teamNumber = 0;
   export let teamSize = 60;
-  export let currentGuess = null;
-  export let timeRemainingInSeconds = -1;
+  export let currentGuess = null; // When the round is over, or not yet started, this must be null!!!
+  export let timeRemainingInSeconds = -1; // When the round is over, or not yet started, this must be -1!!!
 
   export let teamGuesses = []; //List of team guess objects
 
