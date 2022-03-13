@@ -51,7 +51,8 @@
     "sqlite3": "^5.0.2",
     "uuid": "^8.3.2",
     "uuidv4": "^6.2.12",
-    "jsonwebtoken": "^8.5.1"
+    "jsonwebtoken": "^8.5.1",
+    "cors": "^2.8.5"
   },
   "devDependencies": {
     "cross-env": "^7.0.3",
