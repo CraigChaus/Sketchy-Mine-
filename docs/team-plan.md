@@ -371,7 +371,7 @@ Pick a word from the word list in the databse and send it to the frontend
 
 ##### US11 Bl07
 
-Send results of the round to the frontend to display the teams that guseed the word correclty or not.
+Send results of the round to the frontend to display the teams that guessed the word correctly or not.
 
 ##### US11 Bl08
 
@@ -511,7 +511,7 @@ The following is an overview for how the team will communicate internally, as we
 
 For communicating and sharing information with other project members, the following tools are to be used:
 
-- Discord - A common server is used for voice/video calls, screensharing and pair programming, as well as the primary chat tool and permanent record of all team communication. Members in the server are labelled with the role of the sub-group they belong to. Multiple channels are available for members to use depending on the context necessary.
+- Discord - A common server is used for voice/video calls, screen sharing and pair programming, as well as the primary chat tool and permanent record of all team communication. Members in the server are labelled with the role of the sub-group they belong to. Multiple channels are available for members to use depending on the context necessary.
 - OneDrive - A shared OneDrive folder is used to grant access to the shared timesheet for all project members to log their tracked project time.
 - GitLab - The issue board is used as the single source of truth of assigned items and project state. Issues and merge requests are assigned to discrete project members, with the possibility for members to leave review notes, and manage active items. GitLab is also the central store for _all_ project documentation (in markdown format).
 - Email - Used to formally communicate with the publisher and other stakeholders
