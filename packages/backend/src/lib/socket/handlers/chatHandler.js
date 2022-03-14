@@ -15,7 +15,7 @@ const name = 'Sketchy Mine System';
 const CHAT_EVENTS = {
   JOINTEAMCHAT: 'joinTeamChat',
 
-  //JOINSESSION is joining the whole game.
+  // JOINSESSION is joining the whole game.
   JOINSESSION: 'joinSession',
   SEND: 'chat:send',
   MESSAGE: 'message',
@@ -26,11 +26,10 @@ const CHAT_EVENTS = {
 const chatHandler = (io, socket) => {
   const dbg = debug('handler:chat');
 
-
   // User joins a session / game.
 
-  socket.on(CHAT_EVENTS.JOINSESSION, ({ username}, callback) => {
-    dbg(CHAT_EVENTS.JOIN, { username});
+  socket.on(CHAT_EVENTS.JOINSESSION, ({ username }, callback) => {
+    dbg(CHAT_EVENTS.JOIN, { username });
     userJoin(socket.id, username);
 
     // Welcome current user
@@ -41,17 +40,18 @@ const chatHandler = (io, socket) => {
     callback();
   });
 
-
-
-
-  // User that has already joined the game is now connected to the chat that only his team members can see.
-  socket.on(CHAT_EVENTS.JOINTEAMCHAT, ({teamSession}) => {
+  // User that has already joined the game is now
+  // connected to the chat that only his team members can see.
+  socket.on(CHAT_EVENTS.JOINTEAMCHAT, ({ teamSession }) => {
     const user = getCurrentUser(socket.id);
     user.teamSession = teamSession;
     socket.join(user.teamSession);
 
     // Send to all users this message except for current user
-    socket.broadcast.to(user.teamSession).emit(CHAT_EVENTS.MESSAGE, messageFormat(name, `${user.username} has joined the chat`, 3));
+    socket.broadcast.to(user.teamSession).emit(
+      CHAT_EVENTS.MESSAGE,
+      messageFormat(name, `${user.username} has joined the chat`, 3),
+    );
 
     // Send users and session info
     io.to(user.teamSession).emit(CHAT_EVENTS.SESSION_USERS, {
@@ -60,13 +60,14 @@ const chatHandler = (io, socket) => {
     });
   });
 
-
-
   // Listen for chat message
   socket.on(CHAT_EVENTS.CHAT_MESSAGE, (msg) => {
     dbg(CHAT_EVENTS.CHAT_MESSAGE, { msg });
     const user = getCurrentUser(socket.id);
-    socket.broadcast.to(user.teamSession).emit(CHAT_EVENTS.MESSAGE, messageFormat(user.username, msg));
+    socket.broadcast.to(user.teamSession).emit(
+      CHAT_EVENTS.MESSAGE,
+      messageFormat(user.username, msg),
+    );
     socket.emit(CHAT_EVENTS.MESSAGE, messageFormat(user.username, msg, 1));
   });
 
@@ -85,7 +86,10 @@ const chatHandler = (io, socket) => {
     if (user) {
       dbg('Client disconnected', existingUser);
       // Send to everyone using emit() method
-      io.to(existingUser.teamSession).emit(CHAT_EVENTS.MESSAGE, messageFormat(name, `${existingUser.username} has left the chat`, 3));
+      io.to(existingUser.teamSession).emit(
+        CHAT_EVENTS.MESSAGE,
+        messageFormat(name, `${existingUser.username} has left the chat`, 3),
+      );
 
       // Send users and session info again when user disconnects
       io.to(existingUser.teamSession).emit(CHAT_EVENTS.SESSION_USERS, {
