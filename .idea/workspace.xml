@@ -2,10 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="481344fd-0740-43af-9167-2cce919a43b1" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/runConfigurations.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/packages/frontend/src/pages/Ranking.svelte" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/frontend/src/App.svelte" beforeDir="false" afterPath="$PROJECT_DIR$/packages/frontend/src/App.svelte" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/packages/frontend/src/pages/Ranking.svelte" beforeDir="false" afterPath="$PROJECT_DIR$/packages/frontend/src/pages/Ranking.svelte" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />

@@ -35,6 +35,7 @@
     ];
 
 
+    
 //with this loop we will delete all data which we doesn't need to show in our table (it will be not only id):
     for (let i=0; i<users.length; i++) {
         delete users[i].id;
