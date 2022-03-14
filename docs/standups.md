@@ -319,3 +319,37 @@
 - Marko got new task, still working on previous task. Both of them should be done by Tuesday
 - Lukman got a new task, still working on it
   - Main task is done, but not fully complete
+  
+## SCRUM Standup (Entire team) - 14.03.2022
+- Not present: Vedat (he said he would join, but he is ill)
+- Melissa and Craig:
+  - Task is done, it only needs now connecting to the backend
+- Ana:
+  - Fixed login page with Filippos
+  - Some basic research on how to get emeralds when a guess is correct, haven't done code for that
+- Daria:
+  - Needs help, Mira will help
+- Vince:
+  - Made an offline version because of being blocked by other issues
+  - Done but not yet connected
+- Filippos:
+  - Not yet worked on it since his item seems very similar to Marko's item
+  - Needs to coordinate with Marko
+  - We might have 3 items that are seem very similar
+- Marko:
+  - Haven't done much on those 2 items since being blocked by other items
+  - Can continue with items
+- Lukman:
+  - Still working on item
+  - Done a lot of research
+  - Will be done in 1-2 days
+- Mira:
+  - Item completed
+- Peter:
+  - Item completed
+- Group 1 will do a group meeting tomorrow
+
+## SCRUM Standup (Group 2) - 14.03.2022
+- Vedat is missing, we do not know the progress of his item
+- Filippos, Lukman and Marko is still working
+- Peter is done with task, got new item
