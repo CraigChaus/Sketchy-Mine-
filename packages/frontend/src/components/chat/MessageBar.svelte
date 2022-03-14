@@ -1,4 +1,8 @@
 <script>
+  /**
+   * MessageBar component
+   * Represents the user interaction bar where users can type in text and send it as a guess/chat
+   */
   import TextInput from "./TextInput.svelte";
   import ActionButton from "./ChatButton.svelte";
   import { createEventDispatcher } from "svelte";
