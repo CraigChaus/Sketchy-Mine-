@@ -13,15 +13,15 @@
   const session = "main";
 
   let results = null; // It has to be null when we want to hide the results on the team listing
-  let username;
+  let username; //Current user's username
   let teams = []; // Points and colour are used by ProgressBar.
   let teamSize = 0;
-  let chatMessages = [];
-  let teamGuesses = [];
+  let chatMessages = []; //List of all chat messages
+  let teamGuesses = []; //List of all guesses of current team
   let role = 3;
   let promise = getRole();
-  let chatInput;
-  let currentGuess = null;
+  let chatInput; //User's chat input
+  let currentGuess = null; //Current guess of the user
   let brushColor = "#444";
   let brushRadius = 8;
   let SDraw = null;
@@ -191,6 +191,7 @@
     ];
   });
 
+  // Update team listing
   socket.on("teams:update", (data) => {
     if (!data) {
       return;

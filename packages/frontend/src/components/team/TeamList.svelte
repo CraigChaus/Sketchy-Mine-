@@ -1,4 +1,8 @@
 <script>
+    /**
+     * TeamList Components
+     * Stores team listing (individual team items)
+     */
     import ScrollContainer from "../ScrollContainer.svelte";
     import TeamItem from "./TeamItem.svelte";
 
@@ -18,7 +22,7 @@
        ]
        */
     export let contentJSON = [];
-    export let showResults = false;
+    export let showResults = false; // If set to true will show end round results on teams
 </script>
 
 <ScrollContainer>

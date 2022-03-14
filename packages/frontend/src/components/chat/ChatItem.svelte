@@ -1,7 +1,11 @@
 <script>
+  /**
+   * ChatItem component
+   * Represents individual chat messages that can be placed in the ChatBox component
+   */
   export let sender = "Unknown User";
   export let message = "Unknown message";
-  export let type = false;
+  export let type = false; // 1 -> self, 2 -> other, 3 -> system
 </script>
 
 <div class="flex-1 w-full h-full flex max-h-full">
