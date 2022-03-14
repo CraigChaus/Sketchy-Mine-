@@ -159,7 +159,7 @@ _§14_ In git, all branches must be automatically created from the issue board, 
 
 8. As a moderator, I want to remove players from an ongoing game, so that there is no inappropriate behavior.
 
-9. As a moderator, I want to buff or debuff teams, so that I can influence the game logic.
+9. As a moderator, I want to buff or de-buff teams, so that I can influence the game logic.
 
 10. As a user, I want to be able to spectate, so that I can watch an ongoing game.
 
@@ -301,7 +301,49 @@ Connect team listing component with backend
 
 Make team based chat
 
-#### US11 - As a player, I want to get emeralds, so that I can purchase powerups with the gained emeralds.
+#### US06 - As a player, I want the game to be mobile responsive, so that I can play it on my mobile phone.
+
+#### US07 - As a player, I want the ability to leave an ongoing game, so that I am not forced to play
+
+##### US07 BI01
+
+Page for successfully leaving the game
+
+##### US07 BI02
+
+Player is removed form the team with saved progress
+
+#### US08 - As a moderator, I want to remove players from an ongoing game, so there is no  inappropriate behaviour
+
+##### US08 BI01
+
+Ability to assign moderator role to specific users
+
+##### US08 BI02
+
+Create moderator view of the game
+
+##### US08 BI03
+
+Implement functionality for kicking another player from their team
+
+#### US09 - 9. As a moderator, I want to buff or de-buff teams, so that I can influence the game logic.
+
+#### US10 - As a player, I want to be able to spectate, so that I can watch an ongoing game without participating in it
+
+##### US10 BI01
+
+Ability to assign spectator role to users
+
+##### US10 BI02 
+
+Create spectator view of the game
+
+##### US10 BI03
+
+When the spectator oprion is clicked, the user does not become a part of the team
+
+#### US11 - As a player, I want to get emeralds, so that I can purchase power-ups with the gained emeralds.
 
 ##### US11 Bl01
 
@@ -346,6 +388,8 @@ Matchmaking system in the backend
 ##### US11 Bl11
 
 Create the voting system.
+
+#### US12 - 12. As a moderator, I want to have a means of communicating with the players, so that I can give them warnings.
 
 ---
 

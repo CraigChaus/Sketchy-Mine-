@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="481344fd-0740-43af-9167-2cce919a43b1" name="Changes" comment="moderator and warning wireframes added + description in the game-design document">
+    <list default="true" id="481344fd-0740-43af-9167-2cce919a43b1" name="Changes" comment="docs: added missing user story backlogs in team-plan document">
+      <change afterPath="$PROJECT_DIR$/packages/frontend/src/pages/EndedSession.svelte" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/docs/team-plan.md" beforeDir="false" afterPath="$PROJECT_DIR$/docs/team-plan.md" afterDir="false" />
     </list>
@@ -16,6 +18,7 @@
         <option value="JavaScript File" />
         <option value="Login" />
         <option value="LogInComponent" />
+        <option value="EndedSession" />
       </list>
     </option>
   </component>
@@ -46,6 +49,9 @@
     <property name="node.js.selected.package.eslint" value="(autodetect)" />
     <property name="node.js.selected.package.standard" value="" />
     <property name="nodejs_package_manager_path" value="npm" />
+    <property name="project.structure.last.edited" value="Libraries" />
+    <property name="project.structure.proportion" value="0.0" />
+    <property name="project.structure.side.proportion" value="0.2" />
     <property name="settings.editor.selected.configurable" value="settings.javascript.linters.eslint" />
   </component>
   <component name="RunManager">
@@ -92,6 +98,8 @@
       <workItem from="1646824988250" duration="873000" />
       <workItem from="1646841884035" duration="120000" />
       <workItem from="1646998692296" duration="1961000" />
+      <workItem from="1647252630632" duration="586000" />
+      <workItem from="1647253234431" duration="1755000" />
     </task>
     <task id="LOCAL-00001" summary="chore/updated-time-sheet">
       <created>1646607271272</created>
