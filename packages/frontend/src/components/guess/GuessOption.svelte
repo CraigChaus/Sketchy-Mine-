@@ -1,4 +1,8 @@
 <script>
+  /**
+   * GuessOption component
+   * Represents an individual guess
+   */
   import { createEventDispatcher } from "svelte";
   import Icon from "svelte-awesome";
   import { faPaperPlane } from "@fortawesome/free-solid-svg-icons";
@@ -28,6 +32,7 @@
 >
   <div class="flex justify-center flex-row">
     {#if (frequency / teamSize) * 100 > 50}
+      <!-- Mark the guess as submitted-->
       <div class="flex-initial mr-1"><Icon data={faPaperPlane} /></div>
     {/if}
     <div class="flex-initial mr-1"><slot /></div>

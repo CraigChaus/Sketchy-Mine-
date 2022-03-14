@@ -1,4 +1,8 @@
 <script>
+    /**
+     * MembersList component
+     * A dropdown list under each team showing players per team
+     */
     import Icon from "svelte-awesome";
     import {
         faSpellCheck,
@@ -6,7 +10,7 @@
         faUser,
     } from "@fortawesome/free-solid-svg-icons";
 
-    export let membersJSON = [{ username: "N/A", guessed: false }];
+    export let membersJSON = [{ username: "N/A", guessed: false }]; // Default data
     export let showGuessedIndicator = true; // Used to indicate if someone submitted a guess from the team
 </script>
 
@@ -14,6 +18,7 @@
     {#each membersJSON as member}
         <div class="flex justify-between my-1">
             {#if member.current}
+                <!-- Give user this mark when they are the current user-->
                 <Icon
                     data={faUser}
                     class="mr-2 mt-1"
@@ -29,10 +34,12 @@
             </p>
             {#if showGuessedIndicator && member.guessed}
                 <div>
+                    <!-- Give user this mark when they submitted a guess-->
                     <Icon data={faSpellCheck} style="color: darkgray" />
                 </div>
             {:else if member.draws}
                 <div>
+                    <!-- Give user this mark when they are drawing-->
                     <Icon data={faPaintbrush} style="color: darkgray" />
                 </div>
             {/if}
