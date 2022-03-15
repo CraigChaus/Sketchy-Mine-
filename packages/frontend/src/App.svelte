@@ -1,12 +1,12 @@
 <script>
-
+  
   
   import Main from './pages/Main.svelte';
   import Login from './pages/Login.svelte';
   import Home from './pages/Home.svelte';
-
   import router from 'page';
   import SignUp from './pages/SignUp.svelte';
+  import Ranking from './pages/Ranking.svelte';
 
   let page;
   let params;
@@ -15,13 +15,21 @@
   router('/login', (ctx) => page = Login);
   router('/register', (ctx) => page = SignUp);
   router('/game?specate', (ctx) => page = Main);
-  
+  router('/leaderboards', (ctx) => page = Ranking);
+
   router('/', (ctx) => page = Home);
 
   router.start();
 
-</script>
+  const home = async () =>{
+    router.redirect('/')
+  }
 
+</script>
+<a href="">
+
+  <img on:click={home} style="width: 100px;" src="favicon.png" alt="logo">
+</a>
 <!-- <Main /> -->
 <!-- <Home/> -->
 
