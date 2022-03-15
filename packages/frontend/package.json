@@ -31,6 +31,7 @@
     "rollup-plugin-terser": "^7.0.0",
     "socket.io-client": "^4.4.1",
     "svelte": "^3.0.0",
+    "svelte-use-form": "^2.4.3",
     "tailwindcss": "^2.2.16"
   },
   "dependencies": {
@@ -40,6 +41,7 @@
     "sirv-cli": "^2.0.0",
     "socket.io-client": "^4.4.1",
     "svelte-awesome": "^2.4.4",
-    "svelte-preprocess": "^4.10.3"
+    "svelte-preprocess": "^4.10.3",
+    "typescript": "^4.6.2"
   }
 }

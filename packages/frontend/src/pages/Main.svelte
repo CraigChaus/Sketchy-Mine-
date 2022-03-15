@@ -10,7 +10,14 @@
   import { teamsValue } from "../stores/teams";
   import ProgressBar from "../components/team/ProgressBar.svelte";
 
-  const session = "main";
+  // Receiving guesses
+  socket.on("guess", (guesses) => {
+    if (!guesses) {
+      return;
+    }
+
+    teamGuesses = [...guesses];
+  });
 
   let results = null; // It has to be null when we want to hide the results on the team listing
   let username; //Current user's username

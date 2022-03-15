@@ -9,7 +9,7 @@
     router.redirect('/game')
   }
   const register = async () =>{
-    router.redirect('/register')
+    router.redirect('/signup')
   }
   const leaderboards = async () =>{
     

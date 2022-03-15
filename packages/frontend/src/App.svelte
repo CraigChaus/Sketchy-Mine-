@@ -3,17 +3,17 @@
   
   import Main from './pages/Main.svelte';
   import Login from './pages/Login.svelte';
-  import Register from './pages/Register.svelte';
   import Home from './pages/Home.svelte';
 
   import router from 'page';
+  import SignUp from './pages/SignUp.svelte';
 
   let page;
   let params;
 
   router('/game', (ctx) => page = Main);
   router('/login', (ctx) => page = Login);
-  router('/register', (ctx) => page = Register);
+  router('/signup', (ctx) => page = SignUp);
   router('/', (ctx) => page = Home);
 
   router.start();
