@@ -1,6 +1,11 @@
 <script>
+  /**
+   * ChatBox Component
+   * Used to list chat messages
+   */
   import ScrollContainer from "../ScrollContainer.svelte";
   import ChatItem from "./ChatItem.svelte";
+
   /*
      Expected content:
      [

@@ -3,9 +3,11 @@ services:
   db:
     image: 'postgres:latest'
     environment:
-      POSTGRES_USER: username
-      POSTGRES_PASSWORD: password
-      POSTGRES_DB: sm_db
+      POSTGRES_USER: ${DB_USER}
+      POSTGRES_PASSWORD: ${DB_PASS}
+      POSTGRES_DB: ${DB_NAME}
+    networks:
+      - sketchymine-net
   sketchymine-backend:
     image: registry.gitlab.com/saxion.nl/server-clients/dhi2v.so2/backend:latest
     ports:
@@ -15,3 +17,8 @@ services:
       DB_URL: ${DB_URL}
     depends_on:
       - db
+    networks:
+      - sketchymine-net
+
+networks:
+  sketchymine-net:
