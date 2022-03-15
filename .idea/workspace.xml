@@ -1,8 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="481344fd-0740-43af-9167-2cce919a43b1" name="Changes" comment="docs: added more user stories to team-plan document">
-      <change beforePath="$PROJECT_DIR$/docs/team-plan.md" beforeDir="false" afterPath="$PROJECT_DIR$/docs/team-plan.md" afterDir="false" />
+    <list default="true" id="481344fd-0740-43af-9167-2cce919a43b1" name="Changes" comment="docs: fixed some typos">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/packages/frontend/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/packages/frontend/package-lock.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/packages/frontend/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/packages/frontend/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/packages/frontend/src/App.svelte" beforeDir="false" afterPath="$PROJECT_DIR$/packages/frontend/src/App.svelte" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/packages/frontend/src/pages/EndedSession.svelte" beforeDir="false" afterPath="$PROJECT_DIR$/packages/frontend/src/pages/EndedSession.svelte" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -41,6 +45,8 @@
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="add_unversioned_files" value="$PROJECT_DIR$/packages/backend/dist/app.js" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../de-hex" />
     <property name="node.js.detected.package.eslint" value="true" />
     <property name="node.js.detected.package.standard" value="true" />
     <property name="node.js.selected.package.eslint" value="(autodetect)" />
@@ -96,7 +102,8 @@
       <workItem from="1646841884035" duration="120000" />
       <workItem from="1646998692296" duration="1961000" />
       <workItem from="1647252630632" duration="586000" />
-      <workItem from="1647253234431" duration="2127000" />
+      <workItem from="1647253234431" duration="4737000" />
+      <workItem from="1647279021191" duration="2300000" />
     </task>
     <task id="LOCAL-00001" summary="chore/updated-time-sheet">
       <created>1646607271272</created>
@@ -119,7 +126,14 @@
       <option name="project" value="LOCAL" />
       <updated>1647267555762</updated>
     </task>
-    <option name="localTasksCounter" value="4" />
+    <task id="LOCAL-00004" summary="docs: fixed some typos">
+      <created>1647267711260</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1647267711260</updated>
+    </task>
+    <option name="localTasksCounter" value="5" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -152,7 +166,8 @@
     <MESSAGE value="chore/updated-time-sheet" />
     <MESSAGE value="moderator and warning wireframes added + description in the game-design document" />
     <MESSAGE value="docs: added more user stories to team-plan document" />
-    <option name="LAST_COMMIT_MESSAGE" value="docs: added more user stories to team-plan document" />
+    <MESSAGE value="docs: fixed some typos" />
+    <option name="LAST_COMMIT_MESSAGE" value="docs: fixed some typos" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />
