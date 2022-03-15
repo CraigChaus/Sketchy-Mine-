@@ -13,7 +13,9 @@
 
   router('/game', (ctx) => page = Main);
   router('/login', (ctx) => page = Login);
-  router('/signup', (ctx) => page = SignUp);
+  router('/register', (ctx) => page = SignUp);
+  router('/game?specate', (ctx) => page = Main);
+  
   router('/', (ctx) => page = Home);
 
   router.start();

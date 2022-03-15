@@ -2,38 +2,44 @@
   import router from "page";
 
 
-  const login = async () =>{
-    router.redirect('/login')
-  }
   const play = async () =>{
     router.redirect('/game')
   }
+  const spectate = async () =>{
+    router.redirect('/spectate')
+  }
+  const ranking = async () =>{
+    router.redirect('/leaderboards')
+  }
+  const rules = async () =>{
+    router.redirect('/rules')
+  }
+  const login = async () =>{
+    router.redirect('/login')
+  }
   const register = async () =>{
-    router.redirect('/signup')
+    router.redirect('/register')
   }
-  const leaderboards = async () =>{
-    
-  }
+
+
+
 </script>
 
-<div class="flex flex-col">
-    <button
-      on:click={login}
-      class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
-      >login</button
-    >
-    <button
-      on:click={play}
-      class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded"
-      >play</button
-    >
-    <button
-      on:click={register}
-      class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded"
-      >register</button
-    >
-    <button
-      class="bg-yellow-500 hover:bg-yellow-700 text-white font-bold py-2 px-4 rounded"
-      >leaderboards</button
-    >
-</div>
+
+<body class="body-bg min-h-screen pt-12 md:pt-20 pb-6 px-2 md:px-0" style="font-family:'Lato',sans-serif;">
+<main  class="bg-white max-w-lg mx-auto p-8 md:p-12 my-3 rounded-lg shadow-2xl">
+
+    <section>
+        <button class="text-4xl font-bold text-white text-center bg-green-400 hover:bg-green-600  py-2 px-4 rounded my-3 mx-16 w-72">Play</button>
+        <button class="text-4xl font-bold text-white text-center bg-yellow-400 hover:bg-yellow-600  py-2 px-4 rounded my-3 mx-16 w-72">Spectate</button>
+        <button class="text-4xl font-bold text-white text-center bg-pink-400 hover:bg-pink-600  py-2 px-4 rounded my-3 mx-16 w-72">Ranking</button>
+        <button class="text-4xl font-bold text-white text-center bg-red-500 hover:bg-red-700  py-2 px-4 rounded my-3 mx-16 w-72">Rules</button>
+    </section>
+
+    <section class="mt-10">
+        <button class="text-4xl font-bold text-white text-center bg-blue-400 hover:bg-blue-600  py-2 px-4 rounded my-3 mx-16 w-72">Log in</button>
+        <button class="text-4xl font-bold text-white text-center bg-blue-700 hover:bg-blue-900  py-2 px-4 rounded my-3 mx-16 w-72">Register</button>
+    </section>
+
+</main>
+</body>

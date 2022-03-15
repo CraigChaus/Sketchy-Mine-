@@ -2,6 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
 <<<<<<< HEAD
+<<<<<<< HEAD
     <list default="true" id="481344fd-0740-43af-9167-2cce919a43b1" name="Changes" comment="moderator and warning wireframes added + description in the game-design document">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/docs/team-plan.md" beforeDir="false" afterPath="$PROJECT_DIR$/docs/team-plan.md" afterDir="false" />
@@ -11,6 +12,13 @@
       <change beforePath="$PROJECT_DIR$/packages/frontend/src/App.svelte" beforeDir="false" afterPath="$PROJECT_DIR$/packages/frontend/src/App.svelte" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/packages/frontend/src/pages/LogIn.svelte" beforeDir="false" afterPath="$PROJECT_DIR$/packages/frontend/src/pages/LogIn.svelte" afterDir="false" />
 >>>>>>> 53f729611b5369b0bc07972f75897fdabe351c7f
+=======
+    <list default="true" id="481344fd-0740-43af-9167-2cce919a43b1" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/packages/frontend/src/pages/Home.svelte" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/packages/frontend/src/pages/Ranking.svelte" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/packages/frontend/src/App.svelte" beforeDir="false" afterPath="$PROJECT_DIR$/packages/frontend/src/App.svelte" afterDir="false" />
+>>>>>>> ff4c67b5486a28f9873d5b128e0663c4e7b3e4f9
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -22,11 +30,16 @@
       <list>
         <option value="JavaScript File" />
 <<<<<<< HEAD
+<<<<<<< HEAD
         <option value="Login" />
         <option value="LogInComponent" />
 =======
         <option value="Log In" />
 >>>>>>> 53f729611b5369b0bc07972f75897fdabe351c7f
+=======
+        <option value="Home.svelte" />
+        <option value="Ranking.svelte" />
+>>>>>>> ff4c67b5486a28f9873d5b128e0663c4e7b3e4f9
       </list>
     </option>
   </component>
@@ -40,6 +53,9 @@
   </component>
   <component name="MarkdownSettingsMigration">
     <option name="stateVersion" value="1" />
+  </component>
+  <component name="ProblemsViewState">
+    <option name="selectedIndex" value="1" />
   </component>
   <component name="ProjectId" id="24xq8ucaqLsxCeGBoGz9tE7NBa6" />
   <component name="ProjectViewState">
@@ -162,6 +178,7 @@
       </map>
     </option>
     <option name="oldMeFiltersMigrated" value="true" />
+<<<<<<< HEAD
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="Log In done" />
@@ -179,5 +196,7 @@
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />
     <select />
+=======
+>>>>>>> ff4c67b5486a28f9873d5b128e0663c4e7b3e4f9
   </component>
 </project>
