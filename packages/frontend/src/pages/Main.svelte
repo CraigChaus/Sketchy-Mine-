@@ -169,16 +169,23 @@ import { url } from "svelte-use-form";
   };
 
   onMount(() => {
-    //TODO: change this to be done if there is no token received in the backend automatically turn into user
-    let url = window.location.href;
-    if(url.includes('spectator')){ //user is a spectator
+    username = `User${Math.round(Math.random() * 10000)}`;
+    let spectator = window.location.href.includes('spectator');
+
+    //sorr but this has to be called before the await else it won't work
+    //ugly double checking of spectator to have optimal functionality :(
+
+    if(spectator){ //user is a spectator
       spectate();
     }else{  //user is not spectator
-      username = `User${Math.round(Math.random() * 10000)}`;
       socket.emit("joinSession", { username, session }, () => {
-      randomizeDrawer();
+      if(!spectator){
+        randomizeDrawer();
+        joinMatch();
+      }else{
+        spectate
+      }
       socket.emit("canvas:new-user");
-      joinMatch();
     });
   }
   promise = getRole();
