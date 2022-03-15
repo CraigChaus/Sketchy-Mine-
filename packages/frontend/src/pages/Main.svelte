@@ -9,8 +9,18 @@
   import socket from "../socket";
   import { teamsValue } from "../stores/teams";
   import ProgressBar from "../components/team/ProgressBar.svelte";
+import { url } from "svelte-use-form";
 
-  const session = "main";
+
+
+  // Receiving guesses
+  socket.on("guess", (guesses) => {
+    if (!guesses) {
+      return;
+    }
+
+    teamGuesses = [...guesses];
+  });
 
   let results = null; // It has to be null when we want to hide the results on the team listing
   let username; //Current user's username
@@ -18,7 +28,7 @@
   let teamSize = 0;
   let chatMessages = []; //List of all chat messages
   let teamGuesses = []; //List of all guesses of current team
-  let role = 3;
+  let role = 2;
   let promise = getRole();
   let chatInput; //User's chat input
   let currentGuess = null; //Current guess of the user
@@ -159,16 +169,28 @@
   };
 
   onMount(() => {
-    username = `User${Math.round(Math.random() * 10000)}`;
-    socket.emit("joinSession", { username, session }, () => {
+    //TODO: change this to be done if there is no token received in the backend automatically turn into user
+    let url = window.location.href;
+    if(url.includes('spectator')){ //user is a spectator
+      spectate();
+    }else{  //user is not spectator
+      username = `User${Math.round(Math.random() * 10000)}`;
+      socket.emit("joinSession", { username, session }, () => {
       randomizeDrawer();
-      promise = getRole();
       socket.emit("canvas:new-user");
       joinMatch();
     });
+  }
+  promise = getRole();
   });
 
   teamsValue.set(teams);
+
+  const spectate = () => {
+    socket.emit("teams:get");
+    role = 3;
+  
+  }
 
   const joinMatch = () => {
     socket.emit("teams:get");
@@ -262,8 +284,6 @@
 
   const startRound = () => socket.emit("round:start");
   const sendGuess = (guess) => socket.emit("round:guess", guess);
-  const makeAllDrawer = () => socket.emit("canvas:drawer");
-  const makeAllSpec = () => socket.emit("canvas:spectator");
 
   socket.on("round:result", (payload) => (results = payload));
   socket.on("round:progress", updateGuessState);
@@ -279,13 +299,20 @@
 
 <div class="flex">
   <div class="w-1/4 h-12">
-    <GuessList
-      on:guessClicked={onClickGuessItem}
-      {teamGuesses}
-      teamNumber={1}
-      currentGuess={currentGuess ? currentGuess.toLowerCase() : null}
-      {teamSize}
-    />
+    {#await promise}
+        <p>loading..</p>
+      {:then role}
+        {#if role != 3}
+          <GuessList
+          on:guessClicked={onClickGuessItem}
+          {teamGuesses}
+          teamNumber={1}
+          currentGuess={currentGuess ? currentGuess.toLowerCase() : null}
+          {teamSize}
+          />
+      {/if}
+    {/await}
+    
     <TeamList showResults={results != null} contentJSON={teams} />
   </div>
   <div class="w-2/4 h-full space-y-1">
@@ -306,32 +333,29 @@
         <p>You are currently role {role}</p>
       {/await}
     </div>
-    <button
-      on:click={becomeDrawer}
-      class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
-      >become drawer</button
-    >
-    <button
-      on:click={becomeGuesser}
-      class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded"
-      >become guesser</button
-    >
-    <button
-      on:click={makeAllDrawer}
-      class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
-      >make all users drawers</button
-    >
-    <button
-      on:click={makeAllSpec}
-      class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded"
-      >make all users spectators</button
-    >
-
-    <button
-      on:click={startRound}
-      class="bg-purple-500 hover:bg-purple-700 text-white font-bold py-2 px-4 rounded"
-      >Start Round</button
-    >
+    {#await promise}
+        <p>loading..</p>
+      {:then role}
+        {#if role != 3}
+        <button
+        on:click={becomeDrawer}
+        class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+        >become drawer</button
+      >
+      <button
+        on:click={becomeGuesser}
+        class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded"
+        >become guesser</button
+      >
+  
+      <button
+        on:click={startRound}
+        class="bg-purple-500 hover:bg-purple-700 text-white font-bold py-2 px-4 rounded"
+        >Start Round</button
+      >
+        {/if}
+      {/await}
+    
 
     <MessageBar
       {role}
