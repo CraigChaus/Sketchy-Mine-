@@ -9,6 +9,7 @@
   import socket from "../socket";
   import { teamsValue } from "../stores/teams";
   import ProgressBar from "../components/team/ProgressBar.svelte";
+  import Popup from "../components/Popup.svelte";
 
   const session = "main";
 
@@ -274,6 +275,8 @@
   socket.on("canvas:guesser", becomeGuesser);
   socket.on("canvas:spectator", becomeSpectator);
 </script>
+
+<Popup>Hello</Popup>
 
 <ProgressBar {teams} />
 
