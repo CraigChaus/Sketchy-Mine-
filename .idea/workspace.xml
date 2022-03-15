@@ -1,9 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
+<<<<<<< HEAD
     <list default="true" id="481344fd-0740-43af-9167-2cce919a43b1" name="Changes" comment="moderator and warning wireframes added + description in the game-design document">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/docs/team-plan.md" beforeDir="false" afterPath="$PROJECT_DIR$/docs/team-plan.md" afterDir="false" />
+=======
+    <list default="true" id="481344fd-0740-43af-9167-2cce919a43b1" name="Changes" comment="Diagrams added">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/packages/frontend/src/App.svelte" beforeDir="false" afterPath="$PROJECT_DIR$/packages/frontend/src/App.svelte" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/packages/frontend/src/pages/LogIn.svelte" beforeDir="false" afterPath="$PROJECT_DIR$/packages/frontend/src/pages/LogIn.svelte" afterDir="false" />
+>>>>>>> 53f729611b5369b0bc07972f75897fdabe351c7f
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -14,8 +21,12 @@
     <option name="RECENT_TEMPLATES">
       <list>
         <option value="JavaScript File" />
+<<<<<<< HEAD
         <option value="Login" />
         <option value="LogInComponent" />
+=======
+        <option value="Log In" />
+>>>>>>> 53f729611b5369b0bc07972f75897fdabe351c7f
       </list>
     </option>
   </component>
@@ -41,21 +52,29 @@
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="aspect.path.notification.shown" value="true" />
+    <property name="js.linters.configure.manually.selectedeslint" value="true" />
     <property name="node.js.detected.package.eslint" value="true" />
     <property name="node.js.detected.package.standard" value="true" />
     <property name="node.js.selected.package.eslint" value="(autodetect)" />
     <property name="node.js.selected.package.standard" value="" />
     <property name="nodejs_package_manager_path" value="npm" />
+<<<<<<< HEAD
     <property name="settings.editor.selected.configurable" value="settings.javascript.linters.eslint" />
+=======
+    <property name="settings.editor.selected.configurable" value="settings.nodejs" />
+>>>>>>> 53f729611b5369b0bc07972f75897fdabe351c7f
   </component>
   <component name="RunManager">
-    <configuration default="true" type="ArquillianJUnit" factoryName="" nameIsGenerated="true">
+    <configuration default="true" type="ArquillianTestNG" factoryName="" nameIsGenerated="true">
       <option name="arquillianRunConfiguration">
         <value>
           <option name="containerStateName" value="" />
         </value>
       </option>
-      <option name="TEST_OBJECT" value="class" />
+      <option name="TEST_OBJECT" value="CLASS" />
+      <properties />
+      <listeners />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
@@ -79,6 +98,7 @@
       <workItem from="1646055910706" duration="2845000" />
       <workItem from="1646266046859" duration="2349000" />
       <workItem from="1646308368431" duration="41678000" />
+<<<<<<< HEAD
       <workItem from="1646606496778" duration="799000" />
       <workItem from="1646607425821" duration="685000" />
       <workItem from="1646653133962" duration="1793000" />
@@ -92,6 +112,12 @@
       <workItem from="1646824988250" duration="873000" />
       <workItem from="1646841884035" duration="120000" />
       <workItem from="1646998692296" duration="1961000" />
+=======
+      <workItem from="1646606496778" duration="598000" />
+      <workItem from="1646822184431" duration="4150000" />
+      <workItem from="1646835469886" duration="1303000" />
+      <workItem from="1646838136575" duration="4539000" />
+>>>>>>> 53f729611b5369b0bc07972f75897fdabe351c7f
     </task>
     <task id="LOCAL-00001" summary="chore/updated-time-sheet">
       <created>1646607271272</created>
@@ -135,6 +161,15 @@
         </entry>
       </map>
     </option>
+    <option name="oldMeFiltersMigrated" value="true" />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="Log In done" />
+    <option name="LAST_COMMIT_MESSAGE" value="Log In done" />
+  </component>
+  <component name="XSLT-Support.FileAssociations.UIState">
+    <expand />
+    <select />
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="chore/updated-time-sheet" />
