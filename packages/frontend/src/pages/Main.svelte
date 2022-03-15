@@ -9,6 +9,7 @@
   import socket from "../socket";
   import { teamsValue } from "../stores/teams";
   import ProgressBar from "../components/team/ProgressBar.svelte";
+  import Popup from "../components/Popup.svelte";
 
   const session = "main";
 
@@ -25,6 +26,11 @@
   let brushColor = "#444";
   let brushRadius = 8;
   let SDraw = null;
+  let showMatchmakingPopup = true; // Show popup window while player is not in an active team
+  let popupWindowInstruction = "Looking for a team"; // Shown on the popup window (usually used at matchmaking)
+  let popupWindowStatusText = `Please wait...`; // Used by the popup window to display various match statuses
+  let popupWindowShowButtons = true; // Toggle the visibility of the popup window's buttons
+  let cachedTeamSize = 0; // Used to check wether the team's size grows or declines
 
   // Progress bar functionality
   /**
@@ -208,7 +214,61 @@
     });
 
     teams = data;
+
+    handlePopup(); // Every time the teams get updated, we check if we need to show the matchmaking popup
   });
+
+  /**
+   * Logic for when to show popup
+   */
+  function handlePopup() {
+    if (teamSize === 3 && cachedTeamSize < 3) {
+      cachedTeamSize = 3;
+      showMatchmakingPopup = true;
+      popupWindowInstruction = "Ready!";
+      popupWindowStatusText = "Team formed";
+      popupWindowShowButtons = false; // This time we hide the buttons, since team was formed (no more spectating)
+      setTimeout(() => (showMatchmakingPopup = false), 2000); // Show the popup only for 2 seconds to inform players
+    } else if (teamSize === 2 && cachedTeamSize >= 3) {
+      cachedTeamSize = 2;
+      showMatchmakingPopup = true;
+      popupWindowInstruction = "Team disassembled";
+      popupWindowStatusText = `Looking for more players (${teamSize}/3 players)`;
+      popupWindowShowButtons = true; // We show the buttons to allow player to exit or spectate
+    } else if (teamSize < 3 && cachedTeamSize < 3) {
+      // Safe keeping
+      cachedTeamSize = teamSize;
+      showMatchmakingPopup = true;
+      popupWindowInstruction = "Trying to make a team ...";
+      popupWindowStatusText = `(${teamSize}/3 players)`;
+      popupWindowShowButtons = true; // We show the buttons to allow player to exit or spectate
+    }
+  }
+
+  /**
+   * Helper function to hold the execution of the program
+   * @param ms Milliseconds to wait
+   */
+  function wait(ms) {
+    var start = new Date().getTime();
+    var end = start;
+    while (end < start + ms) {
+      end = new Date().getTime();
+    }
+  }
+
+  /**
+   * Exit current match and redirect page back to the home screen
+   * Called by the matchmaking popup window
+   */
+  const exitMatch = () => {
+    //TODO: Redirect to home screen
+  };
+
+  /**
+   * Hide matchmaking popup box and place user into spectate mode
+   */
+  const startSpectate = () => (showMatchmakingPopup = false);
 
   async function getRole() {
     return role;
@@ -274,6 +334,16 @@
   socket.on("canvas:guesser", becomeGuesser);
   socket.on("canvas:spectator", becomeSpectator);
 </script>
+
+{#if showMatchmakingPopup}
+  <Popup
+    instruction={popupWindowInstruction}
+    status={popupWindowStatusText}
+    on:ClickExit={exitMatch}
+    on:ClickSpectate={startSpectate}
+    showButtons={popupWindowShowButtons}
+  />
+{/if}
 
 <ProgressBar {teams} />
 
