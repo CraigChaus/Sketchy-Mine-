@@ -347,6 +347,43 @@ Matchmaking system in the backend
 
 Create the voting system.
 
+#### US07 - As a player, I want the ability to leave an ongoing game, so that I am not forced to play.
+##### US07 Bl01
+
+Creating Screen for the user when they successfully leave the game
+
+##### US07 Bl02
+
+Player is removed from the team with saved progress
+
+#### US08 - As a moderator, I want to remove players from an ongoing game, so that there is no inappropriate behavior.
+
+#####  US08 Bl01
+
+Handle the ability to assign moderator role to a specific user
+
+##### US08 Bl02
+
+Create the moderator screen/view of the game
+
+##### US08 Bl03
+
+Create the functionality to remove another player from their team as a moderator
+
+#### US10 As a user, I want to be able to spectate, so that I can watch an ongoing game.
+
+##### US10 Bl01
+
+Create the ability to assign spectator role to myself as a user
+
+##### US10 Bl02
+
+Create the spectator view of the game
+
+##### US10 Bl03
+
+Remove the user from the team if he/she wants to be a spectator
+
 ---
 
 ## Budget
