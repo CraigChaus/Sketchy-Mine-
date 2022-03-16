@@ -31,7 +31,7 @@
             <table class="text-left w-full border-collapse">
                 <thead>
                 <tr>
-                    <th className=" w-0.5 py-4 px-2  bg-green-400  font-bold uppercase text-sm text-grey-dark border-b border-grey-light"> </th>
+                    <th class=" w-0.5 py-4 px-2  bg-green-400  font-bold uppercase text-sm text-grey-dark border-b border-grey-light"> </th>
                     <th class=" w-0.5 py-4 px-4  bg-green-400  font-bold uppercase text-sm text-grey-dark border-b border-grey-light">username</th>
                     <th class=" w-0.5 py-4 px-4  bg-green-400  font-bold uppercase text-sm text-grey-dark border-b border-grey-light"># emeralds</th>
                 </tr>
@@ -58,5 +58,6 @@
     </body>
 {:catch error}
     <p style="color: red">{error.message}</p>
+    <p> You probably didn't add any new users to database. Add it first and than you will see </p>
 {/await}
 
