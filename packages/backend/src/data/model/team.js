@@ -7,6 +7,7 @@ function teamColour() {
 class Team {
   constructor(teamname) {
     this.teamname = teamname;
+    this.isSpectator = false;
     this.isDrawing = false;
     this.isSelf = false;
     this.won = false;

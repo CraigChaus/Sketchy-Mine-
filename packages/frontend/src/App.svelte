@@ -1,8 +1,39 @@
 <script>
+  
+  
   import Main from './pages/Main.svelte';
-</script>
+  import Login from './pages/Login.svelte';
+  import Home from './pages/Home.svelte';
+  import router from 'page';
+  import SignUp from './pages/SignUp.svelte';
+  import Ranking from './pages/Ranking.svelte';
 
-<Main />
+  let page;
+  let params;
+
+  router('/game', (ctx) => page = Main);
+  router('/login', (ctx) => page = Login);
+  router('/register', (ctx) => page = SignUp);
+  router('/game?specate', (ctx) => page = Main);
+  router('/leaderboards', (ctx) => page = Ranking);
+
+  router('/', (ctx) => page = Home);
+
+  router.start();
+
+  const home = async () =>{
+    router.redirect('/')
+  }
+
+</script>
+<a href="">
+
+  <img on:click={home} style="width: 100px;" src="favicon.png" alt="logo">
+</a>
+<!-- <Main /> -->
+<!-- <Home/> -->
+
+<svelte:component this="{page}" {params} />
 
 <style global>
     @tailwind base;
