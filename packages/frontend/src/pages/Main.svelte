@@ -11,8 +11,6 @@
   import ProgressBar from "../components/team/ProgressBar.svelte";
   import Popup from "../components/Popup.svelte";
 
-
-
   // Receiving guesses
   socket.on("guess", (guesses) => {
     if (!guesses) {
