@@ -10,6 +10,7 @@ export const TEAM_EVENTS = {
   REQUEST_LISTING: 'teams:get', // Get teams listing
   SEND_LISTING: 'teams:update', // Send team listing updates
   JOIN_TEAM: 'teams:join', // Join a team
+  JOIN_SPECTATORS: 'spectators:join' //joins the game as a spectator
 };
 
 const dbg = debug('handler:team');
@@ -61,12 +62,21 @@ const teamHandler = (io, socket) => {
     // Log team member capacity
     Teams.forEach((t) => {
       dbg(`${t.teamname}:`, `${t.members.length} players`);
+      console.log(t);
     });
 
     const sortedTeams = Teams.slice()
       .filter((t) => t.level === 0) // Only consider teams at level 0
       // eslint-disable-next-line max-len
       .sort((t1, t2) => t1.members.length - t2.members.length || t1.teamname.toLowerCase() - t2.teamname.toLowerCase()); // Sort teams by team members and name
+
+    //ignore the spectators team
+    if(sortedTeams[0]){
+      if(sortedTeams[0].teamname === "Spectators"){
+        sortedTeams.shift();
+      }
+    }
+    
 
     // Get team with lowest number of players
     let teamToJoin = sortedTeams[0];
@@ -82,8 +92,30 @@ const teamHandler = (io, socket) => {
     broadcastTeamSpecificGuesses(getIO());
   };
 
+  const joinSpectators = () => {
+    let findSpectatorTeam = Teams.slice()
+      .filter((t) => t.teamname === 'Spectators') // Get only the team with name Spectators
+    
+    let spectators = findSpectatorTeam[0];
+
+    if(findSpectatorTeam.length === 0){ //no spectator team exists yet, creates a new one
+      spectators = new Team('Spectators');
+      spectators.isSpectator = true;
+      addTeam(spectators)
+      dbg('Adding spectators');
+    }
+    joinTeam(spectators.teamname);
+
+
+
+  };
+
   socket.on(TEAM_EVENTS.REQUEST_LISTING, () => sendTeamData(io));
   socket.on(TEAM_EVENTS.JOIN_TEAM, joinMatch);
+  socket.on(TEAM_EVENTS.JOIN_SPECTATORS, joinSpectators);
 };
+
+
+
 
 export default teamHandler;

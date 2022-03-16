@@ -181,27 +181,27 @@
     //ugly double checking of spectator to have optimal functionality :(
 
     if(spectator){ //user is a spectator
-      spectate();
-    }else{  //user is not spectator
-      socket.emit("joinSession", { username, session }, () => {
+      role = 3;
+      showMatchmakingPopup = false;
+    }
+
+    socket.emit("joinSession", { username }, () => {
       if(!spectator){
         randomizeDrawer();
         joinMatch();
       }else{
-        spectate
+        spectate();
       }
       socket.emit("canvas:new-user");
     });
-  }
   promise = getRole();
   });
 
   teamsValue.set(teams);
 
   const spectate = () => {
-    socket.emit("teams:get");
-    role = 3;
-  
+    socket.emit("teams:get"); 
+    socket.emit("spectators:join");
   }
 
   const joinMatch = () => {
@@ -242,8 +242,9 @@
     });
 
     teams = data;
-
-    handlePopup(); // Every time the teams get updated, we check if we need to show the matchmaking popup
+    if(role != 3){
+      handlePopup(); // Every time the teams get updated, we check if we need to show the matchmaking popup
+    }
   });
 
   /**
@@ -304,12 +305,10 @@
 
   let randomizeDrawer = () => {
     const rng = Math.random();
-    if (rng < 0.33) {
+    if (rng < 0.5) {
       role = 1;
-    } else if (rng > 0.33 && rng < 0.66) {
-      role = 2;
     } else {
-      role = 3;
+      role = 2;
     }
   };
 
