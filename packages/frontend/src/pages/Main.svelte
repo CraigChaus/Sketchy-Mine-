@@ -161,14 +161,12 @@
 
   onMount(() => {
     username = `User${Math.round(Math.random() * 10000)}`;
-    console.log("Just not anything.");
     socket.emit("joinSession", { username }, () => {
-      console.log("Just anything.");
       randomizeDrawer();
       promise = getRole();
       socket.emit("canvas:new-user");
       joinMatch();
-    });//TODO: Join team chat
+    });
 
   });
 
@@ -197,7 +195,6 @@
 
   // Update team listing
   socket.on("teams:update", (data) => {
-    console.log("The same, just anything there.")
     if (!data) {
       return;
     }
@@ -205,14 +202,12 @@
     data.forEach((t, i) => {
       t.members.forEach((u) => {
         if (u.username === username) {
-          console.log("I am in a team: " +i +".");
           let teamName = "Team +" +(i +1);
 
           if (teamSession !== teamName){
             teamSession = teamName;
 
             socket.emit("joinTeamChat", {teamSession});
-            console.log("Joined team "+ i + " successfully.");
           }
 
           t.isSelf = true;
