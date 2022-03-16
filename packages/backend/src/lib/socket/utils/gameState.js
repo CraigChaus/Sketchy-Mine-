@@ -126,6 +126,13 @@ export const getTeamResults = () => {
       // Check if the team won or not
       if (bg.guess.toLowerCase() === getCurrentWord().toLowerCase()) t.won = true;
       else t.won = false;
+
+      if (t.won) {
+        // Add points to the team if they guessed correctly
+        const pointsEarned = 10;
+        dbg(`Adding ${pointsEarned} points to ${t.teamname}`);
+        t.addPoints(pointsEarned);
+      }
     }
   });
   // Calculate the teams' placement order by the time when the last guess was submitted
