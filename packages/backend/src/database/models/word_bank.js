@@ -1,4 +1,4 @@
-import { INTEGER, ARRAY, STRING } from 'sequelize';
+import { INTEGER, ARRAY } from 'sequelize';
 import sequelize from '../util/config';
 
 const words = sequelize.define('words', {
