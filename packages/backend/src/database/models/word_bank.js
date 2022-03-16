@@ -1,11 +1,9 @@
-import { INTEGER, ARRAY } from 'sequelize';
+import { INTEGER, DataTypes } from 'sequelize';
 import sequelize from '../util/config';
 
-const words = sequelize.define('words', {
+const WordBank = sequelize.define('wordBank', {
   word_list: {
-    type: ARRAY(sequelize.STRING),
-    primaryKey: true,
-    autoincrement: true,
+    type: DataTypes.ARRAY(DataTypes.STRING),
   },
   total_words: {
     type: INTEGER,
@@ -13,4 +11,4 @@ const words = sequelize.define('words', {
   },
 });
 
-export default words;
+export default WordBank;

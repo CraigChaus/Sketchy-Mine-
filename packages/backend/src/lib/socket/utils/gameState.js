@@ -15,6 +15,7 @@ const teamGuesses = [];
 */
 
 const wordBank = randomWords(10000);
+// console.log(wordBank);
 
 /**
  * Get random word to guess
