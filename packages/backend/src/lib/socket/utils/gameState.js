@@ -1,4 +1,5 @@
 import debug from 'debug';
+import randomWords from 'random-words';
 import { getIO } from '..';
 import { Teams } from '../../../data/teams';
 import { broadcastTeamSpecificGuesses, sendProgress, sendResult } from '../handlers/guessHandler';
@@ -10,12 +11,10 @@ const teamGuesses = [];
 
 /**
  * List of words that can be used for guessing
- */
-const wordBank = [
-  // 'Apple',
-  // 'Banana',
-  'Emerald',
-];
+ * for now, 10000 random words will be stored
+*/
+
+const wordBank = randomWords(10000);
 
 /**
  * Get random word to guess
