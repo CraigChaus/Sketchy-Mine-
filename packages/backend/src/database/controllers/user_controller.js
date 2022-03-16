@@ -46,7 +46,7 @@ export const findAll = (req, res) => {
   const { username } = req.query;
   const condition = username ? { username: { [Op.like]: `%${username}%` } } : null;
 
-  User.findAll({ where: condition })
+  User.findAll({ where: condition, order: [ ['total_emeralds', 'DESC'] ] })
     .then((data) => {
       res
         .send(data);
