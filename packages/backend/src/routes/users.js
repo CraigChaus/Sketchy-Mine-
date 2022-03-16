@@ -1,27 +1,22 @@
 import { Router } from 'express';
-
-const { StatusCodes } = require('http-status-codes');
+import isLoggedIn from '../middleware/is_logged_in';
+import * as users from '../database/controllers/user_controller';
 
 const router = Router();
-const users = require('../data/users');
 
-/* GET users listing. */
-router.get('/', (req, res) => {
-  res.send(users);
-});
+/* Get users listing */
+router.get('/', isLoggedIn, users.findAll);
 
 /* Get user by ID */
-router.get('/:id', (req, res) => {
-  const { id } = req.params;
-  const user = users.find((us) => us.id === id);
+router.get('/:id', isLoggedIn, users.findById);
 
-  if (user) {
-    res.send(user);
-  } else {
-    res
-      .status(StatusCodes.NOT_FOUND)
-      .send(`User with id ${id} not found`);
-  }
-});
+/* Register user */
+router.post('/', users.create);
+
+/* Update User by id */
+router.put('/:id', isLoggedIn, users.update);
+
+/* Delete User by id */
+router.delete('/:id', isLoggedIn, users.deleteUser);
 
 export default router;
