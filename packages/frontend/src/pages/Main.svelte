@@ -33,6 +33,7 @@
   let cachedTeamSize = 0; // Used to check wether the team's size grows or declines
 
   // Progress bar functionality
+  // FIXME: This function has been moved to the backend
   /**
    * This function updates the team's points that guessed correctly.
    * The increase is based on certain timestamps, as it follows:
