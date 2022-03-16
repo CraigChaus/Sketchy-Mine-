@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="481344fd-0740-43af-9167-2cce919a43b1" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/packages/frontend/src/pages/Ranking.svelte" beforeDir="false" afterPath="$PROJECT_DIR$/packages/frontend/src/pages/Ranking.svelte" afterDir="false" />
+    <list default="true" id="481344fd-0740-43af-9167-2cce919a43b1" name="Changes" comment="moderator and warning wireframes added + description in the game-design document">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/team-plan.md" beforeDir="false" afterPath="$PROJECT_DIR$/docs/team-plan.md" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -13,13 +14,15 @@
     <option name="RECENT_TEMPLATES">
       <list>
         <option value="JavaScript File" />
+        <option value="Login" />
+        <option value="LogInComponent" />
       </list>
     </option>
   </component>
   <component name="Git.Settings">
     <option name="RECENT_BRANCH_BY_REPOSITORY">
       <map>
-        <entry key="$PROJECT_DIR$" value="homeScreen" />
+        <entry key="$PROJECT_DIR$" value="main" />
       </map>
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -39,8 +42,11 @@
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="node.js.detected.package.eslint" value="true" />
+    <property name="node.js.detected.package.standard" value="true" />
     <property name="node.js.selected.package.eslint" value="(autodetect)" />
+    <property name="node.js.selected.package.standard" value="" />
     <property name="nodejs_package_manager_path" value="npm" />
+    <property name="settings.editor.selected.configurable" value="settings.javascript.linters.eslint" />
   </component>
   <component name="RunManager">
     <configuration default="true" type="ArquillianJUnit" factoryName="" nameIsGenerated="true">
@@ -73,9 +79,35 @@
       <workItem from="1646055910706" duration="2845000" />
       <workItem from="1646266046859" duration="2349000" />
       <workItem from="1646308368431" duration="41678000" />
-      <workItem from="1646606496778" duration="598000" />
-      <workItem from="1647217331746" duration="15874000" />
+      <workItem from="1646606496778" duration="799000" />
+      <workItem from="1646607425821" duration="685000" />
+      <workItem from="1646653133962" duration="1793000" />
+      <workItem from="1646657461594" duration="3000" />
+      <workItem from="1646657545976" duration="1000" />
+      <workItem from="1646657562075" duration="1238000" />
+      <workItem from="1646665437109" duration="198000" />
+      <workItem from="1646665752411" duration="791000" />
+      <workItem from="1646730058293" duration="2816000" />
+      <workItem from="1646759986036" duration="25000" />
+      <workItem from="1646824988250" duration="873000" />
+      <workItem from="1646841884035" duration="120000" />
+      <workItem from="1646998692296" duration="1961000" />
     </task>
+    <task id="LOCAL-00001" summary="chore/updated-time-sheet">
+      <created>1646607271272</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1646607271272</updated>
+    </task>
+    <task id="LOCAL-00002" summary="moderator and warning wireframes added + description in the game-design document">
+      <created>1646999465342</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1646999465342</updated>
+    </task>
+    <option name="localTasksCounter" value="3" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -103,6 +135,14 @@
         </entry>
       </map>
     </option>
-    <option name="oldMeFiltersMigrated" value="true" />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="chore/updated-time-sheet" />
+    <MESSAGE value="moderator and warning wireframes added + description in the game-design document" />
+    <option name="LAST_COMMIT_MESSAGE" value="moderator and warning wireframes added + description in the game-design document" />
+  </component>
+  <component name="XSLT-Support.FileAssociations.UIState">
+    <expand />
+    <select />
   </component>
 </project>

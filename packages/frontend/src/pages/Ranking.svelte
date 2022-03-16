@@ -3,39 +3,65 @@
 
     //here we need to make get request from the database
 
+    // let users=  async function getAllUsers() {
+    //     const res = await fetch('http://localhost:8080//users');
+    //
+    //     if (res.ok) {
+    //         return await res.json();
+    //     } else {
+    //         throw new Error(await res.text());
+    //     }
+    // }
+
+
     let users = [
         {    id: 1,
             username: 'Bob',
-            emeralds: 12,
+            total_emeralds: 12,
         },
         {
             id: 2,
             username: 'Jack',
-            emeralds: 1,
+            total_emeralds: 1,
         },
         {
             id: 3,
             username: 'Alice',
-            emeralds: 18,
+            total_emeralds: 18,
         },
         {id: 4,
             username: 'Bob1',
-            emeralds: 120,
+            total_emeralds: 120,
         },
         {
             id: 5,
             username: 'Jack1',
-            emeralds: 111,
+            total_emeralds: 111,
         },
         {
             id: 6,
             username: 'Alice1',
-            emeralds: 19,
+            total_emeralds: 19,
+        },
+        {
+            id: 6,
+            username: 'Alice1',
+            total_emeralds: 19,
+        },
+        {
+            id: 6,
+            username: 'Alice1',
+            total_emeralds: 19,
+        },
+        {
+            id: 6,
+            username: 'Alice1',
+            total_emeralds: 19,
         },
     ];
 
 
-    
+
 //with this loop we will delete all data which we doesn't need to show in our table (it will be not only id):
     for (let i=0; i<users.length; i++) {
         delete users[i].id;
@@ -44,7 +70,7 @@
 
 //here is sorting of the objects in Json array in descending order by number of emeralds to show who is winner
     users.sort(function(a, b) {
-        return b.emeralds - a.emeralds;
+        return b.total_emeralds - a.total_emeralds;
     });
 
 </script>

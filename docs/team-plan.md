@@ -171,7 +171,37 @@ _§14_ In git, all branches must be automatically created from the issue board, 
 
 ### Backlog items
 
-#### Sprint 1
+#### US01 - As a system admin, I want the user to be able to sign up and sign in, so that the progress is saved to their account
+
+##### US01 BI01
+
+Login page component
+
+##### US01 BI02
+
+Sign up page component
+
+##### US01 BI03
+
+Login functionality
+
+##### US01 BI04
+
+Sign up functionality
+
+##### US01 BI05
+
+Routing
+
+##### US01 BI06
+
+Home screen component
+
+#### US01 - As a player, I want to be able tto see the players' statistics, so that I can compare myself to other players
+
+##### US02 BI01
+
+Ranking page component
 
 #### US03 - As a player, I want to be able to draw on a canvas, so that the teams can guess my word.
 
@@ -266,6 +296,10 @@ Add team list component
 ##### US05 BI08
 
 Connect team listing component with backend
+
+##### US05 BI09
+
+Make team based chat
 
 #### US11 - As a player, I want to get emeralds, so that I can purchase powerups with the gained emeralds.
 
@@ -424,10 +458,10 @@ The following is an overview for how the team will communicate internally, as we
 
 #### Schedule
 
-| | Sprint planning | Sprint review | Standups | Publisher meeting |
-|-|-|-|-|-|
-| Sprint 1 | 14.02.2022 | 07.03.2022 |  Monday, Friday (every week) | 07.03.2022 |
-| Sprint 2 | 07.03.2022 | – |  Monday, Friday (every week) | – |
+|          | Sprint planning | Sprint review | Standups                    | Publisher meeting |
+| -------- | --------------- | ------------- | --------------------------- | ----------------- |
+| Sprint 1 | 14.02.2022      | 07.03.2022    | Monday, Friday (every week) | 07.03.2022        |
+| Sprint 2 | 07.03.2022      | –             | Monday, Friday (every week) | –                 |
 
 #### Communication tools
 

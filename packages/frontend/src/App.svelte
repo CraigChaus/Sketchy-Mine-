@@ -1,8 +1,9 @@
 <script>
-  import Main from './pages/Main.svelte';
+    import Main from './pages/Main.svelte';
+    import Ranking from './pages/Ranking.svelte';
 </script>
 
-<Main />
+<Ranking />
 
 <style global>
     @tailwind base;

@@ -278,3 +278,78 @@
   - Connect team members list (who draws, who is current user, etc) with the fronted
   - Ability in the UI to chose who will draw (voting system)
     - Handel who draws in the backend
+  
+## SCRUM Standup (Entire team) - 11.03.2022
+- Not present: Vince (got covid, in quarantine)
+- Vedat:
+  - Created database
+  - Task deployed on VPS
+  - Peter help with implementation
+- Marko:
+  - Sort of did it, but got an error
+  - Have to fix the error first (let it known in Discord before the meeting), will need help most likely
+  - Did some refactoring because of Lukeman
+- Lukeman:
+  - Still working on his task
+  - Original task was already done, thus took an other one
+- Daria:
+  - First task is completed
+  - Second task is still in progress
+- Filippos:
+  - Task done, merged 
+  - Did deployments for database
+- Craig:
+  - Core task finished with Melissa
+- Ana:
+  - Had issues with Tailwind, Filippos will help
+  - Task only has bugs
+- Mira:
+  - Task done, ready to be merged
+- Melissa:
+  - Waits for Ana's and Mira's work
+  - Main task is done
+- Peter:
+  - Main task is done, but not fully complete
+
+## SCRUM Standup (Group 2) - 12.03.2022
+- Everyone is present
+- Filippos, previous task finished, got new task
+- Peter is finished with core task, polishing will be completed in sprint 3. Now will work on docs for the protocol spec
+- Vedat's task was done, taking a new task
+- Marko got new task, still working on previous task. Both of them should be done by Tuesday
+- Lukman got a new task, still working on it
+  - Main task is done, but not fully complete
+  
+## SCRUM Standup (Entire team) - 14.03.2022
+- Not present: Vedat (he said he would join, but he is ill)
+- Melissa and Craig:
+  - Task is done, it only needs now connecting to the backend
+- Ana:
+  - Fixed login page with Filippos
+  - Some basic research on how to get emeralds when a guess is correct, haven't done code for that
+- Daria:
+  - Needs help, Mira will help
+- Vince:
+  - Made an offline version because of being blocked by other issues
+  - Done but not yet connected
+- Filippos:
+  - Not yet worked on it since his item seems very similar to Marko's item
+  - Needs to coordinate with Marko
+  - We might have 3 items that are seem very similar
+- Marko:
+  - Haven't done much on those 2 items since being blocked by other items
+  - Can continue with items
+- Lukman:
+  - Still working on item
+  - Done a lot of research
+  - Will be done in 1-2 days
+- Mira:
+  - Item completed
+- Peter:
+  - Item completed
+- Group 1 will do a group meeting tomorrow
+
+## SCRUM Standup (Group 2) - 14.03.2022
+- Vedat is missing, we do not know the progress of his item
+- Filippos, Lukman and Marko is still working
+- Peter is done with task, got new item

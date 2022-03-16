@@ -1,27 +1,38 @@
 import debug from 'debug';
+import { getIO } from '..';
 import Team from '../../../data/model/team';
 import User from '../../../data/model/user';
 import { addTeam, Teams, updateTeams } from '../../../data/teams';
 import { getCurrentUser } from '../utils/users';
+import { broadcastTeamSpecificGuesses } from './guessHandler';
 
-const TEAM_EVENTS = {
-  REQUEST_LISTING: 'teams:get',
-  SEND_LISTING: 'teams:update',
-  JOIN_TEAM: 'teams:join',
+export const TEAM_EVENTS = {
+  REQUEST_LISTING: 'teams:get', // Get teams listing
+  SEND_LISTING: 'teams:update', // Send team listing updates
+  JOIN_TEAM: 'teams:join', // Join a team
 };
 
 const dbg = debug('handler:team');
 
+/**
+ * Broadcast team listing to everyone
+ * @param {IO} io IO of the connection
+ */
 export const sendTeamData = (io) => {
   dbg(TEAM_EVENTS.SEND_LISTING);
   io.emit(TEAM_EVENTS.SEND_LISTING, Teams);
 };
 
 const teamHandler = (io, socket) => {
+  /**
+   * Add a user to a specific team
+   * @param {String} payload Name of the team to join
+   */
   const joinTeam = (payload) => {
     const user = getCurrentUser(socket.id);
     dbg(TEAM_EVENTS.JOIN_TEAM, user.username);
 
+    // Find team
     const team = Teams.find((o) => o.teamname === payload);
 
     if (team) {
@@ -36,6 +47,7 @@ const teamHandler = (io, socket) => {
 
           return obj;
         }));
+        // After adding a new member, broadcast an update to every member
         io.emit(TEAM_EVENTS.SEND_LISTING, Teams);
       }
     }
@@ -67,6 +79,7 @@ const teamHandler = (io, socket) => {
       dbg('Adding team:', teamToJoin.teamname);
     }
     joinTeam(teamToJoin.teamname);
+    broadcastTeamSpecificGuesses(getIO());
   };
 
   socket.on(TEAM_EVENTS.REQUEST_LISTING, () => sendTeamData(io));

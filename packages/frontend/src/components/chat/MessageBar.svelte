@@ -1,11 +1,15 @@
 <script>
+  /**
+   * MessageBar component
+   * Represents the user interaction bar where users can type in text and send it as a guess/chat
+   */
   import TextInput from "./TextInput.svelte";
   import ActionButton from "./ChatButton.svelte";
   import { createEventDispatcher } from "svelte";
 
   const dispatch = createEventDispatcher();
 
-  export let input;
+  export let input; // Text that the user enters
   export let role;
 
   const onSendChatClicked = () => dispatch("sendChatClicked");
@@ -36,9 +40,11 @@
       styles="search-button bg-blue-600"
       on:buttonClicked={onSendChatClicked}>Send Chat</ActionButton
     >
-    
+
     {#if role === 2}
-      <ActionButton styles="search-button" on:buttonClicked={onGuessWordClicked}>Guess Word</ActionButton>
+      <ActionButton styles="search-button" on:buttonClicked={onGuessWordClicked}
+        >Guess Word</ActionButton
+      >
     {/if}
   </div>
 </div>
