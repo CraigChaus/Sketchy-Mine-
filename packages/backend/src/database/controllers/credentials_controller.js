@@ -12,6 +12,7 @@ const login = async (username, password) => {
         id: user.id,
         username: user.username,
         total_emeralds: user.total_emeralds,
+        is_moderator: user.is_moderator,
       }, user.secret);
     }
   }
