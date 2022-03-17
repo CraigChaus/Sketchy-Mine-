@@ -6,7 +6,7 @@ This project contains the Express REST server for the game, as well as the Socke
 
 ### Requirements
 
-> Important, prior to running the server, copy the [_.env.example_](./.env.example) file provided into _.env_, and edit the variables as required.
+> Important, prior to running the server, copy the [_.env.example_](.env) file provided into _.env_, and edit the variables as required.
 
 Ensure a PostgreSQL server is reachable and configured with the **DB_URL** variable configured.
 

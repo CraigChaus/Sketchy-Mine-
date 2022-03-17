@@ -1,5 +1,5 @@
 /**
- * For now, I am using static data but later connect via DB
+ * Store the users in the memory
  */
 
 const users = [];
@@ -21,7 +21,6 @@ export const userLeave = (id) => {
   if (index !== -1) {
     return users.splice(index, 1)[0];
   }
-
   return null;
 };
 

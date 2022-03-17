@@ -9,7 +9,16 @@
   import socket from "../socket";
   import { teamsValue } from "../stores/teams";
   import ProgressBar from "../components/team/ProgressBar.svelte";
+  import Popup from "../components/Popup.svelte";
 
+  // Receiving guesses
+  socket.on("guess", (guesses) => {
+    if (!guesses) {
+      return;
+    }
+
+    teamGuesses = [...guesses];
+  });
   let teamSession = "main"
 
 
@@ -19,15 +28,21 @@
   let teamSize = 0;
   let chatMessages = []; //List of all chat messages
   let teamGuesses = []; //List of all guesses of current team
-  let role = 3;
+  let role = 2;
   let promise = getRole();
   let chatInput; //User's chat input
   let currentGuess = null; //Current guess of the user
   let brushColor = "#444";
   let brushRadius = 8;
   let SDraw = null;
+  let showMatchmakingPopup = true; // Show popup window while player is not in an active team
+  let popupWindowInstruction = "Looking for a team"; // Shown on the popup window (usually used at matchmaking)
+  let popupWindowStatusText = `Please wait...`; // Used by the popup window to display various match statuses
+  let popupWindowShowButtons = true; // Toggle the visibility of the popup window's buttons
+  let cachedTeamSize = 0; // Used to check wether the team's size grows or declines
 
   // Progress bar functionality
+  // FIXME: This function has been moved to the backend
   /**
    * This function updates the team's points that guessed correctly.
    * The increase is based on certain timestamps, as it follows:
@@ -59,6 +74,7 @@
     });
 
     teamsValue.set(teams);
+
   };
 
   /**
@@ -161,141 +177,233 @@
 
   onMount(() => {
     username = `User${Math.round(Math.random() * 10000)}`;
-    socket.emit("joinSession", { username }, () => {
+    socket.emit("joinSession", {username}, () => {
       randomizeDrawer();
       promise = getRole();
-      socket.emit("canvas:new-user");
-      joinMatch();
-    });
+      let spectator = window.location.href.includes('spectator');
 
-  });
+      //sorr but this has to be called before the await else it won't work
+      //ugly double checking of spectator to have optimal functionality :(
 
-  teamsValue.set(teams);
+      if (spectator) { //user is a spectator
+        role = 3;
+        showMatchmakingPopup = false;
+      }
 
-  const joinMatch = () => {
-    socket.emit("teams:get");
-    socket.emit("teams:join"); //TODO: This should only run on matchmaking
-  };
-
-  // Receiving messages
-  socket.on("message", (data) => {
-    if (!data) {
-      return;
-    }
-
-    chatMessages = [
-      ...chatMessages,
-      {
-        username: data.username,
-        message: data.text,
-        type: data.type,
-      },
-    ];
-  });
-
-  // Update team listing
-  socket.on("teams:update", (data) => {
-    if (!data) {
-      return;
-    }
-
-    data.forEach((t, i) => {
-      t.members.forEach((u) => {
-        if (u.username === username) {
-          let teamName = "Team +" +(i +1);
-
-          if (teamSession !== teamName){
-            teamSession = teamName;
-
-            socket.emit("joinTeamChat", {teamSession});
-          }
-
-          t.isSelf = true;
-          u.current = true;
-          teamSize = t.members.length;
+      socket.emit("joinSession", {username}, () => {
+        if (!spectator) {
+          randomizeDrawer();
+          joinMatch();
+        } else {
+          spectate();
         }
+        socket.emit("canvas:new-user");
+        joinMatch();
       });
+      promise = getRole();
     });
-
-    teams = data;
   });
 
-  async function getRole() {
-    return role;
-  }
+    teamsValue.set(teams);
 
-  let randomizeDrawer = () => {
-    const rng = Math.random();
-    if (rng < 0.33) {
+    const spectate = () => {
+      socket.emit("teams:get");
+      socket.emit("spectators:join");
+    }
+
+    const joinMatch = () => {
+      socket.emit("teams:get");
+      socket.emit("teams:join"); //TODO: This should only run on matchmaking
+    };
+
+    // Receiving messages
+    socket.on("message", (data) => {
+      if (!data) {
+        return;
+      }
+
+      chatMessages = [
+        ...chatMessages,
+        {
+          username: data.username,
+          message: data.text,
+          type: data.type,
+        },
+      ];
+    });
+
+    // Update team listing
+    socket.on("teams:update", (data) => {
+      if (!data) {
+        return;
+      }
+
+      data.forEach((t, i) => {
+        t.members.forEach((u) => {
+          if (u.username === username) {
+            let teamName = "Team +" + (i + 1);
+
+            if (teamSession !== teamName) {
+              teamSession = teamName;
+
+              socket.emit("joinTeamChat", {teamSession});
+            }
+
+            t.isSelf = true;
+            u.current = true;
+            teamSize = t.members.length;
+          }
+        });
+      });
+
+      teams = data;
+      if (role != 3) {
+        handlePopup(); // Every time the teams get updated, we check if we need to show the matchmaking popup
+      }
+    });
+
+    /**
+     * Logic for when to show popup
+     */
+    function handlePopup() {
+      if (teamSize === 3 && cachedTeamSize < 3) {
+        cachedTeamSize = 3;
+        showMatchmakingPopup = true;
+        popupWindowInstruction = "Ready!";
+        popupWindowStatusText = "Team formed";
+        popupWindowShowButtons = false; // This time we hide the buttons, since team was formed (no more spectating)
+        setTimeout(() => (showMatchmakingPopup = false), 2000); // Show the popup only for 2 seconds to inform players
+      } else if (teamSize === 2 && cachedTeamSize >= 3) {
+        cachedTeamSize = 2;
+        showMatchmakingPopup = true;
+        popupWindowInstruction = "Team disassembled";
+        popupWindowStatusText = `Looking for more players (${teamSize}/3 players)`;
+        popupWindowShowButtons = true; // We show the buttons to allow player to exit or spectate
+      } else if (teamSize < 3 && cachedTeamSize < 3) {
+        // Safe keeping
+        cachedTeamSize = teamSize;
+        showMatchmakingPopup = true;
+        popupWindowInstruction = "Trying to make a team ...";
+        popupWindowStatusText = `(${teamSize}/3 players)`;
+        popupWindowShowButtons = true; // We show the buttons to allow player to exit or spectate
+      }
+    }
+
+    /**
+     * Helper function to hold the execution of the program
+     * @param ms Milliseconds to wait
+     */
+    function wait(ms) {
+      var start = new Date().getTime();
+      var end = start;
+      while (end < start + ms) {
+        end = new Date().getTime();
+      }
+    }
+
+    /**
+     * Exit current match and redirect page back to the home screen
+     * Called by the matchmaking popup window
+     */
+    const exitMatch = () => {
+      //TODO: Redirect to home screen
+    };
+
+    /**
+     * Hide matchmaking popup box and place user into spectate mode
+     */
+    const startSpectate = () => (showMatchmakingPopup = false);
+
+    async function getRole() {
+      return role;
+    }
+
+    let randomizeDrawer = () => {
+      const rng = Math.random();
+      if (rng < 0.5) {
+        role = 1;
+      } else {
+        role = 2;
+      }
+    };
+
+    const becomeDrawer = () => {
       role = 1;
-    } else if (rng > 0.33 && rng < 0.66) {
+      promise = getRole();
+    };
+    const becomeGuesser = () => {
       role = 2;
-    } else {
+      promise = getRole();
+    };
+    const becomeSpectator = () => {
       role = 3;
-    }
-  };
+      promise = getRole();
+    };
 
-  const becomeDrawer = () => {
-    role = 1;
-    promise = getRole();
-  };
-  const becomeGuesser = () => {
-    role = 2;
-    promise = getRole();
-  };
-  const becomeSpectator = () => {
-    role = 3;
-    promise = getRole();
-  };
+    const onClickGuess = () => {
+      if (chatInput !== "") {
+        currentGuess = chatInput;
+        // teamGuesses.push({ value: currentGuess, frequency: 1 });
+        sendGuess(currentGuess);
+      }
 
-  const onClickGuess = () => {
-    if (chatInput !== "") {
-      currentGuess = chatInput;
-      // teamGuesses.push({ value: currentGuess, frequency: 1 });
-      sendGuess(currentGuess);
-    }
-
-    chatInput = "";
-  };
-
-  const updateGuessState = (payload) => (teamGuesses = payload);
-
-  const onClickGuessItem = (e) => sendGuess(e.detail);
-
-  // Sending messages
-  const onClickChat = () => {
-    if (chatInput !== "") {
-      socket.emit("chatMessage", chatInput);
       chatInput = "";
-    }
-  };
+    };
 
-  const startRound = () => socket.emit("round:start");
-  const sendGuess = (guess) => socket.emit("round:guess", guess);
-  const makeAllDrawer = () => socket.emit("canvas:drawer");
-  const makeAllSpec = () => socket.emit("canvas:spectator");
+    const updateGuessState = (payload) => (teamGuesses = payload);
 
-  socket.on("round:result", (payload) => (results = payload));
-  socket.on("round:progress", updateGuessState);
-  // 1: drawer
-  // 2: guesser
-  // 3: spectator
-  socket.on("canvas:drawer", becomeDrawer);
-  socket.on("canvas:guesser", becomeGuesser);
-  socket.on("canvas:spectator", becomeSpectator);
+    const onClickGuessItem = (e) => sendGuess(e.detail);
+
+    // Sending messages
+    const onClickChat = () => {
+      if (chatInput !== "") {
+        socket.emit("chatMessage", chatInput);
+        chatInput = "";
+      }
+    };
+
+    const startRound = () => socket.emit("round:start");
+    const sendGuess = (guess) => socket.emit("round:guess", guess);
+
+    socket.on("round:result", (payload) => (results = payload));
+    socket.on("round:progress", updateGuessState);
+    // 1: drawer
+    // 2: guesser
+    // 3: spectator
+    socket.on("canvas:drawer", becomeDrawer);
+    socket.on("canvas:guesser", becomeGuesser);
+    socket.on("canvas:spectator", becomeSpectator);
+
 </script>
+
+{#if showMatchmakingPopup}
+  <Popup
+    instruction={popupWindowInstruction}
+    status={popupWindowStatusText}
+    on:ClickExit={exitMatch}
+    on:ClickSpectate={startSpectate}
+    showButtons={popupWindowShowButtons}
+  />
+{/if}
 
 <ProgressBar {teams} />
 
 <div class="flex">
   <div class="w-1/4 h-12">
-    <GuessList
-      on:guessClicked={onClickGuessItem}
-      {teamGuesses}
-      teamNumber={1}
-      currentGuess={currentGuess ? currentGuess.toLowerCase() : null}
-      {teamSize}
-    />
+    {#await promise}
+        <p>loading..</p>
+      {:then role}
+        {#if role != 3}
+          <GuessList
+          on:guessClicked={onClickGuessItem}
+          {teamGuesses}
+          teamNumber={1}
+          currentGuess={currentGuess ? currentGuess.toLowerCase() : null}
+          {teamSize}
+          />
+      {/if}
+    {/await}
+
     <TeamList showResults={results != null} contentJSON={teams} />
   </div>
   <div class="w-2/4 h-full space-y-1">
@@ -316,32 +424,29 @@
         <p>You are currently role {role}</p>
       {/await}
     </div>
-    <button
-      on:click={becomeDrawer}
-      class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
-      >become drawer</button
-    >
-    <button
-      on:click={becomeGuesser}
-      class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded"
-      >become guesser</button
-    >
-    <button
-      on:click={makeAllDrawer}
-      class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
-      >make all users drawers</button
-    >
-    <button
-      on:click={makeAllSpec}
-      class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded"
-      >make all users spectators</button
-    >
+    {#await promise}
+        <p>loading..</p>
+      {:then role}
+        {#if role != 3}
+        <button
+        on:click={becomeDrawer}
+        class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+        >become drawer</button
+      >
+      <button
+        on:click={becomeGuesser}
+        class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded"
+        >become guesser</button
+      >
 
-    <button
-      on:click={startRound}
-      class="bg-purple-500 hover:bg-purple-700 text-white font-bold py-2 px-4 rounded"
-      >Start Round</button
-    >
+      <button
+        on:click={startRound}
+        class="bg-purple-500 hover:bg-purple-700 text-white font-bold py-2 px-4 rounded"
+        >Start Round</button
+      >
+        {/if}
+      {/await}
+
 
     <MessageBar
       {role}

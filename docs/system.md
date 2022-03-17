@@ -180,11 +180,12 @@ Since is going to be an online game the protocols we are going to use WebSockets
 
 ### Teams
 
-| Type    | Event name     | Payload      | Action                                                       |
-| ------- | -------------- | ------------ | ------------------------------------------------------------ |
-| listens | `teams:get`    | –            | Request server to send an array of `Team` objects            |
-| listens | `teams:join`   | –            | Request to put the socket's user into a team                 |
-| sends   | `teams:update` | `Team` array | Sends and array of `Team` objects including the members list |
+| Type    | Event name        | Payload      | Action                                                       |
+| ------- | ----------------- | ------------ | ------------------------------------------------------------ |
+| listens | `teams:get`       | –            | Request server to send an array of `Team` objects            |
+| listens | `teams:join`      | –            | Request to put the socket's user into a team                 |
+| sends   | `teams:update`    | `Team` array | Sends and array of `Team` objects including the members list |
+| listens | `spectators:join` | -            | Request the server to be put into the `Spectators` Team      |
 
 ### User management
 

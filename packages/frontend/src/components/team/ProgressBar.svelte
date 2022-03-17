@@ -14,7 +14,7 @@
 </script>
 
 <div class="progressBar my-5 mx-3"  >
-    <div class="progress-background">
+    <div class="progress-background" >
 
     </div>
     {#each emeraldPosition as emerald}
@@ -40,15 +40,18 @@
 
 <style>
     .progress-background {
-        background: crimson;
-        height: 1rem;
+
+        background: url("/images/dirt.png");
+        background-size: 6rem 3rem;
+        height: 2rem;
     }
     .progressBar {
         position: relative;
         margin-top: 4rem;
     }
     .emerald {
-        background: greenyellow;
+        background: url("/images/gui.png");
+        background-size: cover;
         height: 3rem;
         width: 2rem;
         top: 0;
