@@ -1,12 +1,61 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="481344fd-0740-43af-9167-2cce919a43b1" name="Changes" comment="docs: fixed some typos">
+<<<<<<< HEAD
+    <list default="true" id="909c735f-c0ef-4d1e-a5a9-01b2a3f4a264" name="Changes" comment="moderator and warning wireframes added + description in the game-design document">
+      <change afterPath="$PROJECT_DIR$/docs/resources/wireframes/moderator-buttons.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/docs/resources/wireframes/warning-message-form.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/docs/resources/wireframes/warning-message-player-view-form.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/packages/frontend/src/components/Popup.svelte" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/frontend/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/packages/frontend/package-lock.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/frontend/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/packages/frontend/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/game-design.md" beforeDir="false" afterPath="$PROJECT_DIR$/docs/game-design.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/resources/wireframes/moderator.png" beforeDir="false" afterPath="$PROJECT_DIR$/docs/resources/wireframes/moderator.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/standups.md" beforeDir="false" afterPath="$PROJECT_DIR$/docs/standups.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/system.md" beforeDir="false" afterPath="$PROJECT_DIR$/docs/system.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/team-plan.md" beforeDir="false" afterPath="$PROJECT_DIR$/docs/team-plan.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/packages/backend/.eslintrc.js" beforeDir="false" afterPath="$PROJECT_DIR$/packages/backend/.eslintrc.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/packages/backend/src/data/model/team.js" beforeDir="false" afterPath="$PROJECT_DIR$/packages/backend/src/data/model/team.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/packages/backend/src/lib/socket/handlers/chatHandler.js" beforeDir="false" afterPath="$PROJECT_DIR$/packages/backend/src/lib/socket/handlers/chatHandler.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/packages/backend/src/lib/socket/handlers/guessHandler.js" beforeDir="false" afterPath="$PROJECT_DIR$/packages/backend/src/lib/socket/handlers/guessHandler.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/packages/backend/src/lib/socket/handlers/teamHandler.js" beforeDir="false" afterPath="$PROJECT_DIR$/packages/backend/src/lib/socket/handlers/teamHandler.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/packages/backend/src/lib/socket/utils/gameState.js" beforeDir="false" afterPath="$PROJECT_DIR$/packages/backend/src/lib/socket/utils/gameState.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/packages/backend/src/test/util/guess.test.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/packages/frontend/src/components/ScrollContainer.svelte" beforeDir="false" afterPath="$PROJECT_DIR$/packages/frontend/src/components/ScrollContainer.svelte" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/packages/frontend/src/components/chat/ChatBox.svelte" beforeDir="false" afterPath="$PROJECT_DIR$/packages/frontend/src/components/chat/ChatBox.svelte" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/packages/frontend/src/components/chat/ChatButton.svelte" beforeDir="false" afterPath="$PROJECT_DIR$/packages/frontend/src/components/chat/ChatButton.svelte" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/packages/frontend/src/components/chat/ChatItem.svelte" beforeDir="false" afterPath="$PROJECT_DIR$/packages/frontend/src/components/chat/ChatItem.svelte" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/packages/frontend/src/components/chat/MessageBar.svelte" beforeDir="false" afterPath="$PROJECT_DIR$/packages/frontend/src/components/chat/MessageBar.svelte" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/packages/frontend/src/components/chat/TextInput.svelte" beforeDir="false" afterPath="$PROJECT_DIR$/packages/frontend/src/components/chat/TextInput.svelte" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/packages/frontend/src/components/guess/GuessBox.svelte" beforeDir="false" afterPath="$PROJECT_DIR$/packages/frontend/src/components/guess/GuessBox.svelte" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/packages/frontend/src/components/guess/GuessOption.svelte" beforeDir="false" afterPath="$PROJECT_DIR$/packages/frontend/src/components/guess/GuessOption.svelte" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/packages/frontend/src/components/team/MembersList.svelte" beforeDir="false" afterPath="$PROJECT_DIR$/packages/frontend/src/components/team/MembersList.svelte" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/packages/frontend/src/components/team/TeamItem.svelte" beforeDir="false" afterPath="$PROJECT_DIR$/packages/frontend/src/components/team/TeamItem.svelte" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/packages/frontend/src/components/team/TeamList.svelte" beforeDir="false" afterPath="$PROJECT_DIR$/packages/frontend/src/components/team/TeamList.svelte" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/packages/frontend/src/pages/Main.svelte" beforeDir="false" afterPath="$PROJECT_DIR$/packages/frontend/src/pages/Main.svelte" afterDir="false" />
+=======
+<<<<<<< HEAD
+<<<<<<< HEAD
+    <list default="true" id="481344fd-0740-43af-9167-2cce919a43b1" name="Changes" comment="moderator and warning wireframes added + description in the game-design document">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/team-plan.md" beforeDir="false" afterPath="$PROJECT_DIR$/docs/team-plan.md" afterDir="false" />
+=======
+    <list default="true" id="481344fd-0740-43af-9167-2cce919a43b1" name="Changes" comment="Diagrams added">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/packages/frontend/src/App.svelte" beforeDir="false" afterPath="$PROJECT_DIR$/packages/frontend/src/App.svelte" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/frontend/src/pages/EndedSession.svelte" beforeDir="false" afterPath="$PROJECT_DIR$/packages/frontend/src/pages/EndedSession.svelte" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/packages/frontend/src/pages/LogIn.svelte" beforeDir="false" afterPath="$PROJECT_DIR$/packages/frontend/src/pages/LogIn.svelte" afterDir="false" />
+>>>>>>> 53f729611b5369b0bc07972f75897fdabe351c7f
+=======
+    <list default="true" id="481344fd-0740-43af-9167-2cce919a43b1" name="Changes" comment="">
+<<<<<<< HEAD
+      <change afterPath="$PROJECT_DIR$/packages/frontend/src/pages/Home.svelte" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/packages/frontend/src/pages/Ranking.svelte" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/packages/frontend/src/App.svelte" beforeDir="false" afterPath="$PROJECT_DIR$/packages/frontend/src/App.svelte" afterDir="false" />
+>>>>>>> ff4c67b5486a28f9873d5b128e0663c4e7b3e4f9
+=======
+      <change beforePath="$PROJECT_DIR$/packages/frontend/src/pages/Ranking.svelte" beforeDir="false" afterPath="$PROJECT_DIR$/packages/frontend/src/pages/Ranking.svelte" afterDir="false" />
+>>>>>>> 794aaadc76af6ec9fdd3116e7d49e59032251fad
+>>>>>>> main
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -17,22 +66,46 @@
     <option name="RECENT_TEMPLATES">
       <list>
         <option value="JavaScript File" />
+<<<<<<< HEAD
         <option value="Login" />
         <option value="LogInComponent" />
-        <option value="EndedSession" />
+=======
+<<<<<<< HEAD
+<<<<<<< HEAD
+        <option value="Login" />
+        <option value="LogInComponent" />
+=======
+        <option value="Log In" />
+>>>>>>> 53f729611b5369b0bc07972f75897fdabe351c7f
+=======
+        <option value="Home.svelte" />
+        <option value="Ranking.svelte" />
+>>>>>>> ff4c67b5486a28f9873d5b128e0663c4e7b3e4f9
+>>>>>>> main
       </list>
     </option>
   </component>
   <component name="Git.Settings">
     <option name="RECENT_BRANCH_BY_REPOSITORY">
       <map>
+<<<<<<< HEAD
         <entry key="$PROJECT_DIR$" value="main" />
+=======
+<<<<<<< HEAD
+        <entry key="$PROJECT_DIR$" value="main" />
+=======
+        <entry key="$PROJECT_DIR$" value="homeScreen" />
+>>>>>>> 794aaadc76af6ec9fdd3116e7d49e59032251fad
+>>>>>>> main
       </map>
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="MarkdownSettingsMigration">
     <option name="stateVersion" value="1" />
+  </component>
+  <component name="ProblemsViewState">
+    <option name="selectedIndex" value="1" />
   </component>
   <component name="ProjectId" id="24xq8ucaqLsxCeGBoGz9tE7NBa6" />
   <component name="ProjectViewState">
@@ -45,26 +118,33 @@
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="add_unversioned_files" value="$PROJECT_DIR$/packages/backend/dist/app.js" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/../de-hex" />
+    <property name="aspect.path.notification.shown" value="true" />
+    <property name="js.linters.configure.manually.selectedeslint" value="true" />
     <property name="node.js.detected.package.eslint" value="true" />
     <property name="node.js.detected.package.standard" value="true" />
     <property name="node.js.selected.package.eslint" value="(autodetect)" />
     <property name="node.js.selected.package.standard" value="" />
     <property name="nodejs_package_manager_path" value="npm" />
-    <property name="project.structure.last.edited" value="Libraries" />
-    <property name="project.structure.proportion" value="0.0" />
-    <property name="project.structure.side.proportion" value="0.2" />
+<<<<<<< HEAD
     <property name="settings.editor.selected.configurable" value="settings.javascript.linters.eslint" />
+=======
+<<<<<<< HEAD
+    <property name="settings.editor.selected.configurable" value="settings.javascript.linters.eslint" />
+=======
+    <property name="settings.editor.selected.configurable" value="settings.nodejs" />
+>>>>>>> 53f729611b5369b0bc07972f75897fdabe351c7f
+>>>>>>> main
   </component>
   <component name="RunManager">
-    <configuration default="true" type="ArquillianJUnit" factoryName="" nameIsGenerated="true">
+    <configuration default="true" type="ArquillianTestNG" factoryName="" nameIsGenerated="true">
       <option name="arquillianRunConfiguration">
         <value>
           <option name="containerStateName" value="" />
         </value>
       </option>
-      <option name="TEST_OBJECT" value="class" />
+      <option name="TEST_OBJECT" value="CLASS" />
+      <properties />
+      <listeners />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
@@ -88,6 +168,10 @@
       <workItem from="1646055910706" duration="2845000" />
       <workItem from="1646266046859" duration="2349000" />
       <workItem from="1646308368431" duration="41678000" />
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+>>>>>>> main
       <workItem from="1646606496778" duration="799000" />
       <workItem from="1646607425821" duration="685000" />
       <workItem from="1646653133962" duration="1793000" />
@@ -101,9 +185,7 @@
       <workItem from="1646824988250" duration="873000" />
       <workItem from="1646841884035" duration="120000" />
       <workItem from="1646998692296" duration="1961000" />
-      <workItem from="1647252630632" duration="586000" />
-      <workItem from="1647253234431" duration="4737000" />
-      <workItem from="1647279021191" duration="2300000" />
+<<<<<<< HEAD
     </task>
     <task id="LOCAL-00001" summary="chore/updated-time-sheet">
       <created>1646607271272</created>
@@ -119,21 +201,34 @@
       <option name="project" value="LOCAL" />
       <updated>1646999465342</updated>
     </task>
-    <task id="LOCAL-00003" summary="docs: added more user stories to team-plan document">
-      <created>1647267555762</created>
-      <option name="number" value="00003" />
-      <option name="presentableId" value="LOCAL-00003" />
-      <option name="project" value="LOCAL" />
-      <updated>1647267555762</updated>
+=======
+=======
+      <workItem from="1646606496778" duration="598000" />
+<<<<<<< HEAD
+      <workItem from="1646822184431" duration="4150000" />
+      <workItem from="1646835469886" duration="1303000" />
+      <workItem from="1646838136575" duration="4539000" />
+>>>>>>> 53f729611b5369b0bc07972f75897fdabe351c7f
     </task>
-    <task id="LOCAL-00004" summary="docs: fixed some typos">
-      <created>1647267711260</created>
-      <option name="number" value="00004" />
-      <option name="presentableId" value="LOCAL-00004" />
+    <task id="LOCAL-00001" summary="chore/updated-time-sheet">
+      <created>1646607271272</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
       <option name="project" value="LOCAL" />
-      <updated>1647267711260</updated>
+      <updated>1646607271272</updated>
     </task>
-    <option name="localTasksCounter" value="5" />
+    <task id="LOCAL-00002" summary="moderator and warning wireframes added + description in the game-design document">
+      <created>1646999465342</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1646999465342</updated>
+=======
+      <workItem from="1647217331746" duration="15874000" />
+>>>>>>> 794aaadc76af6ec9fdd3116e7d49e59032251fad
+    </task>
+>>>>>>> main
+    <option name="localTasksCounter" value="3" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -161,13 +256,35 @@
         </entry>
       </map>
     </option>
+    <option name="oldMeFiltersMigrated" value="true" />
+<<<<<<< HEAD
+<<<<<<< HEAD
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="Log In done" />
+    <option name="LAST_COMMIT_MESSAGE" value="Log In done" />
+  </component>
+  <component name="XSLT-Support.FileAssociations.UIState">
+    <expand />
+    <select />
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="chore/updated-time-sheet" />
     <MESSAGE value="moderator and warning wireframes added + description in the game-design document" />
-    <MESSAGE value="docs: added more user stories to team-plan document" />
-    <MESSAGE value="docs: fixed some typos" />
-    <option name="LAST_COMMIT_MESSAGE" value="docs: fixed some typos" />
+    <option name="LAST_COMMIT_MESSAGE" value="moderator and warning wireframes added + description in the game-design document" />
+  </component>
+  <component name="XSLT-Support.FileAssociations.UIState">
+    <expand />
+    <select />
+=======
+>>>>>>> ff4c67b5486a28f9873d5b128e0663c4e7b3e4f9
+=======
+>>>>>>> 794aaadc76af6ec9fdd3116e7d49e59032251fad
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="chore/updated-time-sheet" />
+    <MESSAGE value="moderator and warning wireframes added + description in the game-design document" />
+    <option name="LAST_COMMIT_MESSAGE" value="moderator and warning wireframes added + description in the game-design document" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />

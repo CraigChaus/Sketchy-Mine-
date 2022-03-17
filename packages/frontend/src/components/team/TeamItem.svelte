@@ -1,4 +1,8 @@
 <script>
+    /**
+     * TeamItem Component
+     * Represents a team
+     */
     import Icon from "svelte-awesome";
     import {
         faPaintbrush,
@@ -14,17 +18,18 @@
     export let won = false;
     export let placementNr = -1; //If guessed correctly, shows the place of the team
     export let isDrawingTeam = false;
-    export let members = [{ username: "N/A", guessed: false }];
+    export let members = [{ username: "N/A", guessed: false }]; //Default data
 
     let showMembers = isSelf;
 
-    $: isSelf, (showMembers = isSelf);
+    $: isSelf, (showMembers = isSelf); //Update "showMembers' variable when 'isSelf' changes
 
     let buttonClicked = () => (showMembers = !showMembers);
 </script>
 
 <div class="flex-1 w-full h-full flex max-h-20">
     {#if isSelf}
+        <!--Current user is in this team-->
         <div
             on:click={buttonClicked}
             class="bg-blue-700 mt-1 p-2 text-white flex-1 cursor-pointer transition-all duration-200 hover:brightness-90"
@@ -78,6 +83,7 @@
             </div>
         </div>
     {:else}
+        <!-- Other teams-->
         <div
             on:click={buttonClicked}
             class="bg-gray-600 mt-1 p-2 text-white flex-1 cursor-pointer transition-all duration-200 hover:brightness-90"

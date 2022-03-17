@@ -1,4 +1,5 @@
 import debug from 'debug';
+import randomWords from 'random-words';
 import { getIO } from '..';
 import { Teams } from '../../../data/teams';
 import { broadcastTeamSpecificGuesses, sendProgress, sendResult } from '../handlers/guessHandler';
@@ -10,12 +11,11 @@ const teamGuesses = [];
 
 /**
  * List of words that can be used for guessing
- */
-const wordBank = [
-  // 'Apple',
-  // 'Banana',
-  'Emerald',
-];
+ * for now, 10000 random words will be stored
+*/
+
+const wordBank = randomWords(10000);
+// console.log(wordBank);
 
 /**
  * Get random word to guess
@@ -117,6 +117,8 @@ export const getCurrentWord = () => gameState.currentWord;
  */
 export const getTeamResults = () => {
   const team = [...Teams]; // Copy teams so we don't modify the original dataset
+  const timeNow = new Date();
+
   team.forEach((t) => {
     // Fetch the team guess records so we can pair them with the team dataset
     const tGuesses = teamGuesses.find((tm) => tm.teamname === t.teamname);
@@ -126,8 +128,31 @@ export const getTeamResults = () => {
       // Check if the team won or not
       if (bg.guess.toLowerCase() === getCurrentWord().toLowerCase()) t.won = true;
       else t.won = false;
+
+      if (t.won) {
+        // Add points to the team if they guessed correctly
+        let pointsEarned = 0;
+
+        const guessedTimeTaken = ROUND_DURATION - ((timeNow - t.lastGuessSubmit) / 1000);
+        dbg(`${t.teamname} took ${guessedTimeTaken} seconds to guess`);
+
+        if (guessedTimeTaken < 5) {
+          // if they guessed in less than 30 seconds, they get 20 points and so on
+          pointsEarned += 20;
+        } else if (guessedTimeTaken < 10) {
+          pointsEarned += 15;
+        } else if (guessedTimeTaken < 15) {
+          pointsEarned += 10;
+        } else {
+          pointsEarned += 5;
+        }
+
+        dbg(`Adding ${pointsEarned} points to ${t.teamname}`);
+        t.addPoints(pointsEarned);
+      }
     }
   });
+
   // Calculate the teams' placement order by the time when the last guess was submitted
   team.sort((a, b) => a.lastGuessSubmit - b.lastGuessSubmit);
   let index = 1;

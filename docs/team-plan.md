@@ -159,7 +159,7 @@ _§14_ In git, all branches must be automatically created from the issue board, 
 
 8. As a moderator, I want to remove players from an ongoing game, so that there is no inappropriate behavior.
 
-9. As a moderator, I want to buff or de-buff teams, so that I can influence the game logic.
+9. As a moderator, I want to buff or debuff teams, so that I can influence the game logic.
 
 10. As a user, I want to be able to spectate, so that I can watch an ongoing game.
 
@@ -301,49 +301,7 @@ Connect team listing component with backend
 
 Make team based chat
 
-#### US06 - As a player, I want the game to be mobile responsive, so that I can play it on my mobile phone.
-
-#### US07 - As a player, I want the ability to leave an ongoing game, so that I am not forced to play
-
-##### US07 BI01
-
-Page for successfully leaving the game
-
-##### US07 BI02
-
-Player is removed form the team with saved progress
-
-#### US08 - As a moderator, I want to remove players from an ongoing game, so there is no  inappropriate behaviour
-
-##### US08 BI01
-
-Ability to assign moderator role to specific users
-
-##### US08 BI02
-
-Create moderator view of the game
-
-##### US08 BI03
-
-Implement functionality for kicking another player from their team
-
-#### US09 - 9. As a moderator, I want to buff or de-buff teams, so that I can influence the game logic.
-
-#### US10 - As a player, I want to be able to spectate, so that I can watch an ongoing game without participating in it
-
-##### US10 BI01
-
-Ability to assign spectator role to users
-
-##### US10 BI02 
-
-Create spectator view of the game
-
-##### US10 BI03
-
-When the spectator oprion is clicked, the user does not become a part of the team
-
-#### US11 - As a player, I want to get emeralds, so that I can purchase power-ups with the gained emeralds.
+#### US11 - As a player, I want to get emeralds, so that I can purchase powerups with the gained emeralds.
 
 ##### US11 Bl01
 
@@ -371,7 +329,7 @@ Pick a word from the word list in the databse and send it to the frontend
 
 ##### US11 Bl07
 
-Send results of the round to the frontend to display the teams that guessed the word correctly or not.
+Send results of the round to the frontend to display the teams that guseed the word correclty or not.
 
 ##### US11 Bl08
 
@@ -389,7 +347,42 @@ Matchmaking system in the backend
 
 Create the voting system.
 
-#### US12 - 12. As a moderator, I want to have a means of communicating with the players, so that I can give them warnings.
+#### US07 - As a player, I want the ability to leave an ongoing game, so that I am not forced to play.
+##### US07 Bl01
+
+Creating Screen for the user when they successfully leave the game
+
+##### US07 Bl02
+
+Player is removed from the team with saved progress
+
+#### US08 - As a moderator, I want to remove players from an ongoing game, so that there is no inappropriate behavior.
+
+#####  US08 Bl01
+
+Handle the ability to assign moderator role to a specific user
+
+##### US08 Bl02
+
+Create the moderator screen/view of the game
+
+##### US08 Bl03
+
+Create the functionality to remove another player from their team as a moderator
+
+#### US10 As a user, I want to be able to spectate, so that I can watch an ongoing game.
+
+##### US10 Bl01
+
+Create the ability to assign spectator role to myself as a user
+
+##### US10 Bl02
+
+Create the spectator view of the game
+
+##### US10 Bl03
+
+Remove the user from the team if he/she wants to be a spectator
 
 ---
 
@@ -511,7 +504,7 @@ The following is an overview for how the team will communicate internally, as we
 
 For communicating and sharing information with other project members, the following tools are to be used:
 
-- Discord - A common server is used for voice/video calls, screen sharing and pair programming, as well as the primary chat tool and permanent record of all team communication. Members in the server are labelled with the role of the sub-group they belong to. Multiple channels are available for members to use depending on the context necessary.
+- Discord - A common server is used for voice/video calls, screensharing and pair programming, as well as the primary chat tool and permanent record of all team communication. Members in the server are labelled with the role of the sub-group they belong to. Multiple channels are available for members to use depending on the context necessary.
 - OneDrive - A shared OneDrive folder is used to grant access to the shared timesheet for all project members to log their tracked project time.
 - GitLab - The issue board is used as the single source of truth of assigned items and project state. Issues and merge requests are assigned to discrete project members, with the possibility for members to leave review notes, and manage active items. GitLab is also the central store for _all_ project documentation (in markdown format).
 - Email - Used to formally communicate with the publisher and other stakeholders

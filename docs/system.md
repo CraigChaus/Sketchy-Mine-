@@ -146,22 +146,22 @@ For Sprint 1 to start developing the game, we decided to use Svelte, Tailwind CS
 
 ### Tools used for development:
 
-|Programming Languages       | Tooling/IDE       | 
-| ------------- |:-------------:| 
-| Javascript      |Svelte for IDE, Canvas API | 
-| HTML     | Svelte for IDE ,Canvas API    |  
-| CSS|   Tailwind CSS    |  
+| Programming Languages |        Tooling/IDE         |
+| --------------------- | :------------------------: |
+| Javascript            | Svelte for IDE, Canvas API |
+| HTML                  | Svelte for IDE ,Canvas API |
+| CSS                   |        Tailwind CSS        |
 
 
 ### Tools used for application:
-|Tool/ Application/Module      | Purpose|      
-| ------------- |:-------------:| 
-| Svelte      |For developing fast JavaScript Web Application |
-| Node.js    | using JavaScript to start both the frontend and backend of web apps | 
-| Express.js | By configuring routes for your application, Express. js makes it simple to create a web server and render HTML pages for various HTTP requests.| 
-|Socket.IO| library for realtime web applications|
-|PostgreSQL|open-source relational database management system |
-|Visual Studio Code|All team members will use Visual Studio Code as the primary editor for the project|
+| Tool/ Application/Module |                                                                     Purpose                                                                     |
+| ------------------------ | :---------------------------------------------------------------------------------------------------------------------------------------------: |
+| Svelte                   |                                                 For developing fast JavaScript Web Application                                                  |
+| Node.js                  |                                       using JavaScript to start both the frontend and backend of web apps                                       |
+| Express.js               | By configuring routes for your application, Express. js makes it simple to create a web server and render HTML pages for various HTTP requests. |
+| Socket.IO                |                                                      library for realtime web applications                                                      |
+| PostgreSQL               |                                                open-source relational database management system                                                |
+| Visual Studio Code       |                               All team members will use Visual Studio Code as the primary editor for the project                                |
 ## Communication protocols
 Since is going to be an online game the protocols we are going to use WebSockets and HTTP. HTTP over a REST API will be used for interacting with the game and dispatching certain actions like logging in, joining a game, etc. HTTP will also be used to serve the client Svelte frontend. Socket.IO over WebSockets will be used between the server and client to receive game updates. For the database, we are going to use the SQL protocol to query and store persistent information.
 
@@ -175,3 +175,144 @@ Since is going to be an online game the protocols we are going to use WebSockets
 | 1         | 14/02/2022 | 06/03/2022 | Basic user (web) interface, main parts of our game (canvas, buttons, chat, group listings, ranking, various pages such as the login page, etc.), Basic UI functionality (Sketching on the canvas, Word guessing, Basic chat system ) | 3, 4, 5                      |
 | 2         | 07/03/2022 | 20/03/2022 | Implement database, level progression system, user accounts, moderation, spectating                                                                                                                                                  | 1, 2, 6, 7, 8, 9, 10, 11, 12 |
 | 3         | 21/03/2022 | 10/04/2022 | Polishing the game, fixing game bugs, improving features                                                                                                                                                                             | TBA                          |
+
+## Server protocol spec
+
+### Teams
+
+| Type    | Event name        | Payload      | Action                                                       |
+| ------- | ----------------- | ------------ | ------------------------------------------------------------ |
+| listens | `teams:get`       | –            | Request server to send an array of `Team` objects            |
+| listens | `teams:join`      | –            | Request to put the socket's user into a team                 |
+| sends   | `teams:update`    | `Team` array | Sends and array of `Team` objects including the members list |
+| listens | `spectators:join` | -            | Request the server to be put into the `Spectators` Team      |
+
+### User management
+
+| Type    | Event name    | Payload      | Action                                                                                    |
+| ------- | ------------- | ------------ | ----------------------------------------------------------------------------------------- |
+| listens | `joinSession` | `Credential` | Adds a user to the current match. Sends welcome chat message. Informs other users in chat |
+
+### Chat
+
+| Type    | Event name    | Payload       | Action                                      |
+| ------- | ------------- | ------------- | ------------------------------------------- |
+| listens | `chatMessage` | `ChatMessage` | Send a chat to team members only            |
+| sends   | `message`     | `chatMessage` | Sends chat message to intended users/groups |
+
+### Guess
+
+| Type    | Event name       | Payload       | Action                                                                                |
+| ------- | ---------------- | ------------- | ------------------------------------------------------------------------------------- |
+| listens | `round:guess`    | `String`      | Stores a guess from the payload                                                       |
+| sends   | `round:state`    | `RoundState`  | Sends round information (such as time remaining)                                      |
+| sends   | `round:result`   | `Result`      | Sends either the correct work and marks the end of a round                            |
+| sends   | `round:progress` | `Guess` array | Sends team specific guesses to a user                                                 |
+| sends   | `round:start`    | `Result`      | Marks a new round. Sends an object containing the correct work, whose value is `null` |
+
+### Canvas
+
+| Type    | Event name         | Payload  | Action                                                          |
+| ------- | ------------------ | -------- | --------------------------------------------------------------- |
+| sends   | `canvas:points`    | `Canvas` | Sends the canvas points to draw on other users' canvas          |
+| listens | `canvas:points`    | `Canvas` | Reads canvas points that needs to be broadcasted to other users |
+| listens | `canvas:clear`     | -        | Request canvas clear broadcast                                  |
+| sends   | `canvas:clear`     | -        | Sends canvas clear broadcast instruction                        |
+| listens | `canvas:drawer`    | -        | Request drawer role (write access to the canvas)                |
+| sends   | `canvas:drawer`    | -        | Sends ok signal for drawer role request for the canvas          |
+| listens | `canvas:spectator` | -        | Request spectator role (read access to the canvas)              |
+| sends   | `canvas:spectator` | -        | Sends ok signal for spectator role request for the canvas       |
+| listens | `canvas:guesser`   | -        | Request guesser role (read access to the canvas)                |
+| sends   | `canvas:guesser`   | -        | Sends ok signal for guesser role request for the canvas         |
+| listens | `canvas:new-user`  | `Canvas` | As a newly joined user ask for current canvas state             |
+
+### Object types in Payload
+
+#### Credential
+
+```
+{ 
+  username,
+  session
+}
+```
+
+#### Team
+
+```
+{
+  teamname,
+  isDrawing,
+  isSelf,
+  won,
+  placementNr,
+  points,
+  level,
+  shards,
+  lastGuessSubmit,
+  checkpoints {
+    1,
+    2,
+    3,
+  },
+  colour,
+  members[Member]
+}
+```
+
+#### Member
+
+```
+{
+  username,
+  guessed,
+  current,
+  draws
+}
+```
+
+#### chatMessage
+
+```
+{
+  username,
+  text,
+  currentTime,
+  type
+}
+```
+
+#### Canvas 
+
+```
+{ 
+  points,
+  brushColor,
+  brushRadius
+}
+```
+
+#### RoundState
+
+```
+{
+  roundTime
+}
+```
+
+#### Result
+
+```
+{
+  result
+}
+```
+
+#### Guess
+
+```
+{ 
+  value,
+  frequency
+}
+```
