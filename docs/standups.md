@@ -54,39 +54,6 @@
 
 ---
 
-## Stand-up 2 - 14.02.2022
-
-### Sub-group 1
-
-- Initialize frontend project
-
-**Vincenzo**
-
-- Us3Bi01 - Create canvas component
-- Us3Bi03 - Create drawing tools
-
-**Mira**
-
-- Us3Bi01 - Create canvas component
-- Us3Bi02 - Create separate roles for drawing and viewing canvas
-
-**Craig**
-
-- Us3Bi04 - Create websocket for transferring canvas content between drawer and server
-
-**Melissa**
-
-- Us3Bi04 - Create websocket for transferring canvas content between drawer and server
-
-**Ana**
-
-- Research on logic of the canvas
-
-**Daria**
-
-- Research on logic of the canvas
-
----
 
 ## Sprint 1 planning - 14.02.2022
 
@@ -100,6 +67,30 @@
   - Sets up the backend project
 
 ---
+## SCRUM Standup (Group 1) 14.02.2022
+
+- Initialize frontend project
+
+- Vincenzo
+  - Us3Bi01 - Create canvas component
+  - Us3Bi03 - Create drawing tools
+
+- Mira
+  - Us3Bi01 - Create canvas component
+  - Us3Bi02 - Create separate roles for drawing and viewing canvas
+
+- Craig
+  - Us3Bi04 - Create websocket for transferring canvas content between drawer and server
+
+- Melissa
+  - Us3Bi04 - Create websocket for transferring canvas content between drawer and server
+
+- Ana
+  - Research on logic of the canvas
+
+- Daria
+  - Research on logic of the canvas
+
 
 ## SCRUM Standup (Group 2) - 14.02.2022
 
@@ -208,7 +199,7 @@
   - Task finished after help
 - Mira:
   - Task finished, ready for merge
-- Melisa:
+- Melissa:
   - Task finished, branch merged
 - Filippos:
   - Item 50% done. Currently fixing merge conflicts and deploying the merged codes
@@ -279,6 +270,30 @@
   - Ability in the UI to chose who will draw (voting system)
     - Handel who draws in the backend
   
+## SCRUM Standup (Group 1) - 09.03.2022
+
+- Ana - us01bl01 - login page
+  - needs help to do the branch
+  - backlog id pretty much done
+  - taking get emeralds when guess is correct (us04bi04)
+
+- Melissa and Craig - us04bi06
+  - done, merged
+  - taking login and sign up backend (us01bi03 and us01bi04)
+
+- Vincenzo - us01bi05 - routing
+  - haven't started it, going to do it today
+  - taking get emeralds when guess is correct with Ana
+
+- Daria - us01bi06 - homescreen
+  - Vince helped her to visualise the screen
+  - going to be done soon
+  - taking ranking page (us02bi01)
+
+- Mira - us01bi02 - sign up page
+  - sign up page is done
+  - taking moderator wireframes
+
 ## SCRUM Standup (Entire team) - 11.03.2022
 - Not present: Vince (got covid, in quarantine)
 - Vedat:
@@ -353,3 +368,24 @@
 - Vedat is missing, we do not know the progress of his item
 - Filippos, Lukman and Marko is still working
 - Peter is done with task, got new item
+
+## SCRUM Standup (Group 1) - 1603.2022
+Ana is missing, did not inform the team, everyone else is present
+
+- Melissa
+  - us01bi04 - finished
+  - starting on us08bi01
+
+- Craig
+  - starting on us08bi03
+
+- Vincezo
+  - finished us10us02, us10bi03, us01bi05
+  - will look up into the guessing aspect of the game
+
+- Daria
+  - ranking page is done with getting data from database
+  - starting on  moderator view of the game
+
+- Mira
+  - Ending session screen is done, needs a bit of styling
