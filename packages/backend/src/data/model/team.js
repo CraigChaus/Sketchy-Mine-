@@ -13,7 +13,7 @@ class Team {
     this.won = false;
     this.placementNr = 0;
     this.points = 0;
-    this.level = 0;
+    this.level = 1;
     this.shards = 0;
     this.lastGuessSubmit = new Date();
     this.checkpoints = {
