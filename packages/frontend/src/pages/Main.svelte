@@ -38,6 +38,7 @@
   let popupWindowStatusText = `Please wait...`; // Used by the popup window to display various match statuses
   let popupWindowShowButtons = true; // Toggle the visibility of the popup window's buttons
   let cachedTeamSize = 0; // Used to check wether the team's size grows or declines
+  let correctWord;
 
   // Progress bar functionality
   // FIXME: This function has been moved to the backend
@@ -186,7 +187,6 @@
 
     socket.emit("joinSession", { username }, () => {
       if(!spectator){
-        randomizeDrawer();
         joinMatch();
       }else{
         spectate();
@@ -302,15 +302,6 @@
     return role;
   }
 
-  let randomizeDrawer = () => {
-    const rng = Math.random();
-    if (rng < 0.5) {
-      role = 1;
-    } else {
-      role = 2;
-    }
-  };
-
   const becomeDrawer = () => {
     role = 1;
     promise = getRole();
@@ -349,7 +340,10 @@
   const startRound = () => socket.emit("round:start");
   const sendGuess = (guess) => socket.emit("round:guess", guess);
 
-  socket.on("round:result", (payload) => (results = payload));
+  socket.on("round:result", (payload) => {
+    results = payload
+    correctWord = results.result;
+  });
   socket.on("round:progress", updateGuessState);
   // 1: drawer
   // 2: guesser
@@ -370,6 +364,16 @@
 {/if}
 
 <ProgressBar {teams} />
+<div class="flex items-center justify-center">
+  {#await promise}
+    <p>loading word...</p>
+  {:then role} 
+    {#if role == 1}
+      <p>word to draw {correctWord}</p>
+    {/if}
+  {/await}
+</div>
+
 
 <div class="flex">
   <div class="w-1/4 h-12">
@@ -411,22 +415,11 @@
         <p>loading..</p>
       {:then role}
         {#if role != 3}
-        <button
-        on:click={becomeDrawer}
-        class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
-        >become drawer</button
-      >
-      <button
-        on:click={becomeGuesser}
-        class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded"
-        >become guesser</button
-      >
-  
-      <button
-        on:click={startRound}
-        class="bg-purple-500 hover:bg-purple-700 text-white font-bold py-2 px-4 rounded"
-        >Start Round</button
-      >
+          <button
+            on:click={startRound}
+            class="bg-purple-500 hover:bg-purple-700 text-white font-bold py-2 px-4 rounded"
+            >Start Round</button
+          >
         {/if}
       {/await}
     

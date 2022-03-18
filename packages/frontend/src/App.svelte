@@ -26,10 +26,9 @@
   }
 
 </script>
-<a href="">
-
+<!-- <a href="">
   <img on:click={home} style="width: 100px;" src="favicon.png" alt="logo">
-</a>
+</a> -->
 <!-- <Main /> -->
 <!-- <Home/> -->
 
