@@ -1,10 +1,11 @@
 <script>
     // import Table from ‘./Table.svelte’;
     import tokenStore from '../stores/token';
+    import { API_URL } from "../socket";
 
     //here we need to make get request from the database
     async function getAllUsers() {
-        const res = await fetch('http://localhost:3000/users', {
+        const res = await fetch(API_URL+"/users", {
             headers: {
                 'Content-Type': 'application/json',
                 'Authorization': `Bearer ${$tokenStore.token}`
