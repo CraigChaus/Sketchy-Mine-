@@ -48,19 +48,22 @@ const canvasHandler = (io, socket) => {
 };
 
 export const giveAppropriateRoles = (io, Teams) => {
+  // also clears the canvas since a new team is drawing
+  io.emit(CANVAS_EVENTS.CLEAR);
+  canvasHistory = [];
+
+  // loops through every team
   Teams.forEach((team) => {
     console.log(team);
+    // find the drawing team
     if (team.isDrawing === true) {
       team.members.forEach((member) => {
-        io.to(member.id).emit(CANVAS_EVENTS.DRAWER);
-        console.log(member);
-        console.log('is now a drawer');
+        io.to(member.socketID).emit(CANVAS_EVENTS.DRAWER);
       });
+      // gives the other teams excluding spectators guessing permissions
     } else if (team.isSpectator === false) {
       team.members.forEach((member) => {
-        io.to(member.id).emit(CANVAS_EVENTS.GUESSER);
-        console.log(member);
-        console.log('is now a guesser');
+        io.to(member.socketID).emit(CANVAS_EVENTS.GUESSER);
       });
     }
   });

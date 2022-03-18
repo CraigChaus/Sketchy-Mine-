@@ -39,7 +39,7 @@ const teamHandler = (io, socket) => {
     if (team) {
       const u = team.members.find((m) => m.username === user.username);
       if (!u) {
-        const currentUser = new User(user.username);
+        const currentUser = new User(user.username, user.id);
         updateTeams(Teams.map((obj) => {
           if (obj.teamname === payload) {
             obj.members.push(currentUser);
