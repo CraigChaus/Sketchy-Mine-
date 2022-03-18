@@ -1,5 +1,6 @@
 <script>
     import {Hint, HintGroup, required, useForm, validators} from "svelte-use-form";
+    import { API_URL } from "../socket";
 
     const form = useForm();
 
@@ -16,7 +17,7 @@
     let username = '';
     let password = '';
     const signup = async () => {
-        const response = await fetch('http://localhost:3000/users/register', {
+        const response = await fetch(API_URL + '/users', {
             method: "POST",
             headers: {
                 'Content-Type': 'application/json',
@@ -31,7 +32,6 @@
             alert("Sign up failed \n" + response.statusText);
         }
     }
-
 </script>
 
 <div class="container h-screen px-5 py-24 mx-auto flex flex-wrap items-center">

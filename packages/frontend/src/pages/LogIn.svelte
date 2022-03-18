@@ -1,15 +1,18 @@
 <script>
-    import tokenStore from '../stores/token';
-    import userStore from '../stores/user';
-    import { onMount } from 'svelte';
+    import { token } from '../stores/token';
+    import { user } from '../stores/user';
+    import {onDestroy, onMount} from 'svelte';
+    import { API_URL } from "../socket";
 
-    let user = {};
-    onMount(async () => {
-        userStore.subscribe(value => user = value);
+    let userValue = {};
+    onMount( async () => {
+        user.subscribe((u) => (userValue = u))
     });
 
-    const handleSubmit = async () => {
-        const response = await submit();
+    const unsubscribe = user.subscribe((u) => (userValue = u))
+
+    const handleLogin = async () => {
+        const response = await login();
         if (response) {
             if (response['status'] === 200) {
                 alert("You have successfully logged in, you should be redirected to some other page")
@@ -21,27 +24,36 @@
 
     let username = '';
     let password = '';
-    async function submit() {
+    async function login() {
         try {
-            const response = await fetch('http://localhost:3000/credentials', {
+            const response = await fetch(API_URL + '/credentials', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
                 },
                 body:JSON.stringify({username, password}),
             });
+
             const data = await response.json();
-            $tokenStore.token = data.token;
-            $userStore = data.user;
+            token.update(() => data.token);
+            user.update(() => JSON.stringify(data.user));
+
             return await response;
         } catch (e) {
-            console.log(e);           }
+            console.log(e);
+        }
     }
 
+    const handleLogout = () => {
+        user.update(() => (''))
+    }
+
+    onDestroy(unsubscribe);
 </script>
+
 <div class="flex items-center justify-center min-h-screen bg-gray-100">
     <div class="px-8 py-6 mt-4 text-left bg-white shadow-lg">
-        <form action="" on:submit|preventDefault ={handleSubmit}>
+        <form action="" on:submit|preventDefault ={handleLogin}>
             <div class="mt-4">
                 <div>
                     <label class="block">Username</label>
@@ -62,4 +74,3 @@
         </form>
     </div>
 </div>
-
