@@ -194,40 +194,48 @@ export const nextWord = () => {
   dbg('Round Word -', getCurrentWord());
 };
 
+// gets the next team in the array
+// made as a method to reduce duplication
+const nextTeam = (teamsAmount, index) => {
+  if (index === teamsAmount) {
+    index = 0;
+  } else {
+    index++;
+  }
+  return index;
+};
 
 /**
  * Get next team in the list
  * teams are selected as drawing teams in order
  */
 export const nextDrawingTeam = () => {
-  //find drawing team
-  let index = Teams.findIndex( team => {
-    if (team.isDrawing == true) {
+  // find drawing team
+  let index = Teams.findIndex((team) => {
+    if (team.isDrawing === true) {
       return true;
-    }
+    } return false;
   });
-  if (index === -1){  //There is no drawing team
-    for(let i = 0; i < Teams.length; i++){ //for loop to make sure we ignore spectator teams
-      if(Teams[i].isSpectator == false){  //would have liked to filter out spectator teams but that messes with the Teams array length.
+  if (index === -1) { // There is no drawing team
+    for (let i = 0; i < Teams.length; i++) { // for loop to make sure we ignore spectator teams
+      // would have liked to filter out spectator teams but that messes with the Teams array length.
+      if (Teams[i].isSpectator === false) {
         Teams[i].isDrawing = true;
         break;
       }
     }
-  }else{
-    Teams[index].isDrawing = false;     //removes drawing permissions from old team
-    let teamsAmount = Teams.length-1;
-    if(index == teamsAmount){
-      index = 0;
-    }else{
-      index++;
+  } else {
+    Teams[index].isDrawing = false; // removes drawing permissions from old team
+    const teamsAmount = Teams.length - 1;
+    index = nextTeam(teamsAmount);
+    if (Teams[index].isSpectator === true) {
+      index = nextTeam;
     }
-    Teams[index].isDrawing = true;      //gives drawing permissions to new team
-  } 
+    Teams[index].isDrawing = true; // gives drawing permissions to new team
+  }
 
   giveAppropriateRoles(getIO(), Teams);
-
 };
-
 
 export const removeUserGuesses = (user) => {
   if (user) {
