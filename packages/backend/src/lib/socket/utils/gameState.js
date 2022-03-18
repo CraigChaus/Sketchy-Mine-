@@ -227,9 +227,9 @@ export const nextDrawingTeam = () => {
   } else {
     Teams[index].isDrawing = false; // removes drawing permissions from old team
     const teamsAmount = Teams.length - 1;
-    index = nextTeam(teamsAmount);
+    index = nextTeam(teamsAmount, index);
     if (Teams[index].isSpectator === true) {
-      index = nextTeam;
+      index = nextTeam(teamsAmount, index);
     }
     Teams[index].isDrawing = true; // gives drawing permissions to new team
   }
