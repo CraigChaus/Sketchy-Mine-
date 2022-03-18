@@ -9,6 +9,7 @@ const CANVAS_EVENTS = {
 
 let canvasHistory = [];
 
+
 const canvasHandler = (io, socket) => {
   const drawPoints = (payload) => {
     // saves to the array containing the previous drawings
@@ -45,6 +46,25 @@ const canvasHandler = (io, socket) => {
   socket.on(CANVAS_EVENTS.DRAWER, makeDrawer);
   socket.on(CANVAS_EVENTS.GUESSER, makeGuesser);
   socket.on(CANVAS_EVENTS.SPECTATOR, makeSpectator);
+};
+
+export const giveAppropriateRoles = (io, Teams) => {
+  Teams.forEach(team => {
+    console.log(team);
+    if(team.isDrawing === true){
+      team.members.forEach(member => {
+        io.to(member.id).emit(CANVAS_EVENTS.DRAWER)
+        console.log(member)
+        console.log("is now a drawer");
+      })
+    }else if(team.isSpectator === false){
+      team.members.forEach(member => {
+        io.to(member.id).emit(CANVAS_EVENTS.GUESSER);
+        console.log(member)
+        console.log("is now a guesser");
+      })
+    }
+  })
 };
 
 export default canvasHandler;
