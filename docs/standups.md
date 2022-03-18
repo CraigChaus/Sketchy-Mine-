@@ -353,3 +353,37 @@
 - Vedat is missing, we do not know the progress of his item
 - Filippos, Lukman and Marko is still working
 - Peter is done with task, got new item
+
+## SCRUM Standup (Entire team) - 18.03.2022
+- Everyone is present (hybrid class: partly online and on site)
+- Ana:
+  - Her user story was already implemented by Melissa and Craig, thus she's working on getting emeralds out of the collected shards
+- Lukman:
+  - Task completed, he will get a new issue today
+  - Fixed the backlogs
+- Marko:
+  - Original task was already done by someone, but parts of the task is still pending
+  - He tried to make the game prettier, but has merge conflicts, thus cannot yet be merged
+- Vedat:
+  - His task was already done by Marko
+  - Was sick the whole week, will get a new task today
+- Vince:
+  - Tasks gotten are done
+  - Assigned himself to a new task since previous tasks were done
+    - Needs help with current item
+- Craig:
+  - Got 2 tasks this week, since one was blocked by Melissa's task, so did bug fixes this week
+- Daria:
+  - Finished tasks
+  - Works on moderation task right now
+    - Needs help and feedback
+- Filippos:
+  - Task done
+- Peter:
+  - Task done
+- Melissa:
+  - Did more than original task
+  - Not completely done yet
+- Mira:
+  - Task could use more styling, but done
+  - Added missing documentation
