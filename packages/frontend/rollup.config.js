@@ -8,7 +8,7 @@ import sveltePreprocess from 'svelte-preprocess';
 import replace from '@rollup/plugin-replace';
 
 const production = !process.env.ROLLUP_WATCH;
-const { API_URL } = process.env;
+const { API_URL, SENTRY_DSN } = process.env;
 
 function serve() {
   let server;
@@ -41,9 +41,12 @@ export default {
   },
   plugins: [
     replace({
+      preventAssignment: true,
       process: JSON.stringify({
         env: {
           API_URL,
+          SENTRY_DSN,
+          IS_PROD: production,
         },
       }),
     }),

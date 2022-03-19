@@ -1,9 +1,10 @@
 class User {
-  constructor(username) {
+  constructor(username, userID) {
     this.username = username;
     this.guessed = false;
     this.current = false;
     this.draws = false;
+    this.socketID = userID;
   }
 }
 
