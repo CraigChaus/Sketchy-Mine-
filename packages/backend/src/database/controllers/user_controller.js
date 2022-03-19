@@ -2,7 +2,7 @@ import { Op } from 'sequelize';
 import { StatusCodes } from 'http-status-codes';
 import { v4 as uuidv4 } from 'uuid';
 import bcrypt from 'bcrypt';
-import User from '../models/user_model';
+import User from './models/user_model';
 
 /* Create and Save a new USER */
 export const create = async (req, res) => {

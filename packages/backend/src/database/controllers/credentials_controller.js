@@ -1,7 +1,7 @@
 import bcrypt from 'bcrypt';
 import { StatusCodes } from 'http-status-codes';
 import jwt from 'jsonwebtoken';
-import User from '../models/user_model';
+import User from './models/user_model';
 
 const login = async (username, password) => {
   const user = await User.findOne({ where: { username } });
