@@ -19,8 +19,6 @@
 
     teamGuesses = [...guesses];
   });
-  let teamSession = "main"
-
 
   let results = null; // It has to be null when we want to hide the results on the team listing
   let username; //Current user's username
@@ -40,6 +38,7 @@
   let popupWindowStatusText = `Please wait...`; // Used by the popup window to display various match statuses
   let popupWindowShowButtons = true; // Toggle the visibility of the popup window's buttons
   let cachedTeamSize = 0; // Used to check wether the team's size grows or declines
+  let teamSession = "main";
 
   // Progress bar functionality
   // FIXME: This function has been moved to the backend
@@ -74,7 +73,6 @@
     });
 
     teamsValue.set(teams);
-
   };
 
   /**
@@ -177,203 +175,197 @@
 
   onMount(() => {
     username = `User${Math.round(Math.random() * 10000)}`;
-    socket.emit("joinSession", {username}, () => {
-      randomizeDrawer();
-      promise = getRole();
-      let spectator = window.location.href.includes('spectator');
+    let spectator = window.location.href.includes('spectator');
 
-      //sorr but this has to be called before the await else it won't work
-      //ugly double checking of spectator to have optimal functionality :(
+    //sorr but this has to be called before the await else it won't work
+    //ugly double checking of spectator to have optimal functionality :(
 
-      if (spectator) { //user is a spectator
-        role = 3;
-        showMatchmakingPopup = false;
-      }
+    if(spectator){ //user is a spectator
+      role = 3;
+      showMatchmakingPopup = false;
+    }
 
-      socket.emit("joinSession", {username}, () => {
-        if (!spectator) {
-          randomizeDrawer();
-          joinMatch();
-        } else {
-          spectate();
-        }
-        socket.emit("canvas:new-user");
+    socket.emit("joinSession", { username }, () => {
+      if(!spectator){
+        randomizeDrawer();
         joinMatch();
-      });
-      promise = getRole();
+      }else{
+        spectate();
+      }
+      socket.emit("canvas:new-user");
     });
+  promise = getRole();
   });
 
-    teamsValue.set(teams);
+  teamsValue.set(teams);
 
-    const spectate = () => {
-      socket.emit("teams:get");
-      socket.emit("spectators:join");
+  const spectate = () => {
+    socket.emit("teams:get");
+    socket.emit("spectators:join");
+  }
+
+  const joinMatch = () => {
+    socket.emit("teams:get");
+    socket.emit("teams:join"); //TODO: This should only run on matchmaking
+  };
+
+  // Receiving messages
+  socket.on("message", (data) => {
+    if (!data) {
+      return;
     }
 
-    const joinMatch = () => {
-      socket.emit("teams:get");
-      socket.emit("teams:join"); //TODO: This should only run on matchmaking
-    };
+    chatMessages = [
+      ...chatMessages,
+      {
+        username: data.username,
+        message: data.text,
+        type: data.type,
+      },
+    ];
+  });
 
-    // Receiving messages
-    socket.on("message", (data) => {
-      if (!data) {
-        return;
-      }
+  // Update team listing
+  socket.on("teams:update", (data) => {
+    if (!data) {
+      return;
+    }
 
-      chatMessages = [
-        ...chatMessages,
-        {
-          username: data.username,
-          message: data.text,
-          type: data.type,
-        },
-      ];
-    });
+    data.forEach((t, i) => {
+      t.members.forEach((u) => {
+        if (u.username === username) {
+          let teamName = "Team +" +(i +1);
 
-    // Update team listing
-    socket.on("teams:update", (data) => {
-      if (!data) {
-        return;
-      }
+          if (teamSession !== teamName){
+            teamSession = teamName;
 
-      data.forEach((t, i) => {
-        t.members.forEach((u) => {
-          if (u.username === username) {
-            let teamName = "Team +" + (i + 1);
-
-            if (teamSession !== teamName) {
-              teamSession = teamName;
-
-              socket.emit("joinTeamChat", {teamSession});
-            }
-
-            t.isSelf = true;
-            u.current = true;
-            teamSize = t.members.length;
+            socket.emit("joinTeamChat", {teamSession});
           }
-        });
-      });
 
-      teams = data;
-      if (role != 3) {
-        handlePopup(); // Every time the teams get updated, we check if we need to show the matchmaking popup
-      }
+          t.isSelf = true;
+          u.current = true;
+          teamSize = t.members.length;
+        }
+      });
     });
 
-    /**
-     * Logic for when to show popup
-     */
-    function handlePopup() {
-      if (teamSize === 3 && cachedTeamSize < 3) {
-        cachedTeamSize = 3;
-        showMatchmakingPopup = true;
-        popupWindowInstruction = "Ready!";
-        popupWindowStatusText = "Team formed";
-        popupWindowShowButtons = false; // This time we hide the buttons, since team was formed (no more spectating)
-        setTimeout(() => (showMatchmakingPopup = false), 2000); // Show the popup only for 2 seconds to inform players
-      } else if (teamSize === 2 && cachedTeamSize >= 3) {
-        cachedTeamSize = 2;
-        showMatchmakingPopup = true;
-        popupWindowInstruction = "Team disassembled";
-        popupWindowStatusText = `Looking for more players (${teamSize}/3 players)`;
-        popupWindowShowButtons = true; // We show the buttons to allow player to exit or spectate
-      } else if (teamSize < 3 && cachedTeamSize < 3) {
-        // Safe keeping
-        cachedTeamSize = teamSize;
-        showMatchmakingPopup = true;
-        popupWindowInstruction = "Trying to make a team ...";
-        popupWindowStatusText = `(${teamSize}/3 players)`;
-        popupWindowShowButtons = true; // We show the buttons to allow player to exit or spectate
-      }
+    teams = data;
+    if(role != 3){
+      handlePopup(); // Every time the teams get updated, we check if we need to show the matchmaking popup
     }
+  });
 
-    /**
-     * Helper function to hold the execution of the program
-     * @param ms Milliseconds to wait
-     */
-    function wait(ms) {
-      var start = new Date().getTime();
-      var end = start;
-      while (end < start + ms) {
-        end = new Date().getTime();
-      }
+  /**
+   * Logic for when to show popup
+   */
+  function handlePopup() {
+    if (teamSize === 3 && cachedTeamSize < 3) {
+      cachedTeamSize = 3;
+      showMatchmakingPopup = true;
+      popupWindowInstruction = "Ready!";
+      popupWindowStatusText = "Team formed";
+      popupWindowShowButtons = false; // This time we hide the buttons, since team was formed (no more spectating)
+      setTimeout(() => (showMatchmakingPopup = false), 2000); // Show the popup only for 2 seconds to inform players
+    } else if (teamSize === 2 && cachedTeamSize >= 3) {
+      cachedTeamSize = 2;
+      showMatchmakingPopup = true;
+      popupWindowInstruction = "Team disassembled";
+      popupWindowStatusText = `Looking for more players (${teamSize}/3 players)`;
+      popupWindowShowButtons = true; // We show the buttons to allow player to exit or spectate
+    } else if (teamSize < 3 && cachedTeamSize < 3) {
+      // Safe keeping
+      cachedTeamSize = teamSize;
+      showMatchmakingPopup = true;
+      popupWindowInstruction = "Trying to make a team ...";
+      popupWindowStatusText = `(${teamSize}/3 players)`;
+      popupWindowShowButtons = true; // We show the buttons to allow player to exit or spectate
     }
+  }
 
-    /**
-     * Exit current match and redirect page back to the home screen
-     * Called by the matchmaking popup window
-     */
-    const exitMatch = () => {
-      //TODO: Redirect to home screen
-    };
-
-    /**
-     * Hide matchmaking popup box and place user into spectate mode
-     */
-    const startSpectate = () => (showMatchmakingPopup = false);
-
-    async function getRole() {
-      return role;
+  /**
+   * Helper function to hold the execution of the program
+   * @param ms Milliseconds to wait
+   */
+  function wait(ms) {
+    var start = new Date().getTime();
+    var end = start;
+    while (end < start + ms) {
+      end = new Date().getTime();
     }
+  }
 
-    let randomizeDrawer = () => {
-      const rng = Math.random();
-      if (rng < 0.5) {
-        role = 1;
-      } else {
-        role = 2;
-      }
-    };
+  /**
+   * Exit current match and redirect page back to the home screen
+   * Called by the matchmaking popup window
+   */
+  const exitMatch = () => {
+    //TODO: Redirect to home screen
+  };
 
-    const becomeDrawer = () => {
+  /**
+   * Hide matchmaking popup box and place user into spectate mode
+   */
+  const startSpectate = () => (showMatchmakingPopup = false);
+
+  async function getRole() {
+    return role;
+  }
+
+  let randomizeDrawer = () => {
+    const rng = Math.random();
+    if (rng < 0.5) {
       role = 1;
-      promise = getRole();
-    };
-    const becomeGuesser = () => {
+    } else {
       role = 2;
-      promise = getRole();
-    };
-    const becomeSpectator = () => {
-      role = 3;
-      promise = getRole();
-    };
+    }
+  };
 
-    const onClickGuess = () => {
-      if (chatInput !== "") {
-        currentGuess = chatInput;
-        // teamGuesses.push({ value: currentGuess, frequency: 1 });
-        sendGuess(currentGuess);
-      }
+  const becomeDrawer = () => {
+    role = 1;
+    promise = getRole();
+  };
+  const becomeGuesser = () => {
+    role = 2;
+    promise = getRole();
+  };
+  const becomeSpectator = () => {
+    role = 3;
+    promise = getRole();
+  };
 
+  const onClickGuess = () => {
+    if (chatInput !== "") {
+      currentGuess = chatInput;
+      // teamGuesses.push({ value: currentGuess, frequency: 1 });
+      sendGuess(currentGuess);
+    }
+
+    chatInput = "";
+  };
+
+  const updateGuessState = (payload) => (teamGuesses = payload);
+
+  const onClickGuessItem = (e) => sendGuess(e.detail);
+
+  // Sending messages
+  const onClickChat = () => {
+    if (chatInput !== "") {
+      socket.emit("chatMessage", chatInput);
       chatInput = "";
-    };
+    }
+  };
 
-    const updateGuessState = (payload) => (teamGuesses = payload);
+  const startRound = () => socket.emit("round:start");
+  const sendGuess = (guess) => socket.emit("round:guess", guess);
 
-    const onClickGuessItem = (e) => sendGuess(e.detail);
-
-    // Sending messages
-    const onClickChat = () => {
-      if (chatInput !== "") {
-        socket.emit("chatMessage", chatInput);
-        chatInput = "";
-      }
-    };
-
-    const startRound = () => socket.emit("round:start");
-    const sendGuess = (guess) => socket.emit("round:guess", guess);
-
-    socket.on("round:result", (payload) => (results = payload));
-    socket.on("round:progress", updateGuessState);
-    // 1: drawer
-    // 2: guesser
-    // 3: spectator
-    socket.on("canvas:drawer", becomeDrawer);
-    socket.on("canvas:guesser", becomeGuesser);
-    socket.on("canvas:spectator", becomeSpectator);
-
+  socket.on("round:result", (payload) => (results = payload));
+  socket.on("round:progress", updateGuessState);
+  // 1: drawer
+  // 2: guesser
+  // 3: spectator
+  socket.on("canvas:drawer", becomeDrawer);
+  socket.on("canvas:guesser", becomeGuesser);
+  socket.on("canvas:spectator", becomeSpectator);
 </script>
 
 {#if showMatchmakingPopup}

@@ -14,7 +14,6 @@ const name = 'Sketchy Mine System';
 // Chat events will be used as the socket events
 const CHAT_EVENTS = {
   JOINTEAMCHAT: 'joinTeamChat',
-
   // JOINSESSION is joining the whole game.
   JOINSESSION: 'joinSession',
   SEND: 'chat:send',
@@ -53,7 +52,6 @@ const chatHandler = (io, socket) => {
     user.teamSession = teamSession;
     socket.join(user.teamSession);
 
-    // Use .to method to forward the message to the correct session
     // Send to all users this message except for current user
     socket.broadcast.to(user.teamSession).emit(
       CHAT_EVENTS.MESSAGE,
