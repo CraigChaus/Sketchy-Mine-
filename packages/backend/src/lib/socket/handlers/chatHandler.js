@@ -83,6 +83,32 @@ const chatHandler = (io, socket) => {
       });
     }
   });
+
+  // Runs when client is kicked out from the team
+  // TODO: check this socket to see if it has been connected
+  socket.on('kickOut', () => {
+    const existingUser = getCurrentUser(socket.id);
+    // if the user disconnects from the server, disconnect him from all the places
+    if (existingUser) {
+      removeUserGuesses(existingUser);
+      removePlayerFromTeam(existingUser.username);
+      sendTeamData(io);
+    }
+
+    const user = userLeave(socket.id);
+
+    if (user) {
+      dbg('Client kicked out', existingUser);
+      // Send to everyone using emit() method
+      io.to(existingUser.session).emit(CHAT_EVENTS.MESSAGE, messageFormat(name, `${existingUser.username} has been kicked out`, 3));
+
+      // Send users and session info again when user disconnects
+      io.to(existingUser.session).emit(CHAT_EVENTS.SESSION_USERS, {
+        room: existingUser.session,
+        users: getSessionUsers(existingUser.session),
+      });
+    }
+  });
 };
 
 export default chatHandler;
