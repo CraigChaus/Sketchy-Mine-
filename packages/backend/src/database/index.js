@@ -1,5 +1,5 @@
 import debug from 'debug';
-import User from '../database/controllers/models/user_model';
+import User from './models/user_model';
 // import WordBank from './models/word_bank';
 import { IS_PROD } from '../app';
 import sequelize from './util/config';

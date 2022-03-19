@@ -83,34 +83,6 @@ const chatHandler = (io, socket) => {
       });
     }
   });
-
-  // Runs when client is removed from a team by the moderator
-  /**
-   * Method for disconnecting a kicked player and notifying all the other players
-   */
-  socket.on('kicked', () => { // TODO: check out this socket for the frontend of moderator so that they link
-    const existingUser = getCurrentUser(socket.id);
-    // if the user disconnects from the server, disconnect him from all the places
-    if (existingUser) {
-      removeUserGuesses(existingUser);
-      removePlayerFromTeam(existingUser.username);
-      sendTeamData(io);
-    }
-
-    const user = userLeave(socket.id);
-
-    if (user) {
-      dbg('Client kicked by moderator', existingUser);
-      // Send to everyone using emit() method
-      io.to(existingUser.session).emit(CHAT_EVENTS.MESSAGE, messageFormat(name, `${existingUser.username} has been kicked out by moderator`, 3));
-
-      // Send users and session info again when user disconnects
-      io.to(existingUser.session).emit(CHAT_EVENTS.SESSION_USERS, {
-        room: existingUser.session,
-        users: getSessionUsers(existingUser.session),
-      });
-    }
-  });
 };
 
 export default chatHandler;

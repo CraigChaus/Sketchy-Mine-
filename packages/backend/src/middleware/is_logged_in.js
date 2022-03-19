@@ -1,6 +1,6 @@
 import { StatusCodes } from 'http-status-codes';
 import jwt from 'jsonwebtoken';
-import User from '../database/controllers/models/user_model';
+import User from '../database/models/user_model';
 
 export const verifyToken = async (token) => {
   try {
