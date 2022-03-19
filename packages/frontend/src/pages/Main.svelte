@@ -38,6 +38,7 @@
   let popupWindowStatusText = `Please wait...`; // Used by the popup window to display various match statuses
   let popupWindowShowButtons = true; // Toggle the visibility of the popup window's buttons
   let cachedTeamSize = 0; // Used to check wether the team's size grows or declines
+  let teamSession = "main";
   let correctWord;
 
   // Progress bar functionality
@@ -187,6 +188,7 @@
 
     socket.emit("joinSession", { username }, () => {
       if(!spectator){
+        // randomizeDrawer();
         joinMatch();
       }else{
         spectate();
@@ -199,7 +201,7 @@
   teamsValue.set(teams);
 
   const spectate = () => {
-    socket.emit("teams:get"); 
+    socket.emit("teams:get");
     socket.emit("spectators:join");
   }
 
@@ -230,9 +232,17 @@
       return;
     }
 
-    data.forEach((t) => {
+    data.forEach((t, i) => {
       t.members.forEach((u) => {
         if (u.username === username) {
+          let teamName = "Team +" +(i +1);
+
+          if (teamSession !== teamName){
+            teamSession = teamName;
+
+            socket.emit("joinTeamChat", {teamSession});
+          }
+
           t.isSelf = true;
           u.current = true;
           teamSize = t.members.length;
@@ -367,7 +377,7 @@
 <div class="flex items-center justify-center">
   {#await promise}
     <p>loading word...</p>
-  {:then role} 
+  {:then role}
     {#if role == 1}
       <p>word to draw {correctWord}</p>
     {/if}
@@ -390,7 +400,7 @@
           />
       {/if}
     {/await}
-    
+
     <TeamList showResults={results != null} contentJSON={teams} />
   </div>
   <div class="w-2/4 h-full space-y-1">
@@ -422,7 +432,7 @@
           >
         {/if}
       {/await}
-    
+
 
     <MessageBar
       {role}
