@@ -19,7 +19,7 @@
   export let messages = [];
 </script>
 
-<ScrollContainer styles="max-h-screen h-full">
+<ScrollContainer styles="h-100">
   {#if messages !== "" || messages !== undefined || messages !== null}
     {#each messages as element}
       <ChatItem
