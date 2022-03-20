@@ -139,8 +139,8 @@ The presented product is a network game created for a large number of players wh
   2.Database controller component.Data from the Socket.io component is streamed to the Database controller component, which in turn is connected to the database,
 - the Database component provides access to write new data about the course of the game, players, and so on, and also provides the Database Controller with access to read previously saved data.
 ## Diagrams
-###Package Diagram
-![Package Diagram](./resources/diagrams/Package%20Diagram.png)
+### Package Diagram
+![PackageDiagram](./resources/diagrams/Package%20Diagram.png)
 
 The game logic are the rules, and the evaluation of every turn inside the game. After playing round after round the shards that the players collect are calculated into emeralds which then is added to the players account. SocketIO is the library that connects everything.
 
