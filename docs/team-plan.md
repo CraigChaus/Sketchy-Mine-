@@ -245,7 +245,7 @@ See top picks guess in a certain team
 
 ##### US04 BI04
 
-Get emeralds when the guess is correct
+Calculate emeralds from the user's shards
 
 ##### US04 BI05
 
@@ -255,11 +255,11 @@ Create a progress bar to see where the team is currently at
 
 Multiply the gained emeralds when a new level is reached
 
-##### US04 Bl07
+##### US04 BI07
 
 Add the functionality to the progress bar
 
-##### US04 Bl08
+##### US04 BI08
 
 Create guess backend
 
@@ -301,88 +301,97 @@ Connect team listing component with backend
 
 Make team based chat
 
-#### US11 - As a player, I want to get emeralds, so that I can purchase powerups with the gained emeralds.
+#### US06 -As a player, I want the game to be mobile responsive, so that I can play it on my mobile phone.
 
-##### US11 Bl01
-
-Create the database and the database schema
-
-##### US11 Bl02
-
-Handling team stats in the backend so that each level, emeralds are distributed among team members
-
-##### US11 Bl03
-
-Send updates to the frontend about team progression from the backend.
-
-##### US11 Bl04
-
-Reset the progress of the finished team to the begining when they reach the end of the progress.
-
-##### US11 Bl05
-
-Store the digging distance for each team in the backend
-
-##### US11 Bl06
-
-Pick a word from the word list in the databse and send it to the frontend
-
-##### US11 Bl07
-
-Send results of the round to the frontend to display the teams that guseed the word correclty or not.
-
-##### US11 Bl08
-
-Define the progress that the team should progress in each round in the backend.
-
-##### US11 Bl09
-
-Matchmaking ui in the frontend
-
-##### US11 Bl10
-
-Matchmaking system in the backend
-
-##### US11 Bl11
-
-Create the voting system.
+## US06 BI01
 
 #### US07 - As a player, I want the ability to leave an ongoing game, so that I am not forced to play.
-##### US07 Bl01
+
+##### US07 BI01
 
 Creating Screen for the user when they successfully leave the game
 
-##### US07 Bl02
+##### US07 BI02
 
 Player is removed from the team with saved progress
 
 #### US08 - As a moderator, I want to remove players from an ongoing game, so that there is no inappropriate behavior.
 
-#####  US08 Bl01
+#####  US08 BI01
 
 Handle the ability to assign moderator role to a specific user
 
-##### US08 Bl02
+##### US08 BI02
 
 Create the moderator screen/view of the game
 
-##### US08 Bl03
+##### US08 BI03
 
 Create the functionality to remove another player from their team as a moderator
 
-#### US10 As a user, I want to be able to spectate, so that I can watch an ongoing game.
+#### US09 - As a moderator, I want to buff or debuff teams, so that I can influence the game logic.
 
-##### US10 Bl01
+#### US10 - As a user, I want to be able to spectate, so that I can watch an ongoing game.
+
+##### US10 BI01
 
 Create the ability to assign spectator role to myself as a user
 
-##### US10 Bl02
+##### US10 BI02
 
 Create the spectator view of the game
 
-##### US10 Bl03
+##### US10 BI03
 
 Remove the user from the team if he/she wants to be a spectator
+
+#### US11 - As a player, I want to get emeralds, so that I can purchase powerups with the gained emeralds.
+
+##### US11 BI01
+
+Create the database and the database schema
+
+##### US11 BI02
+
+Handling team stats in the backend so that each level, emeralds are distributed among team members
+
+##### US11 BI03
+
+Send updates to the frontend about team progression from the backend.
+
+##### US11 BI04
+
+Reset the progress of the finished team to the begining when they reach the end of the progress.
+
+##### US11 BI05
+
+Store the digging distance for each team in the backend
+
+##### US11 BI06
+
+Pick a word from the word list in the databse and send it to the frontend
+
+##### US11 BI07
+
+Send results of the round to the frontend to display the teams that guseed the word correclty or not.
+
+##### US11 BI08
+
+Define the progress that the team should progress in each round in the backend.
+
+##### US11 BI09
+
+Matchmaking ui in the frontend
+
+##### US11 BI10
+
+Matchmaking system in the backend
+
+##### US11 BI11
+
+Create the voting system.
+
+#### US12 - As a moderator, I want to have a means of communicating with the players, so that I can give them warnings.
 
 ---
 

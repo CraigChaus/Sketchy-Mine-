@@ -10,6 +10,8 @@
   import { teamsValue } from "../stores/teams";
   import ProgressBar from "../components/team/ProgressBar.svelte";
   import Popup from "../components/Popup.svelte";
+  import LeaveButton from "../components/LeaveButton.svelte";
+  import router from "page";
 
   // Receiving guesses
   socket.on("guess", (guesses) => {
@@ -357,6 +359,10 @@
   socket.on("canvas:drawer", becomeDrawer);
   socket.on("canvas:guesser", becomeGuesser);
   socket.on("canvas:spectator", becomeSpectator);
+
+  const leaveGame = () => {
+    router.redirect('/ended_session');
+  }
 </script>
 
 {#if showMatchmakingPopup}
@@ -368,7 +374,7 @@
     showButtons={popupWindowShowButtons}
   />
 {/if}
-
+<LeaveButton on:buttonClicked={leaveGame}>LEAVE</LeaveButton>
 <ProgressBar {teams} />
 
 <div class="flex">
