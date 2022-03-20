@@ -30,11 +30,8 @@ export const create = async (req, res) => {
 
   /* Create a USER */
   const user = {
-
-    username: req.body.username,
-    password: await bcrypt.hash(req.body.password, 12),
-    is_moderator: req.body.is_moderator,
-
+    username,
+    password: await bcrypt.hash(password, 12),
     secret: uuidv4(),
   };
 
