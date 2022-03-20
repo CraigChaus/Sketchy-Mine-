@@ -173,216 +173,97 @@ _§14_ In git, all branches must be automatically created from the issue board, 
 
 #### US01 - As a system admin, I want the user to be able to sign up and sign in, so that the progress is saved to their account
 
-##### US01 BI01
+| Backlog ID | Description            |
+| ---------- | ---------------------- |
+| US01 BI01  | Login page component   |
+| US01 BI02  | Sign up page component |
+| US01 BI03  | Login functionality    |
+| US01 BI04  | Sign up functionality  |
+| US01 BI05  | Routing                |
+| US01 BI06  | Home screen component  |
 
-Login page component
+#### US02 - As a player, I want to be able tto see the players' statistics, so that I can compare myself to other players
 
-##### US01 BI02
-
-Sign up page component
-
-##### US01 BI03
-
-Login functionality
-
-##### US01 BI04
-
-Sign up functionality
-
-##### US01 BI05
-
-Routing
-
-##### US01 BI06
-
-Home screen component
-
-#### US01 - As a player, I want to be able tto see the players' statistics, so that I can compare myself to other players
-
-##### US02 BI01
-
-Ranking page component
+| Backlog ID | Description            |
+| ---------- | ---------------------- |
+| US02 BI01  | Ranking page component |
 
 #### US03 - As a player, I want to be able to draw on a canvas, so that the teams can guess my word.
 
-##### US03 BI01
-
-Create canvas component
-
-##### US03 BI02
-
-Create separate roles for drawing and viewing canvas
-
-##### US03 BI03
-
-Create drawing tools (e.g. colours) selection
-
-##### US03 BI04
-
-Create websocket for transferring canvas content between drawer and server
-
-##### US03 BI05
-
-Create a save of the canvas content for sending to users that connected later on
-
-##### US03 BI06
-
-Create the logic for the canvas
+| Backlog ID | Description                                                                      |
+| ---------- | -------------------------------------------------------------------------------- |
+| US03 BI01  | Create canvas component                                                          |
+| US03 BI02  | Create separate roles for drawing and viewing canvas                             |
+| US03 BI03  | Create drawing tools (e.g. colours) selection                                    |
+| US03 BI04  | Create websocket for transferring canvas content between drawer and server       |
+| US03 BI05  | Create a save of the canvas content for sending to users that connected later on |
+| US03 BI06  | Create the logic for the canvas                                                  |
 
 #### US04 - As a player, I want to be able to submit my guess, so that I can get more emeralds.
 
-##### US04 BI01
-
-Create guess section where guesses will be submitted
-
-##### US04 BI02
-
-Ability to pick a guess from the guess list
-
-##### US04 BI03
-
-See top picks guess in a certain team
-
-##### US04 BI04
-
-Get emeralds when the guess is correct
-
-##### US04 BI05
-
-Create a progress bar to see where the team is currently at
-
-##### US04 BI06
-
-Multiply the gained emeralds when a new level is reached
-
-##### US04 Bl07
-
-Add the functionality to the progress bar
-
-##### US04 Bl08
-
-Create guess backend
+| Backlog ID | Description                                                 |
+| ---------- | ----------------------------------------------------------- |
+| US04 BI01  | Create guess section where guesses will be submitted        |
+| US04 BI02  | Ability to pick a guess from the guess list                 |
+| US04 BI03  | See top picks guess in a certain team                       |
+| US04 BI04  | Get emeralds when the guess is correct                      |
+| US04 BI05  | Create a progress bar to see where the team is currently at |
+| US04 BI06  | Multiply the gained emeralds when a new level is reached    |
+| US04 Bl07  | Add the functionality to the progress bar                   |
+| US04 Bl08  | Create guess backend                                        |
 
 #### US05 - As a player, I want a chat functionality, so I can communicate with my teammates.
 
-##### US05 BI01
-
-Create chat component
-
-##### US05 BI02
-
-Connect frontend incoming chat to the backend
-
-##### US05 BI03
-
-Establish socket.io server
-
-##### US05 BI04
-
-Add chat backend functionality
-
-##### US05 BI05
-
-Connect frontend outgoing chat to the backend
-
-##### US05 BI06
-
-Add team based chat scopes in the backend
-
-##### US05 BI07
-
-Add team list component
-
-##### US05 BI08
-
-Connect team listing component with backend
-
-##### US05 BI09
-
-Make team based chat
+| Backlog ID | Description                                   |
+| ---------- | --------------------------------------------- |
+| US05 BI01  | Create chat component                         |
+| US05 BI02  | Connect frontend incoming chat to the backend |
+| US05 BI03  | Establish socket.io server                    |
+| US05 BI04  | Add chat backend functionality                |
+| US05 BI05  | Connect frontend outgoing chat to the backend |
+| US05 BI06  | Add team based chat scopes in the backend     |
+| US05 BI07  | Add team list component                       |
+| US05 BI08  | Connect team listing component with backend   |
+| US05 BI09  | Make team based chat                          |
 
 #### US11 - As a player, I want to get emeralds, so that I can purchase powerups with the gained emeralds.
 
-##### US11 Bl01
-
-Create the database and the database schema
-
-##### US11 Bl02
-
-Handling team stats in the backend so that each level, emeralds are distributed among team members
-
-##### US11 Bl03
-
-Send updates to the frontend about team progression from the backend.
-
-##### US11 Bl04
-
-Reset the progress of the finished team to the begining when they reach the end of the progress.
-
-##### US11 Bl05
-
-Store the digging distance for each team in the backend
-
-##### US11 Bl06
-
-Pick a word from the word list in the databse and send it to the frontend
-
-##### US11 Bl07
-
-Send results of the round to the frontend to display the teams that guseed the word correclty or not.
-
-##### US11 Bl08
-
-Define the progress that the team should progress in each round in the backend.
-
-##### US11 Bl09
-
-Matchmaking ui in the frontend
-
-##### US11 Bl10
-
-Matchmaking system in the backend
-
-##### US11 Bl11
-
-Create the voting system.
+| Backlog ID | Description                                                                                           |
+| ---------- | ----------------------------------------------------------------------------------------------------- |
+| US11 Bl01  | Create the database and the database schema                                                           |
+| US11 Bl02  | Handling team stats in the backend so that each level, emeralds are distributed among team members    |
+| US11 Bl03  | Send updates to the frontend about team progression from the backend.                                 |
+| US11 Bl04  | Reset the progress of the finished team to the begining when they reach the end of the progress.      |
+| US11 Bl05  | Store the digging distance for each team in the backend                                               |
+| US11 Bl06  | Pick a word from the word list in the databse and send it to the frontend                             |
+| US11 Bl07  | Send results of the round to the frontend to display the teams that guseed the word correclty or not. |
+| US11 Bl08  | Define the progress that the team should progress in each round in the backend.                       |
+| US11 Bl09  | Matchmaking ui in the frontend                                                                        |
+| US11 Bl10  | Matchmaking system in the backend                                                                     |
+| US11 Bl11  | Create the voting system.                                                                             |
 
 #### US07 - As a player, I want the ability to leave an ongoing game, so that I am not forced to play.
-##### US07 Bl01
 
-Creating Screen for the user when they successfully leave the game
-
-##### US07 Bl02
-
-Player is removed from the team with saved progress
+| Backlog ID | Description                                                        |
+| ---------- | ------------------------------------------------------------------ |
+| US07 Bl01  | Creating Screen for the user when they successfully leave the game |
+| US07 Bl02  | Player is removed from the team with saved progress                |
 
 #### US08 - As a moderator, I want to remove players from an ongoing game, so that there is no inappropriate behavior.
 
-#####  US08 Bl01
-
-Handle the ability to assign moderator role to a specific user
-
-##### US08 Bl02
-
-Create the moderator screen/view of the game
-
-##### US08 Bl03
-
-Create the functionality to remove another player from their team as a moderator
+| Backlog ID | Description                                                                      |
+| ---------- | -------------------------------------------------------------------------------- |
+| US08 Bl01  | Handle the ability to assign moderator role to a specific user                   |
+| US08 Bl02  | Create the moderator screen/view of the game                                     |
+| US08 Bl03  | Create the functionality to remove another player from their team as a moderator |
 
 #### US10 As a user, I want to be able to spectate, so that I can watch an ongoing game.
 
-##### US10 Bl01
-
-Create the ability to assign spectator role to myself as a user
-
-##### US10 Bl02
-
-Create the spectator view of the game
-
-##### US10 Bl03
-
-Remove the user from the team if he/she wants to be a spectator
+| Backlog ID | Description                                                     |
+| ---------- | --------------------------------------------------------------- |
+| US10 Bl01  | Create the ability to assign spectator role to myself as a user |
+| US10 Bl02  | Create the spectator view of the game                           |
+| US10 Bl03  | Remove the user from the team if he/she wants to be a spectator |
 
 ---
 
@@ -498,7 +379,7 @@ The following is an overview for how the team will communicate internally, as we
 |          | Sprint planning | Sprint review | Standups                    | Publisher meeting |
 | -------- | --------------- | ------------- | --------------------------- | ----------------- |
 | Sprint 1 | 14.02.2022      | 07.03.2022    | Monday, Friday (every week) | 07.03.2022        |
-| Sprint 2 | 07.03.2022      | –             | Monday, Friday (every week) | –                 |
+| Sprint 2 | 07.03.2022      | 21.03.2022    | Monday, Friday (every week) | 22.03.2022        |
 
 #### Communication tools
 

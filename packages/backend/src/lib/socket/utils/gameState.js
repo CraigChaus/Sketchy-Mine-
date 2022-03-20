@@ -3,6 +3,7 @@ import randomWords from 'random-words';
 import { getIO } from '..';
 import { Teams } from '../../../data/teams';
 import { broadcastTeamSpecificGuesses, sendProgress, sendResult } from '../handlers/guessHandler';
+import { giveAppropriateRoles } from '../handlers/canvasHandler';
 
 const dbg = debug('state');
 
@@ -191,6 +192,49 @@ export const nextWord = () => {
   }, 1000);
 
   dbg('Round Word -', getCurrentWord());
+};
+
+// gets the next team in the array
+// made as a method to reduce duplication
+const nextTeam = (teamsAmount, index) => {
+  if (index === teamsAmount) {
+    index = 0;
+  } else {
+    index++;
+  }
+  return index;
+};
+
+/**
+ * Get next team in the list
+ * teams are selected as drawing teams in order
+ */
+export const nextDrawingTeam = () => {
+  // find drawing team
+  let index = Teams.findIndex((team) => {
+    if (team.isDrawing === true) {
+      return true;
+    } return false;
+  });
+  if (index === -1) { // There is no drawing team
+    for (let i = 0; i < Teams.length; i++) { // for loop to make sure we ignore spectator teams
+      // would have liked to filter out spectator teams but that messes with the Teams array length.
+      if (Teams[i].isSpectator === false) {
+        Teams[i].isDrawing = true;
+        break;
+      }
+    }
+  } else {
+    Teams[index].isDrawing = false; // removes drawing permissions from old team
+    const teamsAmount = Teams.length - 1;
+    index = nextTeam(teamsAmount, index);
+    if (Teams[index].isSpectator === true) {
+      index = nextTeam(teamsAmount, index);
+    }
+    Teams[index].isDrawing = true; // gives drawing permissions to new team
+  }
+
+  giveAppropriateRoles(getIO(), Teams);
 };
 
 export const removeUserGuesses = (user) => {

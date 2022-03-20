@@ -39,7 +39,7 @@ const teamHandler = (io, socket) => {
     if (team) {
       const u = team.members.find((m) => m.username === user.username);
       if (!u) {
-        const currentUser = new User(user.username);
+        const currentUser = new User(user.username, user.id);
         updateTeams(Teams.map((obj) => {
           if (obj.teamname === payload) {
             obj.members.push(currentUser);
@@ -66,7 +66,7 @@ const teamHandler = (io, socket) => {
     });
 
     const sortedTeams = Teams.slice()
-      .filter((t) => t.level === 0) // Only consider teams at level 0
+      .filter((t) => t.level === 1) // Only consider teams at level 1
       // eslint-disable-next-line max-len
       .sort((t1, t2) => t1.members.length - t2.members.length || t1.teamname.toLowerCase() - t2.teamname.toLowerCase()); // Sort teams by team members and name
 

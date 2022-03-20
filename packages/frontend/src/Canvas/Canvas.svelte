@@ -258,6 +258,7 @@
 
       loop({ once: true });
     }
+
     loadSaveData(saveData, true);
   };
 

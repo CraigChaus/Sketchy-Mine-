@@ -1,5 +1,6 @@
 import { BOOLEAN, INTEGER, STRING } from 'sequelize';
-import sequelize from '../util/config';
+
+import sequelize from '../../util/config';
 
 const User = sequelize.define('user', {
   id: {

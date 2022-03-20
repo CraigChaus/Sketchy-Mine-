@@ -1,5 +1,5 @@
 import { INTEGER, DataTypes } from 'sequelize';
-import sequelize from '../util/config';
+import sequelize from '../../util/config';
 
 const WordBank = sequelize.define('wordBank', {
   word_list: {

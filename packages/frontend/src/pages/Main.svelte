@@ -10,6 +10,10 @@
   import { teamsValue } from "../stores/teams";
   import ProgressBar from "../components/team/ProgressBar.svelte";
   import Popup from "../components/Popup.svelte";
+  import { token } from '../stores/token';
+  import { user } from '../stores/user';
+  import LeaveButton from "../components/LeaveButton.svelte";
+  import router from "page";
 
   // Receiving guesses
   socket.on("guess", (guesses) => {
@@ -38,6 +42,8 @@
   let popupWindowStatusText = `Please wait...`; // Used by the popup window to display various match statuses
   let popupWindowShowButtons = true; // Toggle the visibility of the popup window's buttons
   let cachedTeamSize = 0; // Used to check wether the team's size grows or declines
+  let teamSession = "main";
+  let correctWord;
 
   // Progress bar functionality
   // FIXME: This function has been moved to the backend
@@ -174,6 +180,7 @@
 
   onMount(() => {
     username = `User${Math.round(Math.random() * 10000)}`;
+    // username = $user.username; //FIXME display the logged in user's username
     let spectator = window.location.href.includes('spectator');
 
     //sorr but this has to be called before the await else it won't work
@@ -184,9 +191,10 @@
       showMatchmakingPopup = false;
     }
 
-    socket.emit("joinSession", { username }, () => {
+    let tokenValue = $token;
+    socket.emit("joinSession", { username, tokenValue}, () => {
       if(!spectator){
-        randomizeDrawer();
+        // randomizeDrawer();
         joinMatch();
       }else{
         spectate();
@@ -199,7 +207,7 @@
   teamsValue.set(teams);
 
   const spectate = () => {
-    socket.emit("teams:get"); 
+    socket.emit("teams:get");
     socket.emit("spectators:join");
   }
 
@@ -220,6 +228,7 @@
         username: data.username,
         message: data.text,
         type: data.type,
+        currentTime: data.currentTime,
       },
     ];
   });
@@ -230,9 +239,17 @@
       return;
     }
 
-    data.forEach((t) => {
+    data.forEach((t, i) => {
       t.members.forEach((u) => {
         if (u.username === username) {
+          let teamName = "Team +" +(i +1);
+
+          if (teamSession !== teamName){
+            teamSession = teamName;
+
+            socket.emit("joinTeamChat", {teamSession});
+          }
+
           t.isSelf = true;
           u.current = true;
           teamSize = t.members.length;
@@ -302,15 +319,6 @@
     return role;
   }
 
-  let randomizeDrawer = () => {
-    const rng = Math.random();
-    if (rng < 0.5) {
-      role = 1;
-    } else {
-      role = 2;
-    }
-  };
-
   const becomeDrawer = () => {
     role = 1;
     promise = getRole();
@@ -349,7 +357,10 @@
   const startRound = () => socket.emit("round:start");
   const sendGuess = (guess) => socket.emit("round:guess", guess);
 
-  socket.on("round:result", (payload) => (results = payload));
+  socket.on("round:result", (payload) => {
+    results = payload
+    correctWord = results.result;
+  });
   socket.on("round:progress", updateGuessState);
   // 1: drawer
   // 2: guesser
@@ -357,6 +368,10 @@
   socket.on("canvas:drawer", becomeDrawer);
   socket.on("canvas:guesser", becomeGuesser);
   socket.on("canvas:spectator", becomeSpectator);
+
+  const leaveGame = () => {
+    router.redirect('/ended_session');
+  }
 </script>
 
 {#if showMatchmakingPopup}
@@ -368,8 +383,18 @@
     showButtons={popupWindowShowButtons}
   />
 {/if}
-
+<LeaveButton on:buttonClicked={leaveGame}>LEAVE</LeaveButton>
 <ProgressBar {teams} />
+<div class="flex items-center justify-center">
+  {#await promise}
+    <p>loading word...</p>
+  {:then role}
+    {#if role == 1}
+      <p>word to draw {correctWord}</p>
+    {/if}
+  {/await}
+</div>
+
 
 <div class="flex">
   <div class="w-1/4 h-12">
@@ -386,7 +411,7 @@
           />
       {/if}
     {/await}
-    
+
     <TeamList showResults={results != null} contentJSON={teams} />
   </div>
   <div class="w-2/4 h-full space-y-1">
@@ -411,25 +436,14 @@
         <p>loading..</p>
       {:then role}
         {#if role != 3}
-        <button
-        on:click={becomeDrawer}
-        class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
-        >become drawer</button
-      >
-      <button
-        on:click={becomeGuesser}
-        class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded"
-        >become guesser</button
-      >
-  
-      <button
-        on:click={startRound}
-        class="bg-purple-500 hover:bg-purple-700 text-white font-bold py-2 px-4 rounded"
-        >Start Round</button
-      >
+          <button
+            on:click={startRound}
+            class="bg-purple-500 hover:bg-purple-700 text-white font-bold py-2 px-4 rounded"
+            >Start Round</button
+          >
         {/if}
       {/await}
-    
+
 
     <MessageBar
       {role}

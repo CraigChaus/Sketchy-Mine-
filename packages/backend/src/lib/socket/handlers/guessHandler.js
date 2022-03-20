@@ -1,7 +1,8 @@
 import debug from 'debug';
 import { getIO } from '..';
+import { Teams } from '../../../data/teams';
 import {
-  addGuess, getCurrentWord, getGuesses, nextWord, getTeamResults,
+  addGuess, getCurrentWord, getGuesses, nextWord, getTeamResults, nextDrawingTeam, gameState,
 } from '../utils/gameState';
 import { getCurrentUser } from '../utils/users';
 import { TEAM_EVENTS } from './teamHandler';
@@ -78,7 +79,23 @@ export const sendResult = () => {
  * @param {Socket} socket User's socket
  */
 const startRound = (socket) => {
+  // checks whether game is already in progress before allowing a new round to start
+  if (gameState.roundTime > 0) {
+    return;
+  }
   nextWord();
+  nextDrawingTeam();
+  const index = Teams.findIndex((team) => {
+    if (team.isDrawing === true) {
+      return true;
+    } return false;
+  });
+  const io = getIO();
+  const progress = { result: getCurrentWord() };
+  Teams[index].members.forEach((member) => {
+    io.to(member.socketID).emit(GUESS_EVENTS.ROUND_RESULT, progress);
+  });
+
   sendState(socket);
   // Null needs to be sent to hide the round results on the team listing
   getIO().emit(GUESS_EVENTS.ROUND_RESULT, null);

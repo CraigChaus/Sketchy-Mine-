@@ -7,13 +7,16 @@ import { sendState } from './guessHandler';
 import { removeUserGuesses } from '../utils/gameState';
 import { removePlayerFromTeam } from '../../../data/teams';
 import { sendTeamData } from './teamHandler';
+import { verifyToken } from '../../../middleware/is_logged_in';
 
 // This will appear as the name of the sender
 const name = 'Sketchy Mine System';
 
 // Chat events will be used as the socket events
 const CHAT_EVENTS = {
-  JOIN: 'joinSession',
+  JOINTEAMCHAT: 'joinTeamChat',
+  // JOINSESSION is joining the whole game.
+  JOINSESSION: 'joinSession',
   SEND: 'chat:send',
   MESSAGE: 'message',
   SESSION_USERS: 'sessionUsers',
@@ -29,25 +32,40 @@ const CHAT_EVENTS = {
 const chatHandler = (io, socket) => {
   const dbg = debug('handler:chat');
 
-  socket.on(CHAT_EVENTS.JOIN, ({ username, session }, callback) => {
-    dbg(CHAT_EVENTS.JOIN, { username, session });
-    const user = userJoin(socket.id, username, session);
-    socket.join(user.session);
+  // User joins a session / game.
+
+  socket.on(CHAT_EVENTS.JOINSESSION, async ({ username, tokenValue }, callback) => {
+    const tokenPayload = await verifyToken(tokenValue);
+
+    dbg(CHAT_EVENTS.JOIN, { username, tokenPayload });
+    userJoin(socket.id, username, tokenPayload);
+
     // Welcome current user
     socket.emit(CHAT_EVENTS.MESSAGE, messageFormat(name, 'Welcome to Sketchy Mine!', 3));
-    // Use .to method to forward the message to the correct session
-    // Send to all users this message except for current user
-    socket.broadcast.to(user.session).emit(CHAT_EVENTS.MESSAGE, messageFormat(name, `${user.username} has joined the chat`, 3));
-
-    // Send users and session info
-    io.to(user.session).emit(CHAT_EVENTS.SESSION_USERS, {
-      room: user.session,
-      users: getSessionUsers(user.session),
-    });
 
     sendState(socket);
 
     callback();
+  });
+
+  // User that has already joined the game is now
+  // connected to the chat that only his team members can see.
+  socket.on(CHAT_EVENTS.JOINTEAMCHAT, ({ teamSession }) => {
+    const user = getCurrentUser(socket.id);
+    user.teamSession = teamSession;
+    socket.join(user.teamSession);
+
+    // Send to all users this message except for current user
+    socket.broadcast.to(user.teamSession).emit(
+      CHAT_EVENTS.MESSAGE,
+      messageFormat(name, `${user.username} has joined the chat`, 3),
+    );
+
+    // Send users and session info
+    io.to(user.teamSession).emit(CHAT_EVENTS.SESSION_USERS, {
+      room: user.teamSession,
+      users: getSessionUsers(user.teamSession),
+    });
   });
 
   // Listen for chat message
@@ -55,7 +73,10 @@ const chatHandler = (io, socket) => {
     dbg(CHAT_EVENTS.CHAT_MESSAGE, { msg });
     // Get the user who sent the message
     const user = getCurrentUser(socket.id);
-    socket.broadcast.to(user.session).emit(CHAT_EVENTS.MESSAGE, messageFormat(user.username, msg));
+    socket.broadcast.to(user.teamSession).emit(
+      CHAT_EVENTS.MESSAGE,
+      messageFormat(user.username, msg),
+    );
     socket.emit(CHAT_EVENTS.MESSAGE, messageFormat(user.username, msg, 1));
   });
 
@@ -74,7 +95,38 @@ const chatHandler = (io, socket) => {
     if (user) {
       dbg('Client disconnected', existingUser);
       // Send to everyone using emit() method
-      io.to(existingUser.session).emit(CHAT_EVENTS.MESSAGE, messageFormat(name, `${existingUser.username} has left the chat`, 3));
+      io.to(existingUser.teamSession).emit(
+        CHAT_EVENTS.MESSAGE,
+        messageFormat(name, `${existingUser.username} has left the chat`, 3),
+      );
+
+      // Send users and session info again when user disconnects
+      io.to(existingUser.teamSession).emit(CHAT_EVENTS.SESSION_USERS, {
+        room: existingUser.teamSession,
+        users: getSessionUsers(existingUser.teamSession),
+      });
+    }
+  });
+
+  // Runs when client is removed from a team by the moderator
+  /**
+   * Method for disconnecting a kicked player and notifying all the other players
+   */
+  socket.on('kicked', () => { // TODO: check out this socket for the frontend of moderator so that they link
+    const existingUser = getCurrentUser(socket.id);
+    // if the user disconnects from the server, disconnect him from all the places
+    if (existingUser) {
+      removeUserGuesses(existingUser);
+      removePlayerFromTeam(existingUser.username);
+      sendTeamData(io);
+    }
+
+    const user = userLeave(socket.id);
+
+    if (user) {
+      dbg('Client kicked by moderator', existingUser);
+      // Send to everyone using emit() method
+      io.to(existingUser.session).emit(CHAT_EVENTS.MESSAGE, messageFormat(name, `${existingUser.username} has been kicked out by moderator`, 3));
 
       // Send users and session info again when user disconnects
       io.to(existingUser.session).emit(CHAT_EVENTS.SESSION_USERS, {

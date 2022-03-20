@@ -2,12 +2,14 @@ import { Op } from 'sequelize';
 import { StatusCodes } from 'http-status-codes';
 import { v4 as uuidv4 } from 'uuid';
 import bcrypt from 'bcrypt';
-import User from '../models/user_model';
+import User from './models/user_model';
 
 /* Create and Save a new USER */
 export const create = async (req, res) => {
   /* Validate request */
-  if (!req.body.username) {
+  const { username } = req.body;
+  const { password } = req.body;
+  if (!(username && password)) {
     res
       .status(StatusCodes.BAD_REQUEST)
       .send({
@@ -16,20 +18,37 @@ export const create = async (req, res) => {
     return;
   }
 
+  const userExists = await User.findOne({ where: { username } });
+  if (userExists) {
+    res
+      .status(StatusCodes.BAD_REQUEST)
+      .send({
+        message: 'User already registered!',
+      });
+    return;
+  }
+
   /* Create a USER */
   const user = {
+
     username: req.body.username,
     password: await bcrypt.hash(req.body.password, 12),
     is_moderator: req.body.is_moderator,
+
     secret: uuidv4(),
   };
 
   /* Save USER in the database */
   User.create(user)
-    .then((data) => {
+    .then((u) => {
       res
         .status(StatusCodes.CREATED)
-        .send(data);
+        .send({
+          id: u.id,
+          username: u.username,
+          is_moderator: u.is_moderator,
+          total_emeralds: u.total_emeralds,
+        });
     })
     .catch((err) => {
       res
@@ -47,7 +66,7 @@ export const findAll = (req, res) => {
   const { username } = req.query;
   const condition = username ? { username: { [Op.like]: `%${username}%` } } : null;
 
-  User.findAll({ where: condition })
+  User.findAll({ where: condition, order: [['total_emeralds', 'DESC']] })
     .then((data) => {
       res
         .send(data);
