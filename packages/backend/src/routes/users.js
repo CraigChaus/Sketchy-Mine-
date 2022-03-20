@@ -1,5 +1,6 @@
 import { Router } from 'express';
 import isLoggedIn from '../middleware/is_logged_in';
+import isModerator from '../middleware/is_moderator';
 import * as users from '../database/controllers/user_controller';
 
 const router = Router();
@@ -17,6 +18,6 @@ router.post('/', users.create);
 router.put('/:id', isLoggedIn, users.update);
 
 /* Delete User by id */
-router.delete('/:id', isLoggedIn, users.deleteUser);
+router.delete('/:id', isLoggedIn, isModerator, users.deleteUser);
 
 export default router;

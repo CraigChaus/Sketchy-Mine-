@@ -6,8 +6,10 @@ const users = [];
 
 // Join user to chat room
 // If later on we decided to add multiple session/rooms then this method is already up to date
-export const userJoin = (id, username, teamSession) => {
-  const user = { id, username, teamSession };
+export const userJoin = (id, username, teamSession, tokenPayload) => {
+  const user = {
+    id, username, teamSession, tokenPayload,
+  }; // FIXME tokenPayload
   users.push(user);
   return user;
 };

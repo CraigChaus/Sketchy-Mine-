@@ -1,6 +1,3 @@
-import { writable } from "svelte/store";
+import { writable } from 'svelte-local-storage-store';
 
-const storedToken = localStorage.token;
-export const token = writable(storedToken);
-
-token.subscribe(value => localStorage.token = value);
+export const token = writable('token', "");

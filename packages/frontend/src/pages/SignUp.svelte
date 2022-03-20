@@ -27,9 +27,9 @@
         });
 
         if (response.status === 201) {
-            alert("Account successfully created");
+            alert("Account successfully created"); //FIXME redirect to some other page
         } else {
-            alert("Sign up failed \n" + response.statusText);
+            alert("Sign up failed \n" + response.statusText); //FIXME display message from backend
         }
     }
 </script>
