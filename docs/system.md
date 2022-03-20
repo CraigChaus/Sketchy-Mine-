@@ -138,7 +138,18 @@ The presented product is a network game created for a large number of players wh
 
   2.Database controller component.Data from the Socket.io component is streamed to the Database controller component, which in turn is connected to the database,
 - the Database component provides access to write new data about the course of the game, players, and so on, and also provides the Database Controller with access to read previously saved data.
+## Diagrams
+### Package Diagram
+![PackageDiagram](./resources/diagrams/Package%20Diagram.png)
 
+The game logic are the rules, and the evaluation of every turn inside the game. After playing round after round the shards that the players collect are calculated into emeralds which then is added to the players account. SocketIO is the library that connects everything.
+
+### Application Layer Diagram
+![Application Layer Diagram](./resources/diagrams/Application%20Layer%20Diagram.png)
+
+Game Server, Game Logic and GUI are in the game specific layer. The first layer is about the logic of the game the animation of the game and basically the storing of the game entirely.
+Network, Graphics and GUI are in the Middleware layer. Network focuses on the communication between the game and the server. Graphics are a collection of subsystem all related to visualizing the game in our case "The Canvas", "Tool box" and "Chat box".
+After encapsulating everything and having input from the last layer which is System Software the end product is our game Sketchy Mine.
 ## Technical design
 ### Development tools
 
