@@ -98,7 +98,7 @@ The presented product is a network game created for a large number of players wh
 
 #### Description of a graphical representation of interaction with a WebApplication.
 
-![Use Case Diagram](./resources/diagrams/Use Case Diagram.png "login image")
+![UseCaseDiagram](./resources/diagrams/Use%20Case%20Diagram.png "login image")
 
 
 #### Use case diagrams consist of 2 objects:
@@ -125,10 +125,11 @@ The presented product is a network game created for a large number of players wh
 - The moderator can kick any player out of the game, as well as completely ban the player's account.
 - Moderator options include making the game harder or easier for the players.
 
-##Description of Component Diagram
-![Component Diagram](./resources/diagrams/Abstract Component Diagram.png "login image")
+## Description of Component Diagram
 
-####Component diagram consists of 5 components connected to each other illustrating the operation of the system.
+![ComponentDiagram](./resources/diagrams/Abstract%20Component%20Diagram.png "login image")
+
+#### Component diagram consists of 5 components connected to each other illustrating the operation of the system.
 
 - The Client Web Browser component that requires the
 - Game Server component to provide a running game, inside the Game server component are two subclasses:
