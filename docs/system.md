@@ -98,7 +98,7 @@ The presented product is a network game created for a large number of players wh
 
 #### Description of a graphical representation of interaction with a WebApplication.
 
-![UseCaseDiagram](./resources/diagrams/Use%20Case%20Diagram.png "login image")
+![UseCaseDiagram](./resources/diagrams/Use%20Case%20Diagram.png "Use case diagram")
 
 
 #### Use case diagrams consist of 2 objects:
@@ -127,7 +127,7 @@ The presented product is a network game created for a large number of players wh
 
 ## Description of Component Diagram
 
-![ComponentDiagram](./resources/diagrams/Abstract%20Component%20Diagram.png "login image")
+![ComponentDiagram](./resources/diagrams/Abstract%20Component%20Diagram.png "Abstract component diagram")
 
 #### Component diagram consists of 5 components connected to each other illustrating the operation of the system.
 
