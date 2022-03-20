@@ -26,6 +26,7 @@
         sender={element.username}
         message={element.message}
         type={element.type}
+        currentTime={element.currentTime}
       />
     {/each}
   {/if}

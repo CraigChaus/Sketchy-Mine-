@@ -222,6 +222,7 @@
         username: data.username,
         message: data.text,
         type: data.type,
+        currentTime: data.currentTime,
       },
     ];
   });
