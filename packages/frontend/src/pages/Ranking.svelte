@@ -7,7 +7,7 @@
     const res = await fetch(API_URL + "/users/", {
       headers: {
         "Content-Type": "application/json",
-        Authorization: `Bearer ${$tokenStore.token}`,
+        Authorization: `Bearer ${$tokenStore}`,
       },
     });
 
