@@ -1,23 +1,24 @@
 <script>
+    import router from 'page';
     import { token } from '../stores/token';
     import { user } from '../stores/user';
     import {onDestroy, onMount} from 'svelte';
-    import { API_URL } from "../socket";
+    import { API_URL } from '../socket';
 
     let userValue = {};
     onMount( async () => {
         user.subscribe((u) => (userValue = u))
     });
 
-    const unsubscribe = user.subscribe((u) => (userValue = u))
+    const unsubscribe = user.subscribe((u) => (userValue = u)) //FIXME this might not work properly
 
     const handleLogin = async () => {
         const response = await login();
         if (response) {
             if (response['status'] === 200) {
-                alert("You have successfully logged in, you should be redirected to some other page")
+                router.redirect('/game');
             } else {
-                alert("Unsuccessful login, sorry ")
+                alert("Unsuccessful login, sorry!")
             }
         }
     };
@@ -35,17 +36,19 @@
             });
 
             const data = await response.json();
-            token.update(() => data.token);
-            user.update(() => JSON.stringify(data.user));
+            token.set(data.token);
+            user.set(data.user);
 
             return await response;
         } catch (e) {
+            alert("Unsuccessful login, sorry!")
             console.log(e);
         }
     }
 
     const handleLogout = () => {
         user.update(() => (''))
+        token.update(() => (''));
     }
 
     onDestroy(unsubscribe);
