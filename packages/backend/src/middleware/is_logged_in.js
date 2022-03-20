@@ -1,8 +1,8 @@
 import { StatusCodes } from 'http-status-codes';
 import jwt from 'jsonwebtoken';
-import User from '../database/models/user_model';
+import User from '../database/controllers/models/user_model';
 
-const verifyToken = async (token) => {
+export const verifyToken = async (token) => {
   try {
     const tokenPayload = jwt.decode(token);
 
@@ -16,7 +16,7 @@ const verifyToken = async (token) => {
   }
 };
 
-const getTokenFromRequest = (req) => {
+export const getTokenFromRequest = (req) => {
   const authHeader = req.headers.authorization;
 
   if (authHeader) {

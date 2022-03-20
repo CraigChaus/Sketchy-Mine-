@@ -1,5 +1,5 @@
-import { INTEGER, STRING } from 'sequelize';
-import sequelize from '../util/config';
+import { BOOLEAN, INTEGER, STRING } from 'sequelize';
+import sequelize from '../../util/config';
 
 const User = sequelize.define('user', {
   id: {
@@ -13,6 +13,10 @@ const User = sequelize.define('user', {
   },
   password: {
     type: STRING,
+  },
+  is_moderator: {
+    type: BOOLEAN,
+    defaultValue: false,
   },
   secret: {
     type: STRING,

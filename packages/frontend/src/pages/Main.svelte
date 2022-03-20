@@ -10,6 +10,10 @@
   import { teamsValue } from "../stores/teams";
   import ProgressBar from "../components/team/ProgressBar.svelte";
   import Popup from "../components/Popup.svelte";
+  import { token } from '../stores/token';
+  import { user } from '../stores/user';
+  import LeaveButton from "../components/LeaveButton.svelte";
+  import router from "page";
 
   // Receiving guesses
   socket.on("guess", (guesses) => {
@@ -176,6 +180,7 @@
 
   onMount(() => {
     username = `User${Math.round(Math.random() * 10000)}`;
+    // username = $user.username; //FIXME display the logged in user's username
     let spectator = window.location.href.includes('spectator');
 
     //sorr but this has to be called before the await else it won't work
@@ -186,7 +191,8 @@
       showMatchmakingPopup = false;
     }
 
-    socket.emit("joinSession", { username }, () => {
+    let tokenValue = $token;
+    socket.emit("joinSession", { username, tokenValue}, () => {
       if(!spectator){
         // randomizeDrawer();
         joinMatch();
@@ -362,6 +368,10 @@
   socket.on("canvas:drawer", becomeDrawer);
   socket.on("canvas:guesser", becomeGuesser);
   socket.on("canvas:spectator", becomeSpectator);
+
+  const leaveGame = () => {
+    router.redirect('/ended_session');
+  }
 </script>
 
 {#if showMatchmakingPopup}
@@ -373,7 +383,7 @@
     showButtons={popupWindowShowButtons}
   />
 {/if}
-
+<LeaveButton on:buttonClicked={leaveGame}>LEAVE</LeaveButton>
 <ProgressBar {teams} />
 <div class="flex items-center justify-center">
   {#await promise}

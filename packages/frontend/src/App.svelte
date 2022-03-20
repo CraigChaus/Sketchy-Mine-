@@ -1,21 +1,22 @@
 <script>
-  
-  
+
   import Main from './pages/Main.svelte';
-  import Login from './pages/Login.svelte';
+  import LogIn from './pages/LogIn.svelte';
   import Home from './pages/Home.svelte';
   import router from 'page';
   import SignUp from './pages/SignUp.svelte';
   import Ranking from './pages/Ranking.svelte';
+  import EndedSession from "./pages/EndedSession.svelte";
 
   let page;
   let params;
 
   router('/game', (ctx) => page = Main);
-  router('/login', (ctx) => page = Login);
+  router('/login', (ctx) => page = LogIn);
   router('/register', (ctx) => page = SignUp);
-  router('/game?specate', (ctx) => page = Main);
+  router('/game?spectate', (ctx) => page = Main);
   router('/leaderboards', (ctx) => page = Ranking);
+  router('/ended_session', (ctx) => page = EndedSession);
 
   router('/', (ctx) => page = Home);
 
