@@ -40,6 +40,8 @@
   let popupWindowStatusText = `Please wait...`; // Used by the popup window to display various match statuses
   let popupWindowShowButtons = true; // Toggle the visibility of the popup window's buttons
   let cachedTeamSize = 0; // Used to check wether the team's size grows or declines
+  let teamSession = "main";
+  let correctWord;
 
   // Progress bar functionality
   // FIXME: This function has been moved to the backend
@@ -188,7 +190,7 @@
 
     socket.emit("joinSession", { username }, () => {
       if(!spectator){
-        randomizeDrawer();
+        // randomizeDrawer();
         joinMatch();
       }else{
         spectate();
@@ -201,7 +203,7 @@
   teamsValue.set(teams);
 
   const spectate = () => {
-    socket.emit("teams:get"); 
+    socket.emit("teams:get");
     socket.emit("spectators:join");
   }
 
@@ -232,9 +234,17 @@
       return;
     }
 
-    data.forEach((t) => {
+    data.forEach((t, i) => {
       t.members.forEach((u) => {
         if (u.username === username) {
+          let teamName = "Team +" +(i +1);
+
+          if (teamSession !== teamName){
+            teamSession = teamName;
+
+            socket.emit("joinTeamChat", {teamSession});
+          }
+
           t.isSelf = true;
           u.current = true;
           teamSize = t.members.length;
@@ -304,15 +314,6 @@
     return role;
   }
 
-  let randomizeDrawer = () => {
-    const rng = Math.random();
-    if (rng < 0.5) {
-      role = 1;
-    } else {
-      role = 2;
-    }
-  };
-
   const becomeDrawer = () => {
     role = 1;
     promise = getRole();
@@ -351,7 +352,10 @@
   const startRound = () => socket.emit("round:start");
   const sendGuess = (guess) => socket.emit("round:guess", guess);
 
-  socket.on("round:result", (payload) => (results = payload));
+  socket.on("round:result", (payload) => {
+    results = payload
+    correctWord = results.result;
+  });
   socket.on("round:progress", updateGuessState);
   // 1: drawer
   // 2: guesser
@@ -376,6 +380,16 @@
 {/if}
 <LeaveButton on:buttonClicked={leaveGame}>LEAVE</LeaveButton>
 <ProgressBar {teams} />
+<div class="flex items-center justify-center">
+  {#await promise}
+    <p>loading word...</p>
+  {:then role}
+    {#if role == 1}
+      <p>word to draw {correctWord}</p>
+    {/if}
+  {/await}
+</div>
+
 
 <div class="flex">
   <div class="w-1/4 h-12">
@@ -392,7 +406,7 @@
           />
       {/if}
     {/await}
-    
+
     <TeamList showResults={results != null} contentJSON={teams} />
   </div>
   <div class="w-2/4 h-full space-y-1">
@@ -417,25 +431,14 @@
         <p>loading..</p>
       {:then role}
         {#if role != 3}
-        <button
-        on:click={becomeDrawer}
-        class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
-        >become drawer</button
-      >
-      <button
-        on:click={becomeGuesser}
-        class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded"
-        >become guesser</button
-      >
-  
-      <button
-        on:click={startRound}
-        class="bg-purple-500 hover:bg-purple-700 text-white font-bold py-2 px-4 rounded"
-        >Start Round</button
-      >
+          <button
+            on:click={startRound}
+            class="bg-purple-500 hover:bg-purple-700 text-white font-bold py-2 px-4 rounded"
+            >Start Round</button
+          >
         {/if}
       {/await}
-    
+
 
     <MessageBar
       {role}

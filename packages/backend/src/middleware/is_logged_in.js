@@ -35,7 +35,6 @@ const isLoggedIn = async (req, res, next) => {
       req.user = payload;
       return next();
     }
-    return false;
   }
   res.status(StatusCodes.UNAUTHORIZED).send('Something is wrong with your credentials.');
 
