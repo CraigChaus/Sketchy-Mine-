@@ -226,21 +226,15 @@ _§14_ In git, all branches must be automatically created from the issue board, 
 | US05 BI08  | Connect team listing component with backend   |
 | US05 BI09  | Make team based chat                          |
 
-#### US11 - As a player, I want to get emeralds, so that I can purchase powerups with the gained emeralds.
+#### US06 - As a player, I want the game to be mobile responsive, so that I can play it on my mobile phone.
 
-| Backlog ID | Description                                                                                           |
-| ---------- | ----------------------------------------------------------------------------------------------------- |
-| US11 Bl01  | Create the database and the database schema                                                           |
-| US11 Bl02  | Handling team stats in the backend so that each level, emeralds are distributed among team members    |
-| US11 Bl03  | Send updates to the frontend about team progression from the backend.                                 |
-| US11 Bl04  | Reset the progress of the finished team to the begining when they reach the end of the progress.      |
-| US11 Bl05  | Store the digging distance for each team in the backend                                               |
-| US11 Bl06  | Pick a word from the word list in the databse and send it to the frontend                             |
-| US11 Bl07  | Send results of the round to the frontend to display the teams that guseed the word correclty or not. |
-| US11 Bl08  | Define the progress that the team should progress in each round in the backend.                       |
-| US11 Bl09  | Matchmaking ui in the frontend                                                                        |
-| US11 Bl10  | Matchmaking system in the backend                                                                     |
-| US11 Bl11  | Create the voting system.                                                                             |
+| Backlog ID | Description                                                              |
+|------------|--------------------------------------------------------------------------|
+| US06 Bl01  | Add responsive styling to the main (game) page                           |
+| US06 Bl02  | Better looking progress bar (with textures and emerald pictures)         |
+| US06 Bl03  | Adding a page layout component with a backgorund for each page component |
+| US06 Bl04  | Matching login and signup pages                                          |
+| US06 Bl05  | Matching home screen and ranking page                                    |
 
 #### US07 - As a player, I want the ability to leave an ongoing game, so that I am not forced to play.
 
@@ -257,13 +251,46 @@ _§14_ In git, all branches must be automatically created from the issue board, 
 | US08 Bl02  | Create the moderator screen/view of the game                                     |
 | US08 Bl03  | Create the functionality to remove another player from their team as a moderator |
 
-#### US10 As a user, I want to be able to spectate, so that I can watch an ongoing game.
+#### US09 - As a moderator, I want to buff or debuff teams, so that I can influence the game logic.
+
+| Backlog ID | Description                                                     |
+|------------|-----------------------------------------------------------------|
+| US09 Bl01  | Adding buttons on each team's section for buffing and debuffing |
+| US09 Bl02  | Logic for buffing and debuffing the team                        |
+| US09 Bl03  | Players in the team are notified for their upgrade              |
+
+#### US10 - As a user, I want to be able to spectate, so that I can watch an ongoing game.
 
 | Backlog ID | Description                                                     |
 | ---------- | --------------------------------------------------------------- |
 | US10 Bl01  | Create the ability to assign spectator role to myself as a user |
 | US10 Bl02  | Create the spectator view of the game                           |
 | US10 Bl03  | Remove the user from the team if he/she wants to be a spectator |
+
+#### US11 - As a player, I want to get emeralds, so that I can purchase powerups with the gained emeralds.
+
+| Backlog ID | Description                                                                                           |
+| ---------- | ----------------------------------------------------------------------------------------------------- |
+| US11 Bl01  | Create the database and the database schema                                                           |
+| US11 Bl02  | Handling team stats in the backend so that each level, emeralds are distributed among team members    |
+| US11 Bl03  | Send updates to the frontend about team progression from the backend.                                 |
+| US11 Bl04  | Reset the progress of the finished team to the begining when they reach the end of the progress.      |
+| US11 Bl05  | Store the digging distance for each team in the backend                                               |
+| US11 Bl06  | Pick a word from the word list in the databse and send it to the frontend                             |
+| US11 Bl07  | Send results of the round to the frontend to display the teams that guseed the word correclty or not. |
+| US11 Bl08  | Define the progress that the team should progress in each round in the backend.                       |
+| US11 Bl09  | Matchmaking ui in the frontend                                                                        |
+| US11 Bl10  | Matchmaking system in the backend                                                                     |
+| US11 Bl11  | Create the voting system.                                                                             |
+
+#### US12 - As a moderator, I want to have a means of communicating with the players, so that I can give them warnings.
+
+| Backlog ID | Description                                                                                    |
+|------------|------------------------------------------------------------------------------------------------|
+| US12 Bl01  | Create warning form for moderator to write the message to the player                           |                                                                    |
+| US12 Bl02  | Add button on each player tab on the teams section that opens the form for writing the warning |
+| US12 Bl03  | Ability to send the warning message to the player                                              |
+| US12 Bl04  | Displaying the warning message on the player's side with a pop up                              |
 
 ---
 
