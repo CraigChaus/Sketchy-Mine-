@@ -22,9 +22,24 @@ services:
       - db
     networks:
       - sketchymine-net
+  pg_admin:
+    image: dpage/pgadmin4
+    container_name: sketchymine-db-pgadmin4
+    ports:
+      - 8000:80
+    environment:
+      PGADMIN_DEFAULT_EMAIL: admin@sketchymine.philipposslicher.tech
+      PGADMIN_DEFAULT_PASSWORD: ${DB_PASS}
+    depends_on:
+      - db
+    networks:
+      - sketchymine-net
+    volumes:
+      - pga-volume:/servers.json
 
 networks:
   sketchymine-net:
 
 volumes:
   db-volume:
+  pga-volume:
