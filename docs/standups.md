@@ -421,3 +421,22 @@ Ana is missing, did not inform the team, everyone else is present
 - Mira:
   - Task could use more styling, but done
   - Added missing documentation
+
+## SCRUM Sprint 2 retrospective (Entire team) - 21.03.2022
+- Everyone is present, Marko joined online
+- See notes in `team-plan.md`
+
+## SCRUM Sprint 3 planning (Entire team) - 21.03.2022
+- Everyone is present, Marko joined online
+- Group 1 will work on:
+  - US12
+- Group 2 will work on:
+  - US9
+
+## SCRUM Standup (Group 2) - 21.03.2022
+- Everyone is present, Marko is absent (should have tuned in online)
+- US9 is taken
+- Currently the team will work on bugfixes until the meeting with the publisher
+  - We are not sure yet if we should implement new features or fix bugs
+  - We must wait for the answer of the publisher
+- 
