@@ -1,0 +1,1 @@
+ufw-docker delete allow sketchymine-db-pgadmin4 80
