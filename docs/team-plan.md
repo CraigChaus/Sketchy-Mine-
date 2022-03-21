@@ -60,6 +60,8 @@ The purpose of the ambassador is to handle the two groups ambassadors and mainta
 - Group-2 Scrum Master (Sprint 1): Vedat Daglar
 - Group-1 Scrum Master (Sprint 2): Mira Ilieva
 - Group-2 Scrum Master (Sprint 2): Lukman Sulaiman Al-Busaidi
+- Group-1 Scrum Master (Sprint 3): Mira Ilieva
+- Group-2 Scrum Master (Sprint 3): Peter Pinter
 
 The scrum masters keep track of the issues/tasks given for the following stand-up meeting.
 
@@ -69,6 +71,8 @@ The scrum masters keep track of the issues/tasks given for the following stand-u
 - Group-2 Ambassador (Sprint 1): Vedat Daglar
 - Group-1 Ambassador (Sprint 2): Melissa Neamt-Jilovan
 - Group-2 Ambassador (Sprint 2): Philippos Slicher
+- Group-1 Ambassador (Sprint 3): Craig Chauraya
+- Group-2 Ambassador (Sprint 3): Lukman Sulaiman Al-Busaidi
 
 The group ambassadors are responsible for communication with the other teams' ambassador.
 They also inform the head ambassador of the progress within the team.
@@ -229,7 +233,7 @@ _§14_ In git, all branches must be automatically created from the issue board, 
 #### US06 - As a player, I want the game to be mobile responsive, so that I can play it on my mobile phone.
 
 | Backlog ID | Description                                                              |
-|------------|--------------------------------------------------------------------------|
+| ---------- | ------------------------------------------------------------------------ |
 | US06 Bl01  | Add responsive styling to the main (game) page                           |
 | US06 Bl02  | Better looking progress bar (with textures and emerald pictures)         |
 | US06 Bl03  | Adding a page layout component with a backgorund for each page component |
@@ -251,13 +255,15 @@ _§14_ In git, all branches must be automatically created from the issue board, 
 | US08 Bl02  | Create the moderator screen/view of the game                                     |
 | US08 Bl03  | Create the functionality to remove another player from their team as a moderator |
 
-#### US09 - As a moderator, I want to buff or debuff teams, so that I can influence the game logic.
+#### US09 - As a player, I want to buy power-ups to influence my gameplay
 
-| Backlog ID | Description                                                     |
-|------------|-----------------------------------------------------------------|
-| US09 Bl01  | Adding buttons on each team's section for buffing and debuffing |
-| US09 Bl02  | Logic for buffing and debuffing the team                        |
-| US09 Bl03  | Players in the team are notified for their upgrade              |
+| Backlog ID | Description                                        |
+| ---------- | -------------------------------------------------- |
+| US09 Bl01  | See a list of purchasable power-ups on screen      |
+| US09 Bl02  | Store power-up purchases in database               |
+| US09 Bl03  | Set up server to support power-up purchases        |
+| US09 Bl04  | Implement power-up for increasing digging distance |
+| US09 Bl05  | Implement power-up for getting a hint              |
 
 #### US10 - As a user, I want to be able to spectate, so that I can watch an ongoing game.
 
@@ -286,8 +292,8 @@ _§14_ In git, all branches must be automatically created from the issue board, 
 #### US12 - As a moderator, I want to have a means of communicating with the players, so that I can give them warnings.
 
 | Backlog ID | Description                                                                                    |
-|------------|------------------------------------------------------------------------------------------------|
-| US12 Bl01  | Create warning form for moderator to write the message to the player                           |                                                                    |
+| ---------- | ---------------------------------------------------------------------------------------------- |
+| US12 Bl01  | Create warning form for moderator to write the message to the player                           |  |
 | US12 Bl02  | Add button on each player tab on the teams section that opens the form for writing the warning |
 | US12 Bl03  | Ability to send the warning message to the player                                              |
 | US12 Bl04  | Displaying the warning message on the player's side with a pop up                              |
@@ -370,6 +376,25 @@ _§14_ In git, all branches must be automatically created from the issue board, 
 ![S1R](./resources/img/retrospective-formula.png "Retrospective formula")
 
 > Focus factor this sprint: **0.83712**
+
+### Sprint 2
+
+![S2R](./resources/img/sprint2-retrospective.jpg "Sprint 2 Retrospective")
+
+#### Focus factor:
+𝑓 = 𝑓𝑜𝑐𝑢𝑠 𝑓𝑎𝑐𝑡𝑜𝑟
+
+𝑡 = 𝑎𝑣𝑎𝑖𝑙𝑎𝑏𝑙𝑒 h𝑜𝑢𝑟𝑠 𝑝𝑒𝑟 𝑤𝑒𝑒𝑘 𝑝𝑒𝑟 𝑝𝑒𝑟𝑠𝑜𝑛 (12)
+
+𝑛 = 𝑛𝑢𝑚𝑏𝑒𝑟 𝑜𝑓 𝑡𝑒𝑎𝑚 𝑚𝑒𝑚𝑏𝑒𝑟𝑠 (11)
+
+𝑤 = 𝑛𝑢𝑚𝑏𝑒𝑟 𝑜𝑓 𝑤𝑒𝑒𝑘𝑠 𝑓𝑜𝑟 𝑎 𝑆𝑝𝑟𝑖𝑛𝑡 (2)
+
+𝑣 = 𝑆𝑢𝑚 𝑤𝑒𝑖𝑔h𝑡 𝑜𝑓 𝑏𝑎𝑐𝑘𝑙𝑜𝑔 𝑖𝑡𝑒𝑚 (216)
+
+![S1R](./resources/img/retrospective-formula.png "Retrospective formula")
+
+> Focus factor this sprint: **0.81**
 
 #### Costs:
 
