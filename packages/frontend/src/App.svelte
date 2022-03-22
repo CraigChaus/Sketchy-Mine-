@@ -8,6 +8,8 @@
   import Ranking from './pages/Ranking.svelte';
   import EndedSession from "./pages/EndedSession.svelte";
 
+  import Notifications from 'svelte-notifications';
+
   let page;
   let params;
 
@@ -33,7 +35,9 @@
 <!-- <Main /> -->
 <!-- <Home/> -->
 
-<svelte:component this="{page}" {params} />
+<Notifications>
+  <svelte:component this="{page}" {params} />
+</Notifications>
 
 <style global>
     @tailwind base;

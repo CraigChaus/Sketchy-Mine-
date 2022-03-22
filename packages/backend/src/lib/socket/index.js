@@ -4,6 +4,7 @@ import chatHandler from './handlers/chatHandler';
 import canvasHandler from './handlers/canvasHandler';
 import guessHandler from './handlers/guessHandler';
 import teamHandler from './handlers/teamHandler';
+import moderationHandler from './handlers/moderationHandler';
 
 const debug = require('debug')('socket');
 
@@ -34,6 +35,8 @@ const setup = (server) => {
     canvasHandler(io, socket);
     guessHandler(io, socket);
     teamHandler(io, socket);
+    moderationHandler(io, socket);
+
   };
 
   instrument(io, {
