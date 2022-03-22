@@ -24,6 +24,8 @@ const User = sequelize.define('user', {
   },
   total_emeralds: {
     type: INTEGER,
+    defaultValue: 0,
+    allowNull: false,
   },
 });
 
