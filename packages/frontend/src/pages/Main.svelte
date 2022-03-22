@@ -307,6 +307,7 @@
    */
   const exitMatch = () => {
     //TODO: Redirect to home screen
+    router.redirect('/');
   };
 
   /**

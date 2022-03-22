@@ -1,19 +1,21 @@
 <script>
-    import Icon from "svelte-awesome";
-    import { faCircleInfo } from "@fortawesome/free-solid-svg-icons";
-    import { createEventDispatcher } from "svelte";
+    import Icon from 'svelte-awesome';
+    import { faCircleInfo } from '@fortawesome/free-solid-svg-icons';
+    import { createEventDispatcher } from 'svelte';
+
     /**
      * Component to be used as a popup window
      */
-    export let title = "Matchmaking";
-    export let instruction = "Trying to find team a team ...";
-    export let status = "Waiting for players...";
+
+    export let title = 'Matchmaking';
+    export let instruction = 'Trying to find team a team ...';
+    export let status = 'Waiting for players...';
     export let showButtons = true;
 
     const dispatch = createEventDispatcher();
 
-    export let exitButtonClicked = () => dispatch("ClickExit");
-    export let spectateButtonClicked = () => dispatch("ClickSpectate");
+    export let exitButtonClicked = () => dispatch('ClickExit');
+    export let spectateButtonClicked = () => dispatch('ClickSpectate');
 </script>
 
 <div
