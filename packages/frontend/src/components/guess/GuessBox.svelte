@@ -44,16 +44,7 @@
     result = payload.result;
   };
 
-  /**
-   * Update timer
-   * @param payload Timer data
-   */
-  const updateProgress = (payload) => {
-    timeRemainingInSeconds = payload.roundTime;
-  };
-
   socket.on("round:result", showResult);
-  socket.on("round:state", updateProgress);
 </script>
 
 <section class="p-4 border-2 h-80 border-gray-300 space-y-2">
