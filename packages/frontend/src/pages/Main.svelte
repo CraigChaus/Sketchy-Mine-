@@ -179,8 +179,6 @@
   };
 
   onMount(() => {
-    username = `User${Math.round(Math.random() * 10000)}`;
-    // username = $user.username; //FIXME display the logged in user's username
     let spectator = window.location.href.includes('spectator');
 
     //sorr but this has to be called before the await else it won't work
@@ -192,7 +190,8 @@
     }
 
     let tokenValue = $token;
-    socket.emit("joinSession", { username, tokenValue}, () => {
+    socket.emit("joinSession", { tokenValue }, (sessionUsername) => {
+      username = sessionUsername;
       if(!spectator){
         // randomizeDrawer();
         joinMatch();
