@@ -36,7 +36,6 @@ const setup = (server) => {
     guessHandler(io, socket);
     teamHandler(io, socket);
     moderationHandler(io, socket);
-
   };
 
   instrument(io, {
