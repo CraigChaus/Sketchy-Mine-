@@ -34,18 +34,32 @@ const chatHandler = (io, socket) => {
 
   // User joins a session / game.
 
-  socket.on(CHAT_EVENTS.JOINSESSION, async ({ username, tokenValue }, callback) => {
+  socket.on(CHAT_EVENTS.JOINSESSION, async ({ tokenValue }, callback) => {
     const tokenPayload = await verifyToken(tokenValue);
 
-    dbg(CHAT_EVENTS.JOIN, { username, tokenPayload });
-    userJoin(socket.id, username, tokenPayload);
+    let isUsernameGenerated = true;
+    let isModerator = false;
+    let username = `User${Math.round(Math.random() * 10000)}`;
+    let totalEmeralds = 0;
+
+    if (tokenPayload) {
+      username = tokenPayload.username;
+      isModerator = tokenPayload.is_moderator;
+      totalEmeralds = tokenPayload.total_emeralds;
+      isUsernameGenerated = false;
+    }
+
+    dbg(CHAT_EVENTS.JOIN, {
+      username, isModerator, totalEmeralds, isUsernameGenerated,
+    });
+    userJoin(socket.id, username, isModerator, totalEmeralds, isUsernameGenerated);
 
     // Welcome current user
     socket.emit(CHAT_EVENTS.MESSAGE, messageFormat(name, 'Welcome to Sketchy Mine!', 3));
 
     sendState(socket);
 
-    callback();
+    callback(username);
   });
 
   // User that has already joined the game is now

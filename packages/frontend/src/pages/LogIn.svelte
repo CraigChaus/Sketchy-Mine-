@@ -2,15 +2,7 @@
     import router from 'page';
     import { token } from '../stores/token';
     import { user } from '../stores/user';
-    import {onDestroy, onMount} from 'svelte';
     import { API_URL } from '../socket';
-
-    let userValue = {};
-    onMount( async () => {
-        user.subscribe((u) => (userValue = u))
-    });
-
-    const unsubscribe = user.subscribe((u) => (userValue = u)) //FIXME this might not work properly
 
     const handleLogin = async () => {
         const response = await login();
@@ -36,8 +28,8 @@
             });
 
             const data = await response.json();
-            token.set(data.token);
-            user.set(data.user);
+            $token = data.token;
+            $user = data.user;
 
             return await response;
         } catch (e) {
@@ -47,11 +39,9 @@
     }
 
     const handleLogout = () => {
-        user.update(() => (''))
-        token.update(() => (''));
+        $token = '';
+        $user = '';
     }
-
-    onDestroy(unsubscribe);
 </script>
 
 <div class="flex items-center justify-center min-h-screen bg-gray-100">
