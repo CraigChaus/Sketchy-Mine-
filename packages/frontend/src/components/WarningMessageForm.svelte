@@ -1,11 +1,13 @@
 <script>
     export let playerUsername = '';
-    let warning = '';
-    let showWarningForm = true;
-    export let cancel = () => {
+    export let warning = '';
+
+    export let showWarningForm = true;
+
+    let cancel = () => {
         showWarningForm = false;
     }
-    export let send = () => {
+    let send = () => {
         //TODO: send message to team
     }
 </script>
