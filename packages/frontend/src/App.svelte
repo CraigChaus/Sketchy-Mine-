@@ -1,5 +1,4 @@
 <script>
-
   import Main from './pages/Main.svelte';
   import LogIn from './pages/LogIn.svelte';
   import Home from './pages/Home.svelte';
@@ -27,11 +26,6 @@
   }
 
 </script>
-<!-- <a href="">
-  <img on:click={home} style="width: 100px;" src="favicon.png" alt="logo">
-</a> -->
-<!-- <Main /> -->
-<!-- <Home/> -->
 
 <svelte:component this="{page}" {params} />
 
