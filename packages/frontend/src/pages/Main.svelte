@@ -357,6 +357,8 @@
 
   const startRound = () => {
     isRoundActive = true;
+    teamGuesses = [];
+    currentGuess = null;
     socket.emit("round:start");
   };
   const sendGuess = (guess) => socket.emit("round:guess", guess);

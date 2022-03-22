@@ -61,6 +61,13 @@ export const getGuesses = (username) => {
   return guesses;
 };
 
+/** *
+ * Clear the guess repo of all teams
+ */
+export const resetGuesses = () => {
+  teamGuesses.splice(0, teamGuesses.length);
+};
+
 /**
  * Add a new guess.
  * This function will make sure to add a user's guess to the team guesses database
@@ -121,6 +128,8 @@ export const getTeamResults = () => {
   const timeNow = new Date();
 
   team.forEach((t) => {
+    // First check if we have any guesses for a team
+    if (teamGuesses === undefined || teamGuesses.length < 1) return;
     // Fetch the team guess records so we can pair them with the team dataset
     const tGuesses = teamGuesses.find((tm) => tm.teamname === t.teamname);
     if (tGuesses) {
