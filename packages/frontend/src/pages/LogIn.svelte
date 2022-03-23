@@ -61,8 +61,10 @@
                                bind:value={password}>
                 </div>
                 <div class="flex items-baseline justify-between">
-                    <button class="px-6 py-2 mt-4 text-white bg-green-500 rounded-lg hover:bg-blue-900">Login</button>
+                    <button class="px-6 py-2 mt-4 text-white bg-green-500 rounded-lg hover:bg-green-700">
+                        Log in</button>
                 </div>
+                <p class="text-center mt-2">Don't have an account? <a href="/register" class="text-green-600 font-medium underline">Sign Up</a></p>
             </div>
         </form>
     </div>

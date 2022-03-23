@@ -1,5 +1,4 @@
 <script>
-
   import Main from './pages/Main.svelte';
   import LogIn from './pages/LogIn.svelte';
   import Home from './pages/Home.svelte';
@@ -7,6 +6,8 @@
   import SignUp from './pages/SignUp.svelte';
   import Ranking from './pages/Ranking.svelte';
   import EndedSession from "./pages/EndedSession.svelte";
+
+  import Notifications from 'svelte-notifications';
 
   let page;
   let params;
@@ -27,13 +28,10 @@
   }
 
 </script>
-<!-- <a href="">
-  <img on:click={home} style="width: 100px;" src="favicon.png" alt="logo">
-</a> -->
-<!-- <Main /> -->
-<!-- <Home/> -->
 
-<svelte:component this="{page}" {params} />
+<Notifications>
+  <svelte:component this="{page}" {params} />
+</Notifications>
 
 <style global>
     @tailwind base;

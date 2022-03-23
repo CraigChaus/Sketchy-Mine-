@@ -22,8 +22,8 @@
 {#await getAllUsers()}
   <p>...waiting</p>
 {:then data}
-  <body class="bg-gray-100 font-family-karla flex body-bg min-h-screen ">
-    <div class="w-6/12 mt-12 m-16">
+  <body class="bg-gray-100 font-family-karla flex body-bg min-h-screen">
+    <div class="w-6/12 mt-12 m-96">
       <h3 class="text-center font-bold p-2 text-2xl">Ranking</h3>
       <div class="bg-white overflow-auto">
         <table class="text-left w-full border-collapse">
@@ -45,7 +45,7 @@
           <tbody>
             {#each data as row, i}
               <tr class="hover:bg-grey-lighter">
-                <td class=" w-0.5 py-4 px-2 border-b border-grey-light"
+                <td class=" w-0.5 py-4 px-4 border-b border-grey-light"
                   >{i + 1}</td
                 >
                 <!--place number-->

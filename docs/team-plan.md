@@ -377,6 +377,12 @@ _§14_ In git, all branches must be automatically created from the issue board, 
 
 > Focus factor this sprint: **0.83712**
 
+#### Costs:
+
+- Sprint 1 total time spent: *179.41 hours*
+- Sprint 1 estimated costs: *13'200€*
+- Sprint 1 actual costs: *8'970.5€*
+
 ### Sprint 2
 
 ![S2R](./resources/img/sprint2-retrospective.jpg "Sprint 2 Retrospective")
@@ -398,10 +404,9 @@ _§14_ In git, all branches must be automatically created from the issue board, 
 
 #### Costs:
 
-- Sprint 1 total time spent: *177.41 hours*
-- Sprint 1 estimated costs: *13'200€*
-- Sprint 1 actual costs: *8'870.5€*
-
+- Sprint 2 total time spent: *191.06 hours*
+- Sprint 2 estimated costs: *13'200€*
+- Sprint 2 actual costs: *9'553€*
 
 ---
 

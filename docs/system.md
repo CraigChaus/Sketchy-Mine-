@@ -238,6 +238,12 @@ Since is going to be an online game the protocols we are going to use WebSockets
 | sends   | `canvas:guesser`   | -        | Sends ok signal for guesser role request for the canvas         |
 | listens | `canvas:new-user`  | `Canvas` | As a newly joined user ask for current canvas state             |
 
+### Moderation
+| Type | Event Name | Payload | Action |
+| ------- | -------------------------- | ------- | ---------------------------------------------------------------- |
+| listens | moderation:send_warning    | warning | reads the whether sender is a moderator & reads team and message |
+| sends   | moderation:receive_warning | message | sends the message that should be displayed in the warning        |
+
 ### Object types in Payload
 
 #### Credential
@@ -326,5 +332,14 @@ Since is going to be an online game the protocols we are going to use WebSockets
 { 
   value,
   frequency
+}
+```
+
+#### Warning
+```
+{
+  token,
+  team,
+  message
 }
 ```
