@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 import debug from 'debug';
 import User from './controllers/models/user_model';
 // import WordBank from './models/word_bank';

@@ -11,7 +11,6 @@ beforeAll(async () => {
 
 describe('Status Endpoint', () => {
   it('GET / should show server status', async () => {
-    console.log(`ENV: ${process.env.NODE_ENV}`);
     const res = await requestWithSupertest.get('/');
     expect(res.status).toEqual(200);
     expect(res.type).toEqual(expect.stringContaining('json'));
