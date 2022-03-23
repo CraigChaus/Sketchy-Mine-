@@ -15,6 +15,13 @@
   import LeaveButton from "../components/LeaveButton.svelte";
   import router from "page";
 
+  
+
+  import { getNotificationsContext } from 'svelte-notifications';
+
+  const { addNotification } = getNotificationsContext();
+  let myTeamName;
+
   // Receiving guesses
   socket.on("guess", (guesses) => {
     if (!guesses) {
@@ -178,7 +185,18 @@
     }
   };
 
+  const showWarning = (message) => {
+    addNotification({
+      text: message,
+      position: 'bottom-left',
+      type: 'danger',
+      removeAfter: 7000,
+    });
+  }
+
   onMount(() => {
+
+    
     let spectator = window.location.href.includes('spectator');
 
     //sorr but this has to be called before the await else it won't work
@@ -242,6 +260,7 @@
       t.members.forEach((u) => {
         if (u.username === username) {
           let teamName = "Team +" +(i +1);
+          myTeamName = t.teamname;
 
           if (teamSession !== teamName){
             teamSession = teamName;
@@ -371,6 +390,17 @@
   const leaveGame = () => {
     router.redirect('/ended_session');
   }
+
+  socket.on("moderation:receive_warning", showWarning);
+
+  const warnTeam1 = () => {
+    let payload = {
+      team: myTeamName,
+      token: $token,
+      message: 'you are being very naughty!!'
+    };
+    socket.emit("moderation:send_warning", payload)
+  }
 </script>
 
 {#if showMatchmakingPopup}
@@ -440,9 +470,15 @@
             class="bg-purple-500 hover:bg-purple-700 text-white font-bold py-2 px-4 rounded"
             >Start Round</button
           >
+          
         {/if}
       {/await}
 
+      <button
+            on:click={warnTeam1}
+            class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded"
+            >warn team 1</button
+          >
 
     <MessageBar
       {role}

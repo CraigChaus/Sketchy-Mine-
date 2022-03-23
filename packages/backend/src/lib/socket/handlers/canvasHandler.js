@@ -54,7 +54,6 @@ export const giveAppropriateRoles = (io, Teams) => {
 
   // loops through every team
   Teams.forEach((team) => {
-    console.log(team);
     // find the drawing team
     if (team.isDrawing === true) {
       team.members.forEach((member) => {

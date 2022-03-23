@@ -62,7 +62,6 @@ const teamHandler = (io, socket) => {
     // Log team member capacity
     Teams.forEach((t) => {
       dbg(`${t.teamname}:`, `${t.members.length} players`);
-      console.log(t);
     });
 
     const sortedTeams = Teams.slice()
