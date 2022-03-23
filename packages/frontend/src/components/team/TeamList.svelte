@@ -13,6 +13,9 @@
 
     import { token } from '../../stores/token';
     import socket from '../../socket'
+    import WarningMessageForm from "../WarningMessageForm.svelte";
+    import { onMount } from "svelte";
+
 
     /*
        Expected content:
@@ -33,20 +36,24 @@
     export let showResults = false; // If set to true will show end round results on teams
     let isModerator=true;  //change it later
 
+    let showWarningForm = false;
 
     const warnTeam = (e) => {
-        e.preventDefault();
-        let teamname = contentJSON[0].teamname;
-        let payload = {
-        team: teamname,
-        token: $token,
-        message: 'you are being very naughty!!'
-        };
-        socket.emit("moderation:send_warning", payload)
+        teamname = contentJSON[0].teamname;
+        showWarningForm = true;
     }
 
-</script>
+    let cancelWarning = () => {
+        showWarningForm = false;
+    }
+    let teamname;
 
+
+
+</script>
+{#if showWarningForm }
+    <WarningMessageForm bind:cancel={cancelWarning} bind:teamname={teamname}/>
+{/if}
 <ScrollContainer>
     {#if contentJSON !== "" || contentJSON !== undefined || contentJSON !== null}
         {#each contentJSON as element}
