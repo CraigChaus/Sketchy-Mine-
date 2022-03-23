@@ -394,14 +394,7 @@
 
   socket.on("moderation:receive_warning", showWarning);
 
-  const warnTeam1 = () => {
-    let payload = {
-      team: myTeamName,
-      token: $token,
-      message: 'you are being very naughty!!'
-    };
-    socket.emit("moderation:send_warning", payload)
-  }
+  
 </script>
 
 {#if showMatchmakingPopup}
@@ -474,12 +467,6 @@
           
         {/if}
       {/await}
-
-      <button
-            on:click={warnTeam1}
-            class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded"
-            >warn team 1</button
-          >
 
     <MessageBar
       {role}
