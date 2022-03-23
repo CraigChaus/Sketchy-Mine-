@@ -1,40 +1,39 @@
 <script>
-  import Main from './pages/Main.svelte';
-  import LogIn from './pages/LogIn.svelte';
-  import Home from './pages/Home.svelte';
-  import router from 'page';
-  import SignUp from './pages/SignUp.svelte';
-  import Ranking from './pages/Ranking.svelte';
+  import Main from "./pages/Main.svelte";
+  import LogIn from "./pages/LogIn.svelte";
+  import Home from "./pages/Home.svelte";
+  import router from "page";
+  import SignUp from "./pages/SignUp.svelte";
+  import Ranking from "./pages/Ranking.svelte";
   import EndedSession from "./pages/EndedSession.svelte";
 
-  import Notifications from 'svelte-notifications';
+  import Notifications from "svelte-notifications";
 
   let page;
   let params;
 
-  router('/game', (ctx) => page = Main);
-  router('/login', (ctx) => page = LogIn);
-  router('/register', (ctx) => page = SignUp);
-  router('/game?spectate', (ctx) => page = Main);
-  router('/leaderboards', (ctx) => page = Ranking);
-  router('/ended_session', (ctx) => page = EndedSession);
+  router("/game", (ctx) => (page = Main));
+  router("/login", (ctx) => (page = LogIn));
+  router("/register", (ctx) => (page = SignUp));
+  router("/game?spectate", (ctx) => (page = Main));
+  router("/leaderboards", (ctx) => (page = Ranking));
+  router("/ended_session", (ctx) => (page = EndedSession));
 
-  router('/', (ctx) => page = Home);
+  router("/", (ctx) => (page = Home));
 
   router.start();
 
-  const home = async () =>{
-    router.redirect('/')
-  }
-
+  const home = async () => {
+    router.redirect("/");
+  };
 </script>
 
 <Notifications>
-  <svelte:component this="{page}" {params} />
+  <svelte:component this={page} {params} />
 </Notifications>
 
 <style global>
-    @tailwind base;
-    @tailwind components;
-    @tailwind utilities;
+  @tailwind base;
+  @tailwind components;
+  @tailwind utilities;
 </style>
