@@ -7,7 +7,7 @@ import { giveAppropriateRoles } from '../handlers/canvasHandler';
 
 const dbg = debug('state');
 
-const ROUND_DURATION = 30;
+const ROUND_DURATION = process.env.ROUND_DURATION ?? 30;
 const teamGuesses = [];
 
 /**
@@ -139,16 +139,20 @@ export const getTeamResults = () => {
 
         if (guessedTimeTaken < 5) {
           // if they guessed in less than 30 seconds, they get 20 points and so on
-          pointsEarned += 20;
+          pointsEarned += 25;
         } else if (guessedTimeTaken < 10) {
-          pointsEarned += 15;
+          pointsEarned += 20;
         } else if (guessedTimeTaken < 15) {
-          pointsEarned += 10;
+          pointsEarned += 15;
         } else {
           pointsEarned += 5;
         }
 
+        pointsEarned *= process.env.ROUND_POINTS_MULTIPLIER ?? 1;
+        pointsEarned = Math.round(pointsEarned);
+
         dbg(`Adding ${pointsEarned} points to ${t.teamname}`);
+
         t.addPoints(pointsEarned);
       }
     }

@@ -88,7 +88,8 @@
   "nodemonConfig": {
     "exec": "npm run dev",
     "watch": [
-      "src/*"
+      "src/*",
+      ".env"
     ],
     "ignore": [
       "**/__tests__/**",

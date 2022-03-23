@@ -17,9 +17,9 @@ class Team {
     this.shards = 0;
     this.lastGuessSubmit = new Date();
     this.checkpoints = {
-      1: false,
-      2: false,
-      3: false,
+      one: false,
+      two: false,
+      three: false,
     };
     this.colour = teamColour();
     this.members = [];
@@ -32,17 +32,14 @@ class Team {
   addPoints(points) {
     this.points += points;
 
-    if (this.points >= 25 && !this.checkpoints.one) {
-      this.shards += this.level;
-      this.checkpoints.one = true;
-    } else if (this.points >= 50 && !this.checkpoints.two) {
-      this.shards += this.level;
-      this.checkpoints.two = true;
-    } else if (this.points >= 80 && !this.checkpoints.three) {
-      this.shards += this.level;
-      this.checkpoints.three = true;
-    } else if (this.points >= 100) {
-      // we make sure no team has more than the maximum amount of points
+    this.checkpoints.one = this.points >= 25;
+    this.checkpoints.two = this.points >= 50;
+    this.checkpoints.three = this.points >= 50;
+
+    // TODO: Calculate shards
+
+    if (this.points >= 100) {
+      // We make sure no team has more than the maximum amount of points
       this.points -= 100;
       this.level++;
       this.checkpoints.one = false; // TODO needs refactoring
