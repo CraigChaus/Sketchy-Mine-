@@ -273,6 +273,8 @@
           t.isSelf = true;
           u.current = true;
           teamSize = t.members.length;
+          myTeam = t;
+          console.log(myTeam);
         }
       });
     });
@@ -513,11 +515,12 @@
     max-width: 1366px;
     margin-left: auto;
     margin-right: auto;
+    position: relative;
   }
 
   .background {
     min-height: 100vh;
-    background: url("/images/Background.jpg");
+    background: url("/images/Background2.png");
     background-size: 100% 100%;
   }
   .guesswindow{
@@ -525,12 +528,14 @@
     border-image: url("/images/ChatBox.png") 30 round;
     background: white;
     border-radius: 5px;
+    box-shadow: 5px 5px 5px rgba(0,0,0,0.5) ;
   }
   .chatwindow{
     border: 30px solid transparent;
     border-image: url("/images/ChatBox.png") 30 round;
     background: white;
     border-radius: 5px;
+    box-shadow: 5px 5px 5px rgba(0,0,0,0.5) ;
   }
   .canvas{
     padding: 1rem;

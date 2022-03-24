@@ -48,8 +48,9 @@
         margin-right: auto;
         margin-left: auto;
         position: relative;
-        margin-top: 4rem;
+        margin-top: 6rem;
     }
+
     .emerald {
         background: url("/images/ProgressEmerald1st.png");
         background-size: 100% 100%;
@@ -77,10 +78,12 @@
 
     .teamPointer {
         position: absolute;
-        top: -3rem;
+        bottom: 62px;
         text-align: center;
         transform: translate(-50%, 0);
         white-space: nowrap;
+        background-color: rgba(0,0,0,0.3);
+        padding: 0 10px;
     }
     .teamPointer::before {
         content: "";
@@ -105,7 +108,7 @@
         border-radius: 50%;
     }
     .teamPointer span {
-        color: black;
+        color: antiquewhite;
     }
 
 </style>

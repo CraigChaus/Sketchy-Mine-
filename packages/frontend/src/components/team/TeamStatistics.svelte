@@ -33,7 +33,7 @@
         width: 237px;
         height: 102px;
         top: 30px;
-        right: 20px;
+        right: 0;
         font-size: 1.5rem;
         font-weight: bold;
         font-style: italic;
@@ -41,6 +41,9 @@
         padding: 2rem;
         text-align: center;
         line-height: 30px;
+        position: absolute;
+        border-radius: 5px;
+        box-shadow: 5px 5px 5px rgba(0,0,0,0.5) ;
     }
 
     .myTeamShards {
@@ -49,7 +52,7 @@
         width: 237px;
         height: 102px;
         top: 30px;
-        right: 20px;
+        right: 257px;
         font-size: 1.5rem;
         font-weight: bold;
         font-style: italic;
@@ -58,6 +61,9 @@
         padding-left: 0;
         text-align: center;
         line-height: 30px;
+        position: absolute;
+        border-radius: 5px;
+        box-shadow: 5px 5px 5px rgba(0,0,0,0.5) ;
     }
 
     .emeralds {
