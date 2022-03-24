@@ -40,17 +40,19 @@
 
 <style>
     .progress-background {
-        background: crimson;
-        height: 1rem;
+        background: url("/images/progressBar.png");
+        background-size: 4rem 100%;
+        height: 3rem;
     }
     .progressBar {
         position: relative;
         margin-top: 4rem;
     }
     .emerald {
-        background: greenyellow;
-        height: 3rem;
-        width: 2rem;
+        background: url("/images/EmeraldNoBackground.png");
+        background-size: 100% 100%;
+        height: 3.25rem;
+        width: 1.5rem;
         top: 0;
         left: 0;
         position: absolute;

@@ -10,7 +10,9 @@
   import { teamsValue } from "../stores/teams";
   import ProgressBar from "../components/team/ProgressBar.svelte";
   import Popup from "../components/Popup.svelte";
-  import { token } from "../stores/token";
+  import TeamStatistics from "../components/team/TeamStatistics.svelte";
+  import { token } from '../stores/token';
+  import { user } from '../stores/user';
   import LeaveButton from "../components/LeaveButton.svelte";
   import router from "page";
 
@@ -48,6 +50,7 @@
   let cachedTeamSize = 0; // Used to check wether the team's size grows or declines
   let teamSession = "main";
   let correctWord;
+  let myTeam;
   let isRoundActive = false; // Used to track when a round (when the times is running) is active
   let timeRemainingInSeconds = -1; // Set to -1 by default to indicate mid-round state
 
@@ -259,6 +262,7 @@
         if (u.username === username) {
           let teamName = "Team +" + (i + 1);
           myTeamName = t.teamname;
+          myTeamName = t.teamname;
 
           if (teamSession !== teamName) {
             teamSession = teamName;
@@ -421,6 +425,9 @@
 {/if}
 <LeaveButton on:buttonClicked={leaveGame}>LEAVE</LeaveButton>
 <ProgressBar {teams} />
+
+<TeamStatistics {myTeam}/>
+
 <div class="flex items-center justify-center">
   {#await promise}
     <p>loading word...</p>
