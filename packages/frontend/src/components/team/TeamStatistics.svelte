@@ -28,7 +28,7 @@
     }
 
     .myTeamLevel {
-        background: url("/images/Emerald-Display_01.png") no-repeat;
+        background: url("/images/EmeraldDisplay.png") no-repeat;
         margin-left: 1rem;
         width: 237px;
         height: 102px;
@@ -44,7 +44,7 @@
     }
 
     .myTeamShards {
-        background: url("/images/Emerald-Display_01.png") no-repeat;
+        background: url("/images/EmeraldDisplay.png") no-repeat;
         margin-left: auto;
         width: 237px;
         height: 102px;
