@@ -1,3 +1,5 @@
+import User from '../../database/controllers/models/user_model';
+
 let currentColourIndex = 0;
 const levelShards = 1;
 let emeralds = 0;
@@ -52,8 +54,13 @@ class Team {
       // calculate emeralds for each user after each level
       if ((this.shards % 20) === 0) {
         emeralds++;
-        return emeralds; // TODO: Delete this line, I added this to pass the lint pipeline
-        // TODO:Add these emeralds to each users account
+        // for each member of team, find from db and increment emeralds
+        this.members.forEach(async (member) => {
+          const user = await User.findByPk(member.socketID);
+          if (user) {
+            await user.increment('total_emeralds', { by: emeralds });
+          }
+        });
       }
     }
   }
