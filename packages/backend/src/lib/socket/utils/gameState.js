@@ -29,6 +29,29 @@ export const getRandomWord = () => {
 };
 
 /**
+ * Remove the guess of a user from the teamGuesses repo
+ * @param {String} username Name of the user
+ */
+function removeGuessOfUser(username) {
+  // eslint-disable-next-line max-len
+  teamGuesses.forEach((t) => {
+    t.guesses.forEach((g) => {
+      if (g.usernames.includes(username)) {
+        // Once guesses found that belongs to the leaving user, remove it;
+        g.usernames = g.usernames.filter((u) => u !== username);
+        g.freq -= 1;
+      }
+    });
+  });
+
+  // Loop once more to make sure there are no orphaned guesses
+  teamGuesses.forEach((t) => {
+    // Make sure we remove orphaned guesses that the previous forEach() block made
+    t.guesses = t.guesses.filter((g) => g.freq > 0);
+  });
+}
+
+/**
  * Storage for game round state
  */
 const defaultState = {
@@ -61,6 +84,13 @@ export const getGuesses = (username) => {
   return guesses;
 };
 
+/** *
+ * Clear the guess repo of all teams
+ */
+export const resetGuesses = () => {
+  teamGuesses.splice(0, teamGuesses.length);
+};
+
 /**
  * Add a new guess.
  * This function will make sure to add a user's guess to the team guesses database
@@ -81,7 +111,8 @@ export const addGuess = (username, guess) => {
     teamGuesses.forEach((t) => {
       if (t.teamname === currentTeam.teamname) { // Only modify the user's team's guesses
         // We make sure with the code below that a user can only have one guess submitted
-        t.guesses = t.guesses.filter((g) => !g.usernames.includes(username));
+        removeGuessOfUser(username);
+
         // We check if the team guesses already has the new guess to add
         const found = t.guesses.some((g) => g.guess === guess);
         if (!found) {
@@ -121,6 +152,8 @@ export const getTeamResults = () => {
   const timeNow = new Date();
 
   team.forEach((t) => {
+    // First check if we have any guesses for a team
+    if (teamGuesses === undefined || teamGuesses.length < 1) return;
     // Fetch the team guess records so we can pair them with the team dataset
     const tGuesses = teamGuesses.find((tm) => tm.teamname === t.teamname);
     if (tGuesses) {
@@ -243,22 +276,8 @@ export const nextDrawingTeam = () => {
 
 export const removeUserGuesses = (user) => {
   if (user) {
-    // eslint-disable-next-line max-len
-    teamGuesses.forEach((t) => {
-      t.guesses.forEach((g) => {
-        if (g.usernames.includes(user.username)) {
-          // Once guesses found that belongs to the leaving user, remove it;
-          g.usernames = g.usernames.filter((u) => u !== user.username);
-          g.freq -= 1;
-        }
-      });
-    });
-
-    // Loop once more to make sure there are no orphaned guesses
-    teamGuesses.forEach((t) => {
-      // Make sure we remove orphaned guesses that the previous forEach() block made
-      t.guesses = t.guesses.filter((g) => g.freq > 0);
-    });
+    // Remove the guess
+    removeGuessOfUser(user.username);
     // Once a user is removed, their guesses is removed too, so we send an update of guesses
     broadcastTeamSpecificGuesses(getIO());
   }

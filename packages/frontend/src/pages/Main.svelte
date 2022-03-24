@@ -10,14 +10,11 @@
   import { teamsValue } from "../stores/teams";
   import ProgressBar from "../components/team/ProgressBar.svelte";
   import Popup from "../components/Popup.svelte";
-  import { token } from '../stores/token';
-  import { user } from '../stores/user';
+  import { token } from "../stores/token";
   import LeaveButton from "../components/LeaveButton.svelte";
   import router from "page";
 
-  
-
-  import { getNotificationsContext } from 'svelte-notifications';
+  import { getNotificationsContext } from "svelte-notifications";
 
   const { addNotification } = getNotificationsContext();
   let myTeamName;
@@ -51,6 +48,8 @@
   let cachedTeamSize = 0; // Used to check wether the team's size grows or declines
   let teamSession = "main";
   let correctWord;
+  let isRoundActive = false; // Used to track when a round (when the times is running) is active
+  let timeRemainingInSeconds = -1; // Set to -1 by default to indicate mid-round state
 
   // Progress bar functionality
   // FIXME: This function has been moved to the backend
@@ -188,21 +187,20 @@
   const showWarning = (message) => {
     addNotification({
       text: message,
-      position: 'bottom-left',
-      type: 'danger',
+      position: "bottom-left",
+      type: "danger",
       removeAfter: 7000,
     });
-  }
+  };
 
   onMount(() => {
-
-    
-    let spectator = window.location.href.includes('spectator');
+    let spectator = window.location.href.includes("spectator");
 
     //sorr but this has to be called before the await else it won't work
     //ugly double checking of spectator to have optimal functionality :(
 
-    if(spectator){ //user is a spectator
+    if (spectator) {
+      //user is a spectator
       role = 3;
       showMatchmakingPopup = false;
     }
@@ -210,15 +208,15 @@
     let tokenValue = $token;
     socket.emit("joinSession", { tokenValue }, (sessionUsername) => {
       username = sessionUsername;
-      if(!spectator){
+      if (!spectator) {
         // randomizeDrawer();
         joinMatch();
-      }else{
+      } else {
         spectate();
       }
       socket.emit("canvas:new-user");
     });
-  promise = getRole();
+    promise = getRole();
   });
 
   teamsValue.set(teams);
@@ -226,7 +224,7 @@
   const spectate = () => {
     socket.emit("teams:get");
     socket.emit("spectators:join");
-  }
+  };
 
   const joinMatch = () => {
     socket.emit("teams:get");
@@ -259,13 +257,13 @@
     data.forEach((t, i) => {
       t.members.forEach((u) => {
         if (u.username === username) {
-          let teamName = "Team +" +(i +1);
+          let teamName = "Team +" + (i + 1);
           myTeamName = t.teamname;
 
-          if (teamSession !== teamName){
+          if (teamSession !== teamName) {
             teamSession = teamName;
 
-            socket.emit("joinTeamChat", {teamSession});
+            socket.emit("joinTeamChat", { teamSession });
           }
 
           t.isSelf = true;
@@ -276,7 +274,7 @@
     });
 
     teams = data;
-    if(role != 3){
+    if (role != 3) {
       handlePopup(); // Every time the teams get updated, we check if we need to show the matchmaking popup
     }
   });
@@ -326,7 +324,7 @@
    */
   const exitMatch = () => {
     //TODO: Redirect to home screen
-    router.redirect('/');
+    router.redirect("/");
   };
 
   /**
@@ -373,12 +371,28 @@
     }
   };
 
-  const startRound = () => socket.emit("round:start");
+  const startRound = () => {
+    isRoundActive = true;
+    teamGuesses = [];
+    currentGuess = null;
+    socket.emit("round:start");
+  };
   const sendGuess = (guess) => socket.emit("round:guess", guess);
 
+  /**
+   * Update timer
+   * @param payload Timer data
+   */
+  const updateProgress = (payload) => {
+    timeRemainingInSeconds = payload.roundTime;
+    if (timeRemainingInSeconds < 1) isRoundActive = false;
+    else isRoundActive = true;
+  };
+
   socket.on("round:result", (payload) => {
-    results = payload
+    results = payload;
     correctWord = results.result;
+    isRoundActive = false;
   });
   socket.on("round:progress", updateGuessState);
   // 1: drawer
@@ -387,14 +401,13 @@
   socket.on("canvas:drawer", becomeDrawer);
   socket.on("canvas:guesser", becomeGuesser);
   socket.on("canvas:spectator", becomeSpectator);
+  socket.on("round:state", updateProgress);
 
   const leaveGame = () => {
-    router.redirect('/ended_session');
-  }
+    router.redirect("/ended_session");
+  };
 
   socket.on("moderation:receive_warning", showWarning);
-
-  
 </script>
 
 {#if showMatchmakingPopup}
@@ -418,20 +431,20 @@
   {/await}
 </div>
 
-
 <div class="flex">
   <div class="w-1/4 h-12">
     {#await promise}
-        <p>loading..</p>
-      {:then role}
-        {#if role != 3}
-          <GuessList
+      <p>loading..</p>
+    {:then role}
+      {#if role != 3}
+        <GuessList
           on:guessClicked={onClickGuessItem}
           {teamGuesses}
           teamNumber={1}
           currentGuess={currentGuess ? currentGuess.toLowerCase() : null}
+          {timeRemainingInSeconds}
           {teamSize}
-          />
+        />
       {/if}
     {/await}
 
@@ -456,23 +469,23 @@
       {/await}
     </div>
     {#await promise}
-        <p>loading..</p>
-      {:then role}
-        {#if role != 3}
-          <button
-            on:click={startRound}
-            class="bg-purple-500 hover:bg-purple-700 text-white font-bold py-2 px-4 rounded"
-            >Start Round</button
-          >
-          
-        {/if}
-      {/await}
+      <p>loading..</p>
+    {:then role}
+      {#if role != 3}
+        <button
+          on:click={startRound}
+          class="bg-purple-500 hover:bg-purple-700 text-white font-bold py-2 px-4 rounded"
+          >Start Round</button
+        >
+      {/if}
+    {/await}
 
     <MessageBar
       {role}
       bind:input={chatInput}
       on:guessWordClicked={onClickGuess}
       on:sendChatClicked={onClickChat}
+      guessButtonDisabled={!isRoundActive}
     />
   </div>
 

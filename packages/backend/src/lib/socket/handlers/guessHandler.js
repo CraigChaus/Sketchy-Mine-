@@ -2,7 +2,8 @@ import debug from 'debug';
 import { getIO } from '..';
 import { Teams } from '../../../data/teams';
 import {
-  addGuess, getCurrentWord, getGuesses, nextWord, getTeamResults, nextDrawingTeam, gameState,
+  addGuess, getCurrentWord, getGuesses, nextWord,
+  getTeamResults, nextDrawingTeam, gameState, resetGuesses,
 } from '../utils/gameState';
 import { getCurrentUser } from '../utils/users';
 import { TEAM_EVENTS } from './teamHandler';
@@ -79,6 +80,7 @@ export const sendResult = () => {
  * @param {Socket} socket User's socket
  */
 const startRound = (socket) => {
+  resetGuesses();
   // checks whether game is already in progress before allowing a new round to start
   if (gameState.roundTime > 0) {
     return;

@@ -171,6 +171,8 @@ _§14_ In git, all branches must be automatically created from the issue board, 
 
 12. As a moderator, I want to have a means of communicating with the players, so that I can give them warnings.
 
+13. As a user, I want to be able to login using SSO
+
 ---
 
 ### Backlog items
@@ -294,11 +296,17 @@ _§14_ In git, all branches must be automatically created from the issue board, 
 
 | Backlog ID | Description                                                                                    |
 | ---------- | ---------------------------------------------------------------------------------------------- |
-| US12 BI01  | Create warning form for moderator to write the message to the player                           |  |
+| US12 BI01  | Create warning form for moderator to write the message to the player                           |
 | US12 BI02  | Add button on each player tab on the teams section that opens the form for writing the warning |
 | US12 BI03  | Ability to send the warning message to the player                                              |
 | US12 BI04  | Displaying the warning message on the player's side with a pop up                              |
 
+#### US13 - As a user, I want to be able to login using SSO
+
+| Backlog ID | Description                     |
+| ---------- | ------------------------------- |
+| US13 BI01  | Refactor backend to support SSO |
+| US13 BI02  | Add UI for SSO option           |
 ---
 
 ## Budget

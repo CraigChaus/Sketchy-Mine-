@@ -11,11 +11,10 @@
     export let buttonClicked = () => dispatch("buttonClicked");
 </script>
 
-<div
-    class="bg-green-600 hover:brightness-90 rounded-full border-none text-white p-2 text-center text inline-block transition-all cursor-pointer {disabled
-        ? 'bg-gray-500 cursor-not-allowed hover:brightness-100'
-        : ''} {styles}"
+<button
+    class="mb-2 md:mb-0 disabled:cursor-not-allowed disabled:bg-gray-300 disabled:hover:brightness-100 disabled:text-gray-600 bg-green-500 border border-none px-5 py-2 text-sm font-medium tracking-wider text-white rounded-full hover:brightness-90 transition-all {styles}"
     on:click={buttonClicked}
+    {disabled}
 >
-    <p><slot /></p>
-</div>
+    <slot />
+</button>

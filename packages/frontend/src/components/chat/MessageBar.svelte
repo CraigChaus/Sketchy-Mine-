@@ -11,6 +11,7 @@
 
   export let input; // Text that the user enters
   export let role;
+  export let guessButtonDisabled;
 
   const onSendChatClicked = () => dispatch("sendChatClicked");
 
@@ -42,8 +43,10 @@
     >
 
     {#if role === 2}
-      <ActionButton styles="search-button" on:buttonClicked={onGuessWordClicked}
-        >Guess Word</ActionButton
+      <ActionButton
+        disabled={guessButtonDisabled}
+        styles="search-button"
+        on:buttonClicked={onGuessWordClicked}>Guess Word</ActionButton
       >
     {/if}
   </div>
