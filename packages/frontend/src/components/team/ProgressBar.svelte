@@ -13,9 +13,9 @@
     let emeraldPosition = [25, 50, 80];
 </script>
 
-<div class="progressBar my-5 mx-3"  >
+<div class="progressBar my-5 mx-3">
     <div class="progress-background">
-
+        <img src="/images/progressBarEmpty.png">
     </div>
     {#each emeraldPosition as emerald}
         <div class="emerald" style="left: {emerald}%  ">
@@ -40,25 +40,41 @@
 
 <style>
     .progress-background {
-        background: url("/images/progressBar.png");
-        background-size: 4rem 100%;
-        height: 3rem;
+
+
     }
     .progressBar {
+        max-width: 680px;
+        margin-right: auto;
+        margin-left: auto;
         position: relative;
         margin-top: 4rem;
     }
     .emerald {
-        background: url("/images/EmeraldNoBackground.png");
+        background: url("/images/ProgressEmerald1st.png");
         background-size: 100% 100%;
-        height: 3.25rem;
-        width: 1.5rem;
-        top: 0;
+        width: 32px;
+        height: 16px;
+        bottom: 38px;
         left: 0;
         position: absolute;
-        transform: translate(-50%, -50%);
+        transform: translate(-50%, 0);
 
     }
+    .emerald + .emerald{
+        background: url("/images/ProgressEmerald2nd.png");
+        background-size: 100% 100%;
+        width: 42px;
+        height: 35px;
+    }
+    .emerald + .emerald + .emerald{
+        background: url("/images/ProgressEmerald.png");
+        background-size: 100% 100%;
+        bottom: 35px;
+        width: 83px;
+        height: 72px
+    }
+
     .teamPointer {
         position: absolute;
         top: -3rem;
