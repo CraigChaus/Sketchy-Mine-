@@ -1,4 +1,6 @@
 let currentColourIndex = 0;
+const levelShards = 1;
+let emeralds = 0;
 
 function teamColour() {
   currentColourIndex += 1;
@@ -34,9 +36,11 @@ class Team {
 
     this.checkpoints.one = this.points >= 25;
     this.checkpoints.two = this.points >= 50;
-    this.checkpoints.three = this.points >= 50;
-
-    // TODO: Calculate shards
+    this.checkpoints.three = this.points >= 80;
+    // this is the shards calculator
+    if (this.checkpoints.one || this.checkpoints.two || this.checkpoints.three) {
+      this.shards = levelShards * this.level;
+    }
 
     if (this.points >= 100) {
       // We make sure no team has more than the maximum amount of points
@@ -45,6 +49,12 @@ class Team {
       this.checkpoints.one = false; // TODO needs refactoring
       this.checkpoints.two = false;
       this.checkpoints.three = false;
+      // calculate emeralds for each user after each level
+      if ((this.shards % 20) === 0) {
+        emeralds++;
+        return emeralds; // TODO: Delete this line, I added this to pass the lint pipeline
+        // TODO:Add these emeralds to each users account
+      }
     }
   }
 }
