@@ -274,7 +274,6 @@
           u.current = true;
           teamSize = t.members.length;
           myTeam = t;
-          console.log(myTeam);
         }
       });
     });
