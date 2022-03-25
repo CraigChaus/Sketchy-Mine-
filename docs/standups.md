@@ -472,3 +472,12 @@ Ana is missing, did not inform the team, everyone else is present
   - Fixed all the bugs related to guesses (guess selection, UI, guess changing, etc.)
 - Mira:
   - Took 2 tasks this week, all done
+
+## SCRUM Standup (Group 1 and 2) - 25.03.2022
+- everyone is present
+- The 2 groups did a meeting together
+  - Created backlog items for bugs to be fixed
+  - Created backlog items for issues that we got from the playtest
+- Backlogs were created for bugs
+- Items were assigned
+- A meeting was done together to make sure we have as many bugs fixed as possible till our mid-sprint publisher meeting
