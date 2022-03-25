@@ -1,7 +1,8 @@
 import User from '../../database/controllers/models/user_model';
 
+const levelShards = process.env.LEVEL_SHARDS ?? 1;
+const emeraldShardValue = process.env.EMERALD_SHARD_VALUE ?? 5;
 let currentColourIndex = 0;
-const levelShards = 1;
 let emeralds = 0;
 
 function teamColour() {
@@ -35,28 +36,33 @@ class Team {
    */
   addPoints(points) {
     this.points += points;
-
-    this.checkpoints.one = this.points >= 25;
-    this.checkpoints.two = this.points >= 50;
-    this.checkpoints.three = this.points >= 80;
     // this is the shards calculator
-    if (this.checkpoints.one || this.checkpoints.two || this.checkpoints.three) {
-      this.shards = levelShards * this.level;
+    if (this.points >= 25 && !this.checkpoints.one) {
+      this.shards += levelShards * this.level;
+      this.checkpoints.one = true;
+    } else if (this.points >= 50 && !this.checkpoints.two) {
+      this.shards += levelShards * this.level;
+      this.checkpoints.two = true;
+    } else if (this.points >= 80 && !this.checkpoints.three) {
+      this.shards += levelShards * this.level;
+      this.checkpoints.three = true;
     }
 
     if (this.points >= 100) {
       // We make sure no team has more than the maximum amount of points
       this.points -= 100;
       this.level++;
-      this.checkpoints.one = false; // TODO needs refactoring
+      this.checkpoints.one = false;
       this.checkpoints.two = false;
       this.checkpoints.three = false;
       // calculate emeralds for each user after each level
-      if ((this.shards % 20) === 0) {
-        emeralds++;
+      if (this.shards >= emeraldShardValue) {
+        const extraShards = this.shards % emeraldShardValue;
+        emeralds += Math.round(this.shards / emeraldShardValue);
+        this.shards -= extraShards;
         // for each member of team, find from db and increment emeralds
         this.members.forEach(async (member) => {
-          const user = await User.findByPk(member.socketID);
+          const user = (await User.findAll({ where: { username: member.username } }))[0];
           if (user) {
             await user.increment('total_emeralds', { by: emeralds });
           }
