@@ -66,6 +66,10 @@ const chatHandler = (io, socket) => {
   // connected to the chat that only his team members can see.
   socket.on(CHAT_EVENTS.JOINTEAMCHAT, ({ teamSession }) => {
     const user = getCurrentUser(socket.id);
+    if (!user) {
+      return;
+    }
+
     user.teamSession = teamSession;
     socket.join(user.teamSession);
 
