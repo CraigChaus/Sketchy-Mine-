@@ -47,7 +47,7 @@
   socket.on("round:result", showResult);
 </script>
 
-<section class="p-4 border-2 h-80 border-gray-300 space-y-2">
+<section class="p-4 h-80 border-gray-300 space-y-2">
   {#if result === "N/A" && timeRemainingInSeconds < 0}
     <p class="border-b-2 italic text-center">
       Waiting for next round to start...
