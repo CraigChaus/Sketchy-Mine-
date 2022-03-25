@@ -439,4 +439,36 @@ Ana is missing, did not inform the team, everyone else is present
 - Currently the team will work on bugfixes until the meeting with the publisher
   - We are not sure yet if we should implement new features or fix bugs
   - We must wait for the answer of the publisher
-- 
+
+## SCRUM Standup (Entire team) - 25.03.2022
+- Everyone is present
+- Melissa:
+  - Work with Filippos to move user generation from frontend to backend
+  - Took task to make the progressbar look better, but Marko already did that task meanwhile
+- Vince:
+  - Finished task concerning warning messages
+  - Took a new task on Wednesday, task done too
+- Daria:
+  - Changed icons, buttons
+  - Worked on responsive styling
+  - Not yet done, waiting for Ana (also working on responsive tasks, will take over the branch)
+- Ana:
+  - Works on responsive styling
+  - Main page is not yet done
+- Craig:
+  - Task was to calculate emeralds: task done
+  - Was fixing bugs related to emerald counter: all fixed
+- Lukman:
+  - Task was too hard, thus could not do it yet
+  - Working on it still
+- Marko:
+  - Was working on game assets to make the demo on Friday for play-testing look better
+- Vedat:
+  - Task done, merged
+  - Found a bug with the backlog, was fixed
+- Filippos:
+  - Task done, merged
+- Peter:
+  - Fixed all the bugs related to guesses (guess selection, UI, guess changing, etc.)
+- Mira:
+  - Took 2 tasks this week, all done
