@@ -7,10 +7,10 @@
 <div class="TeamStatistics">
     <div class="myTeamShards">
         <div class="emeralds">
-            Emeralds: {Math.floor(myTeam.shards / 50)} <img src="/images/Emerald.png" /> <!-- emeralds -->
+            Emeralds: {Math.floor(myTeam.shards / 5)} <img src="/images/Emerald.png" /> <!-- emeralds -->
         </div>
         <div class="shards">
-            Shards: {myTeam.shards % 50} <img src="/images/Shard.png"/><!-- shards -->
+            Shards: {myTeam.shards} <img src="/images/Shard.png"/><!-- shards -->
         </div>
     </div>
     <!-- <div class="myTeamPoints"></div>  this is questionable-->
