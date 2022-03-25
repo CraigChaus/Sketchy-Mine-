@@ -434,10 +434,10 @@
 
     <div class="flex items-center justify-center">
       {#await promise}
-        <p>loading word...</p>
+        <p>Loading word...</p>
       {:then role}
         {#if role == 1}
-          <p>word to draw {correctWord}</p>
+          <h2 class="text-white text-xl">Word To Draw: <span class="italic font-medium">{correctWord}</span></h2>
         {/if}
       {/await}
     </div>
