@@ -10,7 +10,9 @@
   import { teamsValue } from "../stores/teams";
   import ProgressBar from "../components/team/ProgressBar.svelte";
   import Popup from "../components/Popup.svelte";
-  import { token } from "../stores/token";
+  import TeamStatistics from "../components/team/TeamStatistics.svelte";
+  import { token } from '../stores/token';
+  import { user } from '../stores/user';
   import LeaveButton from "../components/LeaveButton.svelte";
   import router from "page";
 
@@ -48,6 +50,7 @@
   let cachedTeamSize = 0; // Used to check wether the team's size grows or declines
   let teamSession = "main";
   let correctWord;
+  let myTeam;
   let isRoundActive = false; // Used to track when a round (when the times is running) is active
   let timeRemainingInSeconds = -1; // Set to -1 by default to indicate mid-round state
 
@@ -259,6 +262,7 @@
         if (u.username === username) {
           let teamName = "Team +" + (i + 1);
           myTeamName = t.teamname;
+          myTeamName = t.teamname;
 
           if (teamSession !== teamName) {
             teamSession = teamName;
@@ -269,6 +273,7 @@
           t.isSelf = true;
           u.current = true;
           teamSize = t.members.length;
+          myTeam = t;
         }
       });
     });
@@ -410,86 +415,133 @@
   socket.on("moderation:receive_warning", showWarning);
 </script>
 
-{#if showMatchmakingPopup}
-  <Popup
-    instruction={popupWindowInstruction}
-    status={popupWindowStatusText}
-    on:ClickExit={exitMatch}
-    on:ClickSpectate={startSpectate}
-    showButtons={popupWindowShowButtons}
-  />
-{/if}
-<LeaveButton on:buttonClicked={leaveGame}>LEAVE</LeaveButton>
-<ProgressBar {teams} />
-<div class="flex items-center justify-center">
-  {#await promise}
-    <p>loading word...</p>
-  {:then role}
-    {#if role == 1}
-      <p>word to draw {correctWord}</p>
+
+<div class="background">
+  <div class="container">
+    {#if showMatchmakingPopup}
+      <Popup
+        instruction={popupWindowInstruction}
+        status={popupWindowStatusText}
+        on:ClickExit={exitMatch}
+        on:ClickSpectate={startSpectate}
+        showButtons={popupWindowShowButtons}
+      />
     {/if}
-  {/await}
-</div>
+    <LeaveButton on:buttonClicked={leaveGame}>LEAVE</LeaveButton>
+    <ProgressBar {teams} />
 
-<div class="flex">
-  <div class="w-1/4 h-12">
-    {#await promise}
-      <p>loading..</p>
-    {:then role}
-      {#if role != 3}
-        <GuessList
-          on:guessClicked={onClickGuessItem}
-          {teamGuesses}
-          teamNumber={1}
-          currentGuess={currentGuess ? currentGuess.toLowerCase() : null}
-          {timeRemainingInSeconds}
-          {teamSize}
-        />
-      {/if}
-    {/await}
+    <TeamStatistics {myTeam}/>
 
-    <TeamList showResults={results != null} contentJSON={teams} />
-  </div>
-  <div class="w-2/4 h-full space-y-1">
-    <Canvas
-      {role}
-      bind:this={SDraw}
-      {brushColor}
-      {brushRadius}
-      canvasWidth="640"
-    />
-    <div class="flex-row justify-center">
+    <div class="flex items-center justify-center">
       {#await promise}
-        <p>loading..</p>
+        <p>loading word...</p>
       {:then role}
-        {#if role === 1}
-          <Toolbox bind:SDraw bind:brushColor bind:brushRadius />
+        {#if role == 1}
+          <p>word to draw {correctWord}</p>
         {/if}
-        <p>You are currently role {role}</p>
       {/await}
     </div>
-    {#await promise}
-      <p>loading..</p>
-    {:then role}
-      {#if role != 3}
-        <button
-          on:click={startRound}
-          class="bg-purple-500 hover:bg-purple-700 text-white font-bold py-2 px-4 rounded"
-          >Start Round</button
-        >
-      {/if}
-    {/await}
 
-    <MessageBar
-      {role}
-      bind:input={chatInput}
-      on:guessWordClicked={onClickGuess}
-      on:sendChatClicked={onClickChat}
-      guessButtonDisabled={!isRoundActive}
-    />
-  </div>
+    <div class="flex">
+      <div class="w-1/4 guesswindow">
+        {#await promise}
+          <p>loading..</p>
+        {:then role}
+          {#if role != 3}
+            <GuessList
+              on:guessClicked={onClickGuessItem}
+              {teamGuesses}
+              teamNumber={1}
+              currentGuess={currentGuess ? currentGuess.toLowerCase() : null}
+              {timeRemainingInSeconds}
+              {teamSize}
+            />
+          {/if}
+        {/await}
 
-  <div class="w-1/4 h-full mx-3">
-    <ChatBox messages={chatMessages} />
+        <TeamList showResults={results != null} contentJSON={teams} />
+      </div>
+
+      <div class="w-2/4 h-full space-y-1 canvas">
+        <Canvas
+          {role}
+          bind:this={SDraw}
+          {brushColor}
+          {brushRadius}
+          canvasWidth="640"
+        />
+        <div class="flex-row justify-center">
+          {#await promise}
+            <p>loading..</p>
+          {:then role}
+            {#if role === 1}
+              <Toolbox bind:SDraw bind:brushColor bind:brushRadius />
+            {/if}
+            <p>You are currently role {role}</p>
+          {/await}
+        </div>
+        {#await promise}
+          <p>loading..</p>
+        {:then role}
+          {#if role != 3}
+            <button
+              on:click={startRound}
+              class="bg-purple-500 hover:bg-purple-700 text-white font-bold py-2 px-4 rounded"
+              >Start Round</button
+            >
+          {/if}
+        {/await}
+
+        <MessageBar
+          {role}
+          bind:input={chatInput}
+          on:guessWordClicked={onClickGuess}
+          on:sendChatClicked={onClickChat}
+          guessButtonDisabled={!isRoundActive}
+        />
+      </div>
+
+      <div class="w-1/4 h-full chatwindow">
+        <ChatBox messages={chatMessages} />
+      </div>
+    </div>
   </div>
 </div>
+
+
+<style>
+  .container {
+    max-width: 1366px;
+    margin-left: auto;
+    margin-right: auto;
+    position: relative;
+  }
+
+  .background {
+    min-height: 100vh;
+    background: url("/images/Background2.png");
+    background-size: 100% 100%;
+  }
+  .guesswindow{
+    border: 30px solid transparent;
+    border-image: url("/images/ChatBox.png") 30 round;
+    background: white;
+    border-radius: 5px;
+    box-shadow: 5px 5px 5px rgba(0,0,0,0.5) ;
+  }
+  .chatwindow{
+    border: 30px solid transparent;
+    border-image: url("/images/ChatBox.png") 30 round;
+    background: white;
+    border-radius: 5px;
+    box-shadow: 5px 5px 5px rgba(0,0,0,0.5) ;
+  }
+  .canvas{
+    padding: 1rem;
+    margin-left: 1rem;
+    margin-right: 1rem;
+    background: white;
+    border-radius: 5px;
+  }
+
+</style>
