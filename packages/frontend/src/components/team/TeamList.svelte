@@ -34,8 +34,8 @@
 
   let showWarningForm = false;
 
-  const warnTeam = (e) => {
-    teamname = contentJSON[0].teamname;
+  const warnTeam = (teamName) => {
+    teamname = teamName;
     showWarningForm = true;
   };
 
@@ -82,7 +82,7 @@
               /></button
             >
             <button
-              on:click={warnTeam}
+              on:click={() => warnTeam(element.teamname)}
               class="flex justify-center h-7 w-7 ml-3 bg-yellow-300 hover:bg-yellow-500 text-black font-bold  rounded-full"
               ><Icon
                 data={faTriangleExclamation}
