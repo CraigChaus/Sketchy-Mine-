@@ -204,7 +204,7 @@
   };
 
   const handleDrawStart = (e) => {
-    if (role === 1) {
+    if (role === 1 && !restrictCanvas) {
       e.preventDefault();
 
       // Start drawing
@@ -223,7 +223,7 @@
   };
 
   const handleDrawMove = (e) => {
-    if (role === 1) {
+    if (role === 1 && !restrictCanvas) {
       e.preventDefault();
 
       const { x, y } = getPointerPos(e);
@@ -232,7 +232,7 @@
   };
 
   const handleDrawEnd = (e) => {
-    if (role === 1) {
+    if (role === 1 && !restrictCanvas) {
       e.preventDefault();
 
       // Draw to this end pos
@@ -512,6 +512,7 @@
   }
 
   export let role;
+  export let restrictCanvas;
 
   socket.on('canvas:clear', clear);
 </script>

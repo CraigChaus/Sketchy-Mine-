@@ -5,6 +5,8 @@ const CANVAS_EVENTS = {
   GUESSER: 'canvas:guesser',
   SPECTATOR: 'canvas:spectator',
   NEWLOGIN: 'canvas:new-user',
+  RESTRICT_DRAWING: 'canvas:lock',
+  UNRESTRICT_DRAWING: 'canvas:unlock',
 };
 
 let canvasHistory = [];
@@ -66,6 +68,14 @@ export const giveAppropriateRoles = (io, Teams) => {
       });
     }
   });
+};
+
+export const lockCanvas = (io) => {
+  io.emit(CANVAS_EVENTS.RESTRICT_DRAWING);
+};
+
+export const unlockCanvas = (io) => {
+  io.emit(CANVAS_EVENTS.UNRESTRICT_DRAWING);
 };
 
 export default canvasHandler;

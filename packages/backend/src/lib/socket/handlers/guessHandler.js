@@ -8,6 +8,8 @@ import {
 import { getCurrentUser } from '../utils/users';
 import { TEAM_EVENTS } from './teamHandler';
 
+import { lockCanvas, unlockCanvas } from './canvasHandler';
+
 /**
  * Socket IO events for handling guesses
  */
@@ -21,6 +23,10 @@ export const GUESS_EVENTS = {
 
 const dbg = debug('handler:guess');
 
+export const endRound = (io) => {
+  lockCanvas(io);
+};
+
 /**
  * Broadcast the round timer to all connected users
  * @param {Object} progress Round time
@@ -30,6 +36,9 @@ export const sendProgress = (progress) => {
 
   dbg(GUESS_EVENTS.ROUND_STATE, progress);
   io.emit(GUESS_EVENTS.ROUND_STATE, progress);
+  if (progress.roundTime === 0) { // will block the canvas to avoid further drawing
+    endRound(io);
+  }
 };
 
 /**
@@ -85,6 +94,7 @@ const startRound = (socket) => {
   if (gameState.roundTime > 0) {
     return;
   }
+  unlockCanvas(getIO()); // unlocks the previously locked canvas
   nextWord();
   nextDrawingTeam();
   const index = Teams.findIndex((team) => {
