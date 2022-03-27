@@ -5,6 +5,7 @@
    */
   import ScrollContainer from "../ScrollContainer.svelte";
   import ChatItem from "./ChatItem.svelte";
+  import { afterUpdate } from "svelte";
 
   /*
      Expected content:
@@ -17,9 +18,16 @@
      ]
      */
   export let messages = [];
+
+  let container;
+  // Run after we rendered new messages to the screen
+  afterUpdate(() => {
+    // Scroll to the bottom
+    container.scrollTo(0, container.scrollHeight);
+  });
 </script>
 
-<ScrollContainer styles="h-100">
+<ScrollContainer styles="h-100" bind:container>
   {#if messages !== "" || messages !== undefined || messages !== null}
     {#each messages as element}
       <ChatItem
