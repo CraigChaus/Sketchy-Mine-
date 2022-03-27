@@ -4,6 +4,9 @@
     import { token } from '../stores/token';
     import { createEventDispatcher } from 'svelte'
     import socket from '../socket';
+    import { getNotificationsContext } from "svelte-notifications";
+
+    const { addNotification } = getNotificationsContext();
 
     const dispatch = createEventDispatcher();
 
@@ -20,8 +23,20 @@
             message: warning
         };
         socket.emit("moderation:send_warning", payload)
+        showConfirmation();
+
         cancel();
     }
+
+    const showConfirmation = () => {
+
+        addNotification({
+        text: "warning sent!",
+        position: "bottom-left",
+        type: "success",
+        removeAfter: 3000,
+        });
+  };
     
 </script>
 

@@ -30,6 +30,9 @@
     teamGuesses = [...guesses];
   });
 
+  let roles = ["drawer", "guesser", "spectator"];
+
+  let restrictCanvas = false; //used when the round ends.
   let results = null; // It has to be null when we want to hide the results on the team listing
   let username; //Current user's username
   let teams = []; // Points and colour are used by ProgressBar.
@@ -394,6 +397,14 @@
     else isRoundActive = true;
   };
 
+  const lockCanvas = () => {
+    restrictCanvas = true;
+  }
+
+  const unlockCanvas = () => {
+    restrictCanvas = false;
+  }
+
   socket.on("round:result", (payload) => {
     results = payload;
     correctWord = results.result;
@@ -407,6 +418,10 @@
   socket.on("canvas:guesser", becomeGuesser);
   socket.on("canvas:spectator", becomeSpectator);
   socket.on("round:state", updateProgress);
+  socket.on("canvas:lock", lockCanvas);
+  socket.on("canvas:unlock", unlockCanvas)
+
+  
 
   const leaveGame = () => {
     router.redirect("/ended_session");
@@ -428,6 +443,11 @@
       />
     {/if}
     <LeaveButton on:buttonClicked={leaveGame}>LEAVE</LeaveButton>
+    <button
+              on:click={startRound}
+              class="bg-purple-500 hover:bg-purple-700 text-white font-bold py-2 px-4 rounded"
+              >Start Round</button
+            >
     <ProgressBar {teams} />
 
     <TeamStatistics {myTeam}/>
@@ -464,6 +484,7 @@
 
       <div class="w-2/4 h-full space-y-1 canvas">
         <Canvas
+          {restrictCanvas}
           {role}
           bind:this={SDraw}
           {brushColor}
@@ -474,23 +495,17 @@
           {#await promise}
             <p>loading..</p>
           {:then role}
-            {#if role === 1}
+            {#if role === 1 && !restrictCanvas}
               <Toolbox bind:SDraw bind:brushColor bind:brushRadius />
             {/if}
-            <p>You are currently role {role}</p>
+            {#if restrictCanvas}
+            <p>round ended</p>
+            {:else}
+              <p>You are currently a {roles[role-1]}</p>
+            {/if}
+            
           {/await}
         </div>
-        {#await promise}
-          <p>loading..</p>
-        {:then role}
-          {#if role != 3}
-            <button
-              on:click={startRound}
-              class="bg-purple-500 hover:bg-purple-700 text-white font-bold py-2 px-4 rounded"
-              >Start Round</button
-            >
-          {/if}
-        {/await}
 
         <MessageBar
           {role}

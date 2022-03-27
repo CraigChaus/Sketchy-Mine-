@@ -237,6 +237,8 @@ Since is going to be an online game the protocols we are going to use WebSockets
 | listens | `canvas:guesser`   | -        | Request guesser role (read access to the canvas)                |
 | sends   | `canvas:guesser`   | -        | Sends ok signal for guesser role request for the canvas         |
 | listens | `canvas:new-user`  | `Canvas` | As a newly joined user ask for current canvas state             |
+| sends   | `canvas:lock`      | -        | locks the canvas at the end of the round                        |
+| sends   | `canvas:unlock`    | -        | unlocks the canvas at the start of a new round                  |
 
 ### Moderation
 | Type | Event Name | Payload | Action |
