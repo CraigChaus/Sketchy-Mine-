@@ -1,5 +1,6 @@
 import debug from 'debug';
-import randomWords from 'random-words';
+// eslint-disable-next-line import/no-extraneous-dependencies
+import Sentencer from 'sentencer';
 import { getIO } from '..';
 import { Teams } from '../../../data/teams';
 import { broadcastTeamSpecificGuesses, sendProgress, sendResult } from '../handlers/guessHandler';
@@ -12,16 +13,20 @@ const teamGuesses = [];
 
 /**
  * List of words that can be used for guessing
- * for now, 10000 random words will be stored
+ * for now, 1000 random words will be stored
 */
 
-const wordBank = randomWords(10000);
-// console.log(wordBank);
+const wordBank = [];
+
+for (let index = 0; index < 1000; index++) {
+  wordBank.push(Sentencer.make('{{ noun }}'));
+}
 
 /**
  * Get random word to guess
  * @returns Random word from the word bank
- */
+*/
+
 export const getRandomWord = () => {
   const nextWordIndex = Math.floor(Math.random() * wordBank.length);
   const nextWord = wordBank[nextWordIndex];

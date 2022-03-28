@@ -7,6 +7,7 @@
   import GuessOption from "./GuessOption.svelte";
   import { createEventDispatcher } from "svelte";
   import socket from "../../socket";
+  import Countdown from '../Countdown.svelte';
 
   // If this is set to "N/A" and the timeRemainingInSeconds is -1,
   // that means the round is not yet started
@@ -58,10 +59,9 @@
     </p>
   {:else}
     <p class="border-b-2">
-      Time remaining: <span class="font-bold text-yellow-600"
-        >{timeRemainingInSeconds} seconds</span
-      >
+      Time remaining:
     </p>
+    <Countdown countdown={timeRemainingInSeconds}/>
   {/if}
   <p class="truncate">
     My current guess: <span class="font-medium">{currentGuess ?? "N/A"}</span>
