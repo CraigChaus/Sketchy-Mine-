@@ -457,7 +457,7 @@
         <p>Loading word...</p>
       {:then role}
         {#if role == 1}
-          <h2 class="text-white text-xl">Word To Draw: <span class="italic font-medium">{correctWord}</span></h2>
+          <h2 class=" mb-3 text-white text-xl ">Word To Draw: <span class="neons italic font-medium ">{correctWord}</span></h2>
         {/if}
       {/await}
     </div>
@@ -489,7 +489,7 @@
           bind:this={SDraw}
           {brushColor}
           {brushRadius}
-          canvasWidth="640"
+          canvasWidth="w-2/4"
         />
         <div class="flex-row justify-center">
           {#await promise}
@@ -559,4 +559,27 @@
     border-radius: 5px;
   }
 
+  /*  here will go styles for Guess word*/
+   @import url('https://fonts.googleapis.com/css?family=Codystar:300&display=swap');
+
+  .neons {
+    font-size: 2rem;
+    text-align: center;
+    font-weight: bold;
+    -webkit-animation: glow 2s ease-in-out infinite alternate;
+    -moz-animation: glow 2s ease-in-out infinite alternate;
+    animation: glow 2s ease-in-out infinite alternate;
+  }
+
+  @-webkit-keyframes glow {
+    from {
+      color: #fff;
+      text-shadow: 0 0 10px #00fff2, 0 0 20px #00fff2, 0 0 30px #00fff2, 0 0 40px #00fff2, 0 0 50px #00fff2, 0 0 60px #00fff2, 0 0 70px #00fff2, 0 0 90px #00fff2;
+    }
+
+    to {
+      color: mediumspringgreen;
+      text-shadow: 0 0 20px #00fff2, 0 0 30px #00fff2, 0 0 40px #00fff2, 0 0 50px #00fff2, 0 0 60px #00fff2, 0 0 70px #00fff2, 0 0 80px #00fff2, 0 1 90px #00fff2;
+    }
+  }
 </style>
