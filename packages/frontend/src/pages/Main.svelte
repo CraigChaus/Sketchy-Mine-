@@ -467,7 +467,6 @@
         {#await promise}
           <p>loading..</p>
         {:then role}
-          {#if role != 3}
             <GuessList
               on:guessClicked={onClickGuessItem}
               {teamGuesses}
@@ -476,7 +475,6 @@
               {timeRemainingInSeconds}
               {teamSize}
             />
-          {/if}
         {/await}
 
         <TeamList showResults={results != null} contentJSON={teams} />
@@ -531,7 +529,6 @@
     margin-right: auto;
     position: relative;
   }
-
   .background {
     min-height: 100vh;
     background: url("/images/Background2.png");
