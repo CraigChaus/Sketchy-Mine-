@@ -1,5 +1,4 @@
 <script>
-  import router from "page";
 </script>
 
 <body
@@ -34,6 +33,7 @@
         </button>
       </a>
 
+      <!-- svelte-ignore a11y-invalid-attribute -->
       <a href="#">
         <button
           disabled

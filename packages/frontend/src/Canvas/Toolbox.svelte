@@ -1,6 +1,6 @@
 <script>
-  import ChatButton from '../components/chat/ChatButton.svelte';
-  import socket from '../socket/index';
+  import ChatButton from "../components/chat/ChatButton.svelte";
+  import socket from "../socket/index";
 
   export let brushColor;
   export let brushRadius;
@@ -11,33 +11,34 @@
   }
 
   const colourYellow = () => {
-    brushColor = '#FFE100';
+    brushColor = "#FFE100";
   };
   const colourBlue = () => {
-    brushColor = '#37a0ff';
+    brushColor = "#37a0ff";
   };
   const colourRed = () => {
-    brushColor = '#ea1000';
+    brushColor = "#ea1000";
   };
   const colourGreen = () => {
-    brushColor = '#2dce00';
+    brushColor = "#2dce00";
   };
-
-  // socket.on('canvas:clear', clear);
 </script>
 
 <main>
-  <div class=" m-2 p-2 border-green-400 rounded-xl bg-gray-300">
+  <div class="mt-3 p-0.5 border-green-400 rounded-xl bg-gray-200">
     <div class=" flex-1 flex space-x-2 justify-center items-center">
       <ChatButton
+        styles="!bg-yellow-400"
         on:buttonClicked={() => {
           clear();
-          socket.emit('canvas:clear');
-        }}>CLEAR</ChatButton
+          socket.emit("canvas:clear");
+        }}
       >
-      <div class="lg:inline m-2">
-        <label>COLOUR</label>
-        <input type="color" bind:value={brushColor} />
+        CLEAR
+      </ChatButton>
+      <div class="m-2 flex items-center space-x-1">
+        <label for="colorSelect">COLOUR</label>
+        <input type="color" bind:value={brushColor} id="colorSelect" />
       </div>
 
       <input
@@ -62,8 +63,15 @@
       />
 
       <div class="lg:inline m-2">
-        <label>SIZE</label>
-        <input type="range" bind:value={brushRadius} />
+        <label for="sizeSelect">SIZE</label>
+        <input
+          type="range"
+          bind:value={brushRadius}
+          id="sizeSelect"
+          min="1"
+          max="40"
+          step="0.1"
+        />
       </div>
     </div>
   </div>

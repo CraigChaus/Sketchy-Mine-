@@ -23,11 +23,9 @@
       <div>
         {#if member.current}
           <!-- Give user this mark when they are the current user-->
-          <Icon data={faUser} class="mr-2 mt-1" style="color: blueviolet" />
+          <Icon data={faUser} class="mr-2 mt-0 text-green-600" />
         {/if}
-        <p
-          class="contents {member.current ? 'font-bold text-purple-600 ' : ''}"
-        >
+        <p class="contents {member.current ? 'font-bold text-green-500 ' : ''}">
           <span class="">
             {member.username}
           </span>

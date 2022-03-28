@@ -1,7 +1,18 @@
 {
-  "name": "svelte-app",
-  "version": "1.0.0",
+  "name": "@sketchymine/backend",
+  "version": "0.0.3",
   "private": true,
+  "description": "Svelte game frontend for Sketchy Mine",
+  "repository": {
+    "type": "git",
+    "url": "git+https://gitlab.com/saxion.nl/server-clients/dhi2v.so2.git"
+  },
+  "author": "DHI2V.So2",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://gitlab.com/saxion.nl/server-clients/dhi2v.so2/issues"
+  },
+  "homepage": "https://gitlab.com/saxion.nl/server-clients/dhi2v.so2/-/tree/main/packages/frontend",
   "scripts": {
     "build": "rollup -c",
     "dev": "rollup -c -w",
@@ -13,7 +24,6 @@
     "@rollup/plugin-node-resolve": "^11.0.0",
     "@rollup/plugin-replace": "^4.0.0",
     "autoprefixer": "^9.8.8",
-    "catenary-curve": "^1.0.1",
     "concurrently": "^7.0.0",
     "cross-env": "^7.0.3",
     "eslint": "^8.9.0",
@@ -26,7 +36,7 @@
     "resize-observer-polyfill": "^1.5.0",
     "rollup": "^2.3.4",
     "rollup-plugin-css-only": "^3.1.0",
-    "rollup-plugin-livereload": "^2.0.0",
+    "rollup-plugin-livereload": "^2.0.5",
     "rollup-plugin-svelte": "^7.0.0",
     "rollup-plugin-terser": "^7.0.0",
     "socket.io-client": "^4.4.1",

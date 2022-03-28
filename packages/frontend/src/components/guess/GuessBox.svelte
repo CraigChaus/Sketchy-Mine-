@@ -7,12 +7,11 @@
   import GuessOption from "./GuessOption.svelte";
   import { createEventDispatcher } from "svelte";
   import socket from "../../socket";
-  import Countdown from '../Countdown.svelte';
+  import Countdown from "../Countdown.svelte";
 
   // If this is set to "N/A" and the timeRemainingInSeconds is -1,
   // that means the round is not yet started
   export let result = "N/A"; // When the round is over, or not yet started, this should be "N/A"
-  export let teamNumber = 0;
   export let teamSize = 60;
   export let currentGuess = null; // When the round is over, or not yet started, this must be null!!!
   export let timeRemainingInSeconds = -1; // When the round is over, or not yet started, this must be -1!!!
@@ -58,17 +57,20 @@
       Correct word: <span class="font-bold text-purple-600">{result}</span>
     </p>
   {:else}
-    <p class="border-b-2">
-      Time remaining:
-    </p>
-    <Countdown countdown={timeRemainingInSeconds}/>
+    <p class="border-b-2">Time remaining:</p>
+    <Countdown countdown={timeRemainingInSeconds} />
   {/if}
   <p class="truncate">
     My current guess: <span class="font-medium">{currentGuess ?? "N/A"}</span>
   </p>
-  <p>Top picks in team {teamNumber}:</p>
+  <p>My teams guesses:</p>
   <ScrollContainer styles=" max-h-56 border-0">
     <div class="flex flex-col items-center space-y-2">
+      {#if teamGuesses.length === 0}
+        <p class="italic text-yellow-500 text-center font-medium mt-2">
+          Your team has not placed any guesses yet...
+        </p>
+      {/if}
       {#each teamGuesses as teamGuess, guessIndex}
         <GuessOption
           disabled={teamGuess.value === currentGuess}
