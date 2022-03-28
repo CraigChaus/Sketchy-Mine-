@@ -7,6 +7,7 @@
   import GuessOption from "./GuessOption.svelte";
   import { createEventDispatcher } from "svelte";
   import socket from "../../socket";
+  import Countdown from '../Countdown.svelte';
 
   // If this is set to "N/A" and the timeRemainingInSeconds is -1,
   // that means the round is not yet started
@@ -46,9 +47,9 @@
 
   socket.on("round:result", showResult);
 </script>
-
-<section class="p-4 h-80 border-gray-300 space-y-2">
-  {#if role != 3}
+<div>
+{#if role!=3}
+  <section class="p-4 h-80 border-gray-300 space-y-2">
     {#if result === "N/A" && timeRemainingInSeconds < 0}
       <p class="border-b-2 italic text-center">
         Waiting for next round to start...
@@ -84,21 +85,24 @@
         {/each}
       </div>
     </ScrollContainer>
-    {:else}
-    {#if result === "N/A" && timeRemainingInSeconds < 0}
-      <p class="border-b-2 italic text-center">
-        Waiting for next round to start...
-      </p>
-    {:else if timeRemainingInSeconds == 0}
-      <p class="border-b-2">
-        Correct word: <span class="font-bold text-purple-600">{result}</span>
-      </p>
-    {:else}
-      <p class="border-b-2">
-        Time remaining: <span class="font-bold text-yellow-600"
-      >{timeRemainingInSeconds} seconds</span
-      >
-      </p>
-    {/if}
+  </section>
+  {:else }
+  <section class="p-4 h-80 border-gray-300 space-y-2" style="height: auto;">
+      {#if result === "N/A" && timeRemainingInSeconds < 0}
+        <p class="border-b-2 italic text-center">
+          Waiting for next round to start...
+        </p>
+      {:else if timeRemainingInSeconds == 0}
+        <p class="border-b-2">
+          Correct word: <span class="font-bold text-purple-600">{result}</span>
+        </p>
+      {:else}
+        <p class="border-b-2">
+          Time remaining: <span class="font-bold text-yellow-600"
+        >{timeRemainingInSeconds} seconds</span
+        >
+        </p>
+      {/if}
+  </section>
   {/if}
-</section>
+</div>
