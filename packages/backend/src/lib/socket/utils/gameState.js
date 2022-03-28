@@ -1,5 +1,4 @@
 import debug from 'debug';
-// eslint-disable-next-line import/no-extraneous-dependencies
 import Sentencer from 'sentencer';
 import { getIO } from '..';
 import { Teams } from '../../../data/teams';
