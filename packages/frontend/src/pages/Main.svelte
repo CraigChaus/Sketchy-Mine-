@@ -467,14 +467,18 @@
         {#await promise}
           <p>loading..</p>
         {:then role}
+          {#if role != 3}
             <GuessList
-              on:guessClicked={onClickGuessItem}
-              {teamGuesses}
-              teamNumber={1}
-              currentGuess={currentGuess ? currentGuess.toLowerCase() : null}
-              {timeRemainingInSeconds}
-              {teamSize}
+                    on:guessClicked={onClickGuessItem}
+                    {teamGuesses}
+                    teamNumber={1}
+                    currentGuess={currentGuess ? currentGuess.toLowerCase() : null}
+                    {timeRemainingInSeconds}
+                    {teamSize}
             />
+            {:else}
+            <GuessList role={3} {timeRemainingInSeconds}/>
+          {/if}
         {/await}
 
         <TeamList showResults={results != null} contentJSON={teams} />
