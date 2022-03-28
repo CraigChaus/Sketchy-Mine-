@@ -12,10 +12,8 @@
   import Popup from "../components/Popup.svelte";
   import TeamStatistics from "../components/team/TeamStatistics.svelte";
   import { token } from '../stores/token';
-  import { user } from '../stores/user';
   import LeaveButton from "../components/LeaveButton.svelte";
   import router from "page";
-
   import { getNotificationsContext } from "svelte-notifications";
 
   const { addNotification } = getNotificationsContext();
@@ -60,6 +58,7 @@
   // Progress bar functionality
   // FIXME: This function has been moved to the backend
   /**
+   * Warning: Unused
    * This function updates the team's points that guessed correctly.
    * The increase is based on certain timestamps, as it follows:
    * If guessedTimeTaken is less than 30 seconds, the points are increased by 20,
@@ -93,6 +92,7 @@
   };
 
   /**
+   * Warning: Unused
    * This updates the team's points that guessed wrongly.
    * It increases the team's points by 3 with every wrong guess,
    * no matter the time taken.
@@ -111,6 +111,7 @@
   };
 
   /**
+   * Warning: Unused
    * This function updates the drawing team's points.
    * It increases the points based on the percentage
    * of those who guessed correctly as to the total number
@@ -148,6 +149,7 @@
   };
 
   /**
+   * Warning: Unused
    * This calculates the percentage of the teams
    * that guessed correctly out of the total number of teams.
    * It excludes the drawing team.
@@ -162,6 +164,7 @@
   };
 
   /**
+   * Warning: Unused
    * This function checks the level per team
    * and the amount of shards each team can get.
    * It increases the amount of shards by the number
@@ -206,7 +209,7 @@
     //ugly double checking of spectator to have optimal functionality :(
 
     if (spectator) {
-      //user is a spectator
+      // User is a spectator
       role = 3;
       showMatchmakingPopup = false;
     }
@@ -234,7 +237,7 @@
 
   const joinMatch = () => {
     socket.emit("teams:get");
-    socket.emit("teams:join"); //TODO: This should only run on matchmaking
+    socket.emit("teams:join");
   };
 
   // Receiving messages
@@ -331,8 +334,7 @@
    * Called by the matchmaking popup window
    */
   const exitMatch = () => {
-    //TODO: Redirect to home screen
-    router.redirect("/");
+    router("/");
   };
 
   /**
@@ -360,7 +362,6 @@
   const onClickGuess = () => {
     if (chatInput !== "") {
       currentGuess = chatInput;
-      // teamGuesses.push({ value: currentGuess, frequency: 1 });
       sendGuess(currentGuess);
     }
 
@@ -420,13 +421,6 @@
   socket.on("round:state", updateProgress);
   socket.on("canvas:lock", lockCanvas);
   socket.on("canvas:unlock", unlockCanvas)
-
-  
-
-  const leaveGame = () => {
-    router.redirect("/ended_session");
-  };
-
   socket.on("moderation:receive_warning", showWarning);
 </script>
 
@@ -442,7 +436,7 @@
         showButtons={popupWindowShowButtons}
       />
     {/if}
-    <LeaveButton on:buttonClicked={leaveGame}>LEAVE</LeaveButton>
+    <LeaveButton href="/ended_session">LEAVE</LeaveButton>
     <button
               on:click={startRound}
               class="bg-purple-500 hover:bg-purple-700 text-white font-bold py-2 px-4 rounded"
@@ -465,16 +459,15 @@
     <div class="flex">
       <div class="w-1/4 guesswindow">
         {#await promise}
-          <p>loading..</p>
+          <p>Loading..</p>
         {:then role}
           {#if role != 3}
             <GuessList
-                    on:guessClicked={onClickGuessItem}
-                    {teamGuesses}
-                    teamNumber={1}
-                    currentGuess={currentGuess ? currentGuess.toLowerCase() : null}
-                    {timeRemainingInSeconds}
-                    {teamSize}
+              on:guessClicked={onClickGuessItem}
+              {teamGuesses}
+              currentGuess={currentGuess ? currentGuess.toLowerCase() : null}
+              {timeRemainingInSeconds}
+              {teamSize}
             />
             {:else}
             <GuessList role={3} {timeRemainingInSeconds}/>
@@ -484,7 +477,7 @@
         <TeamList showResults={results != null} contentJSON={teams} />
       </div>
 
-      <div class="w-2/4 h-full space-y-1 canvas">
+      <div class="w-2/4 h-full space-y-1 canvas rounded-md">
         <Canvas
           {restrictCanvas}
           {role}
@@ -495,15 +488,15 @@
         />
         <div class="flex-row justify-center">
           {#await promise}
-            <p>loading..</p>
+            <p>Loading..</p>
           {:then role}
             {#if role === 1 && !restrictCanvas}
               <Toolbox bind:SDraw bind:brushColor bind:brushRadius />
             {/if}
             {#if restrictCanvas}
-            <p>round ended</p>
+            <p>Round over</p>
             {:else}
-              <p>You are currently a {roles[role-1]}</p>
+              <p>You are currently a <span class="text-blue-600 font-medium">{roles[role-1]}</span></p>
             {/if}
             
           {/await}
@@ -557,10 +550,9 @@
     margin-left: 1rem;
     margin-right: 1rem;
     background: white;
-    border-radius: 5px;
   }
 
-  /*  here will go styles for Guess word*/
+  /*  here will go styles for Guess word */
    @import url('https://fonts.googleapis.com/css?family=Codystar:300&display=swap');
 
   .neons {

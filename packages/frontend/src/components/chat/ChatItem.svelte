@@ -13,8 +13,10 @@
 <div class="flex-1 w-full h-full flex max-h-full">
   {#if type === 1}
     <div class="ml-3" />
-    <div class="bg-blue-700 my-1 p-2 rounded-l-2xl text-white ml-auto items-center h-full">
-      <p class="font-bold text-red-500 text-xs text-right">{currentTime}</p>
+    <div
+      class="bg-blue-700 my-1 p-2 rounded-l-2xl text-white ml-auto items-center h-full"
+    >
+      <p class="font-bold text-xs text-right italic">{currentTime}</p>
       <!-- Line break without trying to preserve whole words for all messages-->
       <p class="text-right break-all">{message}</p>
     </div>
@@ -24,8 +26,13 @@
       <p class="break-all">{message}</p>
     </div>
   {:else}
-    <div class="my-5 p-2 border-t-4 border-b-4 border-red-500 bg-gray-100 flex-1 flex flex-col h-full">
-      <p class="font-bold text-red-500 text-xs text-center">{sender} {currentTime}</p>
+    <div
+      class="my-5 p-2 border-t-4 border-b-4 border-red-500 bg-gray-100 flex-1 flex flex-col h-full"
+    >
+      <p class="font-bold text-red-500 text-xs text-center">
+        {sender}
+        {currentTime}
+      </p>
       <p class="break-all">{message}</p>
     </div>
   {/if}
