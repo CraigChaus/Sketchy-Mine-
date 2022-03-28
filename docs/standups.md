@@ -481,3 +481,29 @@ Ana is missing, did not inform the team, everyone else is present
 - Backlogs were created for bugs
 - Items were assigned
 - A meeting was done together to make sure we have as many bugs fixed as possible till our mid-sprint publisher meeting
+
+## SCRUM Standup (Entire team) - 28.03.2022
+- Not present:
+  - Marko: let the team know about the fact of being very late or not being present at all this morning
+  - Daria: Got sick. Let the team know this fact this morning
+  - Vedat: Got official tasks to do. Let the team know this fact this morning
+- Melissa:
+  - Worked on bug fixing, but it turned out to be not a real bug
+  - Will take an other bug to fix
+- Vince:
+  - Worked on bug fixing, task finished
+- Mira:
+  - Laptop broke, could not work. Got a new computer, will continue working now
+- Lukman:
+  - Fixed two bugs
+  - During bug-fixing, a new bug has been found
+    - Style doesn't behave the same on different computers and web browsers
+- Filippos:
+  - Task not yet finished
+- Ana:
+  - Work on responsive styling
+  - Made most pages responsive, but not all yet
+- Peter:
+  - Worked on bug fixing. Task finished
+- Craig:
+  - Work on improvements based on play-test feedback. Task done
