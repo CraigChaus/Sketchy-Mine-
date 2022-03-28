@@ -469,6 +469,8 @@
               {timeRemainingInSeconds}
               {teamSize}
             />
+            {:else}
+            <GuessList role={3} {timeRemainingInSeconds}/>
           {/if}
         {/await}
 
@@ -524,7 +526,6 @@
     margin-right: auto;
     position: relative;
   }
-
   .background {
     min-height: 100vh;
     background: url("/images/Background2.png");
