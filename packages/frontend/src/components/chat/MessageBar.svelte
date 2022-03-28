@@ -21,7 +21,15 @@
     e.preventDefault();
 
     if (input) {
-      onSendChatClicked();
+      if (role == 2) {
+        if (!guessButtonDisabled) {
+          onGuessWordClicked();
+        } else {
+          onSendChatClicked();
+        }
+      } else {
+        onSendChatClicked();
+      }
     }
   };
 </script>

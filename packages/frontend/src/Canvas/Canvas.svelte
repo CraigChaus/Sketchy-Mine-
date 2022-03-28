@@ -1,23 +1,26 @@
 <script>
-  import { onMount, onDestroy, createEventDispatcher } from 'svelte';
-  import { LazyBrush } from 'lazy-brush';
-  import ResizeObserver from 'resize-observer-polyfill';
-  import socket from '../socket/index';
+  import { onMount, onDestroy, createEventDispatcher } from "svelte";
+  import { LazyBrush } from "lazy-brush";
+  import ResizeObserver from "resize-observer-polyfill";
+  import socket from "../socket/index";
 
   export let loadTimeOffset = 5;
   export let lazyRadius = 12;
   export let brushRadius = 10;
-  export let brushColor = '#444';
-  export let catenaryColor = '#0a0302';
-  export let gridColor = 'rgba(150,150,150,0.17)';
-  export let backgroundColor = '#FFF';
-  export let hideGrid = false;
+  export let brushColor = "#444";
+  export let catenaryColor = "#0a0302";
   export let canvasWidth = 400;
   export let canvasHeight = 400;
   export let disabled = false;
-  export let saveData = '';
+  export let saveData = "";
   export let immediateLoading = false;
   export let hideInterface = false;
+
+  $: (() => {
+    if (restrictCanvas || hideInterface) {
+      ctx.interface.clearRect(0, 0, ctx.interface.canvas.width, ctx.interface.canvas.height);
+    }
+  })();
 
   const dispatch = createEventDispatcher();
 
@@ -30,20 +33,16 @@
 
   const canvasTypes = [
     {
-      name: 'interface',
+      name: "interface",
       zIndex: 15,
     },
     {
-      name: 'drawing',
+      name: "drawing",
       zIndex: 11,
     },
     {
-      name: 'temp',
+      name: "temp",
       zIndex: 12,
-    },
-    {
-      name: 'grid',
-      zIndex: 10,
     },
   ];
 
@@ -58,7 +57,6 @@
   let isDrawing = false;
   let isPressing = false;
   let lazy = null;
-  const image = null;
   let chainLength = null;
 
   let canvasContainer = null;
@@ -66,12 +64,12 @@
 
   onMount(() => {
     Object.keys(canvas).forEach((key) => {
-      ctx[key] = canvas[key].getContext('2d');
+      ctx[key] = canvas[key].getContext("2d");
     });
 
     lazy = new LazyBrush({
       radius: lazyRadius * window.devicePixelRatio,
-      enabled: true,
+      enabled: false,
       initialPoint: {
         x: window.innerWidth / 2,
         y: window.innerHeight / 2,
@@ -79,7 +77,9 @@
     });
     chainLength = lazyRadius * window.devicePixelRatio;
 
-    canvasObserver = new ResizeObserver((entries, observer) => handleCanvasResize(entries, observer));
+    canvasObserver = new ResizeObserver((entries, observer) =>
+      handleCanvasResize(entries, observer)
+    );
     canvasObserver.observe(canvasContainer);
 
     loop();
@@ -111,23 +111,24 @@
     triggerOnChange();
   };
 
-  const getSaveData = () => JSON.stringify({
-    lines,
-    width: canvasWidth,
-    height: canvasHeight,
-  });
+  const getSaveData = () =>
+    JSON.stringify({
+      lines,
+      width: canvasWidth,
+      height: canvasHeight,
+    });
 
   let loadSaveData = (payLoad) => {
     const { saveData } = payLoad;
     const immediate = immediateLoading;
-    if (typeof saveData !== 'string') {
-      throw new Error('saveData needs to be of type string!');
+    if (typeof saveData !== "string") {
+      return;
     }
 
     const { lines, width, height } = JSON.parse(saveData);
 
-    if (!lines || typeof lines.push !== 'function') {
-      throw new Error('saveData.lines needs to be an array!');
+    if (!lines || typeof lines.push !== "function") {
+      return;
     }
 
     clear();
@@ -252,9 +253,6 @@
       setCanvasSize(canvas.interface, width, height);
       setCanvasSize(canvas.drawing, width, height);
       setCanvasSize(canvas.temp, width, height);
-      setCanvasSize(canvas.grid, width, height);
-
-      drawGrid(ctx.grid);
 
       loop({ once: true });
     }
@@ -311,7 +309,7 @@
         brushColor,
         brushRadius,
       });
-      socket.emit('canvas:points', { points, brushColor, brushRadius });
+      socket.emit("canvas:points", { points, brushColor, brushRadius });
     }
 
     mouseHasMoved = true;
@@ -323,18 +321,9 @@
     const { brushColor } = payload;
     const { brushRadius } = payload;
 
-    ctx.temp.lineJoin = 'round';
-    ctx.temp.lineCap = 'round';
+    ctx.temp.lineJoin = "round";
+    ctx.temp.lineCap = "round";
     ctx.temp.strokeStyle = brushColor;
-
-    // todo understand why this is here
-    // ctx.temp.clearRect(
-    //     0,
-    //     0,
-    //     ctx.temp.canvas.width,
-    //     ctx.temp.canvas.height
-    // );
-
     ctx.temp.lineWidth = brushRadius * 2;
 
     let p1 = points[0];
@@ -358,7 +347,7 @@
     ctx.temp.stroke();
   };
   // Socket: For drawing the points, drawing on the canvas
-  socket.on('canvas:points', drawPoints);
+  socket.on("canvas:points", drawPoints);
 
   let saveLine = ({ brushColor, brushRadius } = {}) => {
     if (points.length < 2) return;
@@ -386,7 +375,7 @@
   };
 
   let triggerOnChange = (event) => {
-    dispatch('change', event);
+    dispatch("change", event);
   };
 
   let clear = () => {
@@ -413,39 +402,8 @@
     }
   };
 
-  let drawGrid = (ctx) => {
-    if (hideGrid) return;
-
-    ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height);
-
-    ctx.beginPath();
-    ctx.setLineDash([5, 1]);
-    ctx.setLineDash([]);
-    ctx.strokeStyle = gridColor;
-    ctx.lineWidth = 0.5;
-
-    const gridSize = 25;
-
-    let countX = 0;
-    while (countX < ctx.canvas.width) {
-      countX += gridSize;
-      ctx.moveTo(countX, 0);
-      ctx.lineTo(countX, ctx.canvas.height);
-    }
-    ctx.stroke();
-
-    let countY = 0;
-    while (countY < ctx.canvas.height) {
-      countY += gridSize;
-      ctx.moveTo(0, countY);
-      ctx.lineTo(ctx.canvas.width, countY);
-    }
-    ctx.stroke();
-  };
-
   let drawInterface = (ctx, pointer, brush) => {
-    if (hideInterface) return;
-
+    if (hideInterface || restrictCanvas) return;
     ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height);
 
     // Draw brush preview
@@ -464,15 +422,9 @@
     if (lazy.isEnabled()) {
       ctx.beginPath();
       ctx.lineWidth = 2;
-      ctx.lineCap = 'round';
+      ctx.lineCap = "round";
       ctx.setLineDash([2, 4]);
       ctx.strokeStyle = catenaryColor;
-      // catenary.drawToCanvas(
-      //   ctx.interface,
-      //   brush,
-      //   pointer,
-      //   chainLength
-      // );
       ctx.stroke();
     }
 
@@ -496,15 +448,15 @@
   }
 
   function prepareImageData() {
-    const newCanvas = document.createElement('canvas');
-    const _ctx = newCanvas.getContext('2d');
+    const newCanvas = document.createElement("canvas");
+    const _ctx = newCanvas.getContext("2d");
     const width = canvasWidth;
     const height = canvasHeight;
 
     newCanvas.width = width;
     newCanvas.height = height;
 
-    [ctx.grid.canvas, ctx.drawing.canvas].forEach((n) => {
+    [ctx.drawing.canvas].forEach((n) => {
       _ctx.beginPath();
       _ctx.drawImage(n, 0, 0, width, height);
     });
@@ -514,27 +466,29 @@
   export let role;
   export let restrictCanvas;
 
-  socket.on('canvas:clear', clear);
+  socket.on("canvas:clear", clear);
 </script>
 
 <div
-  class="border-black bg-green-6100"
+  class="mb-3"
   style="height:{canvasHeight}px; width:{canvasWidth}px"
   bind:this={canvasContainer}
 >
   {#each canvasTypes as { name, zIndex }}
+    <!-- svelte-ignore a11y-mouse-events-have-key-events -->
     <canvas
       key={name}
+      class="border-gray-600 border-4 rounded-md"
       style="display:block; position:absolute; z-index:{zIndex}"
       bind:this={canvas[name]}
-      on:mousedown={name === 'interface' ? handleDrawStart : undefined}
-      on:mousemove={name === 'interface' ? handleDrawMove : undefined}
-      on:mouseup={name === 'interface' ? handleDrawEnd : undefined}
-      on:mouseout={name === 'interface' ? handleDrawEnd : undefined}
-      on:touchstart={name === 'interface' ? handleDrawStart : undefined}
-      on:touchmove={name === 'interface' ? handleDrawMove : undefined}
-      on:touchend={name === 'interface' ? handleDrawEnd : undefined}
-      on:touchcancel={name === 'interface' ? handleDrawEnd : undefined}
+      on:mousedown={name === "interface" ? handleDrawStart : undefined}
+      on:mousemove={name === "interface" ? handleDrawMove : undefined}
+      on:mouseup={name === "interface" ? handleDrawEnd : undefined}
+      on:mouseout={name === "interface" ? handleDrawEnd : undefined}
+      on:touchstart={name === "interface" ? handleDrawStart : undefined}
+      on:touchmove={name === "interface" ? handleDrawMove : undefined}
+      on:touchend={name === "interface" ? handleDrawEnd : undefined}
+      on:touchcancel={name === "interface" ? handleDrawEnd : undefined}
     />
   {/each}
 </div>
