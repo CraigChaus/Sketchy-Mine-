@@ -49,7 +49,6 @@
     "npm-run-all": "^4.1.5",
     "pg": "^8.7.3",
     "pg-hstore": "^2.3.4",
-    "random-word-slugs": "^0.1.6",
     "random-words": "^1.1.2",
     "rimraf": "^3.0.2",
     "sequelize": "^6.17.0",
@@ -64,6 +63,8 @@
     "eslint-config-airbnb-base": "^15.0.0",
     "eslint-plugin-import": "^2.25.4",
     "jest": "^27.5.1",
+    "random-word-slugs": "^0.1.6",
+    "sentencer": "^0.2.1",
     "socket.io-client": "^4.4.1",
     "supertest": "^6.2.2"
   },
