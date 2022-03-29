@@ -13,9 +13,26 @@
   export let role;
   export let guessButtonDisabled;
 
+  let textInputPlaceholder;
+
   const onSendChatClicked = () => dispatch("sendChatClicked");
 
   const onGuessWordClicked = () => dispatch("guessWordClicked");
+
+  const updateTextInputPlaceholder = () => {
+    if (role == 2) {
+      if (!guessButtonDisabled) {
+        textInputPlaceholder = "Type chat message or word to guess here!";
+      } else {
+        textInputPlaceholder = "Type chat message here!";
+      }
+    } else {
+      textInputPlaceholder = "Type chat message here!";
+    }
+  };
+
+  $: role, updateTextInputPlaceholder();
+  $: guessButtonDisabled, updateTextInputPlaceholder();
 
   const onSubmit = (e) => {
     e.preventDefault();
@@ -37,7 +54,7 @@
 <div class="flex-1 flex mt-8 space-x-2">
   <form class="flex flex-1" on:submit={onSubmit}>
     <TextInput
-      instruction="Search by title..."
+      placeholder={textInputPlaceholder}
       bind:input
       styles="lg:inline"
       on:submit={onSendChatClicked}

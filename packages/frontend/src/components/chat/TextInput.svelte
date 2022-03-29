@@ -6,6 +6,7 @@
   export let styles = "";
   export let input = "";
   export let disabled = false;
+  export let placeholder = "Send chat message or guess a word";
 </script>
 
 <input
@@ -14,6 +15,6 @@
     ? 'bg-gray-300 cursor-not-allowed'
     : ''} {styles}"
   type="text"
-  placeholder={disabled ? "" : "Send chat message or guess a word"}
+  placeholder={disabled ? "" : placeholder}
   bind:value={input}
 />
