@@ -3,8 +3,9 @@ import { getIO } from '..';
 import Team from '../../../data/model/team';
 import User from '../../../data/model/user';
 import { addTeam, Teams, updateTeams } from '../../../data/teams';
+import { gameState } from '../utils/gameState';
 import { getCurrentUser } from '../utils/users';
-import { broadcastTeamSpecificGuesses } from './guessHandler';
+import { broadcastTeamSpecificGuesses, startRound } from './guessHandler';
 
 export const TEAM_EVENTS = {
   REQUEST_LISTING: 'teams:get', // Get teams listing
@@ -22,6 +23,28 @@ const dbg = debug('handler:team');
 export const sendTeamData = (io) => {
   dbg(TEAM_EVENTS.SEND_LISTING);
   io.emit(TEAM_EVENTS.SEND_LISTING, Teams);
+};
+
+// starts a round when a new user joins and the game in not currently ongoing
+export const startGame = () => {
+  if (gameState.roundTime > 1) {
+    return;
+  }
+  const playersPerTeam = 3;
+  const teamsReady = [];
+
+  // first we check if teams are full and ready to play
+  Teams.forEach((team) => {
+    const players = team.members.length;
+    if (players >= playersPerTeam && !team.isSpectator) {
+      teamsReady.push(true);
+    }
+  });
+
+  // now we check whether there are atleast 2 teams ready, so we can start the game
+  if (teamsReady.length >= 2) {
+    startRound();
+  }
 };
 
 const teamHandler = (io, socket) => {
@@ -88,6 +111,8 @@ const teamHandler = (io, socket) => {
     }
     joinTeam(teamToJoin.teamname);
     broadcastTeamSpecificGuesses(getIO());
+
+    startGame();
   };
 
   const joinSpectators = () => {
