@@ -88,7 +88,7 @@ export const sendResult = () => {
  * Start a new round
  * @param {Socket} socket User's socket
  */
-export const startRound = (socket) => {
+export const startRound = () => {
   // checks whether game is already in progress before allowing a new round to start
   if (gameState.roundTime > 0) {
     return;
@@ -136,7 +136,7 @@ const guessHandler = (io, socket) => {
 
   socket.on(GUESS_EVENTS.ROUND_GUESS, sendGuess);
   socket.on(GUESS_EVENTS.ROUND_STATE, () => sendState(socket));
-  socket.on(GUESS_EVENTS.ROUND_START, () => startRound(socket));
+  socket.on(GUESS_EVENTS.ROUND_START, () => startRound());
 };
 
 export default guessHandler;
