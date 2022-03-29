@@ -20,6 +20,11 @@ services:
     environment:
       DB_URL: ${DB_URL}
       SENTRY_DSN: ${SENTRY_DSN}
+      GITLAB_APP_ID: ${GITLAB_APP_ID}
+      GITLAB_APP_SECRET: ${GITLAB_APP_SECRET}
+      CLIENT_URL: ${CLIENT_URL}
+      API_URL: ${API_URL}
+      ROUND_DURATION: ${ROUND_DURATION}
     depends_on:
       - db
     networks:
