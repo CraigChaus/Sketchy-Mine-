@@ -109,6 +109,10 @@
 
     teamsValue.set(teams);
   };
+  // close socket connection on button click 
+  const leaveGame = () => {
+    socket.disconnect();
+  }
 
   /**
    * Warning: Unused
@@ -436,7 +440,7 @@
         showButtons={popupWindowShowButtons}
       />
     {/if}
-    <LeaveButton href="/ended_session">LEAVE</LeaveButton>
+    <LeaveButton on:buttonClicked={leaveGame} href="/ended_session">LEAVE</LeaveButton>
     <ProgressBar {teams} />
 
     <TeamStatistics {myTeam}/>
