@@ -4,6 +4,7 @@ import { getIO } from '..';
 import { Teams } from '../../../data/teams';
 import { broadcastTeamSpecificGuesses, sendProgress, sendResult } from '../handlers/guessHandler';
 import { giveAppropriateRoles } from '../handlers/canvasHandler';
+import { startGame } from '../handlers/teamHandler';
 
 const dbg = debug('state');
 
@@ -229,6 +230,12 @@ export const nextWord = () => {
       dbg('Round over');
       clearInterval(progressTimer);
       sendResult();
+
+      // round is over so next round can start in 5 seconds
+      dbg('round ended. starting next in 5 seconds');
+      setTimeout(() => {
+        startGame();
+      }, 5000);
     }
   }, 1000);
 

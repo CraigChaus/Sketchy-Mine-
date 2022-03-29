@@ -88,12 +88,12 @@ export const sendResult = () => {
  * Start a new round
  * @param {Socket} socket User's socket
  */
-const startRound = (socket) => {
-  resetGuesses();
+export const startRound = (socket) => {
   // checks whether game is already in progress before allowing a new round to start
   if (gameState.roundTime > 0) {
     return;
   }
+  resetGuesses();
   unlockCanvas(getIO()); // unlocks the previously locked canvas
   nextWord();
   nextDrawingTeam();
@@ -108,7 +108,8 @@ const startRound = (socket) => {
     io.to(member.socketID).emit(GUESS_EVENTS.ROUND_RESULT, progress);
   });
 
-  sendState(socket);
+  broadcastTeamSpecificGuesses(getIO());
+
   // Null needs to be sent to hide the round results on the team listing
   getIO().emit(GUESS_EVENTS.ROUND_RESULT, null);
 };
