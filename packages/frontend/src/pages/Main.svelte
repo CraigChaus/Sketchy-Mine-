@@ -467,6 +467,7 @@
               currentGuess={currentGuess ? currentGuess.toLowerCase() : null}
               {timeRemainingInSeconds}
               {teamSize}
+              {role}
             />
             {:else}
             <GuessList role={3} {timeRemainingInSeconds}/>

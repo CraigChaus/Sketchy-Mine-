@@ -31,6 +31,8 @@
     }
   };
 
+  // Every time the role gets updated or the ability of guessing changes
+  // we change the prompt of the text input field
   $: role, updateTextInputPlaceholder();
   $: guessButtonDisabled, updateTextInputPlaceholder();
 
