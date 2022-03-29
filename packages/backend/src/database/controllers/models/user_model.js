@@ -27,6 +27,10 @@ const User = sequelize.define('user', {
     defaultValue: 0,
     allowNull: false,
   },
+  // Auth provider columns
+  gitlabId: {
+    type: INTEGER,
+  },
 });
 
 export default User;

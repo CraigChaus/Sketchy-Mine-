@@ -8,24 +8,36 @@
   import EndedSession from "./pages/EndedSession.svelte";
 
   import Notifications from "svelte-notifications";
+  import Auth from "./pages/Auth.svelte";
+  import qs from "qs";
 
   let page;
   let params;
 
+  router("*", parse);
   router("/game", (ctx) => (page = Main));
   router("/login", (ctx) => (page = LogIn));
   router("/register", (ctx) => (page = SignUp));
   router("/game?spectate", (ctx) => (page = Main));
   router("/leaderboards", (ctx) => (page = Ranking));
   router("/ended_session", (ctx) => (page = EndedSession));
+  router(
+    "/auth",
+    (ctx, next) => {
+      params = ctx.query;
+      next();
+    },
+    (ctx) => (page = Auth)
+  );
 
   router("/", (ctx) => (page = Home));
 
   router.start();
 
-  const home = async () => {
-    router.redirect("/");
-  };
+  function parse(ctx, next) {
+    ctx.query = qs.parse(location.search.slice(1));
+    next();
+  }
 </script>
 
 <Notifications>

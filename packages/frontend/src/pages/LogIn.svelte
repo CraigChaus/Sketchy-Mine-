@@ -3,6 +3,8 @@
   import { token } from "../stores/token";
   import { user } from "../stores/user";
   import { API_URL } from "../socket";
+  import Icon from "svelte-awesome";
+  import { faGitlab } from "@fortawesome/free-brands-svg-icons";
 
   const handleLogin = async () => {
     const response = await login();
@@ -47,7 +49,7 @@
 <div class="flex items-center justify-center min-h-screen bg-gray-100">
   <div class="px-8 py-6 mt-4 text-left bg-white shadow-lg">
     <form action="" on:submit|preventDefault={handleLogin}>
-      <div class="mt-4">
+      <div class="mt-4 flex flex-col items-center">
         <div>
           <label class="block" for="username">Username</label>
           <input
@@ -72,6 +74,10 @@
           >
             Log in</button
           >
+        </div>
+        <div class="flex justify-center items-center space-x-1 mt-3 p-2 hover:bg-gray-100 rounded-md">
+          <Icon data={faGitlab} scale={1.3} />
+          <a href={API_URL + "/auth/gitlab"}>Sign in with Gitlab</a>
         </div>
         <p class="text-center mt-2">
           Don't have an account? <a

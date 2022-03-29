@@ -11,7 +11,7 @@ const setupDatabase = async () => {
   try {
     await sequelize.authenticate();
     dbg('Database connection successful.');
-    await User.sync({ force: !IS_PROD });
+    await User.sync({ force: (process.env.SYNC === 'true') ?? !IS_PROD });
     dbg('User table created/updated.');
     // await WordBank.sync();
     // dbg('Words table created/updated.');

@@ -6,9 +6,11 @@ import * as Sentry from '@sentry/node';
 import * as Tracing from '@sentry/tracing';
 import debug from 'debug';
 
+import passport from 'passport';
 import indexRouter from './routes/index';
 import usersRouter from './routes/users';
 import credentialsRouter from './routes/credentials';
+import authRouter from './routes/auth';
 
 export const IS_PROD = process.env.NODE_ENV === 'production';
 
@@ -40,9 +42,13 @@ app.use(cookieParser());
 
 app.use(cors());
 
+// Auth
+app.use(passport.initialize());
+
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
 app.use('/credentials', credentialsRouter);
+app.use('/auth', authRouter);
 
 if (IS_PROD) {
   app.use(Sentry.Handlers.errorHandler());
