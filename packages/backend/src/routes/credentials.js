@@ -1,7 +1,7 @@
 import express from 'express';
-import create from '../database/controllers/credentials_controller';
+import createCredentials from '../database/controllers/credentials_controller';
 
 const router = express.Router();
-router.post('', create);
+router.post('', createCredentials);
 
 export default router;
