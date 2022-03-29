@@ -152,6 +152,16 @@
     }
   };
 
+  const switchRoundStates = () => {
+    // When round is over, we clear the guess cache
+    if (!isRoundActive) {
+      teamGuesses = [];
+      currentGuess = null;
+    }
+  };
+
+  $: isRoundActive, switchRoundStates();
+
   /**
    * Warning: Unused
    * This calculates the percentage of the teams
@@ -379,12 +389,6 @@
     }
   };
 
-  const startRound = () => {
-    isRoundActive = true;
-    teamGuesses = [];
-    currentGuess = null;
-    socket.emit("round:start");
-  };
   const sendGuess = (guess) => socket.emit("round:guess", guess);
 
   /**
