@@ -109,7 +109,7 @@
 
     teamsValue.set(teams);
   };
-
+  // close socket connection on button click 
   const leaveGame = () => {
     socket.disconnect();
   }
