@@ -4,7 +4,7 @@ import { getIO } from '..';
 import { Teams } from '../../../data/teams';
 import { broadcastTeamSpecificGuesses, sendProgress, sendResult } from '../handlers/guessHandler';
 import { giveAppropriateRoles } from '../handlers/canvasHandler';
-import { startGame } from '../handlers/teamHandler';
+import { sendTeamData, startGame } from '../handlers/teamHandler';
 
 const dbg = debug('state');
 
@@ -60,8 +60,8 @@ function removeGuessOfUser(username) {
  * Storage for game round state
  */
 const defaultState = {
-  currentWord: null,
-  roundTime: null,
+  currentWord: null, // This is the word to draw/guess
+  roundTime: null, // Remaining time to draw/guess
 };
 
 /**
@@ -281,7 +281,7 @@ export const nextDrawingTeam = () => {
     }
     Teams[index].isDrawing = true; // gives drawing permissions to new team
   }
-
+  sendTeamData(getIO()); // Update team listing to show who is the drawer
   giveAppropriateRoles(getIO(), Teams);
 };
 
