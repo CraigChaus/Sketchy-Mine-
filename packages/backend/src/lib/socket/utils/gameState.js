@@ -34,6 +34,19 @@ export const getRandomWord = () => {
 };
 
 /**
+ * Change the indicator whether a user has submitted a guess or not
+ * @param {String} username Name of the user to change guessed indicator
+ * @param {Boolean} guessed State to change the guess status
+ */
+function changeUserGuessState(username, guessed) {
+  Teams.forEach((t) => {
+    t.members.forEach((m) => {
+      if (m.username === username) m.guessed = guessed;
+    });
+  });
+}
+
+/**
  * Remove the guess of a user from the teamGuesses repo
  * @param {String} username Name of the user
  */
@@ -54,6 +67,8 @@ function removeGuessOfUser(username) {
     // Make sure we remove orphaned guesses that the previous forEach() block made
     t.guesses = t.guesses.filter((g) => g.freq > 0);
   });
+
+  changeUserGuessState(username, false);
 }
 
 /**
@@ -89,11 +104,19 @@ export const getGuesses = (username) => {
   return guesses;
 };
 
-/** *
- * Clear the guess repo of all teams
+/**
+ * Clear the guess of all users
  */
 export const resetGuesses = () => {
+  // Clear the guess repo
   teamGuesses.splice(0, teamGuesses.length);
+
+  // Make sure each team member is marked as 'not guessed yet'
+  Teams.forEach((t) => {
+    t.members.forEach((m) => {
+      changeUserGuessState(m.username, false);
+    });
+  });
 };
 
 /**
@@ -103,6 +126,10 @@ export const resetGuesses = () => {
  * @param {String} guess The user's guess to add
  */
 export const addGuess = (username, guess) => {
+  // We make sure with the code below that a user can only have one guess submitted
+  removeGuessOfUser(username);
+  // First, we mark that the user submitted a guess
+  changeUserGuessState(username, true);
   // We check to which team the user belongs
   const currentTeam = Teams.find((t) => t.members.find((m) => m.username === username));
   if (!teamGuesses.some((t) => t.teamname === currentTeam.teamname)) {
@@ -115,9 +142,6 @@ export const addGuess = (username, guess) => {
     // If we already have the team
     teamGuesses.forEach((t) => {
       if (t.teamname === currentTeam.teamname) { // Only modify the user's team's guesses
-        // We make sure with the code below that a user can only have one guess submitted
-        removeGuessOfUser(username);
-
         // We check if the team guesses already has the new guess to add
         const found = t.guesses.some((g) => g.guess === guess);
         if (!found) {
@@ -137,6 +161,8 @@ export const addGuess = (username, guess) => {
       }
     });
   }
+  // Send team user-listing update to show who guessed
+  sendTeamData(getIO());
 };
 
 /**
@@ -291,5 +317,7 @@ export const removeUserGuesses = (user) => {
     removeGuessOfUser(user.username);
     // Once a user is removed, their guesses is removed too, so we send an update of guesses
     broadcastTeamSpecificGuesses(getIO());
+    // Mark user as not guessed a word
+    changeUserGuessState(user.username, false);
   }
 };
