@@ -16,7 +16,7 @@ export const createToken = async (username) => {
   return false;
 };
 
-const authCallback = async (req, res, err, user) => {
+const authCallback = async (_, res, err, user) => {
   if (err || !user) {
     return res.status(400).json({
       message: 'Authentication error',

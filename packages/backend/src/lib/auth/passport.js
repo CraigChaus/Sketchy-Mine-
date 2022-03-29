@@ -2,6 +2,7 @@ import passport from 'passport';
 import { Strategy as LocalStrategy } from 'passport-local';
 import { Strategy as GitLabStrategy } from 'passport-gitlab2';
 import bcrypt from 'bcrypt';
+import { v4 as uuidv4 } from 'uuid';
 import User from '../../database/controllers/models/user_model';
 
 passport.serializeUser((user, done) => {
@@ -36,14 +37,14 @@ passport.use(
   }),
 );
 
-const { GITLAB_APP_ID, GITLAB_APP_SECRET } = process.env;
+const { GITLAB_APP_ID, GITLAB_APP_SECRET, API_URL } = process.env;
 
-if (GITLAB_APP_ID && GITLAB_APP_SECRET) {
+if (GITLAB_APP_ID && GITLAB_APP_SECRET && API_URL) {
   passport.use(new GitLabStrategy(
     {
       clientID: GITLAB_APP_ID,
       clientSecret: GITLAB_APP_SECRET,
-      callbackURL: 'http://localhost:3000/auth/gitlab/callback',
+      callbackURL: `${API_URL}/auth/gitlab/callback`,
     },
     (async (_, __, profile, cb) => {
       const existingGitlabUser = await User.findOne({
@@ -68,7 +69,7 @@ if (GITLAB_APP_ID && GITLAB_APP_SECRET) {
 
       // Completely new user
       const [user] = await User.findOrCreate({
-        where: { gitlabId: profile.id, username: profile.username },
+        where: { gitlabId: profile.id, username: profile.username, secret: uuidv4() },
       });
 
       if (user) {
