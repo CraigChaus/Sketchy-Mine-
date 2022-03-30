@@ -349,7 +349,10 @@
   /**
    * Hide matchmaking popup box and place user into spectate mode
    */
-  const startSpectate = () => (showMatchmakingPopup = false);
+  const startSpectate = () => {
+    showMatchmakingPopup = false;
+    role = 3;
+  }
 
   async function getRole() {
     return role;
