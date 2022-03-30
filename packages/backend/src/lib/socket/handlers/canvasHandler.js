@@ -62,9 +62,14 @@ export const giveAppropriateRoles = (io, Teams) => {
         io.to(member.socketID).emit(CANVAS_EVENTS.DRAWER);
       });
       // gives the other teams excluding spectators guessing permissions
-    } else if (team.isSpectator === false) {
+    } else if (team.members.length >= 3 && team.isSpectator === false) {
       team.members.forEach((member) => {
         io.to(member.socketID).emit(CANVAS_EVENTS.GUESSER);
+      });
+      // gives spectator and teams that are not full spectator permissions
+    } else {
+      team.members.forEach((member) => {
+        io.to(member.socketID).emit(CANVAS_EVENTS.SPECTATOR);
       });
     }
   });

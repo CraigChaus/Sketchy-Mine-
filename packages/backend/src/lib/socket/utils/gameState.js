@@ -279,33 +279,49 @@ const nextTeam = (teamsAmount, index) => {
   return index;
 };
 
+// checks whether the next team can be considered
+
+const considerDrawer = (team) => {
+  if (team.isSpectator) {
+    return false;
+  } if (team.members.length < 3) {
+    return false;
+  }
+  return true; // Team must be full to reach this part
+};
+
 /**
  * Get next team in the list
  * teams are selected as drawing teams in order
  */
 export const nextDrawingTeam = () => {
-  // find drawing team
-  let index = Teams.findIndex((team) => {
+  const drawerTeam = Teams.findIndex((team) => { // find drawing team
     if (team.isDrawing === true) {
       return true;
     } return false;
   });
-  if (index === -1) { // There is no drawing team
+  if (drawerTeam === -1) { // There is no drawing team
     for (let i = 0; i < Teams.length; i++) { // for loop to make sure we ignore spectator teams
       // would have liked to filter out spectator teams but that messes with the Teams array length.
-      if (Teams[i].isSpectator === false) {
+      if (Teams[i].isSpectator === false && Teams[i].members.length >= 3) {
         Teams[i].isDrawing = true;
         break;
       }
     }
   } else {
-    Teams[index].isDrawing = false; // removes drawing permissions from old team
+    Teams[drawerTeam].isDrawing = false; // removes drawing permissions from old team
     const teamsAmount = Teams.length - 1;
-    index = nextTeam(teamsAmount, index);
-    if (Teams[index].isSpectator === true) {
-      index = nextTeam(teamsAmount, index);
+
+    let i = drawerTeam;
+    // this iterates over the teams to check if all of them are complete
+    // and assigns the drawing role
+    while (i < Teams.length) {
+      i = nextTeam(teamsAmount, i);
+      if (considerDrawer(Teams[i])) {
+        Teams[i].isDrawing = true;
+        break;
+      }
     }
-    Teams[index].isDrawing = true; // gives drawing permissions to new team
   }
   sendTeamData(getIO()); // Update team listing to show who is the drawer
   giveAppropriateRoles(getIO(), Teams);
