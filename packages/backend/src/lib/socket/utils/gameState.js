@@ -11,6 +11,8 @@ const dbg = debug('state');
 const ROUND_DURATION = process.env.ROUND_DURATION ?? 30;
 const teamGuesses = [];
 
+let nrTeamsWithFinalizedGuess = 0;
+
 /**
  * List of words that can be used for guessing
  * for now, 1000 random words will be stored
@@ -150,8 +152,11 @@ export const addGuess = (username, guess) => {
           currentTeam.lastGuessSubmit = new Date();
         } else {
           t.guesses.forEach((g) => {
-            if (g.guess === guess && !g.usernames.includes(username)) {
-              g.freq += 1;
+            if (g.guess === guess
+              && !g.usernames.includes(username)
+              && g.freq < currentTeam.members.length / 2) {
+              if (++g.freq >= currentTeam.members.length / 2) nrTeamsWithFinalizedGuess++;
+
               g.usernames.push(username);
               // Update the last guess time for the team placement at the end of the round
               currentTeam.lastGuessSubmit = new Date();
@@ -252,9 +257,12 @@ export const nextWord = () => {
     sendProgress({ roundTime: gameState.roundTime });
 
     // Once the time hits 0, the round is over
-    if (gameState.roundTime <= 0) {
+    if (gameState.roundTime <= 0 || nrTeamsWithFinalizedGuess === Teams.length - 1) {
+      nrTeamsWithFinalizedGuess = 0;
+      gameState.roundTime = 0;
       dbg('Round over');
       clearInterval(progressTimer);
+      sendProgress({ roundTime: gameState.roundTime });
       sendResult();
 
       // round is over so next round can start in 5 seconds
