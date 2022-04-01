@@ -15,6 +15,7 @@
   import LeaveButton from "../components/LeaveButton.svelte";
   import router from "page";
   import { getNotificationsContext } from "svelte-notifications";
+  import Countdown from "../components/Countdown.svelte";
 
   const { addNotification } = getNotificationsContext();
   let myTeamName;
@@ -477,14 +478,21 @@
       </div>
 
       <div class="w-2/4 h-full space-y-1 canvas rounded-md">
+
+        {#if timeRemainingInSeconds <= 5 && timeRemainingInSeconds !== 0}
+          <div class="p-2 bg-red-400 rounded-md animate-pulse"></div>
+        {/if}
         <Canvas
-          {restrictCanvas}
-          {role}
-          bind:this={SDraw}
-          {brushColor}
-          {brushRadius}
-          canvasWidth="w-2/4"
+                {restrictCanvas}
+                {role}
+                bind:this={SDraw}
+                {brushColor}
+                {brushRadius}
+                canvasWidth="w-2/4"
         />
+        {#if timeRemainingInSeconds <= 5 && timeRemainingInSeconds !== 0}
+          <div class="p-2 bg-red-400 rounded-md animate-pulse"></div>
+        {/if}
         <div class="flex-row justify-center">
           {#await promise}
             <p>Loading..</p>
