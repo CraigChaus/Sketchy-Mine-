@@ -487,7 +487,7 @@
 
       <div class="w-2/4 h-full space-y-1 canvas rounded-md">
 
-        {#if timeRemainingInSeconds <= 5 && timeRemainingInSeconds !== 0}
+        {#if timeRemainingInSeconds <= 5 && timeRemainingInSeconds > 0}
           <div class="p-2 bg-red-400 rounded-md animate-pulse"></div>
         {/if}
         <Canvas
@@ -498,7 +498,7 @@
                 {brushRadius}
                 canvasWidth="w-2/4"
         />
-        {#if timeRemainingInSeconds <= 5 && timeRemainingInSeconds !== 0}
+        {#if timeRemainingInSeconds <= 5 && timeRemainingInSeconds > 0}
           <div class="p-2 bg-red-400 rounded-md animate-pulse"></div>
         {/if}
         <div class="flex-row justify-center">
