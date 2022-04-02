@@ -4,13 +4,20 @@
 
 const users = [];
 
+const userExists = function (username) {
+  return users.some((user) => user.username === username);
+};
+
 // Join user to chat room
 // If later on we decided to add multiple session/rooms then this method is already up to date
 export const userJoin = (socketId, username, isModerator, totalEmeralds, isUsernameGenerated) => {
   const user = {
     id: socketId, username, isModerator, totalEmeralds, isUsernameGenerated,
   };
-  users.push(user);
+  const exists = userExists(user.username);
+  if (!exists) {
+    users.push(user);
+  }
   return user;
 };
 
