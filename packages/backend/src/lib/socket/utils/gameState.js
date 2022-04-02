@@ -1,10 +1,11 @@
 import debug from 'debug';
-import Sentencer from 'sentencer';
 import { getIO } from '..';
 import { Teams } from '../../../data/teams';
 import { broadcastTeamSpecificGuesses, sendProgress, sendResult } from '../handlers/guessHandler';
 import { giveAppropriateRoles } from '../handlers/canvasHandler';
 import { sendTeamData, startGame } from '../handlers/teamHandler';
+import Word from '../../../database/controllers/models/word_model';
+import sequelize from '../../../database/util/config';
 
 const dbg = debug('state');
 
@@ -12,25 +13,16 @@ const ROUND_DURATION = process.env.ROUND_DURATION ?? 30;
 const teamGuesses = [];
 
 /**
- * List of words that can be used for guessing
- * for now, 1000 random words will be stored
-*/
-
-const wordBank = [];
-
-for (let index = 0; index < 1000; index++) {
-  wordBank.push(Sentencer.make('{{ noun }}'));
-}
-
-/**
  * Get random word to guess
  * @returns Random word from the word bank
 */
 
-export const getRandomWord = () => {
-  const nextWordIndex = Math.floor(Math.random() * wordBank.length);
-  const nextWord = wordBank[nextWordIndex];
-  return nextWord;
+export const getRandomWord = async () => {
+  const nextWord = (await Word.findAll({ order: sequelize.random(), limit: 1 }))[0];
+  // const nextWordIndex = Math.floor(Math.random() * wordBank.length);
+  // const nextWord = wordBank[nextWordIndex];
+  console.log(nextWord);
+  return nextWord.word;
 };
 
 /**
@@ -237,8 +229,8 @@ export const getTeamResults = () => {
  * - Set the round duration
  * - Start the timer loop
  */
-export const nextWord = () => {
-  const word = getRandomWord();
+export const nextWord = async () => {
+  const word = await getRandomWord();
   gameState.currentWord = word;
   gameState.roundTime = ROUND_DURATION;
   teamGuesses.guesses = [];

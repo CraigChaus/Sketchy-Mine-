@@ -88,14 +88,14 @@ export const sendResult = () => {
  * Start a new round
  * @param {Socket} socket User's socket
  */
-export const startRound = () => {
+export const startRound = async () => {
   // checks whether game is already in progress before allowing a new round to start
   if (gameState.roundTime > 0) {
     return;
   }
   resetGuesses();
   unlockCanvas(getIO()); // unlocks the previously locked canvas
-  nextWord();
+  await nextWord();
   nextDrawingTeam();
   const index = Teams.findIndex((team) => {
     if (team.isDrawing === true) {

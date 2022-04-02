@@ -9,12 +9,11 @@ import sequelize from './util/config';
 const dbg = debug('db');
 
 function addInitialWordsToWordBank() {
-  fs.readFileSync(process.env.WORDBANK).toString().split('\n').forEach((line, index, arr) => {
+  fs.readFileSync(process.env.WORD_BANK).toString().split('\n').forEach((line, index, arr) => {
     if (index === arr.length - 1 && line === '') { return; }
     const newWord = { word: line };
     Word.create(newWord);
   });
-  dbg('Wordbank initialized.');
 }
 
 const setupDatabase = async () => {
@@ -23,9 +22,10 @@ const setupDatabase = async () => {
     dbg('Database connection successful.');
     await User.sync({ force: (process.env.SYNC === 'true') ?? !IS_PROD });
     dbg('User table created/updated.');
-    await Word.sync();
+    await Word.sync({ force: true });
     dbg('Word table created/updated.');
     addInitialWordsToWordBank();
+    dbg('Wordbank initialized.');
   } catch (error) {
     console.error(error);
   }
