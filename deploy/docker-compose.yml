@@ -25,6 +25,7 @@ services:
       CLIENT_URL: ${CLIENT_URL}
       API_URL: ${API_URL}
       ROUND_DURATION: ${ROUND_DURATION}
+      WORD_BANK: ${WORD_BANK}
     depends_on:
       - db
     networks:
