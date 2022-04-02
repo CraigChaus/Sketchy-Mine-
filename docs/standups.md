@@ -507,3 +507,36 @@ Ana is missing, did not inform the team, everyone else is present
   - Worked on bug fixing. Task finished
 - Craig:
   - Work on improvements based on play-test feedback. Task done
+
+## SCRUM Standup (Entire team) - 28.03.2022
+- Not present:
+  - Marko: let the team know that he is busy with work only today in the morning
+  - Vince: let the team know that he feels sick only today in the morning
+- Peter:
+  - Finished task that was assigned on Monday
+  - Took a new polishing task on Thursday as an extra task
+- Ana:
+  - Worked on responsiveness
+  - Almost fixed, but won't spend more time on it
+  - Will take a new backlog
+- Daria:
+  - Can't launch the program, stuck (can't test it)
+  - Working on moderation
+- Filippos:
+  - Since last standup did the SSO task, will take a new task now
+- Vedat:
+  - Fixed bug, but not completely yet.
+  - Will continue working on it
+- Craig:
+  - Worked on spectator timer
+  - Haven't worked on the project this week because of other subjects
+- Lukman:
+  - Finished main task
+  - Took an extra task, but that's not yet done
+- Melissa:
+  - Worked on teams bug
+  - Task finished
+- Mira:
+  - Task is done
+  - May need some tweaking
+  - Can take a new task
