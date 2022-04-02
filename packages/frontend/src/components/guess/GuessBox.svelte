@@ -17,8 +17,14 @@
   export let timeRemainingInSeconds = -1; // When the round is over, or not yet started, this must be -1!!!
   export let role = null;
   export let teamGuesses = []; //List of team guess objects
+  export let guessingEnded = false;
 
   const dispatch = createEventDispatcher();
+
+  function finalizeGuessing() {
+    guessingEnded = true;
+    dispatch("finalized");
+  }
 
   function sortGuesses() {
     teamGuesses.sort((a, b) => {
@@ -82,7 +88,8 @@
               frequency={teamGuess.frequency}
               {teamSize}
               on:guess={guess}
-              turnedOff={timeRemainingInSeconds <= 0}
+              turnedOff={timeRemainingInSeconds <= 0 || guessingEnded}
+              on:finalized={finalizeGuessing}
             >
               {guessIndex + 1}:
             </GuessOption>
