@@ -18,6 +18,8 @@ COPY --from=build /usr/src/app/dist/ ./dist/
 
 RUN npm ci --only=production
 
+COPY words.db words.db
+
 ENV NODE_ENV=production
 ENV DEBUG=express,socket,state,db,handler:*
 
