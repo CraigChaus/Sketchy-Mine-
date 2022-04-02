@@ -4,6 +4,7 @@
 
 const users = [];
 
+// check if user with same username already exists
 const userExists = function (username) {
   return users.some((user) => user.username === username);
 };
