@@ -11,7 +11,7 @@
   import ProgressBar from "../components/team/ProgressBar.svelte";
   import Popup from "../components/Popup.svelte";
   import TeamStatistics from "../components/team/TeamStatistics.svelte";
-  import { token } from '../stores/token';
+  import { token } from "../stores/token";
   import LeaveButton from "../components/LeaveButton.svelte";
   import router from "page";
   import { getNotificationsContext } from "svelte-notifications";
@@ -110,10 +110,10 @@
 
     teamsValue.set(teams);
   };
-  // close socket connection on button click 
+  // close socket connection on button click
   const leaveGame = () => {
     socket.disconnect();
-  }
+  };
 
   /**
    * Warning: Unused
@@ -152,6 +152,16 @@
       teamsValue.set(teams);
     }
   };
+
+  const switchRoundStates = () => {
+    // When round is over, we clear the guess cache
+    if (!isRoundActive) {
+      teamGuesses = [];
+      currentGuess = null;
+    }
+  };
+
+  $: isRoundActive, switchRoundStates();
 
   /**
    * Warning: Unused
@@ -271,13 +281,8 @@
     data.forEach((t, i) => {
       t.members.forEach((u) => {
         if (u.username === username) {
-          let teamName = "Team +" + (i + 1);
-          myTeamName = t.teamname;
-          myTeamName = t.teamname;
-
-          if (teamSession !== teamName) {
-            teamSession = teamName;
-
+          if (teamSession !== t.teamname) {
+            teamSession = t.teamname;
             socket.emit("joinTeamChat", { teamSession });
           }
 
@@ -345,7 +350,10 @@
   /**
    * Hide matchmaking popup box and place user into spectate mode
    */
-  const startSpectate = () => (showMatchmakingPopup = false);
+  const startSpectate = () => {
+    showMatchmakingPopup = false;
+    role = 3;
+  }
 
   async function getRole() {
     return role;
@@ -385,12 +393,6 @@
     }
   };
 
-  const startRound = () => {
-    isRoundActive = true;
-    teamGuesses = [];
-    currentGuess = null;
-    socket.emit("round:start");
-  };
   const sendGuess = (guess) => socket.emit("round:guess", guess);
 
   /**
@@ -405,11 +407,11 @@
 
   const lockCanvas = () => {
     restrictCanvas = true;
-  }
+  };
 
   const unlockCanvas = () => {
     restrictCanvas = false;
-  }
+  };
 
   socket.on("round:result", (payload) => {
     results = payload;
@@ -425,10 +427,9 @@
   socket.on("canvas:spectator", becomeSpectator);
   socket.on("round:state", updateProgress);
   socket.on("canvas:lock", lockCanvas);
-  socket.on("canvas:unlock", unlockCanvas)
+  socket.on("canvas:unlock", unlockCanvas);
   socket.on("moderation:receive_warning", showWarning);
 </script>
-
 
 <div class="background">
   <div class="container">
@@ -441,17 +442,23 @@
         showButtons={popupWindowShowButtons}
       />
     {/if}
-    <LeaveButton on:buttonClicked={leaveGame} href="/ended_session">LEAVE</LeaveButton>
+    <LeaveButton on:buttonClicked={leaveGame} href="/ended_session"
+      >LEAVE</LeaveButton
+    >
     <ProgressBar {teams} />
 
-    <TeamStatistics {myTeam}/>
+    <TeamStatistics {myTeam} />
 
     <div class="flex items-center justify-center">
       {#await promise}
         <p>Loading word...</p>
       {:then role}
         {#if role == 1}
-          <h2 class=" mb-3 text-white text-xl ">Word To Draw: <span class="neons italic font-medium ">{correctWord}</span></h2>
+          <h2 class=" mb-3 text-white text-xl ">
+            Word To Draw: <span class="neons italic font-medium "
+              >{correctWord}</span
+            >
+          </h2>
         {/if}
       {/await}
     </div>
@@ -468,9 +475,10 @@
               currentGuess={currentGuess ? currentGuess.toLowerCase() : null}
               {timeRemainingInSeconds}
               {teamSize}
+              {role}
             />
-            {:else}
-            <GuessList role={3} {timeRemainingInSeconds}/>
+          {:else}
+            <GuessList role={3} {timeRemainingInSeconds} />
           {/if}
         {/await}
 
@@ -501,11 +509,14 @@
               <Toolbox bind:SDraw bind:brushColor bind:brushRadius />
             {/if}
             {#if restrictCanvas}
-            <p>Round over</p>
+              <p>Round over</p>
             {:else}
-              <p>You are currently a <span class="text-blue-600 font-medium">{roles[role-1]}</span></p>
+              <p>
+                You are currently a <span class="text-blue-600 font-medium"
+                  >{roles[role - 1]}</span
+                >
+              </p>
             {/if}
-            
           {/await}
         </div>
 
@@ -525,7 +536,6 @@
   </div>
 </div>
 
-
 <style>
   .container {
     max-width: 1366px;
@@ -538,21 +548,21 @@
     background: url("/images/Background2.png");
     background-size: 100% 100%;
   }
-  .guesswindow{
+  .guesswindow {
     border: 30px solid transparent;
     border-image: url("/images/ChatBox.png") 30 round;
     background: white;
     border-radius: 5px;
-    box-shadow: 5px 5px 5px rgba(0,0,0,0.5) ;
+    box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.5);
   }
-  .chatwindow{
+  .chatwindow {
     border: 30px solid transparent;
     border-image: url("/images/ChatBox.png") 30 round;
     background: white;
     border-radius: 5px;
-    box-shadow: 5px 5px 5px rgba(0,0,0,0.5) ;
+    box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.5);
   }
-  .canvas{
+  .canvas {
     padding: 1rem;
     margin-left: 1rem;
     margin-right: 1rem;
@@ -560,7 +570,7 @@
   }
 
   /*  here will go styles for Guess word */
-   @import url('https://fonts.googleapis.com/css?family=Codystar:300&display=swap');
+  @import url("https://fonts.googleapis.com/css?family=Codystar:300&display=swap");
 
   .neons {
     font-size: 2rem;
@@ -574,12 +584,16 @@
   @-webkit-keyframes glow {
     from {
       color: #fff;
-      text-shadow: 0 0 10px #00fff2, 0 0 20px #00fff2, 0 0 30px #00fff2, 0 0 40px #00fff2, 0 0 50px #00fff2, 0 0 60px #00fff2, 0 0 70px #00fff2, 0 0 90px #00fff2;
+      text-shadow: 0 0 10px #00fff2, 0 0 20px #00fff2, 0 0 30px #00fff2,
+        0 0 40px #00fff2, 0 0 50px #00fff2, 0 0 60px #00fff2, 0 0 70px #00fff2,
+        0 0 90px #00fff2;
     }
 
     to {
       color: mediumspringgreen;
-      text-shadow: 0 0 20px #00fff2, 0 0 30px #00fff2, 0 0 40px #00fff2, 0 0 50px #00fff2, 0 0 60px #00fff2, 0 0 70px #00fff2, 0 0 80px #00fff2, 0 1 90px #00fff2;
+      text-shadow: 0 0 20px #00fff2, 0 0 30px #00fff2, 0 0 40px #00fff2,
+        0 0 50px #00fff2, 0 0 60px #00fff2, 0 0 70px #00fff2, 0 0 80px #00fff2,
+        0 1 90px #00fff2;
     }
   }
 </style>

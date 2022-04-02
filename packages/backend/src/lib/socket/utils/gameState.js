@@ -4,7 +4,7 @@ import { getIO } from '..';
 import { Teams } from '../../../data/teams';
 import { broadcastTeamSpecificGuesses, sendProgress, sendResult } from '../handlers/guessHandler';
 import { giveAppropriateRoles } from '../handlers/canvasHandler';
-import { startGame } from '../handlers/teamHandler';
+import { sendTeamData, startGame } from '../handlers/teamHandler';
 
 const dbg = debug('state');
 
@@ -34,6 +34,19 @@ export const getRandomWord = () => {
 };
 
 /**
+ * Change the indicator whether a user has submitted a guess or not
+ * @param {String} username Name of the user to change guessed indicator
+ * @param {Boolean} guessed State to change the guess status
+ */
+function changeUserGuessState(username, guessed) {
+  Teams.forEach((t) => {
+    t.members.forEach((m) => {
+      if (m.username === username) m.guessed = guessed;
+    });
+  });
+}
+
+/**
  * Remove the guess of a user from the teamGuesses repo
  * @param {String} username Name of the user
  */
@@ -54,14 +67,16 @@ function removeGuessOfUser(username) {
     // Make sure we remove orphaned guesses that the previous forEach() block made
     t.guesses = t.guesses.filter((g) => g.freq > 0);
   });
+
+  changeUserGuessState(username, false);
 }
 
 /**
  * Storage for game round state
  */
 const defaultState = {
-  currentWord: null,
-  roundTime: null,
+  currentWord: null, // This is the word to draw/guess
+  roundTime: null, // Remaining time to draw/guess
 };
 
 /**
@@ -89,11 +104,19 @@ export const getGuesses = (username) => {
   return guesses;
 };
 
-/** *
- * Clear the guess repo of all teams
+/**
+ * Clear the guess of all users
  */
 export const resetGuesses = () => {
+  // Clear the guess repo
   teamGuesses.splice(0, teamGuesses.length);
+
+  // Make sure each team member is marked as 'not guessed yet'
+  Teams.forEach((t) => {
+    t.members.forEach((m) => {
+      changeUserGuessState(m.username, false);
+    });
+  });
 };
 
 /**
@@ -103,6 +126,10 @@ export const resetGuesses = () => {
  * @param {String} guess The user's guess to add
  */
 export const addGuess = (username, guess) => {
+  // We make sure with the code below that a user can only have one guess submitted
+  removeGuessOfUser(username);
+  // First, we mark that the user submitted a guess
+  changeUserGuessState(username, true);
   // We check to which team the user belongs
   const currentTeam = Teams.find((t) => t.members.find((m) => m.username === username));
   if (!teamGuesses.some((t) => t.teamname === currentTeam.teamname)) {
@@ -115,9 +142,6 @@ export const addGuess = (username, guess) => {
     // If we already have the team
     teamGuesses.forEach((t) => {
       if (t.teamname === currentTeam.teamname) { // Only modify the user's team's guesses
-        // We make sure with the code below that a user can only have one guess submitted
-        removeGuessOfUser(username);
-
         // We check if the team guesses already has the new guess to add
         const found = t.guesses.some((g) => g.guess === guess);
         if (!found) {
@@ -137,6 +161,8 @@ export const addGuess = (username, guess) => {
       }
     });
   }
+  // Send team user-listing update to show who guessed
+  sendTeamData(getIO());
 };
 
 /**
@@ -253,35 +279,51 @@ const nextTeam = (teamsAmount, index) => {
   return index;
 };
 
+// checks whether the next team can be considered
+
+const considerDrawer = (team) => {
+  if (team.isSpectator) {
+    return false;
+  } if (team.members.length < 3) {
+    return false;
+  }
+  return true; // Team must be full to reach this part
+};
+
 /**
  * Get next team in the list
  * teams are selected as drawing teams in order
  */
 export const nextDrawingTeam = () => {
-  // find drawing team
-  let index = Teams.findIndex((team) => {
+  const drawerTeam = Teams.findIndex((team) => { // find drawing team
     if (team.isDrawing === true) {
       return true;
     } return false;
   });
-  if (index === -1) { // There is no drawing team
+  if (drawerTeam === -1) { // There is no drawing team
     for (let i = 0; i < Teams.length; i++) { // for loop to make sure we ignore spectator teams
       // would have liked to filter out spectator teams but that messes with the Teams array length.
-      if (Teams[i].isSpectator === false) {
+      if (Teams[i].isSpectator === false && Teams[i].members.length >= 3) {
         Teams[i].isDrawing = true;
         break;
       }
     }
   } else {
-    Teams[index].isDrawing = false; // removes drawing permissions from old team
+    Teams[drawerTeam].isDrawing = false; // removes drawing permissions from old team
     const teamsAmount = Teams.length - 1;
-    index = nextTeam(teamsAmount, index);
-    if (Teams[index].isSpectator === true) {
-      index = nextTeam(teamsAmount, index);
-    }
-    Teams[index].isDrawing = true; // gives drawing permissions to new team
-  }
 
+    let i = drawerTeam;
+    // this iterates over the teams to check if all of them are complete
+    // and assigns the drawing role
+    while (i < Teams.length) {
+      i = nextTeam(teamsAmount, i);
+      if (considerDrawer(Teams[i])) {
+        Teams[i].isDrawing = true;
+        break;
+      }
+    }
+  }
+  sendTeamData(getIO()); // Update team listing to show who is the drawer
   giveAppropriateRoles(getIO(), Teams);
 };
 
@@ -291,5 +333,7 @@ export const removeUserGuesses = (user) => {
     removeGuessOfUser(user.username);
     // Once a user is removed, their guesses is removed too, so we send an update of guesses
     broadcastTeamSpecificGuesses(getIO());
+    // Mark user as not guessed a word
+    changeUserGuessState(user.username, false);
   }
 };
