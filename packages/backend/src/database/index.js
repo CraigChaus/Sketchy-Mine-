@@ -1,11 +1,20 @@
 /* eslint-disable no-console */
 import debug from 'debug';
+import fs from 'fs';
 import User from './controllers/models/user_model';
-// import WordBank from './models/word_bank';
+import Word from './controllers/models/word_model';
 import { IS_PROD } from '../app';
 import sequelize from './util/config';
 
 const dbg = debug('db');
+
+function addInitialWordsToWordBank() {
+  fs.readFileSync(process.env.WORD_BANK).toString().split('\n').forEach((line, index, arr) => {
+    if (index === arr.length - 1 && line === '') { return; }
+    const newWord = { word: line };
+    Word.create(newWord);
+  });
+}
 
 const setupDatabase = async () => {
   try {
@@ -13,8 +22,10 @@ const setupDatabase = async () => {
     dbg('Database connection successful.');
     await User.sync({ force: (process.env.SYNC === 'true') ?? !IS_PROD });
     dbg('User table created/updated.');
-    // await WordBank.sync();
-    // dbg('Words table created/updated.');
+    await Word.sync({ force: true });
+    dbg('Word table created/updated.');
+    addInitialWordsToWordBank();
+    dbg('Wordbank initialized.');
   } catch (error) {
     console.error(error);
   }
