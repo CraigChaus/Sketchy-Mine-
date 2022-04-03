@@ -56,6 +56,15 @@
   let timeRemainingInSeconds = -1; // Set to -1 by default to indicate mid-round state
   let guessingDisabled = false;
 
+  
+  let sendingMessageAudio = new Audio('sounds/sendMessage_sound.mp3'); // Used to add audio when a message is sent
+  // Set sendingMessageAudio to 40%
+  sendingMessageAudio.volume = 0.4;
+
+  let receivingMessageAudio = new Audio('sounds/messageReceived_sound.mp3'); // Used to add audio when a message is received
+  // Set receivingMessageAudio to 40%
+  receivingMessageAudio.volume = 0.4;
+
   // Progress bar functionality
   // FIXME: This function has been moved to the backend
   /**
@@ -270,6 +279,9 @@
         currentTime: data.currentTime,
       },
     ];
+
+    //receivingMessageAudio.play();
+    
   });
 
   // Update team listing
@@ -388,6 +400,7 @@
   // Sending messages
   const onClickChat = () => {
     if (chatInput !== "") {
+      sendingMessageAudio.play();
       socket.emit("chatMessage", chatInput);
       chatInput = "";
     }
@@ -468,8 +481,8 @@
       {/await}
     </div>
 
-    <div class="flex">
-      <div class="w-1/4 guesswindow">
+    <div class="flex fixedHeight">
+      <div class="w-1/4 guesswindow h-full overflow-y-auto overflow-x-hidden">
         {#await promise}
           <p>Loading..</p>
         {:then role}
@@ -598,5 +611,10 @@
         0 0 50px #00fff2, 0 0 60px #00fff2, 0 0 70px #00fff2, 0 0 80px #00fff2,
         0 1 90px #00fff2;
     }
+  }
+
+  .fixedHeight {
+      max-height: 555px;
+      height: 555px;
   }
 </style>
