@@ -480,8 +480,8 @@
       {/await}
     </div>
 
-    <div class="flex">
-      <div class="w-1/4 guesswindow">
+    <div class="flex fixedHeight">
+      <div class="w-1/4 guesswindow h-full overflow-y-auto overflow-x-hidden">
         {#await promise}
           <p>Loading..</p>
         {:then role}
@@ -610,5 +610,10 @@
         0 0 50px #00fff2, 0 0 60px #00fff2, 0 0 70px #00fff2, 0 0 80px #00fff2,
         0 1 90px #00fff2;
     }
+  }
+
+  .fixedHeight {
+      max-height: 555px;
+      height: 555px;
   }
 </style>
