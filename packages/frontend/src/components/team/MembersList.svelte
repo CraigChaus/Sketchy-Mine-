@@ -13,6 +13,9 @@
     faPersonRunning,
   } from "@fortawesome/free-solid-svg-icons";
   import { user } from "../../stores/user";
+  import { token } from '../../stores/token';
+
+  import socket from "../../socket";
 
   export let membersJSON = [{ username: "N/A", guessed: false }]; // Default data
   export let showGuessedIndicator = true; // Used to indicate if someone submitted a guess from the team
@@ -21,6 +24,15 @@
   // // import { token as tokenStore } from "../stores/token";
   //
   //
+
+  const kick = (username) => {
+    console.log("hello");
+        let payload = {
+            player: username,
+            token: $token,
+        };
+        socket.emit("moderation:kick_player", payload)
+    }
 
   export async function removePlayer(username) {
       const res = await fetch(API_URL + '/users/' + username, {
@@ -56,7 +68,7 @@
       {#if $user.is_moderator}
         <p class="flex justify-end ">
 <!--          <button>-->
-          <button    on:click={() => removePlayer(member.username)}
+          <button    on:click={() => kick(member.username)}
             class="flex justify-center h-6 w-6 bg-yellow-300 hover:bg-yellow-500 font-bold  rounded-full"
             ><Icon data={faPersonRunning} scale="1.4" style="color:black" />
           </button>

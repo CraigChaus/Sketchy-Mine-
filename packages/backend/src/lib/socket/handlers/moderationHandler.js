@@ -1,9 +1,12 @@
 import { Teams } from '../../../data/teams';
 import { verifyToken } from '../../../middleware/is_logged_in';
+import { getUserByUsername } from '../utils/users';
+import { handleKick } from './chatHandler';
 
 const MODERATION_EVENTS = {
   INCWARNING: 'moderation:send_warning',
   OUTWARNING: 'moderation:receive_warning',
+  KICK: 'moderation:kick_player'
 
 };
 
@@ -29,7 +32,24 @@ const moderationHandler = (io, socket) => {
     }
   };
 
+  // Runs when client is removed from a team by the moderator
+  /**
+   * Method for disconnecting a kicked player and notifying all the other players
+   */
+   const kickPlayer = async (payload) => {
+    if(await isModerator(payload.token)){
+      const playerToKick = getUserByUsername(payload.player);
+      if (playerToKick) {
+        handleKick(playerToKick);
+    }
+    }else{
+      return;
+    }
+  };
+
   socket.on(MODERATION_EVENTS.INCWARNING, warnTeam);
+  socket.on(MODERATION_EVENTS.KICK, kickPlayer);
+
 };
 
 export default moderationHandler;
