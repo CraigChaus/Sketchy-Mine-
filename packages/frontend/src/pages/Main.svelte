@@ -56,6 +56,15 @@
   let timeRemainingInSeconds = -1; // Set to -1 by default to indicate mid-round state
   let guessingDisabled = false;
 
+  
+  let sendingMessageAudio = new Audio('sounds/sendMessage_sound.mp3'); // Used to add audio when a message is sent
+  // Set sendingMessageAudio to 40%
+  sendingMessageAudio.volume = 0.4;
+
+  let receivingMessageAudio = new Audio('sounds/messageReceived_sound.mp3'); // Used to add audio when a message is received
+  // Set receivingMessageAudio to 40%
+  receivingMessageAudio.volume = 0.4;
+
   // Progress bar functionality
   // FIXME: This function has been moved to the backend
   /**
@@ -270,6 +279,8 @@
         currentTime: data.currentTime,
       },
     ];
+
+    receivingMessageAudio.play();
   });
 
   // Update team listing
@@ -388,6 +399,7 @@
   // Sending messages
   const onClickChat = () => {
     if (chatInput !== "") {
+      sendingMessageAudio.play();
       socket.emit("chatMessage", chatInput);
       chatInput = "";
     }
