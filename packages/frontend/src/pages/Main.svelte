@@ -280,7 +280,8 @@
       },
     ];
 
-    receivingMessageAudio.play();
+    //receivingMessageAudio.play();
+    
   });
 
   // Update team listing
