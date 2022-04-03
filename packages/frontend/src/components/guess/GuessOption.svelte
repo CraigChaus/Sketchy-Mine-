@@ -19,11 +19,14 @@
     if (!turnedOff) dispatch("guess", value);
   };
 
-  const updateButton = () => {
-    if ((frequency / teamSize) * 100 > 50) turnedOff = true;
-  };
+  function updateButton() {
+    if ((frequency / teamSize) * 100 >= 50) {
+      turnedOff = true;
+      dispatch("finalized");
+    }
+  }
 
-  $: frequency, updateButton;
+  $: frequency, updateButton();
 </script>
 
 <button

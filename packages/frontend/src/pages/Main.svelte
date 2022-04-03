@@ -54,6 +54,7 @@
   let myTeam;
   let isRoundActive = false; // Used to track when a round (when the times is running) is active
   let timeRemainingInSeconds = -1; // Set to -1 by default to indicate mid-round state
+  let guessingDisabled = false;
 
   // Progress bar functionality
   // FIXME: This function has been moved to the backend
@@ -352,7 +353,7 @@
   const startSpectate = () => {
     showMatchmakingPopup = false;
     role = 3;
-  }
+  };
 
   async function getRole() {
     return role;
@@ -401,7 +402,10 @@
   const updateProgress = (payload) => {
     timeRemainingInSeconds = payload.roundTime;
     if (timeRemainingInSeconds < 1) isRoundActive = false;
-    else isRoundActive = true;
+    else {
+      isRoundActive = true;
+      if (teamGuesses.length === 0) guessingDisabled = false;
+    }
   };
 
   const lockCanvas = () => {
@@ -411,6 +415,8 @@
   const unlockCanvas = () => {
     restrictCanvas = false;
   };
+
+  const lockGuesses = () => (guessingDisabled = true);
 
   socket.on("round:result", (payload) => {
     results = payload;
@@ -475,9 +481,14 @@
               {timeRemainingInSeconds}
               {teamSize}
               {role}
+              on:finalized={lockGuesses}
             />
           {:else}
-            <GuessList role={3} {timeRemainingInSeconds} />
+            <GuessList
+              role={3}
+              {timeRemainingInSeconds}
+              on:finalized={lockGuesses}
+            />
           {/if}
         {/await}
 
@@ -517,7 +528,7 @@
           bind:input={chatInput}
           on:guessWordClicked={onClickGuess}
           on:sendChatClicked={onClickChat}
-          guessButtonDisabled={!isRoundActive}
+          guessButtonDisabled={!isRoundActive || guessingDisabled}
         />
       </div>
 
