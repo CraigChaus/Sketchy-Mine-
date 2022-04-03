@@ -6,6 +6,7 @@
   import SignUp from "./pages/SignUp.svelte";
   import Ranking from "./pages/Ranking.svelte";
   import EndedSession from "./pages/EndedSession.svelte";
+  import Rules from "./pages/Rules.svelte"
 
   import Notifications from "svelte-notifications";
   import Auth from "./pages/Auth.svelte";
@@ -16,6 +17,7 @@
 
   router("*", parse);
   router("/game", (ctx) => (page = Main));
+  router("/rules",(ctx) => (page = Rules));
   router("/login", (ctx) => (page = LogIn));
   router("/register", (ctx) => (page = SignUp));
   router("/game?spectate", (ctx) => (page = Main));
