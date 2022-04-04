@@ -5,7 +5,7 @@ import {
 import messageFormat from '../utils/messages';
 import { sendState } from './guessHandler';
 import { removeUserGuesses } from '../utils/gameState';
-import { removePlayerFromTeam } from '../../../data/teams';
+import { removePlayerFromTeam, Teams } from '../../../data/teams';
 import { sendTeamData } from './teamHandler';
 import { verifyToken } from '../../../middleware/is_logged_in';
 
@@ -91,6 +91,23 @@ const chatHandler = (io, socket) => {
     dbg(CHAT_EVENTS.CHAT_MESSAGE, { msg });
     // Get the user who sent the message
     const user = getCurrentUser(socket.id);
+    if(user === undefined){
+      return;
+    }
+    // check if the user is in a team, otherwise the server will crash
+    let userHasTeam = false;
+    Teams.forEach((team) =>{
+      team.members.forEach((member) =>{
+        if(user.username === member.username){
+          userHasTeam = true;
+        }
+      })
+    })
+
+    // user does not have a team to exit out
+    if(!userHasTeam){
+      return;
+    }
     socket.broadcast.to(user.teamSession).emit(
       CHAT_EVENTS.MESSAGE,
       messageFormat(user.username, msg),
