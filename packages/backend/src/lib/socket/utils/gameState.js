@@ -324,7 +324,7 @@ export const nextDrawingTeam = () => {
     }
   }
   sendTeamData(getIO()); // Update team listing to show who is the drawer
-  giveAppropriateRoles(getIO(), Teams);
+  giveAppropriateRoles(getIO());
 };
 
 export const removeUserGuesses = (user) => {

@@ -1,3 +1,6 @@
+import { Teams } from '../../../data/teams';
+import { getCurrentUser } from '../utils/users';
+
 const CANVAS_EVENTS = {
   POINTS: 'canvas:points',
   CLEAR: 'canvas:clear',
@@ -13,10 +16,18 @@ let canvasHistory = [];
 
 const canvasHandler = (io, socket) => {
   const drawPoints = (payload) => {
-    // saves to the array containing the previous drawings
-    canvasHistory.push(payload);
+    // checks whether the drawer is in the drawing team
 
-    socket.broadcast.emit(CANVAS_EVENTS.POINTS, payload);
+    const drawingTeam = Teams.filter((team) => team.isDrawing === true);
+    const user = getCurrentUser(socket.id);
+    drawingTeam[0].members.forEach((member) => {
+      if (member.username === user.username) {
+        // saves to the array containing the previous drawings
+        canvasHistory.push(payload);
+
+        socket.broadcast.emit(CANVAS_EVENTS.POINTS, payload);
+      }
+    });
   };
 
   const clearCanvas = () => {
@@ -49,7 +60,7 @@ const canvasHandler = (io, socket) => {
   socket.on(CANVAS_EVENTS.SPECTATOR, makeSpectator);
 };
 
-export const giveAppropriateRoles = (io, Teams) => {
+export const giveAppropriateRoles = (io) => {
   // also clears the canvas since a new team is drawing
   io.emit(CANVAS_EVENTS.CLEAR);
   canvasHistory = [];
