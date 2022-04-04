@@ -141,17 +141,17 @@ export const handleKick = (existingUser) => {
 
   const user = userLeave(existingUser.id);
   const dbg = debug('handler:kick');
-    if (user) {
-      dbg('Client kicked by moderator', existingUser);
-      // Send to everyone using emit() method
-      io.to(existingUser.session).emit(CHAT_EVENTS.MESSAGE, messageFormat(name, `${existingUser.username} has been kicked out by moderator`, 3));
+  if (user) {
+    dbg('Client kicked by moderator', existingUser);
+    // Send to everyone using emit() method
+    io.to(existingUser.session).emit(CHAT_EVENTS.MESSAGE, messageFormat(name, `${existingUser.username} has been kicked out by moderator`, 3));
 
-      // Send users and session info again when user disconnects
-      io.to(existingUser.session).emit(CHAT_EVENTS.SESSION_USERS, {
-        room: existingUser.session,
-        users: getSessionUsers(existingUser.session),
-      });
-    }
-}
+    // Send users and session info again when user disconnects
+    io.to(existingUser.session).emit(CHAT_EVENTS.SESSION_USERS, {
+      room: existingUser.session,
+      users: getSessionUsers(existingUser.session),
+    });
+  }
+};
 
 export default chatHandler;

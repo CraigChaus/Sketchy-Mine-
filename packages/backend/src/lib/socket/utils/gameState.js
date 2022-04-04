@@ -23,7 +23,7 @@ export const getRandomWord = async () => {
   const nextWord = (await Word.findAll({ order: sequelize.random(), limit: 1 }))[0];
   // const nextWordIndex = Math.floor(Math.random() * wordBank.length);
   // const nextWord = wordBank[nextWordIndex];
-  console.log(nextWord);
+  console.log(nextWord); // eslint-disable no-console
   return nextWord.word;
 };
 

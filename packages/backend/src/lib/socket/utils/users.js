@@ -20,8 +20,6 @@ export const getCurrentUser = (id) => users.find((user) => user.id === id);
 // Get user by username
 export const getUserByUsername = (username) => users.find((user) => user.username === username);
 
-
-
 // User leaves chat teamSession
 export const userLeave = (id) => {
   const index = users.findIndex((user) => user.id === id);
