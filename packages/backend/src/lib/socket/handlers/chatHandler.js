@@ -8,6 +8,7 @@ import { removeUserGuesses } from '../utils/gameState';
 import { removePlayerFromTeam } from '../../../data/teams';
 import { sendTeamData } from './teamHandler';
 import { verifyToken } from '../../../middleware/is_logged_in';
+import { getIO } from '..';
 
 // This will appear as the name of the sender
 const name = 'Sketchy Mine System';
@@ -130,29 +131,27 @@ const chatHandler = (io, socket) => {
   /**
    * Method for disconnecting a kicked player and notifying all the other players
    */
-  socket.on('kicked', () => { // TODO: check out this socket for the frontend of moderator so that they link
-    const existingUser = getCurrentUser(socket.id);
-    // if the user disconnects from the server, disconnect him from all the places
-    if (existingUser) {
-      removeUserGuesses(existingUser);
-      removePlayerFromTeam(existingUser.username);
-      sendTeamData(io);
-    }
+};
 
-    const user = userLeave(socket.id);
+export const handleKick = (existingUser) => {
+  const io = getIO();
+  removeUserGuesses(existingUser);
+  removePlayerFromTeam(existingUser.username);
+  sendTeamData(io);
 
-    if (user) {
-      dbg('Client kicked by moderator', existingUser);
-      // Send to everyone using emit() method
-      io.to(existingUser.session).emit(CHAT_EVENTS.MESSAGE, messageFormat(name, `${existingUser.username} has been kicked out by moderator`, 3));
+  const user = userLeave(existingUser.id);
+  const dbg = debug('handler:kick');
+  if (user) {
+    dbg('Client kicked by moderator', existingUser);
+    // Send to everyone using emit() method
+    io.to(existingUser.session).emit(CHAT_EVENTS.MESSAGE, messageFormat(name, `${existingUser.username} has been kicked out by moderator`, 3));
 
-      // Send users and session info again when user disconnects
-      io.to(existingUser.session).emit(CHAT_EVENTS.SESSION_USERS, {
-        room: existingUser.session,
-        users: getSessionUsers(existingUser.session),
-      });
-    }
-  });
+    // Send users and session info again when user disconnects
+    io.to(existingUser.session).emit(CHAT_EVENTS.SESSION_USERS, {
+      room: existingUser.session,
+      users: getSessionUsers(existingUser.session),
+    });
+  }
 };
 
 export default chatHandler;
