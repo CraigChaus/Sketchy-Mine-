@@ -307,6 +307,18 @@ _§14_ In git, all branches must be automatically created from the issue board, 
 | ---------- | ------------------------------- |
 | US13 BI01  | Refactor backend to support SSO |
 | US13 BI02  | Add UI for SSO option           |
+
+#### US14 - Unexpected features
+
+| Backlog ID | Description               |
+|------------|---------------------------|
+| US14 BI01  | Automatic start of rounds |
+| US14 BI02  | Apply sound effects       |
+| US14 BI03  | Drawing notification      |
+| US14 BI04  | Add page for the rules    |
+| US14 BI05  | Tool tips for main page   |
+| US14 BI06  | Time ends soon warning    |
+
 ---
 
 ## Budget
