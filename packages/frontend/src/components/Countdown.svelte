@@ -1,12 +1,14 @@
 <script>
     export let countdown = 0;
+    let countdownAudio = new Audio('sounds/countdown_sound.mp3');
+    countdownAudio.volume = 0.3;
 </script>
 
 <span class="countdown font-mono text-6xl">
     {#if countdown > 5}
         <span style="--value:{countdown};"></span>
         {:else}
-        <span style="--value:{countdown};color:red;"></span>
+        <span style="--value:{countdown};color:red;">{countdownAudio.play()}</span>
     {/if}
 </span>
 <span class="font-mono text-2xl text-yellow-600">seconds</span>
@@ -29,4 +31,5 @@
     .countdown{
         line-height:1em
     }
+  
 </style>

@@ -55,6 +55,16 @@
   let myTeam;
   let isRoundActive = false; // Used to track when a round (when the times is running) is active
   let timeRemainingInSeconds = -1; // Set to -1 by default to indicate mid-round state
+  let guessingDisabled = false;
+
+  
+  let sendingMessageAudio = new Audio('sounds/sendMessage_sound.mp3'); // Used to add audio when a message is sent
+  // Set sendingMessageAudio to 40%
+  sendingMessageAudio.volume = 0.4;
+
+  let receivingMessageAudio = new Audio('sounds/messageReceived_sound.mp3'); // Used to add audio when a message is received
+  // Set receivingMessageAudio to 40%
+  receivingMessageAudio.volume = 0.4;
 
   // Progress bar functionality
   // FIXME: This function has been moved to the backend
@@ -270,6 +280,9 @@
         currentTime: data.currentTime,
       },
     ];
+
+    //receivingMessageAudio.play();
+    
   });
 
   // Update team listing
@@ -353,7 +366,7 @@
   const startSpectate = () => {
     showMatchmakingPopup = false;
     role = 3;
-  }
+  };
 
   async function getRole() {
     return role;
@@ -388,6 +401,7 @@
   // Sending messages
   const onClickChat = () => {
     if (chatInput !== "") {
+      sendingMessageAudio.play();
       socket.emit("chatMessage", chatInput);
       chatInput = "";
     }
@@ -402,7 +416,10 @@
   const updateProgress = (payload) => {
     timeRemainingInSeconds = payload.roundTime;
     if (timeRemainingInSeconds < 1) isRoundActive = false;
-    else isRoundActive = true;
+    else {
+      isRoundActive = true;
+      if (teamGuesses.length === 0) guessingDisabled = false;
+    }
   };
 
   const lockCanvas = () => {
@@ -412,6 +429,8 @@
   const unlockCanvas = () => {
     restrictCanvas = false;
   };
+
+  const lockGuesses = () => (guessingDisabled = true);
 
   socket.on("round:result", (payload) => {
     results = payload;
@@ -463,8 +482,8 @@
       {/await}
     </div>
 
-    <div class="flex">
-      <div class="w-1/4 guesswindow">
+    <div class="flex fixedHeight">
+      <div class="w-1/4 guesswindow h-full overflow-y-auto overflow-x-hidden">
         {#await promise}
           <p>Loading..</p>
         {:then role}
@@ -476,9 +495,14 @@
               {timeRemainingInSeconds}
               {teamSize}
               {role}
+              on:finalized={lockGuesses}
             />
           {:else}
-            <GuessList role={3} {timeRemainingInSeconds} />
+            <GuessList
+              role={3}
+              {timeRemainingInSeconds}
+              on:finalized={lockGuesses}
+            />
           {/if}
         {/await}
 
@@ -525,7 +549,7 @@
           bind:input={chatInput}
           on:guessWordClicked={onClickGuess}
           on:sendChatClicked={onClickChat}
-          guessButtonDisabled={!isRoundActive}
+          guessButtonDisabled={!isRoundActive || guessingDisabled}
         />
       </div>
 
@@ -595,5 +619,10 @@
         0 0 50px #00fff2, 0 0 60px #00fff2, 0 0 70px #00fff2, 0 0 80px #00fff2,
         0 1 90px #00fff2;
     }
+  }
+
+  .fixedHeight {
+      max-height: 555px;
+      height: 555px;
   }
 </style>

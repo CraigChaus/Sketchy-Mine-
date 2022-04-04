@@ -26,7 +26,7 @@ export const sendTeamData = (io) => {
 };
 
 // starts a round when a new user joins and the game in not currently ongoing
-export const startGame = () => {
+export const startGame = async () => {
   if (gameState.roundTime > 1) {
     return;
   }
@@ -41,9 +41,9 @@ export const startGame = () => {
     }
   });
 
-  // now we check whether there are atleast 2 teams ready, so we can start the game
+  // now we check whether there are at least 2 teams ready, so we can start the game
   if (teamsReady.length >= 2) {
-    startRound();
+    await startRound();
   }
 };
 

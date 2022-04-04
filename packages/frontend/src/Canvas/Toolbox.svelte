@@ -6,21 +6,32 @@
   export let brushRadius;
   export let SDraw;
 
+  let erasingAudio = new Audio('sounds/erasing_sound.mp3');
+  let clickingAudio = new Audio('sounds/clicking_sound.mp3');
+  // Set volume to 30% for erasingAudio
+  erasingAudio.volume = 0.3;
+  // Set volume to 40% for clickingAudio
+  clickingAudio.volume = 0.4;
+
   function clear() {
     SDraw.clearDrawings();
   }
 
   const colourYellow = () => {
     brushColor = "#FFE100";
+    clickingAudio.play();
   };
   const colourBlue = () => {
     brushColor = "#37a0ff";
+    clickingAudio.play();
   };
   const colourRed = () => {
     brushColor = "#ea1000";
+    clickingAudio.play();
   };
   const colourGreen = () => {
     brushColor = "#2dce00";
+    clickingAudio.play();
   };
 </script>
 
@@ -31,14 +42,15 @@
         styles="!bg-yellow-400"
         on:buttonClicked={() => {
           clear();
+          erasingAudio.play();
           socket.emit("canvas:clear");
         }}
       >
         CLEAR
       </ChatButton>
       <div class="m-2 flex items-center space-x-1">
-        <label for="colorSelect">COLOUR</label>
-        <input type="color" bind:value={brushColor} id="colorSelect" />
+        <label for="colorSelect">COLOR</label>
+        <input type="color" bind:value={brushColor} id="colorSelect"/>
       </div>
 
       <input

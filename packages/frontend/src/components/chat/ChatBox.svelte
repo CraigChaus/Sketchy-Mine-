@@ -27,7 +27,7 @@
   });
 </script>
 
-<ScrollContainer styles="h-100" bind:container>
+<ScrollContainer styles="h-full" bind:container>
   {#if messages !== "" || messages !== undefined || messages !== null}
     {#each messages as element}
       <ChatItem

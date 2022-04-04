@@ -7,8 +7,9 @@
 </script>
 
 <div
-    class="max-h-96 overflow-y-auto flex flex-col flex-1 {styles}"
+    class="overflow-y-auto flex flex-col flex-1 {styles}"
     bind:this={container}
 >
     <slot />
 </div>
+
