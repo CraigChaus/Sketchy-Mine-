@@ -91,21 +91,21 @@ const chatHandler = (io, socket) => {
     dbg(CHAT_EVENTS.CHAT_MESSAGE, { msg });
     // Get the user who sent the message
     const user = getCurrentUser(socket.id);
-    if(user === undefined){
+    if (user === undefined) {
       return;
     }
     // check if the user is in a team, otherwise the server will crash
     let userHasTeam = false;
-    Teams.forEach((team) =>{
-      team.members.forEach((member) =>{
-        if(user.username === member.username){
+    Teams.forEach((team) => {
+      team.members.forEach((member) => {
+        if (user.username === member.username) {
           userHasTeam = true;
         }
-      })
-    })
+      });
+    });
 
     // user does not have a team to exit out
-    if(!userHasTeam){
+    if (!userHasTeam) {
       return;
     }
     socket.broadcast.to(user.teamSession).emit(
