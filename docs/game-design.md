@@ -9,8 +9,8 @@ Throughout the following sections, various terminology, with this definition tab
 |            Term | Definition                                                                              |
 | --------------: | --------------------------------------------------------------------------------------- |
 |    Emerald Mine | The retro game this design is conceptually referenced from                              |
-|         Emerald | Reward system currency                                                                  |
-| Emerald _shard_ | Reward system currency (smaller unit)                                                   |
+|         Emerald | Reward system currency made up from emerald shards                                      |
+| Emerald _shard_ | Reward system currency (smaller unit) that when combined make up an emerald             |
 |          Player | A connected client that is actively playing                                             |
 |       Spectator | A connected client that can only passively observe the game                             |
 |       Moderator | A connected client that can oversee the game state                                      |
@@ -25,6 +25,7 @@ Throughout the following sections, various terminology, with this definition tab
 |           Round | A single iteration of the sketching or guessing phase of the game                       |
 |         Digging | The progression of a team through the level by accurately sketching or guessing         |
 |     Game server | The central instance of the game logic server that players connect to                   |
+|          ∞      | This means infinite                                                                     |
 
 ## Overview
 
@@ -35,30 +36,29 @@ Teams work together to "dig" distance in a mine to receive emerald shards by gue
 
 | Name         | Max        | Minimum   |
 | ------------ | ---------- | --------- |
-| Server       | 99 players | 9 players |
-| Team members | 30 players | 3 players |
-| Teams        | 33 teams   | 3 teams   |
+| Server       | ∞ players  | 6 players |
+| Team members | 3 players  | 3 players |
+| Teams        | ∞ teams    | 3 teams   |
 | Spectator    | ∞          | 0         |
 
 ---
 
 ## Teams
 
-In the game, players are split into teams of 3-33 players, and depending on the game round, are tasked to either draw a word (the drawing team), or come up with a shared guess as to what the sketch represents (the guessing team).
+In the game, players are split into teams of 3 players, and depending on the game round, are tasked to either draw a word (the drawing team), or come up with a shared guess as to what the sketch represents (the guessing team).
 
-Once a team is formed, new members can only join if the team is still in level 1--due to level progression. This prevents unbalanced rewards given out to the new players who have not contributed to the team yet.
-
-Members of the teams may leave any time. Once the team is no longer comprised of at least 3 players, the team is destroyed and other members can no longer continue.
+Members of the teams may leave any time but once the team is no longer comprised of 3 players, the team is destroyed and other members can no longer continue. Therefore, as a team of 3 being a small number it is easier to communicate amongst each other and 
+commit to each other that you can work well together as a team.
 
 > Teams are based on a current game session, and are not persistent. They only exist for the indefinite lifecycle of the game
 
 ### Initial match making
 
-Once a player joins they will be put on hold until they can join a team in level 1 with at least 2 other players or form a new one. The game will be put on hold until there are at least 3 teams in total (with at least 3 players per each team).
+A team of 3 is created once a randomly assigned team player is put in to the same team with 2 other players. A "Team matchmaking" message is displayed to the other 2 team members until a third member joins. Once a third member joins and there is another team of 3 ready a "Ready message" is displayed to signal the start of the game.
 
 ### Team composition
 
-As defined, in the _Game parameters_, the maximum number of players in the game is 99, but with a maximum of 33 teams of 3 player each, or 3 teams of 30 players--and any combination in between. The concrete composition of the game players is not strictly defined, as long as the total number of players, the number of active teams, and players within a team are within the mentioned bounds.
+As defined, in the _Game parameters_, the maximum number of players in the game is ∞, but with a maximum of ∞ teams of 3 players each. The concrete composition of the game players is not strictly defined, as long as the total number of players, the number of active teams, and players within a team are within the mentioned bounds.
 
 ### Drawing team
 
@@ -66,9 +66,9 @@ As defined, in the _Game parameters_, the maximum number of players in the game 
 
 In each round, one team must draw a given word for the other teams to guess. This specific team is randomly chosen at the start of every game round by the game server.
 
-Once a team has been chosen to draw, a category is shown to the members of the team and they can elect a player to draw. With a chosen player to draw, the actual word is revealed, and the player starts drawing the word. The player who was elected to draw will not be able to draw again for the next 2 rounds, to allow for a more fair distribution of player involvement within the team.
+Once a team has been chosen to draw, a word is shown to the members of the team to draw. All team members can draw since they are only 3 members. Hence, all the team players can get a taste of drawing on the canvas. They can also communicate amongst each other on who can draw the word ofcourse by using the integrated team chat.
 
-The rest of the drawing team can observe the sketch and see other teams guessing states, and communicate with their assigned drawing player to improve the sketch.
+
 
 #### Balancing
 
@@ -78,9 +78,9 @@ In terms of balancing, if no guessing teams correctly guess the word based on th
 
 #### Gameplay
 
-In a guessing team, as soon as the sketching phase commences, the team will have to reach consensus on what word is being sketched within a certain timeframe. The exact range of time can be changed by the Moderator. This guessed word must be agreed on by the majority of the teams members in order to be made as the teams final guess.
+In a guessing team, as soon as the sketching phase commences, the team will have to reach consensus on what word is being sketched within a certain timeframe. This guessed word must be agreed on by the majority of the teams members in order to be made as the teams final guess.
 
-In order to arrive on a team guess, players in the team must first individually guess a word. This can be done either by initially writing the guess in the dedicated UI element, or by clicking an existing guess the team has made--effectively changing the players guess.
+In order to arrive on a team guess, players in the team must first individually guess a word. This can be done either by initially writing the guess in the dedicated UI element, or by clicking an existing guess the team has made thus effectively changing the players guess.
 
 All players in the team can see what their teams internal guesses are so far, together with how many people have "voted" for each guess. Players can also see what their teams final guess will be at any moment, and the amount of players still needed to reach consensus on the guess.
 
@@ -96,7 +96,7 @@ If a word is guessed correctly, a great amount of digging progress is awarded (p
 
 ## Levels
 
-For progressing with your team, as soon as the end of the level/mine is reached, the team restarts with a higher level, increasing the rewards that they can obtain. Due to this, there is an endless amount levels.
+For progressing with your team, as soon as the end of the level/mine is reached, the team restarts with a higher level, increasing the rewards that they can obtain. Due to this, there is an endless amount of levels.
 
 Levels are also only specific to a team, without influencing match making or the game itself. This mean that all the teams are in the same game, with each teams final level reward being different depending on their level.
 
@@ -120,15 +120,12 @@ The emerald shards you earn are multiplied by the "levels completed" counter, so
 
 ## Moderator
 
-Besides players, a moderator role is defined in the game, with this client being able to affect the parameters and state of the game.
+Besides players, a moderator role is defined in the game, with this client being able to affect the state of the game.
 
 ### State influence
 
-Moderators can (de)buff teams by temporarily increasing or decreasing a teams digging distance multiplier. Additionally, moderators can also kick teams for inappropriate behavior.
-
-### Parameter influence
-
-To influence the game logic itself, moderating users are able to edit the word bank available going forward, as well as the parameters revolving around the round duration, and level difficulty (distance).
+The moderator can send a warning message to a team as well as permanently ban a misbehaving player. Ofcourse this means making the whole team immediately stop playing since the team is disbanded when a player leaves the team. This is because there will be 2 players left which opposes the games team composition parameter. It is basically a blanket punishment to the whole team
+which is unfortunate. 
 
 ## Spectators
 
@@ -192,11 +189,8 @@ All players have their own persistent ranking, based on the number of emerald sh
 #### Moderator view of the canvas
 ![Moderator](./resources/wireframes/moderator-buttons.png "Moderator view")
 
-- view of the moderator is similar to the player's view, but has additional buttons:
-  - the moderator can kick out a player, prevent them to send messages and send them a warning (warning form below)
-  - they can boost, de-boost or kick out the whole group
-  - they can clear the canvas and ban the drawer form his role, if what he is drawing is inappropriate
-  - they can delete messages from the chat and ban the player from sending more, if they are being offensive so anyone
+- view of the moderator is similar to the player's view, but has an additional button such as:
+  - the moderator can kick out a player and send them a warning (warning form below)
 - the modal appears on top of the screen upon chosen moderator action
 - behind the modal the view is similar to spectator one
 - the modal depends on the chosen action that the moderator want to perform
