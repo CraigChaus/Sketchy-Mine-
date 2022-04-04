@@ -1,4 +1,5 @@
 <script>
+  import SvelteTooltip from "svelte-tooltip";
   export let myTeam;
 </script>
 
@@ -6,13 +7,25 @@
   <div class="TeamStatistics">
     <div class="myTeamShards">
       <div class="emeralds">
-        Emeralds: {Math.floor(myTeam.shards / 5)}
-        <img src="/images/Emerald.png" alt="Emeralds graphic" />
+        <SvelteTooltip
+          tip="Emeralds are used for your ranking"
+          left
+          color="#6024EB"
+        >
+          Emeralds: {Math.floor(myTeam.shards / 5)}
+          <img src="/images/Emerald.png" alt="Emeralds graphic" />
+        </SvelteTooltip>
         <!-- emeralds -->
       </div>
       <div class="shards">
-        Shards: {myTeam.shards}
-        <img src="/images/Shard.png" alt="Shards graphic" />
+        <SvelteTooltip
+          tip="Get shards from a level to convert them into emeralds"
+          left
+          color="#6024EB"
+        >
+          Shards: {myTeam.shards}
+          <img src="/images/Shard.png" alt="Shards graphic" />
+        </SvelteTooltip>
         <!-- shards -->
       </div>
     </div>
