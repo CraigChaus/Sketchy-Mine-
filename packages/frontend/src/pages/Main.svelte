@@ -365,7 +365,7 @@
    */
   const startSpectate = () => {
     showMatchmakingPopup = false;
-    role = 3;
+    becomeSpectator();
   };
 
   async function getRole() {
