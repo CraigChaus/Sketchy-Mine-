@@ -25,7 +25,7 @@ const canvasHandler = (io, socket) => {
   };
 
   const drawAllPoints = () => {
-    canvasHistory.forEach((item) => socket.emit(CANVAS_EVENTS.POINTS, item);
+    canvasHistory.forEach((item) => socket.emit(CANVAS_EVENTS.POINTS, item));
   };
 
   socket.on(CANVAS_EVENTS.POINTS, drawPoints);

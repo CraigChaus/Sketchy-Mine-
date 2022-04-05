@@ -113,6 +113,32 @@ export const resetGuesses = () => {
   });
 };
 
+function addGuessForExistingTeam(currentTeam, username, guess) {
+  teamGuesses.forEach((t) => {
+    if (t.teamname === currentTeam.teamname) { // Only modify the user's team's guesses
+      // We check if the team guesses already has the new guess to add
+      const found = t.guesses.some((g) => g.guess === guess);
+      if (!found) {
+        t.guesses.push({ guess, freq: 1, usernames: [username] });
+        // Update the last guess time for the team placement at the end of the round
+        currentTeam.lastGuessSubmit = new Date();
+      } else {
+        t.guesses.forEach((g) => {
+          if (g.guess === guess
+            && !g.usernames.includes(username)
+            && g.freq < currentTeam.members.length / 2) {
+            if (++g.freq >= currentTeam.members.length / 2) nrTeamsWithFinalizedGuess++;
+
+            g.usernames.push(username);
+            // Update the last guess time for the team placement at the end of the round
+            currentTeam.lastGuessSubmit = new Date();
+          }
+        });
+      }
+    }
+  });
+}
+
 /**
  * Add a new guess.
  * This function will make sure to add a user's guess to the team guesses database
@@ -134,29 +160,7 @@ export const addGuess = (username, guess) => {
     teamGuesses.push(teamObj); // Add the new team with the new guess
   } else {
     // If we already have the team
-    teamGuesses.forEach((t) => {
-      if (t.teamname === currentTeam.teamname) { // Only modify the user's team's guesses
-        // We check if the team guesses already has the new guess to add
-        const found = t.guesses.some((g) => g.guess === guess);
-        if (!found) {
-          t.guesses.push({ guess, freq: 1, usernames: [username] });
-          // Update the last guess time for the team placement at the end of the round
-          currentTeam.lastGuessSubmit = new Date();
-        } else {
-          t.guesses.forEach((g) => {
-            if (g.guess === guess
-              && !g.usernames.includes(username)
-              && g.freq < currentTeam.members.length / 2) {
-              if (++g.freq >= currentTeam.members.length / 2) nrTeamsWithFinalizedGuess++;
-
-              g.usernames.push(username);
-              // Update the last guess time for the team placement at the end of the round
-              currentTeam.lastGuessSubmit = new Date();
-            }
-          });
-        }
-      }
-    });
+    addGuessForExistingTeam(currentTeam, username, guess);
   }
   // Send team user-listing update to show who guessed
   sendTeamData(getIO());
@@ -168,17 +172,34 @@ export const addGuess = (username, guess) => {
  */
 export const getCurrentWord = () => gameState.currentWord;
 
-/**
- * Calculates the results for each team
- * This function handles:
- * - Deciding who won and not
- * - Team placement order
- * @returns Array of team object with the final results
- */
-export const getTeamResults = () => {
-  const team = [...Teams]; // Copy teams so we don't modify the original dataset
+function calculatePointsForTeam(t) {
   const timeNow = new Date();
+  let pointsEarned = 0;
 
+  const guessedTimeTaken = ROUND_DURATION - ((timeNow - t.lastGuessSubmit) / 1000);
+  dbg(`${t.teamname} took ${guessedTimeTaken} seconds to guess`);
+
+  if (guessedTimeTaken < 5) {
+    // if they guessed in less than 30 seconds, they get 20 points and so on
+    pointsEarned += 25;
+  } else if (guessedTimeTaken < 10) {
+    pointsEarned += 20;
+  } else if (guessedTimeTaken < 15) {
+    pointsEarned += 15;
+  } else {
+    pointsEarned += 5;
+  }
+
+  pointsEarned *= process.env.ROUND_POINTS_MULTIPLIER ?? 1;
+  pointsEarned = Math.round(pointsEarned);
+
+  dbg(`Adding ${pointsEarned} points to ${t.teamname}`);
+
+  t.addPoints(pointsEarned);
+}
+
+// Update the teams array
+function updateTeamArray(team) {
   team.forEach((t) => {
     // First check if we have any guesses for a team
     if (teamGuesses === undefined || teamGuesses.length < 1) return;
@@ -193,31 +214,23 @@ export const getTeamResults = () => {
 
       if (t.won) {
         // Add points to the team if they guessed correctly
-        let pointsEarned = 0;
-
-        const guessedTimeTaken = ROUND_DURATION - ((timeNow - t.lastGuessSubmit) / 1000);
-        dbg(`${t.teamname} took ${guessedTimeTaken} seconds to guess`);
-
-        if (guessedTimeTaken < 5) {
-          // if they guessed in less than 30 seconds, they get 20 points and so on
-          pointsEarned += 25;
-        } else if (guessedTimeTaken < 10) {
-          pointsEarned += 20;
-        } else if (guessedTimeTaken < 15) {
-          pointsEarned += 15;
-        } else {
-          pointsEarned += 5;
-        }
-
-        pointsEarned *= process.env.ROUND_POINTS_MULTIPLIER ?? 1;
-        pointsEarned = Math.round(pointsEarned);
-
-        dbg(`Adding ${pointsEarned} points to ${t.teamname}`);
-
-        t.addPoints(pointsEarned);
+        calculatePointsForTeam(t);
       }
     }
   });
+}
+
+/**
+ * Calculates the results for each team
+ * This function handles:
+ * - Deciding who won and not
+ * - Team placement order
+ * @returns Array of team object with the final results
+ */
+export const getTeamResults = () => {
+  const team = [...Teams]; // Copy teams so we don't modify the original dataset
+
+  updateTeamArray(team); // Update the dataset
 
   // Calculate the teams' placement order by the time when the last guess was submitted
   team.sort((a, b) => a.lastGuessSubmit - b.lastGuessSubmit);
