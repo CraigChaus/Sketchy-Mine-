@@ -31,7 +31,13 @@
     </div>
     <!-- <div class="myTeamPoints"></div>  this is questionable-->
     <div class="myTeamLevel">
-      Level: {myTeam.level}
+      <SvelteTooltip
+        tip="Higher level gives higher shard multiplier"
+        left
+        color="#6024EB"
+      >
+        Level: {myTeam.level}
+      </SvelteTooltip>
     </div>
   </div>
 {/if}

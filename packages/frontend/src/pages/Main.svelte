@@ -57,12 +57,11 @@
   let timeRemainingInSeconds = -1; // Set to -1 by default to indicate mid-round state
   let guessingDisabled = false;
 
-  
-  let sendingMessageAudio = new Audio('sounds/sendMessage_sound.mp3'); // Used to add audio when a message is sent
+  let sendingMessageAudio = new Audio("sounds/sendMessage_sound.mp3"); // Used to add audio when a message is sent
   // Set sendingMessageAudio to 40%
   sendingMessageAudio.volume = 0.4;
 
-  let receivingMessageAudio = new Audio('sounds/messageReceived_sound.mp3'); // Used to add audio when a message is received
+  let receivingMessageAudio = new Audio("sounds/messageReceived_sound.mp3"); // Used to add audio when a message is received
   // Set receivingMessageAudio to 40%
   receivingMessageAudio.volume = 0.4;
 
@@ -282,7 +281,6 @@
     ];
 
     //receivingMessageAudio.play();
-    
   });
 
   // Update team listing
@@ -510,20 +508,19 @@
       </div>
 
       <div class="w-2/4 h-full space-y-1 canvas rounded-md">
-
         {#if timeRemainingInSeconds <= 5 && timeRemainingInSeconds > 0}
-          <div class="p-2 bg-red-400 rounded-md animate-pulse"></div>
+          <div class="p-2 bg-red-400 rounded-md animate-pulse" />
         {/if}
         <Canvas
-                {restrictCanvas}
-                {role}
-                bind:this={SDraw}
-                {brushColor}
-                {brushRadius}
-                canvasWidth="w-2/4"
+          {restrictCanvas}
+          {role}
+          bind:this={SDraw}
+          {brushColor}
+          {brushRadius}
+          canvasWidth="w-2/4"
         />
         {#if timeRemainingInSeconds <= 5 && timeRemainingInSeconds > 0}
-          <div class="p-2 bg-red-400 rounded-md animate-pulse"></div>
+          <div class="p-2 bg-red-400 rounded-md animate-pulse" />
         {/if}
         <div class="flex-row justify-center">
           {#await promise}
@@ -622,7 +619,7 @@
   }
 
   .fixedHeight {
-      max-height: 555px;
-      height: 555px;
+    max-height: 555px;
+    height: 555px;
   }
 </style>

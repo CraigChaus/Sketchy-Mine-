@@ -8,6 +8,7 @@
   import { createEventDispatcher } from "svelte";
   import socket from "../../socket";
   import Countdown from "../Countdown.svelte";
+  import SvelteTooltip from "svelte-tooltip";
 
   // If this is set to "N/A" and the timeRemainingInSeconds is -1,
   // that means the round is not yet started
@@ -58,7 +59,13 @@
     <section class="p-4 h-80 border-gray-300 space-y-2">
       {#if result === "N/A" && timeRemainingInSeconds < 0}
         <p class="border-b-2 italic text-center">
-          Waiting for next round to start...
+          <SvelteTooltip
+            tip="Round starts with enough players"
+            bottom
+            color="#C9D9FF"
+          >
+            Waiting for next round to start...
+          </SvelteTooltip>
         </p>
       {:else if timeRemainingInSeconds == 0}
         <p class="border-b-2">
@@ -101,7 +108,13 @@
     <section class="p-4 h-80 border-gray-300 space-y-2" style="height: auto;">
       {#if result === "N/A" && timeRemainingInSeconds < 0}
         <p class="border-b-2 italic text-center">
-          Waiting for next round to start...
+          <SvelteTooltip
+            tip="Round starts with enough players"
+            bottom
+            color="#C9D9FF"
+          >
+            Waiting for next round to start...
+          </SvelteTooltip>
         </p>
       {:else if timeRemainingInSeconds == 0}
         <p class="border-b-2">
