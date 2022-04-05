@@ -19,12 +19,14 @@
 
   {#if teams && teams.length}
     {#each teams as team}
-      <div
-        class="teamPointer"
-        style="left: {team.points}%; color: {team.colour}"
-      >
-        <span>{team.teamname}</span>
-      </div>
+      {#if team.teamname !== 'Spectators'}
+        <div
+          class="teamPointer"
+          style="left: {team.points}%; color: {team.colour}"
+        >
+          <span>{team.teamname}</span>
+        </div>
+      {/if}
     {/each}
   {/if}
 

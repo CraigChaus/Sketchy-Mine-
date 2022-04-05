@@ -62,10 +62,6 @@
   // Set sendingMessageAudio to 40%
   sendingMessageAudio.volume = 0.4;
 
-  let receivingMessageAudio = new Audio('sounds/messageReceived_sound.mp3'); // Used to add audio when a message is received
-  // Set receivingMessageAudio to 40%
-  receivingMessageAudio.volume = 0.4;
-
   // Progress bar functionality
   // FIXME: This function has been moved to the backend
   /**
