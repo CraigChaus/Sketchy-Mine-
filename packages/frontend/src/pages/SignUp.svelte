@@ -34,8 +34,9 @@
     }
 </script>
 
-<div class="flex items-center justify-center min-h-screen bg-gray-100">
-    <div class="px-8 py-6 mt-4 text-left bg-white shadow-lg">
+<div class="flex items-center justify-center min-h-screen bg-cover bg-no-repeat"
+     style = "background-image: url(./images/Background2.png)">
+    <div class="px-8 py-6 mt-4 text-left bg-white shadow-lg rounded">
     <form use:form action="" on:submit|preventDefault={handleSubmit}>
 
         <div class="relative mb-4">
