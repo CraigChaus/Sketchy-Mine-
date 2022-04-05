@@ -540,3 +540,35 @@ Ana is missing, did not inform the team, everyone else is present
   - Task is done
   - May need some tweaking
   - Can take a new task
+
+## SCRUM Standup (Entire team) - 04.04.2022
+- Everyone is present
+- Daria:
+  - Vince helped
+  - Not perfect, but should be enough
+- Marko:
+  - Haven't done any task
+- Lukman:
+  - Added new sound effects
+  - Fixed some css issues
+  - Task done
+- Vedat:
+  - Had a bug from the previous issue
+  - Done, will take a new issue
+- Peter:
+  - Task done, merged
+- Craig:
+  - Task done, merged
+- Ana:
+  - Worked on styling
+  - Haven't made much progress but trying to get there
+- Melissa:
+  - Had to fix some items, task done
+- Filippos:
+  - Had documentation task
+  - Helped Peter with the wordbank
+  - Documentation is in progress
+- Vince:
+  - Helped Daria instead of doing his task, since his task was too "confusing"
+- Mira:
+  - Task done, merged
