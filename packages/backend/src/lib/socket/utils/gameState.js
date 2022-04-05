@@ -10,9 +10,9 @@ import sequelize from '../../../database/util/config';
 const dbg = debug('state');
 
 const ROUND_DURATION = process.env.ROUND_DURATION ?? 30;
-const teamGuesses = [];
+const teamGuesses = []; // Stores teams and their guesses
 
-let nrTeamsWithFinalizedGuess = 0;
+let nrTeamsWithFinalizedGuess = 0; // Stores how many teams submitted their final guess
 
 /**
  * Get random word to guess
@@ -23,7 +23,7 @@ export const getRandomWord = async () => {
   const nextWord = (await Word.findAll({ order: sequelize.random(), limit: 1 }))[0];
   // const nextWordIndex = Math.floor(Math.random() * wordBank.length);
   // const nextWord = wordBank[nextWordIndex];
-  console.log(nextWord);
+  // console.log(nextWord);
   return nextWord.word;
 };
 

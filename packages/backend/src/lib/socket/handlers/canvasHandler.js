@@ -25,24 +25,16 @@ const canvasHandler = (io, socket) => {
   };
 
   const drawAllPoints = () => {
-    canvasHistory.forEach((item) => {
-      socket.emit(CANVAS_EVENTS.POINTS, item);
-    });
+    canvasHistory.forEach((item) => socket.emit(CANVAS_EVENTS.POINTS, item);
   };
 
   socket.on(CANVAS_EVENTS.POINTS, drawPoints);
   socket.on(CANVAS_EVENTS.CLEAR, clearCanvas);
   socket.on(CANVAS_EVENTS.NEWLOGIN, drawAllPoints);
 
-  const makeSpectator = () => {
-    socket.broadcast.emit(CANVAS_EVENTS.SPECTATOR);
-  };
-  const makeDrawer = () => {
-    socket.broadcast.emit(CANVAS_EVENTS.DRAWER);
-  };
-  const makeGuesser = () => {
-    socket.broadcast.emit(CANVAS_EVENTS.GUESSER);
-  };
+  const makeSpectator = () => socket.broadcast.emit(CANVAS_EVENTS.SPECTATOR);
+  const makeDrawer = () => socket.broadcast.emit(CANVAS_EVENTS.DRAWER);
+  const makeGuesser = () => socket.broadcast.emit(CANVAS_EVENTS.GUESSER);
 
   socket.on(CANVAS_EVENTS.DRAWER, makeDrawer);
   socket.on(CANVAS_EVENTS.GUESSER, makeGuesser);
@@ -75,12 +67,7 @@ export const giveAppropriateRoles = (io, Teams) => {
   });
 };
 
-export const lockCanvas = (io) => {
-  io.emit(CANVAS_EVENTS.RESTRICT_DRAWING);
-};
-
-export const unlockCanvas = (io) => {
-  io.emit(CANVAS_EVENTS.UNRESTRICT_DRAWING);
-};
+export const lockCanvas = (io) => io.emit(CANVAS_EVENTS.RESTRICT_DRAWING);
+export const unlockCanvas = (io) => io.emit(CANVAS_EVENTS.UNRESTRICT_DRAWING);
 
 export default canvasHandler;

@@ -8,6 +8,7 @@ import sequelize from './util/config';
 
 const dbg = debug('db');
 
+// Add basic words from the words.db file to the database
 function addInitialWordsToWordBank() {
   fs.readFileSync(process.env.WORD_BANK).toString().split('\n').forEach((line, index, arr) => {
     if (index === arr.length - 1 && line === '') { return; }
@@ -15,7 +16,7 @@ function addInitialWordsToWordBank() {
     Word.create(newWord);
   });
 }
-
+// Set up databse tables and seed it
 const setupDatabase = async () => {
   try {
     await sequelize.authenticate();
