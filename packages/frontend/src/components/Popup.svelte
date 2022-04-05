@@ -1,21 +1,22 @@
 <script>
-    import Icon from 'svelte-awesome';
-    import { faCircleInfo } from '@fortawesome/free-solid-svg-icons';
-    import { createEventDispatcher } from 'svelte';
+    import Icon from "svelte-awesome";
+    import { faCircleInfo } from "@fortawesome/free-solid-svg-icons";
+    import { createEventDispatcher } from "svelte";
+    import SvelteTooltip from "svelte-tooltip";
 
     /**
      * Component to be used as a popup window
      */
 
-    export let title = 'Matchmaking';
-    export let instruction = 'Trying to find team a team ...';
-    export let status = 'Waiting for players...';
+    export let title = "Matchmaking";
+    export let instruction = "Trying to find team a team ...";
+    export let status = "Waiting for players..."; // Secondary information to indicate more details
     export let showButtons = true;
 
     const dispatch = createEventDispatcher();
 
-    export let exitButtonClicked = () => dispatch('ClickExit');
-    export let spectateButtonClicked = () => dispatch('ClickSpectate');
+    export let exitButtonClicked = () => dispatch("ClickExit");
+    export let spectateButtonClicked = () => dispatch("ClickSpectate");
 </script>
 
 <div
@@ -41,18 +42,30 @@
             <!-- Action buttons-->
             <div class="p-3  mt-2 text-center space-x-4 md:block">
                 {#if showButtons}
-                    <button
-                        class="mb-2 md:mb-0 bg-white px-5 py-2 text-sm font-medium tracking-wider border text-gray-600 rounded-full hover:bg-gray-100 transition-all"
-                        on:click={exitButtonClicked}
+                    <SvelteTooltip
+                        tip="Go back to title page"
+                        top
+                        color="#C9D9FF"
                     >
-                        Exit
-                    </button>
-                    <button
-                        class="mb-2 md:mb-0 bg-blue-500 border border-blue-500 px-5 py-2 text-sm font-medium tracking-wider text-white rounded-full hover:bg-blue-600 transition-all"
-                        on:click={spectateButtonClicked}
+                        <button
+                            class="mb-2 md:mb-0 bg-white px-5 py-2 text-sm font-medium tracking-wider border text-gray-600 rounded-full hover:bg-gray-100 transition-all"
+                            on:click={exitButtonClicked}
+                        >
+                            Exit
+                        </button>
+                    </SvelteTooltip>
+                    <SvelteTooltip
+                        tip="Cancel matchmaking and spectate instead"
+                        top
+                        color="#C9D9FF"
                     >
-                        Spectate
-                    </button>
+                        <button
+                            class="mb-2 md:mb-0 bg-blue-500 border border-blue-500 px-5 py-2 text-sm font-medium tracking-wider text-white rounded-full hover:bg-blue-600 transition-all"
+                            on:click={spectateButtonClicked}
+                        >
+                            Spectate
+                        </button>
+                    </SvelteTooltip>
                 {/if}
             </div>
         </div>

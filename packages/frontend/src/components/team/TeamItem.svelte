@@ -39,6 +39,7 @@
                     <div style="width: 2rem;">
                         {#if won && !isDrawingTeam}
                             {#if placementNr === 1}
+                                <!-- If team guessed first -->
                                 <Icon
                                     data={faCrown}
                                     scale="1.5"
@@ -139,5 +140,6 @@
     {/if}
 </div>
 {#if showMembers}
+    <!-- Show members for a team -->
     <MembersList membersJSON={members} showGuessedIndicator={isSelf} />
 {/if}

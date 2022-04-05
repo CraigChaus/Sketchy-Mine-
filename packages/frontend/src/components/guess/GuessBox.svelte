@@ -8,6 +8,7 @@
   import { createEventDispatcher } from "svelte";
   import socket from "../../socket";
   import Countdown from "../Countdown.svelte";
+  import SvelteTooltip from "svelte-tooltip";
 
   // If this is set to "N/A" and the timeRemainingInSeconds is -1,
   // that means the round is not yet started
@@ -15,17 +16,20 @@
   export let teamSize = 60;
   export let currentGuess = null; // When the round is over, or not yet started, this must be null!!!
   export let timeRemainingInSeconds = -1; // When the round is over, or not yet started, this must be -1!!!
-  export let role = null;
+  export let role = null; // 1->drawers, 2->guessers, 3->spectators
   export let teamGuesses = []; //List of team guess objects
   export let guessingEnded = false;
 
   const dispatch = createEventDispatcher();
 
+  // Used once a guess reaches 50% or more.
+  // This case no more guesses are allowed
   function finalizeGuessing() {
     guessingEnded = true;
     dispatch("finalized");
   }
 
+  // Make sure the top guess is at the top of the list
   function sortGuesses() {
     teamGuesses.sort((a, b) => {
       return b.frequency - a.frequency;
@@ -54,12 +58,20 @@
 </script>
 
 <div>
+  <!-- Show prompts for drawers and guessers only -->
   {#if role != 3 && role === 2}
     <section class="p-4 h-80 border-gray-300 space-y-2">
       {#if result === "N/A" && timeRemainingInSeconds < 0}
         <p class="border-b-2 italic text-center">
-          Waiting for next round to start...
+          <SvelteTooltip
+            tip="Round starts with enough players"
+            bottom
+            color="#C9D9FF"
+          >
+            Waiting for next round to start...
+          </SvelteTooltip>
         </p>
+        <!-- Once match over, show the correct word -->
       {:else if timeRemainingInSeconds == 0}
         <p class="border-b-2">
           Correct word: <span class="font-bold text-purple-600">{result}</span>
@@ -76,6 +88,7 @@
       <p>My teams guesses:</p>
       <ScrollContainer styles=" max-h-56 border-0">
         <div class="flex flex-col items-center space-y-2">
+          <!-- If team hasen't made any guesses yet, show a placeholder -->
           {#if teamGuesses.length === 0 && role === 2}
             <p class="italic text-yellow-500 text-center font-medium mt-2">
               Your team has not placed any guesses yet...
@@ -101,7 +114,13 @@
     <section class="p-4 h-80 border-gray-300 space-y-2" style="height: auto;">
       {#if result === "N/A" && timeRemainingInSeconds < 0}
         <p class="border-b-2 italic text-center">
-          Waiting for next round to start...
+          <SvelteTooltip
+            tip="Round starts with enough players"
+            bottom
+            color="#C9D9FF"
+          >
+            Waiting for next round to start...
+          </SvelteTooltip>
         </p>
       {:else if timeRemainingInSeconds == 0}
         <p class="border-b-2">
