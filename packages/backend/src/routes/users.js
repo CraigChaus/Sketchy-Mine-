@@ -6,7 +6,7 @@ import * as users from '../database/controllers/user_controller';
 const router = Router();
 
 /* Get users listing */
-router.get('/', isLoggedIn, users.findAll);
+router.get('/', users.findAll);
 
 /* Get user by ID */
 router.get('/:id', isLoggedIn, users.findById);

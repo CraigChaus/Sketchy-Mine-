@@ -8,13 +8,23 @@
     faSpellCheck,
     faPaintbrush,
     faUser,
-    faBan,
     faPersonRunning,
   } from "@fortawesome/free-solid-svg-icons";
   import { user } from "../../stores/user";
+  import { token } from "../../stores/token";
+
+  import socket from "../../socket";
 
   export let membersJSON = [{ username: "N/A", guessed: false }]; // Default data
   export let showGuessedIndicator = true; // Used to indicate if someone submitted a guess from the team
+
+  const kick = (username) => {
+    let payload = {
+      player: username,
+      token: $token,
+    };
+    socket.emit("moderation:kick_player", payload);
+  };
 </script>
 
 <div class="bg-gray-100 mb-2 rounded-bl-lg p-2 flex-1 ml-5 divide-y">
@@ -34,14 +44,11 @@
 
       {#if $user.is_moderator}
         <p class="flex justify-end ">
+          <!--          <button>-->
           <button
-            class="flex justify-center h-6 w-6 bg-yellow-300 hover:bg-yellow-500 font-bold  rounded-full"
+            on:click={() => kick(member.username)}
+            class="flex justify-center h-6 w-6 bg-red-500 hover:bg-red-700  font-bold  rounded-full"
             ><Icon data={faPersonRunning} scale="1.4" style="color:black" />
-          </button>
-          <button
-            class="flex justify-center h-6 w-6 ml-1 bg-red-500 hover:bg-red-700   font-bold  rounded-full"
-          >
-            <Icon data={faBan} scale="1.4" style="color:black" />
           </button>
         </p>
       {/if}

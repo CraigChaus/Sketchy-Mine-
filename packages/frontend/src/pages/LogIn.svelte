@@ -46,8 +46,9 @@
   };
 </script>
 
-<div class="flex items-center justify-center min-h-screen bg-gray-100">
-  <div class="px-8 py-6 mt-4 text-left bg-white shadow-lg">
+<div class="flex items-center justify-center min-h-screen bg-no-repeat bg-cover"
+     style="background-image: url(./images/Background2.png)">
+  <div class="px-8 py-6 mt-4 text-left bg-white shadow-lg rounded">
     <form action="" on:submit|preventDefault={handleLogin}>
       <div class="mt-4 flex flex-col items-center">
         <div>

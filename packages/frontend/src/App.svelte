@@ -6,18 +6,30 @@
   import SignUp from "./pages/SignUp.svelte";
   import Ranking from "./pages/Ranking.svelte";
   import EndedSession from "./pages/EndedSession.svelte";
-  import Rules from "./pages/Rules.svelte"
+  import Rules from "./pages/Rules.svelte";
 
   import Notifications from "svelte-notifications";
   import Auth from "./pages/Auth.svelte";
   import qs from "qs";
+
+  // Delete the stored user and token if they're invalid
+  const token = window.localStorage.getItem("token");
+  const user = window.localStorage.getItem("user");
+
+  if (!token || token === "undefined") {
+    window.localStorage.removeItem("token");
+  }
+
+  if (!user || user === "undefined") {
+    window.localStorage.removeItem("user");
+  }
 
   let page;
   let params;
 
   router("*", parse);
   router("/game", (ctx) => (page = Main));
-  router("/rules",(ctx) => (page = Rules));
+  router("/rules", (ctx) => (page = Rules));
   router("/login", (ctx) => (page = LogIn));
   router("/register", (ctx) => (page = SignUp));
   router("/game?spectate", (ctx) => (page = Main));

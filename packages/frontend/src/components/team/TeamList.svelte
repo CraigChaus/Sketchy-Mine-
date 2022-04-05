@@ -72,14 +72,6 @@
         {#if $user.is_moderator}
           <div class=" flex justify-end">
             <button
-              class="flex justify-center h-7 w-7 bg-black-300 hover:bg-black-500  font-bold rounded"
-              ><Icon
-                data={faEnvelope}
-                scale="1.7"
-                style="color:white"
-              /></button
-            >
-            <button
               on:click={() => warnTeam(element.teamname)}
               class="flex justify-center h-7 w-7 ml-3 bg-yellow-300 hover:bg-yellow-500 text-black font-bold  rounded-full"
               ><Icon
