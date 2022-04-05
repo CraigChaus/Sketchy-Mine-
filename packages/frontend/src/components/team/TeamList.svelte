@@ -51,7 +51,8 @@
 <ScrollContainer>
   {#if contentJSON !== "" || contentJSON !== undefined || contentJSON !== null}
     {#each contentJSON as element}
-      <TeamItem
+      {#if element.teamname !== 'Spectators'}
+        <TeamItem
         class="contents"
         members={element.members}
         {showResults}
@@ -64,11 +65,9 @@
           <p>
             {element.teamname}
           </p>
-          {#if element.teamname !== "Spectators"}
-            <p class="ml-auto font-semibold text-blue-100 mr-1">
-              Level {element.level}
-            </p>
-          {/if}
+          <p class="ml-auto font-semibold text-blue-100 mr-1">
+            Level {element.level}
+          </p>
         </div>
 
         {#if $user.is_moderator}
@@ -85,6 +84,7 @@
           </div>
         {/if}
       </TeamItem>
+      {/if}
     {/each}
   {/if}
 </ScrollContainer>
