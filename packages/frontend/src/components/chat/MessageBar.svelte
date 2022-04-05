@@ -10,8 +10,8 @@
   const dispatch = createEventDispatcher();
 
   export let input; // Text that the user enters
-  export let role;
-  export let guessButtonDisabled;
+  export let role; // 2 -> guesser
+  export let guessButtonDisabled; // Used to disable clicking on guesses
 
   let textInputPlaceholder;
 
@@ -19,6 +19,7 @@
 
   const onGuessWordClicked = () => dispatch("guessWordClicked");
 
+  // Change the textinput placeholder instructions based on what buttons are enabled
   const updateTextInputPlaceholder = () => {
     if (role == 2) {
       if (!guessButtonDisabled) {
@@ -69,6 +70,7 @@
       on:buttonClicked={onSendChatClicked}>Send Chat</ActionButton
     >
 
+    <!-- If guessers -->
     {#if role === 2}
       <ActionButton
         disabled={guessButtonDisabled}

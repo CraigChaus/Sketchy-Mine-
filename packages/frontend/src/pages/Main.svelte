@@ -15,22 +15,16 @@
   import LeaveButton from "../components/LeaveButton.svelte";
   import router from "page";
   import { getNotificationsContext } from "svelte-notifications";
-  import Countdown from "../components/Countdown.svelte";
 
   const { addNotification } = getNotificationsContext();
-  let myTeamName;
 
   // Receiving guesses
   socket.on("guess", (guesses) => {
-    if (!guesses) {
-      return;
-    }
-
+    if (!guesses) return;
     teamGuesses = [...guesses];
   });
 
   let roles = ["drawer", "guesser", "spectator"];
-
   let restrictCanvas = false; //used when the round ends.
   let results = null; // It has to be null when we want to hide the results on the team listing
   let username; //Current user's username
@@ -38,7 +32,7 @@
   let teamSize = 0;
   let chatMessages = []; //List of all chat messages
   let teamGuesses = []; //List of all guesses of current team
-  let role = 2;
+  let role = 2; // default role
   let promise = getRole();
   let chatInput; //User's chat input
   let currentGuess = null; //Current guess of the user
@@ -56,12 +50,11 @@
   let isRoundActive = false; // Used to track when a round (when the times is running) is active
   let timeRemainingInSeconds = -1; // Set to -1 by default to indicate mid-round state
   let guessingDisabled = false;
-
   let sendingMessageAudio = new Audio("sounds/sendMessage_sound.mp3"); // Used to add audio when a message is sent
+  let receivingMessageAudio = new Audio("sounds/messageReceived_sound.mp3"); // Used to add audio when a message is received
   // Set sendingMessageAudio to 40%
   sendingMessageAudio.volume = 0.4;
 
-  let receivingMessageAudio = new Audio("sounds/messageReceived_sound.mp3"); // Used to add audio when a message is received
   // Set receivingMessageAudio to 40%
   receivingMessageAudio.volume = 0.4;
 
@@ -170,6 +163,7 @@
     }
   };
 
+  // If round activity status changes, check if we need to clear the guesses
   $: isRoundActive, switchRoundStates();
 
   /**
@@ -292,7 +286,9 @@
     data.forEach((t, i) => {
       t.members.forEach((u) => {
         if (u.username === username) {
+          // If we found current user
           if (teamSession !== t.teamname) {
+            // If we are not joined to the team's session yet
             teamSession = t.teamname;
             socket.emit("joinTeamChat", { teamSession });
           }
@@ -306,9 +302,7 @@
     });
 
     teams = data;
-    if (role != 3) {
-      handlePopup(); // Every time the teams get updated, we check if we need to show the matchmaking popup
-    }
+    if (role != 3) handlePopup(); // Every time the teams get updated, we check if we need to show the matchmaking popup
   });
 
   /**
@@ -354,9 +348,7 @@
    * Exit current match and redirect page back to the home screen
    * Called by the matchmaking popup window
    */
-  const exitMatch = () => {
-    router("/");
-  };
+  const exitMatch = () => router("/");
 
   /**
    * Hide matchmaking popup box and place user into spectate mode
@@ -420,14 +412,8 @@
     }
   };
 
-  const lockCanvas = () => {
-    restrictCanvas = true;
-  };
-
-  const unlockCanvas = () => {
-    restrictCanvas = false;
-  };
-
+  const lockCanvas = () => (restrictCanvas = true);
+  const unlockCanvas = () => (restrictCanvas = false);
   const lockGuesses = () => (guessingDisabled = true);
 
   socket.on("round:result", (payload) => {

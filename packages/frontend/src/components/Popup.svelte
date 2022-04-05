@@ -10,7 +10,7 @@
 
     export let title = "Matchmaking";
     export let instruction = "Trying to find team a team ...";
-    export let status = "Waiting for players...";
+    export let status = "Waiting for players..."; // Secondary information to indicate more details
     export let showButtons = true;
 
     const dispatch = createEventDispatcher();
