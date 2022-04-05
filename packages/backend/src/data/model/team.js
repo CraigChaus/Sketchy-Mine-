@@ -9,25 +9,26 @@ function teamColour() {
   currentColourIndex += 1;
   return `hsl(${currentColourIndex * 37}, 100%, 50%)`;
 }
+// Used to model a Team object
 class Team {
   constructor(teamname) {
     this.teamname = teamname;
     this.isSpectator = false;
     this.isDrawing = false;
-    this.isSelf = false;
+    this.isSelf = false; // True if current user is in this team
     this.won = false;
-    this.placementNr = 0;
+    this.placementNr = 0; // When round is over and guessed correctly, this stored their placement
     this.points = 0;
     this.level = 1;
     this.shards = 0;
-    this.lastGuessSubmit = new Date();
+    this.lastGuessSubmit = new Date(); // Store when the last guess was submitted
     this.checkpoints = {
       one: false,
       two: false,
       three: false,
     };
     this.colour = teamColour();
-    this.members = [];
+    this.members = []; // List of users in the team
   }
 
   /**

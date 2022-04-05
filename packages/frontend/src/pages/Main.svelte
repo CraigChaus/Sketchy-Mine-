@@ -15,22 +15,16 @@
   import LeaveButton from "../components/LeaveButton.svelte";
   import router from "page";
   import { getNotificationsContext } from "svelte-notifications";
-  import Countdown from "../components/Countdown.svelte";
 
   const { addNotification } = getNotificationsContext();
-  let myTeamName;
 
   // Receiving guesses
   socket.on("guess", (guesses) => {
-    if (!guesses) {
-      return;
-    }
-
+    if (!guesses) return;
     teamGuesses = [...guesses];
   });
 
   let roles = ["drawer", "guesser", "spectator"];
-
   let restrictCanvas = false; //used when the round ends.
   let results = null; // It has to be null when we want to hide the results on the team listing
   let username; //Current user's username
@@ -38,7 +32,7 @@
   let teamSize = 0;
   let chatMessages = []; //List of all chat messages
   let teamGuesses = []; //List of all guesses of current team
-  let role = 2;
+  let role = 2; // default role
   let promise = getRole();
   let chatInput; //User's chat input
   let currentGuess = null; //Current guess of the user
@@ -57,8 +51,7 @@
   let timeRemainingInSeconds = -1; // Set to -1 by default to indicate mid-round state
   let guessingDisabled = false;
 
-  
-  let sendingMessageAudio = new Audio('sounds/sendMessage_sound.mp3'); // Used to add audio when a message is sent
+  let sendingMessageAudio = new Audio("sounds/sendMessage_sound.mp3"); // Used to add audio when a message is sent
   // Set sendingMessageAudio to 40%
   sendingMessageAudio.volume = 0.4;
 
@@ -121,44 +114,6 @@
     socket.disconnect();
   };
 
-  /**
-   * Warning: Unused
-   * This function updates the drawing team's points.
-   * It increases the points based on the percentage
-   * of those who guessed correctly as to the total number
-   * of teams playing the round.
-   * The points awarded as follows:
-   * percentage up to 25 gets 10 points,
-   * up to 50 - 20 points,
-   * up to 75 - 30,
-   * up to 100 - 40.
-   * @param drawingTeam the currently drawing team
-   * @param numberOfGuessedTeams the number of teams that guessed correctly
-   */
-  const updateDrawingTeamPoints = (drawingTeam, numberOfGuessedTeams) => {
-    if (numberOfGuessedTeams < teams.length) {
-      const percentage = getGuessedTeamsPercentage(numberOfGuessedTeams);
-
-      teams.forEach((team) => {
-        if (team.teamname === drawingTeam) {
-          if (percentage > 0 && percentage < 25) {
-            team.points += 10;
-          } else if (percentage < 50) {
-            team.points += 20;
-          } else if (percentage < 75) {
-            team.points += 30;
-          } else {
-            team.points += 40;
-          }
-        }
-
-        validateLevelPoints(team);
-      });
-
-      teamsValue.set(teams);
-    }
-  };
-
   const switchRoundStates = () => {
     // When round is over, we clear the guess cache
     if (!isRoundActive) {
@@ -167,22 +122,8 @@
     }
   };
 
+  // If round activity status changes, check if we need to clear the guesses
   $: isRoundActive, switchRoundStates();
-
-  /**
-   * Warning: Unused
-   * This calculates the percentage of the teams
-   * that guessed correctly out of the total number of teams.
-   * It excludes the drawing team.
-   * @param numberOfGuessedTeams the number of teams that guessed correctly
-   * @returns {number} the percentage
-   */
-  const getGuessedTeamsPercentage = (numberOfGuessedTeams) => {
-    const teamsSize = teams.length - 1;
-    const percentage = (numberOfGuessedTeams / teamsSize) * 100;
-
-    return percentage;
-  };
 
   /**
    * Warning: Unused
@@ -226,7 +167,7 @@
   onMount(() => {
     let spectator = window.location.href.includes("spectator");
 
-    //sorr but this has to be called before the await else it won't work
+    // Sorry but this has to be called before the await else it won't work
     //ugly double checking of spectator to have optimal functionality :(
 
     if (spectator) {
@@ -236,6 +177,7 @@
     }
 
     let tokenValue = $token;
+
     socket.emit("joinSession", { tokenValue }, (sessionUsername) => {
       username = sessionUsername;
       if (!spectator) {
@@ -278,7 +220,6 @@
     ];
 
     //receivingMessageAudio.play();
-    
   });
 
   // Update team listing
@@ -290,7 +231,9 @@
     data.forEach((t, i) => {
       t.members.forEach((u) => {
         if (u.username === username) {
+          // If we found current user
           if (teamSession !== t.teamname) {
+            // If we are not joined to the team's session yet
             teamSession = t.teamname;
             socket.emit("joinTeamChat", { teamSession });
           }
@@ -304,9 +247,7 @@
     });
 
     teams = data;
-    if (role != 3) {
-      handlePopup(); // Every time the teams get updated, we check if we need to show the matchmaking popup
-    }
+    if (role != 3) handlePopup(); // Every time the teams get updated, we check if we need to show the matchmaking popup
   });
 
   /**
@@ -337,24 +278,10 @@
   }
 
   /**
-   * Helper function to hold the execution of the program
-   * @param ms Milliseconds to wait
-   */
-  function wait(ms) {
-    var start = new Date().getTime();
-    var end = start;
-    while (end < start + ms) {
-      end = new Date().getTime();
-    }
-  }
-
-  /**
    * Exit current match and redirect page back to the home screen
    * Called by the matchmaking popup window
    */
-  const exitMatch = () => {
-    router("/");
-  };
+  const exitMatch = () => router("/");
 
   /**
    * Hide matchmaking popup box and place user into spectate mode
@@ -418,14 +345,8 @@
     }
   };
 
-  const lockCanvas = () => {
-    restrictCanvas = true;
-  };
-
-  const unlockCanvas = () => {
-    restrictCanvas = false;
-  };
-
+  const lockCanvas = () => (restrictCanvas = true);
+  const unlockCanvas = () => (restrictCanvas = false);
   const lockGuesses = () => (guessingDisabled = true);
 
   socket.on("round:result", (payload) => {
@@ -434,6 +355,7 @@
     isRoundActive = false;
   });
   socket.on("round:progress", updateGuessState);
+
   // 1: drawer
   // 2: guesser
   // 3: spectator
@@ -506,20 +428,19 @@
       </div>
 
       <div class="w-2/4 h-full space-y-1 canvas rounded-md">
-
         {#if timeRemainingInSeconds <= 5 && timeRemainingInSeconds > 0}
-          <div class="p-2 bg-red-400 rounded-md animate-pulse"></div>
+          <div class="p-2 bg-red-400 rounded-md animate-pulse" />
         {/if}
         <Canvas
-                {restrictCanvas}
-                {role}
-                bind:this={SDraw}
-                {brushColor}
-                {brushRadius}
-                canvasWidth="w-2/4"
+          {restrictCanvas}
+          {role}
+          bind:this={SDraw}
+          {brushColor}
+          {brushRadius}
+          canvasWidth="w-2/4"
         />
         {#if timeRemainingInSeconds <= 5 && timeRemainingInSeconds > 0}
-          <div class="p-2 bg-red-400 rounded-md animate-pulse"></div>
+          <div class="p-2 bg-red-400 rounded-md animate-pulse" />
         {/if}
         <div class="flex-row justify-center">
           {#await promise}
@@ -618,7 +539,7 @@
   }
 
   .fixedHeight {
-      max-height: 555px;
-      height: 555px;
+    max-height: 555px;
+    height: 555px;
   }
 </style>

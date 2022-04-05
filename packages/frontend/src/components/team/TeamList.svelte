@@ -39,9 +39,7 @@
     showWarningForm = true;
   };
 
-  let cancelWarning = () => {
-    showWarningForm = false;
-  };
+  let cancelWarning = () => (showWarningForm = false);
   let teamname;
 </script>
 

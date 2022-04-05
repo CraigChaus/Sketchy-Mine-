@@ -65,9 +65,7 @@ export const broadcastTeamSpecificGuesses = (io) => {
 export const sendState = (socket) => {
   const user = getCurrentUser(socket.id);
 
-  if (user) {
-    broadcastTeamSpecificGuesses(getIO());
-  }
+  if (user) broadcastTeamSpecificGuesses(getIO());
 };
 
 /**
