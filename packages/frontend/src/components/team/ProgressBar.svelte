@@ -2,9 +2,7 @@
   import { teamsValue } from "../../stores/teams";
 
   export let teams = [];
-  teamsValue.subscribe((value) => {
-    teams = value;
-  });
+  teamsValue.subscribe((value) => (teams = value));
 
   let emeraldPosition = [25, 50, 80];
 </script>
@@ -14,11 +12,13 @@
     <img src="/images/ProgressBarEmpty.png" alt="Progress bar graphic" />
   </div>
   {#each emeraldPosition as emerald}
+    <!-- Show emeralds on the progress bar -->
     <div class="emerald" style="left: {emerald}%  " />
   {/each}
 
   {#if teams && teams.length}
     {#each teams as team}
+      <!-- Show team pointers on the progress bar -->
       <div
         class="teamPointer"
         style="left: {team.points}%; color: {team.colour}"

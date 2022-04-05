@@ -28,6 +28,7 @@
 </script>
 
 <ScrollContainer styles="h-full" bind:container>
+  <!-- Show only valid messages -->
   {#if messages !== "" || messages !== undefined || messages !== null}
     {#each messages as element}
       <ChatItem

@@ -11,6 +11,7 @@
 </script>
 
 <div class="flex-1 w-full h-full flex max-h-20 my-1">
+  <!-- User's own message -->
   {#if type === 1}
     <div class="ml-3" />
     <div
@@ -20,11 +21,13 @@
       <!-- Line break without trying to preserve whole words for all messages-->
       <p class="text-right break-all">{message}</p>
     </div>
+    <!-- Someone else's message -->
   {:else if type === 2}
     <div class="bg-gray-600 p-2 rounded-r-2xl text-white mr-3 h-full">
       <p class="font-bold text-blue-400 text-xs">{sender} {currentTime}</p>
       <p class="break-all">{message}</p>
     </div>
+    <!-- System/server message -->
   {:else}
     <div
       class="p-2 border-t-4 border-b-4 border-red-500 bg-gray-100 flex-1 flex flex-col h-full"
