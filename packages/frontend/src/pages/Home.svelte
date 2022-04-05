@@ -2,11 +2,11 @@
 </script>
 
 <body
-  class="body-bg min-h-screen pt-12 md:pt-20 pb-6 px-2 md:px-0"
-  style="font-family:'Lato',sans-serif;"
+  class="flex bg-no-repeat bg-cover items-center justify-center min-h-screen pt-12 sm:pt-6 pb-3 px-1 "
+  style = "background-image: url(./images/Background2.png)"
 >
   <main
-    class="bg-white max-w-lg mx-auto p-8 md:p-12 my-3 rounded-lg shadow-2xl"
+    class="bg-white max-w-lg mx-auto items-center pt-3 sm:pt-6 pb-3 px-1 w-2/3 md:p-12 my-3 rounded-lg shadow-2xl"
   >
     <section>
       <a href="/game">
