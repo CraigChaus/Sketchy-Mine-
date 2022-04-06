@@ -40,6 +40,7 @@
   let brushRadius = 8;
   let SDraw = null;
   let showMatchmakingPopup = true; // Show popup window while player is not in an active team
+  let popupWindowTitle = "";
   let popupWindowInstruction = "Looking for a team"; // Shown on the popup window (usually used at matchmaking)
   let popupWindowStatusText = `Please wait...`; // Used by the popup window to display various match statuses
   let popupWindowShowButtons = true; // Toggle the visibility of the popup window's buttons
@@ -50,7 +51,9 @@
   let isRoundActive = false; // Used to track when a round (when the times is running) is active
   let timeRemainingInSeconds = -1; // Set to -1 by default to indicate mid-round state
   let guessingDisabled = false;
-
+  let showDrawingAlert = false;
+  let alertTitle = "";
+  let alertInstruction = "";
   let sendingMessageAudio = new Audio("sounds/sendMessage_sound.mp3"); // Used to add audio when a message is sent
   // Set sendingMessageAudio to 40%
   sendingMessageAudio.volume = 0.4;
@@ -216,7 +219,17 @@
 
     teams = data;
     if (role != 3) handlePopup(); // Every time the teams get updated, we check if we need to show the matchmaking popup
+    //   if (role === 1) {handleAlert()};
   });
+
+  function handleAlert() {
+    showDrawingAlert = true;
+    popupWindowTitle = "Alert";
+    popupWindowInstruction = "Your team is drawing!";
+    popupWindowStatusText = ".";
+    popupWindowShowButtons = false;
+    setTimeout(() => (showDrawingAlert = false), 2000);
+  }
 
   /**
    * Logic for when to show popup
@@ -265,6 +278,10 @@
 
   const becomeDrawer = () => {
     role = 1;
+    if (role === 1 && !showMatchmakingPopup) {
+      handleAlert();
+    }
+
     promise = getRole();
   };
   const becomeGuesser = () => {
@@ -349,17 +366,26 @@
     {/if}
 
     <div class="flex flex-row items-center justify-center">
+      {#if showDrawingAlert}
+        <Popup
+          title={popupWindowTitle}
+          instruction={popupWindowInstruction}
+          status={popupWindowStatusText}
+          on:ClickExit={exitMatch}
+          on:ClickSpectate={startSpectate}
+          showButtons={popupWindowShowButtons}
+        />
+      {/if}
       <ProgressBar {teams} />
 
       <div class="flex-col items-center px-12">
         <div class="">
-          <div class="h-20"></div>
-          <LeaveButton on:buttonClicked={leaveGame} href="/ended_session">LEAVE
+          <div class="h-20" />
+          <LeaveButton on:buttonClicked={leaveGame} href="/ended_session"
+            >LEAVE
           </LeaveButton>
         </div>
-
       </div>
-
     </div>
 
     <TeamStatistics {myTeam} />
