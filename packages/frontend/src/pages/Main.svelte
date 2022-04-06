@@ -347,10 +347,20 @@
         showButtons={popupWindowShowButtons}
       />
     {/if}
-    <LeaveButton on:buttonClicked={leaveGame} href="/ended_session"
-      >LEAVE</LeaveButton
-    >
-    <ProgressBar {teams} />
+
+    <div class="flex flex-row items-center justify-center">
+      <ProgressBar {teams} />
+
+      <div class="flex-col items-center px-12">
+        <div class="">
+          <div class="h-20"></div>
+          <LeaveButton on:buttonClicked={leaveGame} href="/ended_session">LEAVE
+          </LeaveButton>
+        </div>
+
+      </div>
+
+    </div>
 
     <TeamStatistics {myTeam} />
 
