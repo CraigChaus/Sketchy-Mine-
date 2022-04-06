@@ -55,7 +55,7 @@
                         </button>
                     </SvelteTooltip>
                     <SvelteTooltip
-                        tip="Cancel matchmaking and spectate instead"
+                        tip="Wait for a team"
                         top
                         color="#C9D9FF"
                     >
@@ -63,7 +63,7 @@
                             class="mb-2 md:mb-0 bg-blue-500 border border-blue-500 px-5 py-2 text-sm font-medium tracking-wider text-white rounded-full hover:bg-blue-600 transition-all"
                             on:click={spectateButtonClicked}
                         >
-                            Spectate
+                            Wait
                         </button>
                     </SvelteTooltip>
                 {/if}
