@@ -8,6 +8,7 @@
   import { createEventDispatcher } from "svelte";
   const dispatch = createEventDispatcher();
 
+  // Create new event once the chat button is clicked
   export let buttonClicked = () => dispatch("buttonClicked");
 </script>
 

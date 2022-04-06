@@ -9,7 +9,7 @@
 
   export let disabled = false; // This means the button is clicked by the user
   export let value = "";
-  export let frequency = 0;
+  export let frequency = 0; // nr of members putting their guess on this guess option
   export let teamSize = 0;
   export let turnedOff = false; // This means the button is disabled
 
@@ -20,12 +20,14 @@
   };
 
   function updateButton() {
+    // Once a guess reacher 50% or more, send the signal that no more guesses should be accepted
     if ((frequency / teamSize) * 100 >= 50) {
       turnedOff = true;
       dispatch("finalized");
     }
   }
 
+  // Every time the frequency changes, check if the button should be turned off
   $: frequency, updateButton();
 </script>
 

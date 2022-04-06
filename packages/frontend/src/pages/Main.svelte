@@ -15,22 +15,16 @@
   import LeaveButton from "../components/LeaveButton.svelte";
   import router from "page";
   import { getNotificationsContext } from "svelte-notifications";
-  import Countdown from "../components/Countdown.svelte";
 
   const { addNotification } = getNotificationsContext();
-  let myTeamName;
 
   // Receiving guesses
   socket.on("guess", (guesses) => {
-    if (!guesses) {
-      return;
-    }
-
+    if (!guesses) return;
     teamGuesses = [...guesses];
   });
 
   let roles = ["drawer", "guesser", "spectator"];
-
   let restrictCanvas = false; //used when the round ends.
   let results = null; // It has to be null when we want to hide the results on the team listing
   let username; //Current user's username
@@ -38,7 +32,7 @@
   let teamSize = 0;
   let chatMessages = []; //List of all chat messages
   let teamGuesses = []; //List of all guesses of current team
-  let role = 2;
+  let role = 2; // default role
   let promise = getRole();
   let chatInput; //User's chat input
   let currentGuess = null; //Current guess of the user
@@ -46,6 +40,7 @@
   let brushRadius = 8;
   let SDraw = null;
   let showMatchmakingPopup = true; // Show popup window while player is not in an active team
+  let popupWindowTitle = "";
   let popupWindowInstruction = "Looking for a team"; // Shown on the popup window (usually used at matchmaking)
   let popupWindowStatusText = `Please wait...`; // Used by the popup window to display various match statuses
   let popupWindowShowButtons = true; // Toggle the visibility of the popup window's buttons
@@ -56,107 +51,14 @@
   let isRoundActive = false; // Used to track when a round (when the times is running) is active
   let timeRemainingInSeconds = -1; // Set to -1 by default to indicate mid-round state
   let guessingDisabled = false;
-
-  
-  let sendingMessageAudio = new Audio('sounds/sendMessage_sound.mp3'); // Used to add audio when a message is sent
+  let showDrawingAlert = false;
+  let sendingMessageAudio = new Audio("sounds/sendMessage_sound.mp3"); // Used to add audio when a message is sent
   // Set sendingMessageAudio to 40%
   sendingMessageAudio.volume = 0.4;
 
-  // Progress bar functionality
-  // FIXME: This function has been moved to the backend
-  /**
-   * Warning: Unused
-   * This function updates the team's points that guessed correctly.
-   * The increase is based on certain timestamps, as it follows:
-   * If guessedTimeTaken is less than 30 seconds, the points are increased by 20,
-   * if less than 60, by 15,
-   * and less than 90, by 10.
-   * @param correctGuessedTeam the team that correctly guessed the answer
-   * @param guessedTimeTaken the time taken to get the correct guess
-   */
-  const updateCorrectGuessingTeamPoints = (
-    correctGuessedTeam,
-    guessedTimeTaken
-  ) => {
-    teams.forEach((team) => {
-      if (team.teamname === correctGuessedTeam) {
-        if (guessedTimeTaken < 30) {
-          // if they guessed in less than 30 seconds, they get 20 points and so on
-          team.points += 20;
-        } else if (guessedTimeTaken < 60) {
-          team.points += 15;
-        } else if (guessedTimeTaken < 90) {
-          team.points += 10;
-        } else {
-          team.points += 5;
-        }
-      }
-
-      validateLevelPoints(team);
-    });
-
-    teamsValue.set(teams);
-  };
-
-  /**
-   * Warning: Unused
-   * This updates the team's points that guessed wrongly.
-   * It increases the team's points by 3 with every wrong guess,
-   * no matter the time taken.
-   * @param wrongGuessingTeam the team that made the wrong guess
-   */
-  const updateWrongGuessingTeamPoints = (wrongGuessingTeam) => {
-    teams.forEach((team) => {
-      if (team.teamname === wrongGuessingTeam) {
-        team.points += 3;
-      }
-
-      validateLevelPoints(team);
-    });
-
-    teamsValue.set(teams);
-  };
   // close socket connection on button click
   const leaveGame = () => {
     socket.disconnect();
-  };
-
-  /**
-   * Warning: Unused
-   * This function updates the drawing team's points.
-   * It increases the points based on the percentage
-   * of those who guessed correctly as to the total number
-   * of teams playing the round.
-   * The points awarded as follows:
-   * percentage up to 25 gets 10 points,
-   * up to 50 - 20 points,
-   * up to 75 - 30,
-   * up to 100 - 40.
-   * @param drawingTeam the currently drawing team
-   * @param numberOfGuessedTeams the number of teams that guessed correctly
-   */
-  const updateDrawingTeamPoints = (drawingTeam, numberOfGuessedTeams) => {
-    if (numberOfGuessedTeams < teams.length) {
-      const percentage = getGuessedTeamsPercentage(numberOfGuessedTeams);
-
-      teams.forEach((team) => {
-        if (team.teamname === drawingTeam) {
-          if (percentage > 0 && percentage < 25) {
-            team.points += 10;
-          } else if (percentage < 50) {
-            team.points += 20;
-          } else if (percentage < 75) {
-            team.points += 30;
-          } else {
-            team.points += 40;
-          }
-        }
-
-        validateLevelPoints(team);
-      });
-
-      teamsValue.set(teams);
-    }
   };
 
   const switchRoundStates = () => {
@@ -167,52 +69,8 @@
     }
   };
 
+  // If round activity status changes, check if we need to clear the guesses
   $: isRoundActive, switchRoundStates();
-
-  /**
-   * Warning: Unused
-   * This calculates the percentage of the teams
-   * that guessed correctly out of the total number of teams.
-   * It excludes the drawing team.
-   * @param numberOfGuessedTeams the number of teams that guessed correctly
-   * @returns {number} the percentage
-   */
-  const getGuessedTeamsPercentage = (numberOfGuessedTeams) => {
-    const teamsSize = teams.length - 1;
-    const percentage = (numberOfGuessedTeams / teamsSize) * 100;
-
-    return percentage;
-  };
-
-  /**
-   * Warning: Unused
-   * This function checks the level per team
-   * and the amount of shards each team can get.
-   * It increases the amount of shards by the number
-   * of level at every checkpoint.
-   * The checkpoints are: 25, 50 and 80.
-   * When the team levels up, the checkpoints are reset.
-   * @param team the team whose points are being checked
-   */
-  const validateLevelPoints = (team) => {
-    if (team.points >= 25 && !team.checkpoints.one) {
-      team.shards += team.level;
-      team.checkpoints.one = true;
-    } else if (team.points >= 50 && !team.checkpoints.two) {
-      team.shards += team.level;
-      team.checkpoints.two = true;
-    } else if (team.points >= 80 && !team.checkpoints.three) {
-      team.shards += team.level;
-      team.checkpoints.three = true;
-    } else if (team.points >= 100) {
-      // we make sure no team has more than the maximum amount of points
-      team.points -= 100;
-      team.level++;
-      team.checkpoints.one = false; // TODO needs refactoring
-      team.checkpoints.two = false;
-      team.checkpoints.three = false;
-    }
-  };
 
   const showWarning = (message) => {
     addNotification({
@@ -226,7 +84,7 @@
   onMount(() => {
     let spectator = window.location.href.includes("spectator");
 
-    //sorr but this has to be called before the await else it won't work
+    // Sorry but this has to be called before the await else it won't work
     //ugly double checking of spectator to have optimal functionality :(
 
     if (spectator) {
@@ -236,6 +94,7 @@
     }
 
     let tokenValue = $token;
+
     socket.emit("joinSession", { tokenValue }, (sessionUsername) => {
       username = sessionUsername;
       if (!spectator) {
@@ -278,7 +137,6 @@
     ];
 
     //receivingMessageAudio.play();
-    
   });
 
   // Update team listing
@@ -290,7 +148,9 @@
     data.forEach((t, i) => {
       t.members.forEach((u) => {
         if (u.username === username) {
+          // If we found current user
           if (teamSession !== t.teamname) {
+            // If we are not joined to the team's session yet
             teamSession = t.teamname;
             socket.emit("joinTeamChat", { teamSession });
           }
@@ -304,10 +164,18 @@
     });
 
     teams = data;
-    if (role != 3) {
-      handlePopup(); // Every time the teams get updated, we check if we need to show the matchmaking popup
-    }
+    if (role != 3) handlePopup(); // Every time the teams get updated, we check if we need to show the matchmaking popup
+    //   if (role === 1) {handleAlert()};
   });
+
+  function handleAlert() {
+    showDrawingAlert = true;
+    popupWindowTitle = "Alert";
+    popupWindowInstruction = "Your team is drawing!";
+    popupWindowStatusText = ".";
+    popupWindowShowButtons = false;
+    setTimeout(() => (showDrawingAlert = false), 2000);
+  }
 
   /**
    * Logic for when to show popup
@@ -337,24 +205,10 @@
   }
 
   /**
-   * Helper function to hold the execution of the program
-   * @param ms Milliseconds to wait
-   */
-  function wait(ms) {
-    var start = new Date().getTime();
-    var end = start;
-    while (end < start + ms) {
-      end = new Date().getTime();
-    }
-  }
-
-  /**
    * Exit current match and redirect page back to the home screen
    * Called by the matchmaking popup window
    */
-  const exitMatch = () => {
-    router("/");
-  };
+  const exitMatch = () => router("/");
 
   /**
    * Hide matchmaking popup box and place user into spectate mode
@@ -370,6 +224,10 @@
 
   const becomeDrawer = () => {
     role = 1;
+    if (role === 1 && !showMatchmakingPopup) {
+      handleAlert();
+    }
+
     promise = getRole();
   };
   const becomeGuesser = () => {
@@ -418,14 +276,8 @@
     }
   };
 
-  const lockCanvas = () => {
-    restrictCanvas = true;
-  };
-
-  const unlockCanvas = () => {
-    restrictCanvas = false;
-  };
-
+  const lockCanvas = () => (restrictCanvas = true);
+  const unlockCanvas = () => (restrictCanvas = false);
   const lockGuesses = () => (guessingDisabled = true);
 
   socket.on("round:result", (payload) => {
@@ -434,6 +286,7 @@
     isRoundActive = false;
   });
   socket.on("round:progress", updateGuessState);
+
   // 1: drawer
   // 2: guesser
   // 3: spectator
@@ -457,10 +310,29 @@
         showButtons={popupWindowShowButtons}
       />
     {/if}
-    <LeaveButton on:buttonClicked={leaveGame} href="/ended_session"
-      >LEAVE</LeaveButton
-    >
-    <ProgressBar {teams} />
+
+    <div class="flex flex-row items-center justify-center">
+      {#if showDrawingAlert}
+        <Popup
+          title={popupWindowTitle}
+          instruction={popupWindowInstruction}
+          status={popupWindowStatusText}
+          on:ClickExit={exitMatch}
+          on:ClickSpectate={startSpectate}
+          showButtons={popupWindowShowButtons}
+        />
+      {/if}
+      <ProgressBar {teams} />
+
+      <div class="flex-col items-center px-12">
+        <div class="">
+          <div class="h-20" />
+          <LeaveButton on:buttonClicked={leaveGame} href="/ended_session"
+            >LEAVE
+          </LeaveButton>
+        </div>
+      </div>
+    </div>
 
     <TeamStatistics {myTeam} />
 
@@ -506,20 +378,19 @@
       </div>
 
       <div class="w-2/4 h-full space-y-1 canvas rounded-md">
-
         {#if timeRemainingInSeconds <= 5 && timeRemainingInSeconds > 0}
-          <div class="p-2 bg-red-400 rounded-md animate-pulse"></div>
+          <div class="p-2 bg-red-400 rounded-md animate-pulse" />
         {/if}
         <Canvas
-                {restrictCanvas}
-                {role}
-                bind:this={SDraw}
-                {brushColor}
-                {brushRadius}
-                canvasWidth="w-2/4"
+          {restrictCanvas}
+          {role}
+          bind:this={SDraw}
+          {brushColor}
+          {brushRadius}
+          canvasWidth="w-2/4"
         />
         {#if timeRemainingInSeconds <= 5 && timeRemainingInSeconds > 0}
-          <div class="p-2 bg-red-400 rounded-md animate-pulse"></div>
+          <div class="p-2 bg-red-400 rounded-md animate-pulse" />
         {/if}
         <div class="flex-row justify-center">
           {#await promise}
@@ -618,7 +489,7 @@
   }
 
   .fixedHeight {
-      max-height: 555px;
-      height: 555px;
+    max-height: 555px;
+    height: 555px;
   }
 </style>
