@@ -1,5 +1,5 @@
 <script>
-  import { onMount } from "svelte";
+  import {onMount} from "svelte";
   import Canvas from "../Canvas/Canvas.svelte";
   import ChatBox from "../components/chat/ChatBox.svelte";
   import GuessList from "../components/guess/GuessBox.svelte";
@@ -7,16 +7,16 @@
   import MessageBar from "../components/chat/MessageBar.svelte";
   import Toolbox from "../Canvas/Toolbox.svelte";
   import socket from "../socket";
-  import { teamsValue } from "../stores/teams";
+  import {teamsValue} from "../stores/teams";
   import ProgressBar from "../components/team/ProgressBar.svelte";
   import Popup from "../components/Popup.svelte";
   import TeamStatistics from "../components/team/TeamStatistics.svelte";
-  import { token } from "../stores/token";
+  import {token} from "../stores/token";
   import LeaveButton from "../components/LeaveButton.svelte";
   import router from "page";
-  import { getNotificationsContext } from "svelte-notifications";
+  import {getNotificationsContext} from "svelte-notifications";
 
-  const { addNotification } = getNotificationsContext();
+  const {addNotification} = getNotificationsContext();
 
   // Receiving guesses
   socket.on("guess", (guesses) => {
@@ -40,6 +40,7 @@
   let brushRadius = 8;
   let SDraw = null;
   let showMatchmakingPopup = true; // Show popup window while player is not in an active team
+  let popupWindowTitle = "";
   let popupWindowInstruction = "Looking for a team"; // Shown on the popup window (usually used at matchmaking)
   let popupWindowStatusText = `Please wait...`; // Used by the popup window to display various match statuses
   let popupWindowShowButtons = true; // Toggle the visibility of the popup window's buttons
@@ -50,7 +51,9 @@
   let isRoundActive = false; // Used to track when a round (when the times is running) is active
   let timeRemainingInSeconds = -1; // Set to -1 by default to indicate mid-round state
   let guessingDisabled = false;
-
+  let showDrawingAlert = false;
+  let alertTitle = "";
+  let alertInstruction = "";
   let sendingMessageAudio = new Audio("sounds/sendMessage_sound.mp3"); // Used to add audio when a message is sent
   // Set sendingMessageAudio to 40%
   sendingMessageAudio.volume = 0.4;
@@ -146,7 +149,7 @@
 
     let tokenValue = $token;
 
-    socket.emit("joinSession", { tokenValue }, (sessionUsername) => {
+    socket.emit("joinSession", {tokenValue}, (sessionUsername) => {
       username = sessionUsername;
       if (!spectator) {
         // randomizeDrawer();
@@ -203,7 +206,7 @@
           if (teamSession !== t.teamname) {
             // If we are not joined to the team's session yet
             teamSession = t.teamname;
-            socket.emit("joinTeamChat", { teamSession });
+            socket.emit("joinTeamChat", {teamSession});
           }
 
           t.isSelf = true;
@@ -216,7 +219,19 @@
 
     teams = data;
     if (role != 3) handlePopup(); // Every time the teams get updated, we check if we need to show the matchmaking popup
+ //   if (role === 1) {handleAlert()};
+
   });
+
+  function handleAlert(){
+
+    showDrawingAlert = true;
+    popupWindowTitle = "Alert"
+    popupWindowInstruction = "Your team is drawing!";
+    popupWindowStatusText = ".";
+    popupWindowShowButtons = false;
+    setTimeout(() => (showDrawingAlert = false), 2000);
+  }
 
   /**
    * Logic for when to show popup
@@ -265,6 +280,8 @@
 
   const becomeDrawer = () => {
     role = 1;
+    if (role === 1 && !showMatchmakingPopup) {handleAlert()};
+
     promise = getRole();
   };
   const becomeGuesser = () => {
@@ -347,9 +364,20 @@
         showButtons={popupWindowShowButtons}
       />
     {/if}
+    {#if showDrawingAlert}
+      <Popup
+              title={popupWindowTitle}
+              instruction={popupWindowInstruction}
+              status={popupWindowStatusText}
+              on:ClickExit={exitMatch}
+              on:ClickSpectate={startSpectate}
+              showButtons={popupWindowShowButtons}
+      />
+    {/if}
     <LeaveButton on:buttonClicked={leaveGame} href="/ended_session"
       >LEAVE</LeaveButton
     >
+
     <ProgressBar {teams} />
 
     <TeamStatistics {myTeam} />
