@@ -18,13 +18,14 @@
 
   {#if teams && teams.length}
     {#each teams as team}
-      <!-- Show team pointers on the progress bar -->
-      <div
-        class="teamPointer"
-        style="left: {team.points}%; color: {team.colour}"
-      >
-        <span>{team.teamname}</span>
-      </div>
+      {#if team.teamname !== 'Spectators'}
+        <div
+          class="teamPointer"
+          style="left: {team.points}%; color: {team.colour}"
+        >
+          <span>{team.teamname}</span>
+        </div>
+      {/if}
     {/each}
   {/if}
 

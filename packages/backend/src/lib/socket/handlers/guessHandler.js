@@ -98,7 +98,8 @@ export const startRound = async () => {
   const index = Teams.findIndex((team) => {
     if (team.isDrawing === true) {
       return true;
-    } return false;
+    }
+    return false;
   });
   const io = getIO();
   const progress = { result: getCurrentWord() };

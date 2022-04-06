@@ -49,40 +49,42 @@
 <ScrollContainer>
   {#if contentJSON !== "" || contentJSON !== undefined || contentJSON !== null}
     {#each contentJSON as element}
-      <TeamItem
-        class="contents"
-        members={element.members}
-        {showResults}
-        isSelf={element.isSelf}
-        isDrawingTeam={element.isDrawing}
-        won={element.won}
-        placementNr={element.placementNr}
-      >
-        <div class="flex flex-row">
-          <p>
-            {element.teamname}
-          </p>
-          {#if element.teamname !== "Spectators"}
-            <p class="ml-auto font-semibold text-blue-100 mr-1">
-              Level {element.level}
+      {#if element.teamname !== 'Spectators'}
+        <TeamItem
+          class="contents"
+          members={element.members}
+          {showResults}
+          isSelf={element.isSelf}
+          isDrawingTeam={element.isDrawing}
+          won={element.won}
+          placementNr={element.placementNr}
+        >
+          <div class="flex flex-row">
+            <p>
+              {element.teamname}
             </p>
-          {/if}
-        </div>
-
-        {#if $user.is_moderator}
-          <div class=" flex justify-end">
-            <button
-              on:click={() => warnTeam(element.teamname)}
-              class="flex justify-center h-7 w-7 ml-3 bg-yellow-300 hover:bg-yellow-500 text-black font-bold  rounded-full"
-              ><Icon
-                data={faTriangleExclamation}
-                scale="1.4"
-                style="color:black"
-              /></button
-            >
+            {#if element.teamname !== "Spectators"}
+              <p class="ml-auto font-semibold text-blue-100 mr-1">
+                Level {element.level}
+              </p>
+            {/if}
           </div>
-        {/if}
-      </TeamItem>
+
+          {#if $user.is_moderator}
+            <div class=" flex justify-end">
+              <button
+                on:click={() => warnTeam(element.teamname)}
+                class="flex justify-center h-7 w-7 ml-3 bg-yellow-300 hover:bg-yellow-500 text-black font-bold  rounded-full"
+                ><Icon
+                  data={faTriangleExclamation}
+                  scale="1.4"
+                  style="color:black"
+                /></button
+              >
+            </div>
+          {/if}
+        </TeamItem>
+      {/if}
     {/each}
   {/if}
 </ScrollContainer>
