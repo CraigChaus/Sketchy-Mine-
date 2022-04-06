@@ -1,5 +1,5 @@
 <script>
-  import {onMount} from "svelte";
+  import { onMount } from "svelte";
   import Canvas from "../Canvas/Canvas.svelte";
   import ChatBox from "../components/chat/ChatBox.svelte";
   import GuessList from "../components/guess/GuessBox.svelte";
@@ -7,16 +7,16 @@
   import MessageBar from "../components/chat/MessageBar.svelte";
   import Toolbox from "../Canvas/Toolbox.svelte";
   import socket from "../socket";
-  import {teamsValue} from "../stores/teams";
+  import { teamsValue } from "../stores/teams";
   import ProgressBar from "../components/team/ProgressBar.svelte";
   import Popup from "../components/Popup.svelte";
   import TeamStatistics from "../components/team/TeamStatistics.svelte";
-  import {token} from "../stores/token";
+  import { token } from "../stores/token";
   import LeaveButton from "../components/LeaveButton.svelte";
   import router from "page";
-  import {getNotificationsContext} from "svelte-notifications";
+  import { getNotificationsContext } from "svelte-notifications";
 
-  const {addNotification} = getNotificationsContext();
+  const { addNotification } = getNotificationsContext();
 
   // Receiving guesses
   socket.on("guess", (guesses) => {
@@ -149,7 +149,7 @@
 
     let tokenValue = $token;
 
-    socket.emit("joinSession", {tokenValue}, (sessionUsername) => {
+    socket.emit("joinSession", { tokenValue }, (sessionUsername) => {
       username = sessionUsername;
       if (!spectator) {
         // randomizeDrawer();
@@ -206,7 +206,7 @@
           if (teamSession !== t.teamname) {
             // If we are not joined to the team's session yet
             teamSession = t.teamname;
-            socket.emit("joinTeamChat", {teamSession});
+            socket.emit("joinTeamChat", { teamSession });
           }
 
           t.isSelf = true;
@@ -219,14 +219,12 @@
 
     teams = data;
     if (role != 3) handlePopup(); // Every time the teams get updated, we check if we need to show the matchmaking popup
- //   if (role === 1) {handleAlert()};
-
+    //   if (role === 1) {handleAlert()};
   });
 
-  function handleAlert(){
-
+  function handleAlert() {
     showDrawingAlert = true;
-    popupWindowTitle = "Alert"
+    popupWindowTitle = "Alert";
     popupWindowInstruction = "Your team is drawing!";
     popupWindowStatusText = ".";
     popupWindowShowButtons = false;
@@ -280,7 +278,9 @@
 
   const becomeDrawer = () => {
     role = 1;
-    if (role === 1 && !showMatchmakingPopup) {handleAlert()};
+    if (role === 1 && !showMatchmakingPopup) {
+      handleAlert();
+    }
 
     promise = getRole();
   };
@@ -364,21 +364,29 @@
         showButtons={popupWindowShowButtons}
       />
     {/if}
-    {#if showDrawingAlert}
-      <Popup
-              title={popupWindowTitle}
-              instruction={popupWindowInstruction}
-              status={popupWindowStatusText}
-              on:ClickExit={exitMatch}
-              on:ClickSpectate={startSpectate}
-              showButtons={popupWindowShowButtons}
-      />
-    {/if}
-    <LeaveButton on:buttonClicked={leaveGame} href="/ended_session"
-      >LEAVE</LeaveButton
-    >
 
-    <ProgressBar {teams} />
+    <div class="flex flex-row items-center justify-center">
+      {#if showDrawingAlert}
+        <Popup
+          title={popupWindowTitle}
+          instruction={popupWindowInstruction}
+          status={popupWindowStatusText}
+          on:ClickExit={exitMatch}
+          on:ClickSpectate={startSpectate}
+          showButtons={popupWindowShowButtons}
+        />
+      {/if}
+      <ProgressBar {teams} />
+
+      <div class="flex-col items-center px-12">
+        <div class="">
+          <div class="h-20" />
+          <LeaveButton on:buttonClicked={leaveGame} href="/ended_session"
+            >LEAVE
+          </LeaveButton>
+        </div>
+      </div>
+    </div>
 
     <TeamStatistics {myTeam} />
 
