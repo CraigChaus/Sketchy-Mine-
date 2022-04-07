@@ -1,6 +1,6 @@
-# *Project* Sketchy Mine
+# Project _Sketchy Mine_
 
-> *By Team* DHI2V.So2
+> By Team DHI2V.So2
 
 ---
 
@@ -13,14 +13,17 @@
 ## Documents
 
 The docs folder has two sub-folders:
+
 - `internal` (taken notes, todo tasks, etc.)
 - `resources` (images for the docs, presentations, etc.)
 
 The resources folder contains:
+
 - The diagrams
 - Image sources
 
 The docs folder contains the following documents:
+
 - [Game Design Doc](./docs/game-design.md)
   - Definition of our game
   - Gameplay description
@@ -38,12 +41,15 @@ The docs folder contains the following documents:
   - Technical design
   - Networking protocol spec
   - Roadmap (project deadlines and User Stories plan)
+- [Installation Manual](./docs/manual.md)
+  - General installation instructions
+  - Deployment instructions
 - [Team Plan Doc](./docs/team-plan.md)
   - Team composition (roles, sub-group members)
   - Code of Conduct
   - Process artifacts
   - Backlogs
-  - Budget brakedown
+  - Budget breakdown
   - Sprint retrospectives
   - Team communication plan
 - [Time Sheet](./docs/Timesheet.xlsx)
@@ -53,9 +59,8 @@ The docs folder contains the following documents:
 
 The [packages/backend](./packages/backend/README.md) directory contains the Sketchy Mine backend. This package is the backend server that communicates with the database and the frontend.
 
-The backend package contains the `.env` file that holds the configuration to connect a PostgreSQL database to the backend.
+The backend package contains the `.env` file that holds the configuration to connect a PostgreSQL database to the backend, as well as other environment variables.
 
 ## Frontend
 
 The [packages/frontend](./packages/frontend/README.md) directory contains the Sketchy Mine Svelte frontend. This package holds the code for the website that will communicate with the backend.
-
