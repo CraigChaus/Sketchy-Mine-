@@ -24,7 +24,7 @@ To transpile and run the project in production mode, run `npm run prod`.
 
 ### Test
 
-Use `npm test` to the Jest test cases.
+Use `npm test` to run the Jest test cases.
 
 ## Linting
 
