@@ -18,7 +18,7 @@
 
   {#if teams && teams.length}
     {#each teams as team}
-      {#if team.teamname !== 'Spectators'}
+      {#if team.teamname !== "Spectators"}
         <div
           class="teamPointer"
           style="left: {team.points}%; color: {team.colour}"

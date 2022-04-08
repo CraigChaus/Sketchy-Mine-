@@ -49,7 +49,7 @@
 <ScrollContainer>
   {#if contentJSON !== "" || contentJSON !== undefined || contentJSON !== null}
     {#each contentJSON as element}
-      {#if element.teamname !== 'Spectators'}
+      {#if element.teamname !== "Spectators"}
         <TeamItem
           class="contents"
           members={element.members}

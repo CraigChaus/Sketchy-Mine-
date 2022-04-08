@@ -162,6 +162,18 @@ Game Server, Game Logic and GUI are in the game specific layer. The first layer 
 Network, Graphics and GUI are in the Middleware layer. Network focuses on the communication between the game and the server. Graphics are a collection of subsystem all related to visualizing the game in our case the canvas progress bar chat component gui etc..
 
 After encapsulating everything and having input from the last layer which is System Software the end product is our game Sketchy Mine.
+
+### Deployment Diagram
+![Deployment Diagram](./resources/diagrams/Deployment%20Diagram%20.png)
+
+The server contains a Docker container containing the container for the backend, a container for DataDog (which is simply a web traffic monitor) and a database container for postgres (where we store user data). These components are Dockerized to create a seperate container for each client connected to the VPS to optimize performance and compatibility.
+
+Netlify is the service responsible for deploying the frontend to the clients browser with information provided by the VPS  for optimum performance and security.
+
+The external service Sentry is for tracking any errors or performance hinderances that might be in the product code.It communicates with both the VPS and Netlify for it to check those two components. We use Gitlabs OAuth SSO provider for Single Sign Ons when registering to play.
+
+All the external components communicate to each other using an HTTPS protocol. The site has to be secure in order to protect the user from data exploitation. The client is the Computer that will use the browser to play the game. All communication is bidirectional. With the help of all these performance tools the deployed game performs well even when multiple clients are connected to it.
+
 ## Technical design
 The following section describes the technologies and development tools we have used throughout the development process of our game.
 

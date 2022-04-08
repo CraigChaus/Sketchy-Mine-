@@ -6,8 +6,8 @@
   export let brushRadius;
   export let SDraw;
 
-  let erasingAudio = new Audio('sounds/erasing_sound.mp3');
-  let clickingAudio = new Audio('sounds/clicking_sound.mp3');
+  let erasingAudio = new Audio("sounds/erasing_sound.mp3");
+  let clickingAudio = new Audio("sounds/clicking_sound.mp3");
   // Set volume to 30% for erasingAudio
   erasingAudio.volume = 0.3;
   // Set volume to 40% for clickingAudio
@@ -50,7 +50,7 @@
       </ChatButton>
       <div class="m-2 flex items-center space-x-1">
         <label for="colorSelect">COLOR</label>
-        <input type="color" bind:value={brushColor} id="colorSelect"/>
+        <input type="color" bind:value={brushColor} id="colorSelect" />
       </div>
 
       <input

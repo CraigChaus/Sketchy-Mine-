@@ -46,8 +46,10 @@
   };
 </script>
 
-<div class="flex items-center justify-center min-h-screen bg-no-repeat bg-cover"
-     style="background-image: url(./images/Background2.png)">
+<div
+  class="flex items-center justify-center min-h-screen bg-no-repeat bg-cover"
+  style="background-image: url(./images/Background2.png)"
+>
   <div class="px-8 py-6 mt-4 text-left bg-white shadow-lg rounded">
     <form action="" on:submit|preventDefault={handleLogin}>
       <div class="mt-4 flex flex-col items-center">
@@ -76,7 +78,9 @@
             Log in</button
           >
         </div>
-        <div class="flex justify-center items-center space-x-1 mt-3 p-2 hover:bg-gray-100 rounded-md">
+        <div
+          class="flex justify-center items-center space-x-1 mt-3 p-2 hover:bg-gray-100 rounded-md"
+        >
           <Icon data={faGitlab} scale={1.3} />
           <a href={API_URL + "/auth/gitlab"}>Sign in with Gitlab</a>
         </div>

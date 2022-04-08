@@ -1,16 +1,16 @@
 <script>
+  import router from "page";
+  import Notifications from "svelte-notifications";
+  import qs from "qs";
   import Main from "./pages/Main.svelte";
   import LogIn from "./pages/LogIn.svelte";
   import Home from "./pages/Home.svelte";
-  import router from "page";
   import SignUp from "./pages/SignUp.svelte";
   import Ranking from "./pages/Ranking.svelte";
   import EndedSession from "./pages/EndedSession.svelte";
   import Rules from "./pages/Rules.svelte";
 
-  import Notifications from "svelte-notifications";
   import Auth from "./pages/Auth.svelte";
-  import qs from "qs";
 
   // Delete the stored user and token if they're invalid
   const token = window.localStorage.getItem("token");
