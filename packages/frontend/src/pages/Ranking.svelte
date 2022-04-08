@@ -36,23 +36,34 @@
                 class="  py-4 px-4  bg-green-400  font-bold uppercase text-sm text-grey-dark border-b border-grey-light"
                 >username</th
               >
-              <th class=" py-4   bg-green-400  font-bold uppercase text-sm text-grey-dark border-b border-grey-light"></th>
+              <th
+                class=" py-4   bg-green-400  font-bold uppercase text-sm text-grey-dark border-b border-grey-light"
+              />
               <th
                 class="  py-4 px-4  bg-green-400  font-bold uppercase text-sm text-grey-dark border-b border-grey-light"
                 >Emeralds</th
               >
             </tr>
           </thead>
-          <tbody >
+          <tbody>
             {#each data as row, i}
               <tr class=" hover:bg-grey-lighter">
-                <td class=" font-bold uppercase py-4 px-4 border-b border-grey-light"
+                <td
+                  class=" font-bold uppercase py-4 px-4 border-b border-grey-light"
                   >{i + 1}</td
                 >
                 <!--place number-->
                 <td class="  py-4 px-4 border-b border-grey-light"
                   >{row.username}</td
-                ><td  class = " border-b border-grey-light"><img class="flash" src="./images/ProgressEmerald.png" alt=""  height=40% width=40%/></td>
+                ><td class=" border-b border-grey-light"
+                  ><img
+                    class="flash"
+                    src="./images/ProgressEmerald.png"
+                    alt=""
+                    height="40%"
+                    width="40%"
+                  /></td
+                >
                 <td class="  py-4 px-4 border-b border-grey-light"
                   >{row.total_emeralds}</td
                 >
@@ -71,9 +82,8 @@
   </p>
 {/await}
 
-
 <style>
-img {
+  img {
     fill: lightseagreen;
     -webkit-animation: glowing-polygon 1300ms infinite;
     -moz-animation: glowing-polygon 1300ms infinite;
@@ -83,29 +93,29 @@ img {
   @-webkit-keyframes glowing-polygon {
     0% {
       fill: #0091b2;
-      -webkit-filter: drop-shadow( 0 0 3px #21e4e3);
+      -webkit-filter: drop-shadow(0 0 3px #21e4e3);
     }
     50% {
       fill: #21c7ed;
-      -webkit-filter: drop-shadow( 0 0 15px #14a4a3);
+      -webkit-filter: drop-shadow(0 0 15px #14a4a3);
     }
     100% {
       fill: #0091b2;
-      -webkit-filter: drop-shadow( 0 0 3px #0c605f);
+      -webkit-filter: drop-shadow(0 0 3px #0c605f);
     }
   }
   @keyframes glowingPolygon {
     0% {
       fill: #0091b2;
-      filter: drop-shadow( 0 0 3px #21e4e3);
+      filter: drop-shadow(0 0 3px #21e4e3);
     }
     50% {
       fill: #21c7ed;
-      filter: drop-shadow( 0 0 15px #14a4a3);
+      filter: drop-shadow(0 0 15px #14a4a3);
     }
     100% {
       fill: #0091b2;
-      filter: drop-shadow( 0 0 3px #0c605f);
+      filter: drop-shadow(0 0 3px #0c605f);
     }
   }
 </style>
