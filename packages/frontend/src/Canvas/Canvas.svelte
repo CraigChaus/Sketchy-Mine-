@@ -16,13 +16,18 @@
   export let immediateLoading = false;
   export let hideInterface = false;
 
-  let drawingAudio = new Audio('sounds/drawing_sound.mp3');
+  let drawingAudio = new Audio("sounds/drawing_sound.mp3");
   // Set volume to 75%
   drawingAudio.volume = 0.75;
 
   $: (() => {
     if (restrictCanvas || hideInterface) {
-      ctx.interface.clearRect(0, 0, ctx.interface.canvas.width, ctx.interface.canvas.height);
+      ctx.interface.clearRect(
+        0,
+        0,
+        ctx.interface.canvas.width,
+        ctx.interface.canvas.height
+      );
     }
   })();
 
@@ -309,8 +314,8 @@
       // Add new point
       points.push(lazy.brush.toObject());
       // Play audio when user draws and the audio is not already playing
-      if (!drawingAudio.isPlaying){
-        drawingAudio.play(); 
+      if (!drawingAudio.isPlaying) {
+        drawingAudio.play();
       }
       // Draw current points
       drawPoints({
@@ -501,4 +506,3 @@
     />
   {/each}
 </div>
-
