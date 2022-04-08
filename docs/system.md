@@ -96,12 +96,12 @@ The presented product is a network game created for a large number of players wh
 ---
 ### Interface
 
-#### Description of a graphical representation of interaction with a WebApplication.
+#### Description of a graphical representation of interaction with the WebApplication.
 
 ![UseCaseDiagram](./resources/diagrams/Use%20Case%20Diagram.png "Use case diagram")
 
 
-#### Use case diagrams consist of 2 objects:
+#### Use case diagrams consist of 3 actors:
 1. Player
 2. Moderator
 3. Spectator
@@ -110,44 +110,47 @@ The presented product is a network game created for a large number of players wh
 #### Player capabilities:
 - The player can register to participate or log into a previously registered account. Alternatively, users can also play as guests, meaning they do not have login whatsoever.
 
-- After deciding to be a player or spectator, the user joins the team automatically with the matchmaking system.
-- When the game begins, the progress towards the victory of the Player is indicated by the number of emeralds collected,when a word is guessed from your drawing by the player's team or when a word is guessed from your drawing under the required conditions.
-- Afterwords, player can see the progress and rating of the players.
+- Players can collect shards as a team by reaching certain progress points throughout levels
+- Player can see the progress and rating of the players.
 - During the game, the player communicates via chat with their team, discussing options for solving the current word.
-- The game is into rounds, in each round, the players of the team will guess the drawn image through voting and chat discussions, another role during the game is when your team has to draw the image for other teams to guess it
+- The players of the team can guess the drawn image through voting and chat discussions
+- Can draw on the canvas
 
 #### Spectator capabilities:
 - The spectator can just watch the game process, without the ability to somehow influence it
 - Spectators have the ability to chat with eachother
+- Spectators can also be logged in users
 
-#### Purpose of moderator: The goal of the moderator is to monitor and control the correct course of the game.
+
+#### Purpose of moderator:
+ The goal of the moderator is to monitor and control the correct course of the game.
 
 #### Moderator capabilities:
 - The moderator's capabilities include private chat with the whole team, as well as with an individual team member.
--The moderator can send warnings to players
 - The moderator can kick any player out of the game, as well as completely ban the player's account.
+- Moderators can send warning messages to teams and/or players
 
 
 ## Description of Component Diagram
 
 ![ComponentDiagram](./resources/diagrams/Abstract%20Component%20Diagram.png "Abstract component diagram")
 
-#### Component diagram consists of 5 components connected to each other illustrating the operation of the system.
+#### Component diagram consists of 7 components connected to each other illustrating the operation of the system.
 
 - The Client Web Browser component that requires the
-- Game Server component to provide a running game, inside the Game server component are four subclasses:
+ Game Server component to provide a running game, inside the Game server component are four subclasses:
 
   1.Socket.IO component, which provides our Client Web Browser component realtime web application ( communication between webclient and servers).
 
-  2.Authentication, is for authenticating the user info using JWT with 2 seperate middleware which one of them checks if the user is a moderator or not.
+  2.Authentication, is for authenticating the user credentials using JWT and consists of 2 seperate middleware layers which one of them checks if the user is a moderator or not.
 
-  3.Socket Handler, the socket handler defines the functionality of the sockets and is the layer that processes the incoming message events.
+  3.Socket Handler, the socket handler defines the functionality of the sockets and is the layer that processes the incoming/outgoing message events.
   
   4.Database controller component, Data from the Socket.io component is streamed to the Database controller component, which in turn is connected to the database.
 
   
   
-- the Database component provides access to write new data about the course of the game, players, and so on, and also provides the Database Controller with access to read previously saved data.
+- the Database component provides access to write new data about the course of the game, players, and so on, it also provides the Database Controller with access to read previously saved data.
 ## Diagrams
 ### Package Diagram
 ![PackageDiagram](./resources/diagrams/Package%20Diagram.png)
@@ -156,13 +159,13 @@ The game logic are the rules, and the evaluation of every turn inside the game. 
 
 There are Spectators, Drawers, Guessers and Moderators as for different types of users which all of them use sockets.
 
-The Database component, uses the controllers to forward the data to database.
+The Database component, uses the controllers to read and write the data to/from the database.
 
 ### Application Layer Diagram
 ![Application Layer Diagram](./resources/diagrams/Application%20Layer%20Diagram.png)
 
 Game Server, Game Logic and GUI are in the game specific layer. The first layer is about the logic of the game the animation of the game and basically the storing of the game entirely.
-Network, Graphics and GUI are in the Middleware layer. Network focuses on the communication between the game and the server. Graphics are a collection of subsystem all related to visualizing the game in our case the canvas progress bar chat component gui etc..
+Network, Graphics and GUI are in the Middleware layer. Network focuses on the communication between the game and the server. Graphics are a collection of subsystem all related to visualizing the game in our case the canvas, progress bar, chat component interface etc..
 
 After encapsulating everything and having input from the last layer which is System Software the end product is our game Sketchy Mine.
 
