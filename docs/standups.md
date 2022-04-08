@@ -572,3 +572,7 @@ Ana is missing, did not inform the team, everyone else is present
   - Helped Daria instead of doing his task, since his task was too "confusing"
 - Mira:
   - Task done, merged
+
+## SCRUM Sprint 3 retrospective (Entire team) - 08.04.2022
+- Marko is not present. He let us know that he is busy on the day of the meeting
+- See notes in `team-plan.md`
