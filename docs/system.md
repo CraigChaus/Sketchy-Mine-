@@ -134,7 +134,7 @@ The presented product is a network game created for a large number of players wh
 - The Client Web Browser component that requires the
 - Game Server component to provide a running game, inside the Game server component are two subclasses:
 
-  1.Socket.IO component, which provides our Clent Web Browser component realtime web application ( communication between webclient and servers).
+  1.Socket.IO component, which provides our Client Web Browser component realtime web application ( communication between webclient and servers).
 
   2.Database controller component.Data from the Socket.io component is streamed to the Database controller component, which in turn is connected to the database,
 - the Database component provides access to write new data about the course of the game, players, and so on, and also provides the Database Controller with access to read previously saved data.
@@ -151,29 +151,56 @@ Game Server, Game Logic and GUI are in the game specific layer. The first layer 
 Network, Graphics and GUI are in the Middleware layer. Network focuses on the communication between the game and the server. Graphics are a collection of subsystem all related to visualizing the game in our case "The Canvas", "Tool box" and "Chat box".
 After encapsulating everything and having input from the last layer which is System Software the end product is our game Sketchy Mine.
 ## Technical design
+The following section describes the technologies and development tools we have used throughout the development process of our game.
+
+### Technology stack
+
+#### Programming language
+- JavaScript - to create the application and add dynamic behavior to web pages 
+
+#### User interface
+- HTML - to ensure proper formatting of text and images on the web page
+- CSS - to style and layout the web pages
+
+#### Frontend frameworks
+- Svelte - for faster development with reusable components
+- Tailwind - CSS framework for a faster styling process
+
+#### Backend frameworks
+- SocketIO - to enable bidirectional communication between the client and the server
+- ExpressJS - to configure routes and render HTML pages for various HTTP requests
+- Sequelize - ORM that eases the database management
+
+#### Runtime environment
+- NodeJS - to start both the frontend and the backend web applications
+
+#### Database
+- PostgreSQL - for data storage and querying
+
+#### Hosting
+- VPS - for hosting our application to be used by multiple users
+
+#### Containerization
+- Docker Compose - to configure multiple Docker containers on the same host
+
+#### Linter
+- ESLint - to make code more consistent and readable
+
 ### Development tools
+#### Code editors
+- Visual Studio Code - free, open-source, cross-platform editor
+- JetBrains Intellij IDEA - provides a service for pair programming - Code With Me, free version for students
 
-For Sprint 1 to start developing the game, we decided to use Svelte, Tailwind CSS for the client. For the server, we are going to use Node.js, Express, Socket.IO, and PostgreSQL. The server will store player data, and distribute the game state to connected clients.
+#### Version control tools
+- Git - to track the changes made to files
 
+#### Online code repositories
+- Gitlab - for team collaboration
 
-### Tools used for development:
+#### Additional tools for wireframes and diagrams creation
+- PowerPoint
+- draw.io 
 
-| Programming Languages |        Tooling/IDE         |
-| --------------------- | :------------------------: |
-| Javascript            | Svelte for IDE, Canvas API |
-| HTML                  | Svelte for IDE ,Canvas API |
-| CSS                   |        Tailwind CSS        |
-
-
-### Tools used for application:
-| Tool/ Application/Module |                                                                     Purpose                                                                     |
-| ------------------------ | :---------------------------------------------------------------------------------------------------------------------------------------------: |
-| Svelte                   |                                                 For developing fast JavaScript Web Application                                                  |
-| Node.js                  |                                       using JavaScript to start both the frontend and backend of web apps                                       |
-| Express.js               | By configuring routes for your application, Express. js makes it simple to create a web server and render HTML pages for various HTTP requests. |
-| Socket.IO                |                                                      library for realtime web applications                                                      |
-| PostgreSQL               |                                                open-source relational database management system                                                |
-| Visual Studio Code       |                               All team members will use Visual Studio Code as the primary editor for the project                                |
 ## Communication protocols
 Since is going to be an online game the protocols we are going to use WebSockets and HTTP. HTTP over a REST API will be used for interacting with the game and dispatching certain actions like logging in, joining a game, etc. HTTP will also be used to serve the client Svelte frontend. Socket.IO over WebSockets will be used between the server and client to receive game updates. For the database, we are going to use the SQL protocol to query and store persistent information.
 
