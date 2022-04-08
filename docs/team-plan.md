@@ -429,6 +429,30 @@ _§14_ In git, all branches must be automatically created from the issue board, 
 - Sprint 2 estimated costs: *13'200€*
 - Sprint 2 actual costs: *9'553€*
 
+### Sprint 3
+![S3R](./resources/img/sprint3-retorspective.jpg "Sprint 3 Retrospective")
+
+#### Focus factor:
+𝑓 = 𝑓𝑜𝑐𝑢𝑠 𝑓𝑎𝑐𝑡𝑜𝑟
+
+𝑡 = 𝑎𝑣𝑎𝑖𝑙𝑎𝑏𝑙𝑒 h𝑜𝑢𝑟𝑠 𝑝𝑒𝑟 𝑤𝑒𝑒𝑘 𝑝𝑒𝑟 𝑝𝑒𝑟𝑠𝑜𝑛 (12)
+
+𝑛 = 𝑛𝑢𝑚𝑏𝑒𝑟 𝑜𝑓 𝑡𝑒𝑎𝑚 𝑚𝑒𝑚𝑏𝑒𝑟𝑠 (11)
+
+𝑤 = 𝑛𝑢𝑚𝑏𝑒𝑟 𝑜𝑓 𝑤𝑒𝑒𝑘𝑠 𝑓𝑜𝑟 𝑎 𝑆𝑝𝑟𝑖𝑛𝑡 (3)
+
+𝑣 = 𝑆𝑢𝑚 𝑤𝑒𝑖𝑔h𝑡 𝑜𝑓 𝑏𝑎𝑐𝑘𝑙𝑜𝑔 𝑖𝑡𝑒𝑚 (255)
+
+![S3R](./resources/img/retrospective-formula.png "Retrospective formula")
+
+> Focus factor this sprint: **0.644**
+
+#### Costs:
+
+- Sprint 3 total time spent: *205.04 hours*
+- Sprint 3 estimated costs: *19'800€*
+- Sprint 3 actual costs: *10'252€*
+
 ---
 
 ## Communication methods
