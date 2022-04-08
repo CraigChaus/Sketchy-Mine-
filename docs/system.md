@@ -151,7 +151,7 @@ Game Server, Game Logic and GUI are in the game specific layer. The first layer 
 Network, Graphics and GUI are in the Middleware layer. Network focuses on the communication between the game and the server. Graphics are a collection of subsystem all related to visualizing the game in our case "The Canvas", "Tool box" and "Chat box".
 After encapsulating everything and having input from the last layer which is System Software the end product is our game Sketchy Mine.
 
-###Deployment Diagram
+### Deployment Diagram
 ![Deployment Diagram](./resources/diagrams/Deployment%20Diagram%20.png)
 
 The server contains a Docker container containing the container for the backend, a container for DataDog (which is simply a web traffic monitor) and a database container for postgres (where we store user data). These components are Dockerized to create a seperate container for each client connected to the VPS to optimize performance and compatibility.
