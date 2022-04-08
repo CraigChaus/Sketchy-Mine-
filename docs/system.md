@@ -104,25 +104,29 @@ The presented product is a network game created for a large number of players wh
 #### Use case diagrams consist of 2 objects:
 1. Player
 2. Moderator
+3. Spectator
 
 
 #### Player capabilities:
-- The player  can register to participate or log into a previously registered account. Alternatively, users can also play as guests, meaning they do not have login whatsoever.
-- The player can be just a spectator, then he just watches the game process, without the ability to somehow influence it.
-- Next when the player has chosen the role of the player, they join the team automatically.
+- The player can register to participate or log into a previously registered account. Alternatively, users can also play as guests, meaning they do not have login whatsoever.
+
+- After deciding to be a player or spectator, the user joins the team automatically with the matchmaking system.
 - When the game begins, the progress towards the victory of the Player is indicated by the number of emeralds collected,when a word is guessed from your drawing by the player's team or when a word is guessed from your drawing under the required conditions.
 - Afterwords, player can see the progress and rating of the players.
-- During the game, the player communicates via chat with his team, discussing options for solving the word.
-- The game is divided into several rounds, in each round, the players of the team will guess the drawn image through voting and chat discussions, another role during the game is when your team has to draw the image for other teams to guess it
+- During the game, the player communicates via chat with their team, discussing options for solving the current word.
+- The game is into rounds, in each round, the players of the team will guess the drawn image through voting and chat discussions, another role during the game is when your team has to draw the image for other teams to guess it
 
+#### Spectator capabilities:
+- The spectator can just watch the game process, without the ability to somehow influence it
+- Spectators have the ability to chat with eachother
 
-
-##### Purpose of moderator: The goal of the moderator is to monitor and control the correct course of the game.
+#### Purpose of moderator: The goal of the moderator is to monitor and control the correct course of the game.
 
 #### Moderator capabilities:
 - The moderator's capabilities include private chat with the whole team, as well as with an individual team member.
+-The moderator can send warnings to players
 - The moderator can kick any player out of the game, as well as completely ban the player's account.
-- Moderator options include making the game harder or easier for the players.
+
 
 ## Description of Component Diagram
 
@@ -135,12 +139,11 @@ The presented product is a network game created for a large number of players wh
 
   1.Socket.IO component, which provides our Client Web Browser component realtime web application ( communication between webclient and servers).
 
-  2.Database controller component, Data from the Socket.io component is streamed to the Database controller component, which in turn is connected to the database.
+  2.Authentication, is for authenticating the user info using JWT with 2 seperate middleware which one of them checks if the user is a moderator or not.
 
   3.Socket Handler, the socket handler defines the functionality of the sockets and is the layer that processes the incoming message events.
   
-
-  4.Authentication, is for authenticating the user info using JWT with 2 seperates middleware which one of them checks if the user is a moderator or not.
+  4.Database controller component, Data from the Socket.io component is streamed to the Database controller component, which in turn is connected to the database.
 
   
   
