@@ -150,6 +150,13 @@ The game logic are the rules, and the evaluation of every turn inside the game. 
 Game Server, Game Logic and GUI are in the game specific layer. The first layer is about the logic of the game the animation of the game and basically the storing of the game entirely.
 Network, Graphics and GUI are in the Middleware layer. Network focuses on the communication between the game and the server. Graphics are a collection of subsystem all related to visualizing the game in our case "The Canvas", "Tool box" and "Chat box".
 After encapsulating everything and having input from the last layer which is System Software the end product is our game Sketchy Mine.
+
+###Deployment Diagram
+![Deployment diagram](./resources/diagrams/Deployment%20Diagram.png)
+
+The server contains dockerfiles for the frontend, backend and database. The reason for doing this is to enable the client to connect to the vps that uses the dockerized program of the emerald mine game. This will act as an independent website for the connected client because it is run as a container.
+Running the game as a docker container will also allow the game to run as intended regardless of the operating system it is running on.
+
 ## Technical design
 The following section describes the technologies and development tools we have used throughout the development process of our game.
 
