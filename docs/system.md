@@ -107,13 +107,12 @@ The presented product is a network game created for a large number of players wh
 
 
 #### Player capabilities:
-- Whenever player opens the web application and select the role of a participant in the game if the game has not yet started or if the first round of this game is in progress.
-- The player than must register to participate or log into a previously registered account.
+- The player  can register to participate or log into a previously registered account. Alternatively, users can also play as guests, meaning they do not have login whatsoever.
 - The player can be just a spectator, then he just watches the game process, without the ability to somehow influence it.
-- Next when the player has chosen the role of the player, he joins the team automatically.
-- When the game began, the progress towards the victory of the Player is indicated by the number of emeralds collected,when a word is guessed from your drawing by the player's team or when a word is guessed from your drawing under the required conditions.
+- Next when the player has chosen the role of the player, they join the team automatically.
+- When the game begins, the progress towards the victory of the Player is indicated by the number of emeralds collected,when a word is guessed from your drawing by the player's team or when a word is guessed from your drawing under the required conditions.
 - Afterwords, player can see the progress and rating of the players.
-- During the game, the player communicates via chat with his team, discussing options for solving the puzzle.
+- During the game, the player communicates via chat with his team, discussing options for solving the word.
 - The game is divided into several rounds, in each round, the players of the team will guess the drawn image through voting and chat discussions, another role during the game is when your team has to draw the image for other teams to guess it
 
 
@@ -132,23 +131,36 @@ The presented product is a network game created for a large number of players wh
 #### Component diagram consists of 5 components connected to each other illustrating the operation of the system.
 
 - The Client Web Browser component that requires the
-- Game Server component to provide a running game, inside the Game server component are two subclasses:
+- Game Server component to provide a running game, inside the Game server component are four subclasses:
 
   1.Socket.IO component, which provides our Client Web Browser component realtime web application ( communication between webclient and servers).
 
-  2.Database controller component.Data from the Socket.io component is streamed to the Database controller component, which in turn is connected to the database,
+  2.Database controller component, Data from the Socket.io component is streamed to the Database controller component, which in turn is connected to the database.
+
+  3.Socket Handler, the socket handler defines the functionality of the sockets and is the layer that processes the incoming message events.
+  
+
+  4.Authentication, is for authenticating the user info using JWT with 2 seperates middleware which one of them checks if the user is a moderator or not.
+
+  
+  
 - the Database component provides access to write new data about the course of the game, players, and so on, and also provides the Database Controller with access to read previously saved data.
 ## Diagrams
 ### Package Diagram
 ![PackageDiagram](./resources/diagrams/Package%20Diagram.png)
 
-The game logic are the rules, and the evaluation of every turn inside the game. After playing round after round the shards that the players collect are calculated into emeralds which then is added to the players account. SocketIO is the library that connects everything.
+The game logic are the rules, and the evaluation of every turn inside the game. After playing round after round the shards that the players collect are calculated into emeralds which then is added to the players account. SocketIO is the socket library that connects users to the web server. 
+
+There are Spectators, Drawers, Guessers and Moderators as for different types of users which all of them use sockets.
+
+The Database component, uses the controllers to forward the data to database.
 
 ### Application Layer Diagram
 ![Application Layer Diagram](./resources/diagrams/Application%20Layer%20Diagram.png)
 
 Game Server, Game Logic and GUI are in the game specific layer. The first layer is about the logic of the game the animation of the game and basically the storing of the game entirely.
-Network, Graphics and GUI are in the Middleware layer. Network focuses on the communication between the game and the server. Graphics are a collection of subsystem all related to visualizing the game in our case "The Canvas", "Tool box" and "Chat box".
+Network, Graphics and GUI are in the Middleware layer. Network focuses on the communication between the game and the server. Graphics are a collection of subsystem all related to visualizing the game in our case the canvas progress bar chat component gui etc..
+
 After encapsulating everything and having input from the last layer which is System Software the end product is our game Sketchy Mine.
 ## Technical design
 The following section describes the technologies and development tools we have used throughout the development process of our game.
