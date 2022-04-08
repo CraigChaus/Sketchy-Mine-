@@ -372,3 +372,26 @@ Since is going to be an online game the protocols we are going to use WebSockets
   message
 }
 ```
+
+## Branching strategy
+The team decided to use branching strategies in this project to enable parallel development for every member of the team.
+
+#### What is a branching strategy
+Branching strategy it is essentially a set of rules that developers can use to specify how they interact with a common codebase.
+A branching strategy is thus the strategy used by software development teams when writing, merging, and deploying code when using a version control system.
+
+#### Where 
+Branches are primarily used by teams to develop features by providing them with a separate workspace for their code. Upon completion of work, these branches are usually merged back into a master branch. In this manner, features (as well as any bugs and bug fixes) are separated from one another, allowing you to fix mistakes more easily.
+
+#### What are branches
+Branches are isolated lines of code that branch off the master branch, letting developers to work individually before merging their changes back into the code base.
+By default, all branches have been made protected. Thus, only the person responsible for merging branches (Maintainer role) has access to the final decision on merging branches.
+
+#### How it helps
+1) This means that branches protect the mainline of code and that any changes made to any given branch have no effect on other developers.
+
+2) Maintain a bug-free code base in which developers can quickly resolve issues and return changes to production without disrupting the development workflow.
+3) Moreover, for more efficient work through Gitlab, it was decided to use an additional tool "Сontinuous Integration"(CI). When changes are checked in, CI validates them using an automated build process that also runs validation and integration tests. Continuous integration aims to detect bugs and errors faster and eliminate integration issues that arise when developers work in isolation, resulting in higher quality software releases and faster delivery times.
+   CI was necessary to quickly identify problems in the code before pushing it to the main branch.
+4) Since branches are created protected by default, each developer creating a branch does not have the opportunity to directly merge his branch after changes with the main one. This helps protect the base code from multiple conflicts and bugs.
+5) In addition, in order to better track the process of the work of the entire team in real time, labels for each merge reguest were used in this project. Labels (like bug, feature request,FrontEnd, BackEnd or docs.) help the developer responsible for the merge to classify the branches associated with different problems and quickly decide what priority to merge branches
