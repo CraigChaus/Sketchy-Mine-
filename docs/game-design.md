@@ -1,5 +1,21 @@
 # Game Design
 
+## Table Of Contents
+- [Introduction](#introduction)
+- [Global definitions](#global-definitions)
+- [Overview](#overview)
+- [Game parameters](#game-parameters)
+- [Targets](#targets)
+- [Teams](#teams)
+- [Levels](#levels)
+- [Moderator](#moderator)
+- [Spectator](#spectators)
+- [Chatting](#chatting)
+- [Ranking](#ranking)
+- [Wireframes](#wireframes)
+---
+
+## Introduction
 The following document outlines our proposed game design including: the flow and structure of the game, game mechanics. For the basic wireframes associated with the game interface, consult the [wireframes](#wireframes) at the end of this document.
 
 ## Global Definitions
@@ -42,6 +58,10 @@ Teams work together to "dig" distance in a mine to receive emerald shards by gue
 | Spectator    | ∞          | 0         |
 
 ---
+
+## Targets
+
+Our game is mainly for users of all ages as the game has no explicit content and it is easy to play and requires no problems/puzzles solving as the main purpose of the game is to have fun as much as the user can. Furthermore, this game can be played when the user just wants to kill time while waiting for something because the game requires no signup/login to start playing the game. Hence, the game can be played __*wherever*__ and __*whenever*__ the users want!
 
 ## Teams
 
@@ -149,51 +169,51 @@ All players have their own persistent ranking, based on the number of emerald sh
 
 ![HomeScreen](./resources/wireframes/homescreen.png "home screen image")
 
-- the form appears on a white/black page, it's not all dirt
-- font can be changed to a more similar one to the one in emerald mine
-- login and signup can be moved to a previous screen if we don't allow people to play without being signed in
-- make background with lower opacity (60-70%)
+- The form appears on a white/black page, it's not all dirt
+- Font can be changed to a more similar one to the one in emerald mine
+- Login and signup can be moved to a previous screen if we don't allow people to play without being signed in
+- Make background with lower opacity (60-70%)
 
 ### Login
 
 ![Login](./resources/wireframes/login.png "login image")
 
-- basic login screen
-- signup form looks the same (maybe with a confirmation password field)
-- the form appears on a white/black page, it's not all dirt
-- font can be changed to a more similar one to the one in emerald mine
-- make background with lower opacity (60-70%)
+- Basic login screen
+- Signup form looks the same (maybe with a confirmation password field)
+- The form appears on a white/black page, it's not all dirt
+- Font can be changed to a more similar one to the one in emerald mine
+- Make background with lower opacity (60-70%)
 
 ### GUI
 
 ![GUI](./resources/wireframes/gui.png "GUI image")
 
-- adding more emerald mine elements
-- adding more drawing tools
-- separate the drawer, guesser and spectator view
+- Adding more emerald mine elements
+- Adding more drawing tools
+- Separate the drawer, guesser and spectator view
 
 ### Ranking
 
 ![Rank](./resources/wireframes/ranking.png "Ranking screen")
 
-- maybe fancier 1, 2 and 3 places
-- copy how the emerald count looks in the GUI and maybe use that
+- First, second and third places
+- Copy how the emerald count looks in the GUI and maybe use that
 
 ### Rules
 
-- a page with a "RULES" title and text underneath
-- no dedicated wireframe
+- A page with a "RULES" title and text underneath
+- No dedicated wireframe
 
 ### Moderator
 
 #### Moderator view of the canvas
 ![Moderator](./resources/wireframes/moderator-buttons.png "Moderator view")
 
-- view of the moderator is similar to the player's view, but has an additional button such as:
-  - the moderator can kick out a player and send them a warning (warning form below)
-- the modal appears on top of the screen upon chosen moderator action
-- behind the modal the view is similar to spectator one
-- the modal depends on the chosen action that the moderator want to perform
+- View of the moderator is similar to the player's view, but has an additional button such as:
+  - The moderator can kick out a player and send them a warning (warning form below)
+- The modal appears on top of the screen upon chosen moderator action
+- Behind the modal the view is similar to the spectator one
+- The modal depends on the chosen action that the moderator wants to perform
 
 #### Moderator warning message form
 ![WarningForm](./resources/wireframes/warning-message-form.jpg "Warning message form")
