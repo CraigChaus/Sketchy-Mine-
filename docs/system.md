@@ -1,5 +1,20 @@
 # System Document
 ---
+
+## Table Of Contents
+- [Functional design](#functional-design)
+  - [Goal](#goal)
+  - [Product](#product)
+  - [Requirements](#requirements)
+  - [Interface](#interface)
+  - [Diagrams](#diagrams)
+- [Technical design](#technical-design)
+  - [Technology stack](#technology-stack)
+  - [Development tools](#development-tools)
+  - [Communication protocols](#communication-protocols)
+- [Road map](#road-map)
+- [Protocol specifications](#server-protocol-spec)
+- [Branching strategy](#branching-strategy)
 ## Functional design
 
 ### Goal
@@ -131,7 +146,7 @@ The presented product is a network game created for a large number of players wh
 - Moderators can send warning messages to teams and/or players
 
 
-## Description of Component Diagram
+### Diagrams
 
 ![ComponentDiagram](./resources/diagrams/Abstract%20Component%20Diagram.png "Abstract component diagram")
 
@@ -151,8 +166,8 @@ The presented product is a network game created for a large number of players wh
   
   
 - the Database component provides access to write new data about the course of the game, players, and so on, it also provides the Database Controller with access to read previously saved data.
-## Diagrams
-### Package Diagram
+
+#### Package Diagram
 ![PackageDiagram](./resources/diagrams/Package%20Diagram.png)
 
 The game logic are the rules, and the evaluation of every turn inside the game. After playing round after round the shards that the players collect are calculated into emeralds which then is added to the players account. SocketIO is the socket library that connects users to the web server. 
@@ -161,7 +176,7 @@ There are Spectators, Drawers, Guessers and Moderators as for different types of
 
 The Database component, uses the controllers to read and write the data to/from the database.
 
-### Application Layer Diagram
+#### Application Layer Diagram
 ![Application Layer Diagram](./resources/diagrams/Application%20Layer%20Diagram.png)
 
 Game Server, Game Logic and GUI are in the game specific layer. The first layer is about the logic of the game the animation of the game and basically the storing of the game entirely.
@@ -169,7 +184,7 @@ Network, Graphics and GUI are in the Middleware layer. Network focuses on the co
 
 After encapsulating everything and having input from the last layer which is System Software the end product is our game Sketchy Mine.
 
-### Deployment Diagram
+#### Deployment Diagram
 ![Deployment Diagram](./resources/diagrams/Deployment%20Diagram%20.png)
 
 The server contains a Docker container containing the container for the backend, a container for DataDog (which is simply a web traffic monitor) and a database container for postgres (where we store user data). These components are Dockerized to create a seperate container for each client connected to the VPS to optimize performance and compatibility.

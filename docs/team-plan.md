@@ -1,5 +1,18 @@
 # Team Plan
 
+## Table Of Contents
+- [Roles](#roles)
+- [Code of Conduct](#code-of-conduct)
+- [Process artifacts](#process-artifacts)
+    - [User stories](#user-stories)
+    - [Backlog items](#backlog-items)
+- [Budget](#budget)
+- [Sprint retrospectives](#sprint-retrospectives)
+    - [Sprint 0](#sprint-0)
+    - [Sprint 1](#sprint-1)
+    - [Sprint 2](#sprint-2)
+    - [Sprint 3](#sprint-3)
+- [Communication methods](#communication-methods)
 ---
 
 ## Roles
@@ -147,11 +160,11 @@ _§14_ In git, all branches must be automatically created from the issue board, 
 
 ### User stories
 
-1. As a system admin, I want the user to be able to sign up and sign in, so that the progress is saved to their account.
+1. As a user, I want the user to be able to sign up and sign in, so that the progress is saved to my account.
 
 2. As a player, I want to be able to see the players' statistics, so that I can compare myself to other players.
 
-3. As a player, I want to be able to draw on a canvas, so that the teams can guess my word.
+3. As a player, I want to be able to draw on a canvas, so that the teams can guess my drawing.
 
 4. As a player, I want to be able to submit my guess, so that I can get more emeralds.
 
@@ -177,7 +190,7 @@ _§14_ In git, all branches must be automatically created from the issue board, 
 
 ### Backlog items
 
-#### US01 - As a system admin, I want the user to be able to sign up and sign in, so that the progress is saved to their account
+#### US01 - As a user, I want the user to be able to sign up and sign in, so that the progress is saved to my account
 
 | Backlog ID | Description            |
 | ---------- | ---------------------- |
@@ -188,13 +201,13 @@ _§14_ In git, all branches must be automatically created from the issue board, 
 | US01 BI05  | Routing                |
 | US01 BI06  | Home screen component  |
 
-#### US02 - As a player, I want to be able tto see the players' statistics, so that I can compare myself to other players
+#### US02 - As a player, I want to be able to see the players' statistics, so that I can compare myself to other players
 
 | Backlog ID | Description            |
 | ---------- | ---------------------- |
 | US02 BI01  | Ranking page component |
 
-#### US03 - As a player, I want to be able to draw on a canvas, so that the teams can guess my word.
+#### US03 - As a player, I want to be able to draw on a canvas, so that the other teams can guess my drawing.
 
 | Backlog ID | Description                                                                      |
 | ---------- | -------------------------------------------------------------------------------- |
@@ -215,7 +228,7 @@ _§14_ In git, all branches must be automatically created from the issue board, 
 | US04 BI04  | Get emeralds when the guess is correct                      |
 | US04 BI05  | Create a progress bar to see where the team is currently at |
 | US04 BI06  | Multiply the gained emeralds when a new level is reached    |
-| US04 BI07  | Add the functionality to the progress bar                   |
+| US04 BI07  | Add the functionality to the progress bar to move                   |
 | US04 BI08  | Create guess backend                                        |
 | US04 BI09  | Team level UI                                               |
 
@@ -398,6 +411,9 @@ _§14_ In git, all branches must be automatically created from the issue board, 
 
 > Focus factor this sprint: **0.83712**
 
+> This means that the productivity of the team was great as it nearly reached 1 which the optimal ratio, this was due to the fact that every team members sticked to the rules and the deadlines for the tasks as the hours spent on this sprint for each individual is
+enough.
+
 #### Costs:
 
 - Sprint 1 total time spent: *179.41 hours*
@@ -423,6 +439,8 @@ _§14_ In git, all branches must be automatically created from the issue board, 
 
 > Focus factor this sprint: **0.81**
 
+> The focus factor for this sprint got reduced due to the fact that team members got sick and therefore, the hours spent got also decreased. However, it roughly remained the same as the previous sprint and everyone was trying to cope with it. Nevertheless, the productivity was as good enough as the previous sprint
+
 #### Costs:
 
 - Sprint 2 total time spent: *191.06 hours*
@@ -446,6 +464,8 @@ _§14_ In git, all branches must be automatically created from the issue board, 
 ![S3R](./resources/img/retrospective-formula.png "Retrospective formula")
 
 > Focus factor this sprint: **0.644**
+
+> The purpose of this sprint was to polish/fix bugs and not implmenting a new features and as a result, every team member spent less time on the project cause the main goal was to make the game better which we managed to acheive. Hence, the focus factor got decreased. Nonetheless, the productivity of the team was good enough to finish the assigned tasks/issues on time.
 
 #### Costs:
 
@@ -476,19 +496,19 @@ The following is an overview for how the team will communicate internally, as we
 | Sprint review     |       Project team        |                                                           Validate sprint, reflect on project and team progress |                       End of sprint |
 | Publisher meeting | Project team, stakeholder |                                                        Present current deliverables, update on product progress |                       End of sprint |
 
-#### Schedule
+### Schedule
 
 |          | Sprint planning | Sprint review | Standups                    | Publisher meeting |
 | -------- | --------------- | ------------- | --------------------------- | ----------------- |
 | Sprint 1 | 14.02.2022      | 07.03.2022    | Monday, Friday (every week) | 07.03.2022        |
 | Sprint 2 | 07.03.2022      | 21.03.2022    | Monday, Friday (every week) | 22.03.2022        |
 
-#### Communication tools
+### Communication tools
 
 For communicating and sharing information with other project members, the following tools are to be used:
 
 - Discord - A common server is used for voice/video calls, screensharing and pair programming, as well as the primary chat tool and permanent record of all team communication. Members in the server are labelled with the role of the sub-group they belong to. Multiple channels are available for members to use depending on the context necessary.
 - OneDrive - A shared OneDrive folder is used to grant access to the shared timesheet for all project members to log their tracked project time.
-- GitLab - The issue board is used as the single source of truth of assigned items and project state. Issues and merge requests are assigned to discrete project members, with the possibility for members to leave review notes, and manage active items. GitLab is also the central store for _all_ project documentation (in markdown format).
+- GitLab - The issue board is used as the single source of truth of assigned items and project state. Issues and merge requests are assigned to discrete project members, with the possibility for members to leave review notes, and manage active items. GitLab is also the central store for **_all_** project documentation (in markdown format).
 - Email - Used to formally communicate with the publisher and other stakeholders
 - Physical meetings - Used for standups, and publisher presentations.

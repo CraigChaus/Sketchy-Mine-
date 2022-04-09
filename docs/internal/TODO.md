@@ -13,7 +13,7 @@ CURRENT TODOS:
     - [x] original game
   - [x] Script
 - **_Docs_**
-  - Team Plan doc
+  - **Team Plan doc**
     - [x] Sprint retrospectives
     - [x] Process artifacts
     - [x] Which role is responsible for what
@@ -21,13 +21,14 @@ CURRENT TODOS:
     - [x] Group structure
     - [x] Communication (when, where, how often, main aim)
   - **System Doc**
-    - [x] Framework
+    - [x] Frameworks
     - [x] Protocol analysis
-    - [x] requirements (F,NF)
-    - [ ] diagrams
-    - [x] technical design (road map)
-    - [x] user stories
-    - [x] backlogs
+    - [x] Requirements (F,NF)
+    - [x] Diagrams
+    - [x] Technical design (road map)
+    - [x] Functional design
+    - [x] User stories
+    - [x] Backlogs
   - **Game design doc**
     - [x] Game design choices
     - [x] Wireframes

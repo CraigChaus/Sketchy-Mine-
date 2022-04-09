@@ -13,7 +13,7 @@
 
 ## Roles
 Game Master:
-- can influence the game
+- can influence the game and send messages or kick players
 
 ## Publisher's idea
 - dig tunnel
@@ -28,5 +28,5 @@ Game Master:
 - Next time we need to show how much time we spent in the presentation slides
 - Cost (planned/actual) must be present in the slides
 - Make sure we have the scoring system well documented
-  - Share the progression system documentation with the publisher
+- Share the progression system documentation with the publisher
 - Protocol must be designed/documented
